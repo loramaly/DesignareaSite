@@ -26,7 +26,7 @@ body{
 @media (max-width:1199px){
   .bg-fx{background-size:150% auto}
 }
-.page{position:relative;z-index:1;max-width:1440px;margin:0 auto;padding:48px}
+.page{position:relative;z-index:1;max-width:2000px;margin:0 auto;padding:48px}
 /* ===== site chrome: menu bar, frame, footer ===== */
 .sitebar{
   position:relative;z-index:2;display:flex;align-items:center;justify-content:space-between;
@@ -63,7 +63,7 @@ body.menu-open .sitebar{z-index:100}
 }
 .sitefooter a{color:var(--accent-secondary);text-decoration:none}
 @media (max-width:900px){
-  .page{padding:24px}
+  .page{padding:16px}
   .hamburger{display:block}
   .main-nav{position:fixed;top:0;right:0;bottom:0;width:272px;z-index:50;flex-direction:column;gap:8px;align-items:stretch;
     background:linear-gradient(180deg,var(--panel-grad-a),var(--panel-grad-b));

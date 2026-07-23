@@ -43,6 +43,33 @@
 
     <div class="chat">
       <img class="portrait" src="assets/images/portrait.png" alt="Lora Maly">
+      <div class="thread-actions">
+        <div class="share-wrap">
+          <button class="cbtn" id="shareBtn" aria-label="Share conversation" title="Share conversation" aria-haspopup="true" aria-expanded="false" hidden>
+            <svg viewBox="0 0 24 24" fill="none"><path d="M18 8C19.6569 8 21 6.65685 21 5C21 3.34315 19.6569 2 18 2C16.3431 2 15 3.34315 15 5C15 6.65685 16.3431 8 18 8Z" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"/><path d="M6 15C7.65685 15 9 13.6569 9 12C9 10.3431 7.65685 9 6 9C4.34315 9 3 10.3431 3 12C3 13.6569 4.34315 15 6 15Z" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"/><path d="M18 22C19.6569 22 21 20.6569 21 19C21 17.3431 19.6569 16 18 16C16.3431 16 15 17.3431 15 19C15 20.6569 16.3431 22 18 22Z" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"/><path d="M8.58984 13.51L15.4198 17.49" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"/><path d="M15.4098 6.51001L8.58984 10.49" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          </button>
+          <div class="share-menu" id="shareMenu">
+            <button class="share-opt" data-network="whatsapp">
+              <svg viewBox="0 0 24 24"><path d="M3 21l1.65 -3.8a9 9 0 1 1 3.4 2.9l-5.05 .9"/><path d="M9 10a.5 .5 0 0 0 1 0v-1a.5 .5 0 0 0 -1 0v1a5 5 0 0 0 5 5h1a.5 .5 0 0 0 0 -1h-1a.5 .5 0 0 0 0 1"/></svg>
+              <span>WhatsApp</span>
+            </button>
+            <button class="share-opt" data-network="telegram">
+              <svg viewBox="0 0 24 24"><line x1="22" y1="2" x2="11" y2="13"/><polygon points="22 2 15 22 11 13 2 9 22 2"/></svg>
+              <span>Telegram</span>
+            </button>
+            <button class="share-opt" data-network="email">
+              <svg viewBox="0 0 24 24"><rect x="2" y="4" width="20" height="16" rx="2"/><polyline points="22 6 12 13 2 6"/></svg>
+              <span>Email</span>
+            </button>
+          </div>
+        </div>
+        <button class="cbtn" id="downloadBtn" aria-label="Download as PDF" title="Download as PDF" hidden>
+          <svg viewBox="0 0 24 24"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+        </button>
+        <button class="cbtn" id="chatReset" aria-label="Clear conversation" title="Clear conversation" hidden>
+          <svg viewBox="0 0 24 24"><path d="M7.0002 21L2.7002 16.7C1.7002 15.7 1.7002 14.2 2.7002 13.3L12.3002 3.70001C13.3002 2.70001 14.8002 2.70001 15.7002 3.70001L21.3002 9.30001C22.3002 10.3 22.3002 11.8 21.3002 12.7L13.0002 21" stroke-linecap="round" stroke-linejoin="round"/><path d="M22 21H7" stroke-linecap="round" stroke-linejoin="round"/><path d="M5 11L14 20" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        </button>
+      </div>
       <div class="thread" id="thread"></div>
       <div class="drag-handle" id="dragHandle" aria-label="Resize conversation" title="Drag to resize">
         <span></span>
@@ -51,9 +78,6 @@
         <div class="chat-head">
         <div class="ask-title">Ask me anything...</div>
         <div class="chat-controls">
-          <button class="cbtn" id="chatReset" aria-label="Clear conversation" title="Clear conversation" hidden>
-            <svg viewBox="0 0 24 24"><polyline points="1 4 1 10 7 10"/><path d="M3.51 15a9 9 0 1 0 2.13-9.36L1 10"/></svg>
-          </button>
           <button class="cbtn square" id="chipsToggle" aria-label="Collapse questions" title="Hide questions">
             <svg viewBox="0 0 24 24"><line x1="5" y1="12" x2="19" y2="12"/></svg>
           </button>
@@ -75,11 +99,32 @@
 
   <section class="works" id="works">
     <div class="works-head">
-      <h2>Selected Works</h2>
-      <a class="pf-btn" href="[PORTFOLIO-URL]"><svg class="pf-ic" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <h2>Portfolio</h2>
+      <div class="works-actions">
+        <div class="share-wrap">
+          <button class="pf-btn" id="portfolioShareBtn" aria-label="Share portfolio" title="Share portfolio" aria-haspopup="true" aria-expanded="false">
+            <svg class="pf-ic" viewBox="0 0 24 24" fill="none"><path d="M18 8C19.6569 8 21 6.65685 21 5C21 3.34315 19.6569 2 18 2C16.3431 2 15 3.34315 15 5C15 6.65685 16.3431 8 18 8Z" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"/><path d="M6 15C7.65685 15 9 13.6569 9 12C9 10.3431 7.65685 9 6 9C4.34315 9 3 10.3431 3 12C3 13.6569 4.34315 15 6 15Z" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"/><path d="M18 22C19.6569 22 21 20.6569 21 19C21 17.3431 19.6569 16 18 16C16.3431 16 15 17.3431 15 19C15 20.6569 16.3431 22 18 22Z" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"/><path d="M8.58984 13.51L15.4198 17.49" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"/><path d="M15.4098 6.51001L8.58984 10.49" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          </button>
+          <div class="share-menu" id="portfolioShareMenu">
+            <button class="share-opt" data-network="whatsapp">
+              <svg viewBox="0 0 24 24"><path d="M3 21l1.65 -3.8a9 9 0 1 1 3.4 2.9l-5.05 .9"/><path d="M9 10a.5 .5 0 0 0 1 0v-1a.5 .5 0 0 0 -1 0v1a5 5 0 0 0 5 5h1a.5 .5 0 0 0 0 -1h-1a.5 .5 0 0 0 0 1"/></svg>
+              <span>WhatsApp</span>
+            </button>
+            <button class="share-opt" data-network="telegram">
+              <svg viewBox="0 0 24 24"><line x1="22" y1="2" x2="11" y2="13"/><polygon points="22 2 15 22 11 13 2 9 22 2"/></svg>
+              <span>Telegram</span>
+            </button>
+            <button class="share-opt" data-network="email">
+              <svg viewBox="0 0 24 24"><rect x="2" y="4" width="20" height="16" rx="2"/><polyline points="22 6 12 13 2 6"/></svg>
+              <span>Email</span>
+            </button>
+          </div>
+        </div>
+        <a class="pf-btn" href="[PORTFOLIO-URL]" aria-label="Portfolio"><svg class="pf-ic" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
 <path d="M10.75 2.75C10.75 2.33579 10.4142 2 10 2C9.58579 2 9.25 2.33579 9.25 2.75V11.3636L6.29526 8.23503C6.01085 7.93389 5.53617 7.92033 5.23503 8.20474C4.9339 8.48915 4.92033 8.96383 5.20474 9.26497L9.45474 13.765C9.59642 13.915 9.79366 14 10 14C10.2063 14 10.4036 13.915 10.5453 13.765L14.7953 9.26497C15.0797 8.96383 15.0661 8.48915 14.765 8.20474C14.4638 7.92033 13.9892 7.93389 13.7047 8.23503L10.75 11.3636V2.75Z" fill="currentColor"/>
 <path d="M3.5 12.75C3.5 12.3358 3.16421 12 2.75 12C2.33579 12 2 12.3358 2 12.75V15.25C2 16.7688 3.23122 18 4.75 18H15.25C16.7688 18 18 16.7688 18 15.25V12.75C18 12.3358 17.6642 12 17.25 12C16.8358 12 16.5 12.3358 16.5 12.75V15.25C16.5 15.9404 15.9404 16.5 15.25 16.5H4.75C4.05964 16.5 3.5 15.9404 3.5 15.25V12.75Z" fill="currentColor"/>
-</svg><span>Portfolio</span></a>
+</svg></a>
+      </div>
     </div>
     <div class="cards">
 
@@ -125,6 +170,8 @@
   </footer>
 
 </div>
+
+<div id="printTranscript"></div>
 
 <script src="js/chat.js"></script>
 </body>

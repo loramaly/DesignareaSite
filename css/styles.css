@@ -94,7 +94,7 @@ body.menu-open header{z-index:100}
 .intro{display:flex;justify-content:center;padding-top:7px;min-height:195px}
 .intro-txt{position:relative;z-index:2;width:521px;max-width:100%;display:flex;flex-direction:column;
   margin-left:415px}  /* text starts exactly at the image's right edge - 0 gap */
-.hello{font-family:var(--script);font-size:clamp(44px,3.8vw,55px);line-height:.92}
+.hello{font-family:var(--script);font-size:clamp(44px,3.8vw,55px);line-height:.92;opacity:.6}
 .iam{display:flex;align-items:baseline;gap:6px;margin-top:6px;white-space:nowrap}
 .iam .i{font-size:clamp(19px,1.65vw,24px)}
 .iam .n{font-size:clamp(22px,1.95vw,28px);font-weight:600}
@@ -109,32 +109,57 @@ body.menu-open header{z-index:100}
   display:flex;flex-direction:column;gap:24px;
   box-shadow:0 24px 60px rgba(0,0,0,.35);
 }
-.thread{display:flex;flex-direction:column;gap:12px;overflow-y:auto;max-height:300px;
+.thread{display:flex;flex-direction:column;gap:12px;overflow-y:auto;max-height:500px;
   scroll-behavior:smooth;
   margin-right:-40px;padding-right:40px;      /* scrollbar sits at the chat's edge, not mid-panel */
-  scrollbar-width:thin;scrollbar-color:transparent transparent;}
+  margin-top:-16px;    /* .chat's flex gap is 24px; this trims it to a net 8px above the thread */
+  scrollbar-width:thin;scrollbar-color:transparent transparent;
+  opacity:1;transition:opacity .22s ease}
 .chat:hover .thread{scrollbar-color:rgba(195,167,255,.45) transparent}  /* appears on hover only */
 .thread:empty{display:none}
+.thread.clearing{opacity:0}
+.thread-actions{display:flex;justify-content:flex-end;align-items:center;gap:6px;margin-bottom:0;margin-top:-8px}
+.thread-actions .cbtn{width:41px;height:41px}
+.thread-actions .cbtn svg{width:22px;height:22px;stroke-width:1.5;stroke:#c8b3f6}
+.share-wrap{position:relative}
+.share-menu{position:absolute;top:calc(100% + 8px);right:0;z-index:20;
+  background:linear-gradient(180deg,var(--panel-grad-a),var(--panel-grad-b));
+  border:1px solid var(--chip-line);border-radius:8px;
+  padding:6px;display:flex;flex-direction:column;gap:2px;min-width:168px;
+  box-shadow:0 12px 32px rgba(0,0,0,.35);
+  opacity:0;transform:translateY(-6px);pointer-events:none;
+  transition:opacity .18s ease,transform .18s ease}
+.share-menu.open{opacity:1;transform:translateY(0);pointer-events:auto}
+.share-opt{display:flex;align-items:center;gap:10px;width:100%;
+  background:transparent;border:none;border-radius:5px;padding:8px 10px;
+  color:var(--text);font-family:inherit;font-size:14px;cursor:pointer;text-align:left;
+  transition:background .15s ease}
+.share-opt:hover{background:rgba(255,255,255,.08)}
+.share-opt svg{width:18px;height:18px;flex:none;fill:none;stroke:currentColor;
+  stroke-width:1;stroke-linecap:round;stroke-linejoin:round}
+#printTranscript{display:none}
 .thread::-webkit-scrollbar{width:6px}
 .thread::-webkit-scrollbar-track{background:transparent}
 .thread::-webkit-scrollbar-thumb{background:transparent;border-radius:999px}
 .chat:hover .thread::-webkit-scrollbar-thumb{background:rgba(195,167,255,.45)}
-.msg{max-width:90%;font-size:15px;animation:rise .25s ease both}
+.msg{max-width:min(90%, 620px);font-size:15px;animation:rise .25s ease both}
 @keyframes rise{from{opacity:0;transform:translateY(6px)}to{opacity:1;transform:none}}
-.msg.user{align-self:flex-end;background:rgba(255,255,255,.10);border:1px solid rgba(195,167,255,.35);
+.msg.user{align-self:flex-end;background:rgba(255,255,255,.10);border:1px solid rgba(195,167,255,.35);border-right-width:4px;
   padding:8px 12px;border-radius:12px 12px 3px 12px}
 .bot-row{display:flex;gap:10px;align-items:flex-start;animation:rise .25s ease both}
 .avatar{width:30px;height:30px;border-radius:50%;flex:none;margin-top:1px}
-.bot-col{display:flex;flex-direction:column;gap:8px;min-width:0;max-width:calc(90% - 40px)}
+.bot-col{display:flex;flex-direction:column;gap:8px;min-width:0;max-width:min(calc(90% - 40px), 620px)}
 .bot-col .msg{max-width:100%}
 .evidence{display:flex;flex-wrap:wrap;gap:8px;margin-top:8px}
 .msg strong{font-weight:700}
 .caret{display:inline-block;width:2px;height:1em;background:var(--text-dim);margin-left:1px;vertical-align:-2px;animation:blink 1s steps(2) infinite}
 @keyframes blink{50%{opacity:0}}
-.msg br{line-height:1.9}
+.msg-p+.msg-p{margin-top:10px}
 .msg-link{display:inline-block;margin-top:8px;color:var(--text-dim);font-size:14px;text-decoration:none;border-bottom:1px solid var(--text-dim)}
 .msg-link:hover{color:var(--text)}
-.tag{font-size:12.5px;color:#7BE0B0;border:1px solid #7BE0B0;border-radius:6px;padding:4px 8px;background:rgba(123,224,176,.07)}
+.tag{font-size:12.5px;color:#7BE0B0;border-radius:6px;padding:4px 8px;background:rgba(123,224,176,.07);
+  display:inline-flex;align-items:center;gap:5px;margin-top:6px;margin-bottom:6px}
+.tag svg{width:12px;height:12px;flex:none;fill:none;stroke:currentColor;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round}
 .typing{display:inline-flex;gap:5px;padding:4px 0}
 .typing i{width:6px;height:6px;border-radius:50%;background:var(--text-dim);animation:blink 1.1s infinite}
 .typing i:nth-child(2){animation-delay:.18s}
@@ -152,7 +177,9 @@ body.menu-open header{z-index:100}
 .fb-note a{color:var(--text)}
 .ask-box{display:flex;flex-direction:column;gap:8px}
 .ask-title{font-size:32px;font-weight:600;line-height:44px}
-.chips{display:flex;flex-wrap:wrap;gap:10px}
+.chips{display:flex;flex-wrap:wrap;gap:10px;
+  max-height:300px;opacity:1;overflow:hidden;
+  transition:max-height .32s ease, opacity .28s ease}
 .chip{
   font-family:var(--font);font-size:16px;color:var(--text);
   background:transparent;border:1px solid var(--chip-line);border-radius:50px;
@@ -166,7 +193,7 @@ body.menu-open header{z-index:100}
 .chip.more:hover{color:var(--text)}
 /* input - h68, pad 10/10/10/16, r6, stroke 2 #9E70FF, btn 48 r4 #854CFF */
 .inputrow{
-  display:flex;align-items:center;gap:10px;height:68px;
+  display:flex;align-items:center;flex-wrap:wrap;gap:10px;min-height:68px;
   padding:10px 10px 10px 16px;
   border:2px solid var(--input-line);border-radius:6px;
   transition:border-color .15s;
@@ -206,24 +233,30 @@ body.menu-open header{z-index:100}
 }
 .works-head{
   margin:0;
-  display:flex;align-items:center;justify-content:space-between;
+  display:flex;align-items:center;justify-content:space-between;gap:12px;
   padding:16px 28px;
   border:2px solid var(--frame-line);border-top:none;   /* hangs from the top line */
   border-radius:0 0 6px 6px;             /* bottom corners 6px */
 }
+.works h2{min-width:0}
 @media (min-width:1200px){
   .works-head{margin-left:calc(clamp(16px, 12vw - 74px, 176px) - 48px);
               margin-right:calc(clamp(16px, 12vw - 74px, 176px) - 48px)}
 }
+.works-actions{display:flex;align-items:center;gap:8px}
 .pf-btn{
-  display:inline-flex;align-items:center;gap:9px;
-  color:var(--text);text-decoration:none;font-size:15px;font-weight:600;
+  display:inline-flex;align-items:center;justify-content:center;flex:none;
+  color:var(--text);text-decoration:none;
+  background:transparent;font-family:inherit;cursor:pointer;
   border:1px solid #fff;border-radius:4px;         /* corners 4px */
-  padding:8px 14px;
+  width:36px;height:36px;
   transition:background .18s ease, border-color .18s ease;
 }
 .pf-btn:hover{background:rgba(255,255,255,.08)}
-.pf-ic{width:18px;height:18px}
+.pf-ic{width:18px;height:18px;stroke-width:1.5}
+#portfolioShareBtn{border:none;width:auto;height:auto;padding:4px}
+#portfolioShareBtn .pf-ic{width:23px;height:23px}
+.works-actions .share-menu{right:auto;left:0}
 .works h2{font-size:24px;font-weight:700;margin-bottom:0}
 .cards{display:flex;flex-direction:column;gap:24px;margin-top:10px}
 .card{display:flex;color:inherit;text-decoration:none}
@@ -387,7 +420,6 @@ input#q{transition:border-color .2s ease}
 }
 /* truly tight: buttons drop to their own row */
 @media (max-width:380px){
-  .inputrow{flex-wrap:wrap}
   .inputrow input{flex:1 1 100%}
   .dice{order:2}
   .send{order:3;flex:1;width:auto}
@@ -439,10 +471,10 @@ input#q{transition:border-color .2s ease}
 }
 @media (max-width:900px){
   .cards{gap:210px;margin-top:130px}
-  .case-card,.case-card.rev{flex-direction:column;min-height:0}
+  .case-card,.case-card.rev{flex-direction:column;flex-wrap:nowrap;min-height:0}
   .case-media,.case-card.rev .case-media{flex:none;padding:0 16px 8px 16px;justify-content:center}
   .case-media img{width:100%;margin-top:-26%}
-  .case-body{padding:16px 20px 20px;margin-left:0;margin-right:0}
+  .case-card .case-body{padding:16px 20px 20px;margin-left:0;margin-right:0}
   .case-card.rev .case-body{margin-right:0}
   .case-body h3{font-size:20px}
   .case-body p{font-size:15px}
@@ -488,10 +520,12 @@ input#q{transition:border-color .2s ease}
   transition:background .18s ease,color .18s ease}
 .cbtn:hover{background:rgba(255,255,255,.08);color:var(--text)}
 .cbtn svg{width:14px;height:14px;fill:none;stroke:currentColor;stroke-width:2;stroke-linecap:round;stroke-linejoin:round}
+#chipsToggle .vbar{transition:transform .28s cubic-bezier(.34,1.56,.64,1);transform-origin:center;transform-box:fill-box}
+#chipsToggle[aria-expanded="true"] .vbar{transform:scaleY(0)}
 #chatReset svg{transform:translate(1px,0)}   /* the glyph is left-biased in its box - optical centering */
 .cbtn.square{width:26px;height:26px;border:1px solid var(--input-line);border-radius:5px}
 .cbtn.square svg{width:13px;height:13px}
-.chips-collapsed{display:none!important}
+.chips-collapsed{max-height:0;opacity:0;pointer-events:none}
 .drag-handle{display:none;height:14px;align-items:flex-start;justify-content:center;cursor:ns-resize;
   touch-action:none;margin:6px -48px 2px;padding:0 48px;
   border-top:1px solid rgba(158,112,255,.5)}      /* the cut line, full chat width */
@@ -499,6 +533,9 @@ input#q{transition:border-color .2s ease}
   margin-top:-3.5px;                              /* grip sits ON the line - zero gap */
   transition:opacity .15s ease}
 .drag-handle:hover span{opacity:1}
+@media (max-width:900px){
+  .drag-handle{margin-left:-20px;margin-right:-20px;padding-left:20px;padding-right:20px}
+}
 
 /* scroll fade - clipped text melts at the edge, making the drag handle self-explanatory */
 .thread.fade-top{-webkit-mask-image:linear-gradient(180deg,transparent 0,#000 38px);
@@ -509,8 +546,27 @@ input#q{transition:border-color .2s ease}
   -webkit-mask-image:linear-gradient(180deg,transparent 0,#000 38px,#000 calc(100% - 38px),transparent 100%);
   mask-image:linear-gradient(180deg,transparent 0,#000 38px,#000 calc(100% - 38px),transparent 100%)}
 
-.more-chip{display:inline-block;margin-top:10px;font-size:13.5px;color:var(--text);
-  background:transparent;border:1px solid var(--chip-line);border-radius:50px;
+.more-chip{display:inline-flex;align-items:center;gap:6px;margin-top:10px;font-size:13.5px;color:var(--text);
+  background:transparent;border:1px solid var(--chip-line);border-radius:4px;
   padding:5px 14px;cursor:pointer;font-family:inherit;
   transition:background .18s ease,transform .18s ease}
+.more-content{margin-top:10px}
 .more-chip:hover{background:rgba(255,255,255,.08);transform:translateY(-1px)}
+.more-chip svg{width:12px;height:12px;flex:none;fill:none;stroke:currentColor;stroke-width:2;
+  stroke-linecap:round;stroke-linejoin:round;transition:transform .25s ease}
+.more-chip.open svg{transform:rotate(180deg)}
+
+/* printable transcript - everything else hides, only this prints (used for "download as PDF") */
+@media print{
+  html,body{background:#fff!important}
+  body *{visibility:hidden}
+  #printTranscript,#printTranscript *{visibility:visible}
+  #printTranscript{display:block;position:absolute;top:0;left:0;width:100%;min-height:100%;
+    padding:48px;color:#000;background:#fff;font-family:var(--font)}
+  #printTranscript .pt-brand{display:none}
+  #printTranscript h1{font-size:20px;font-weight:600;margin-bottom:4px;color:#000}
+  #printTranscript .pt-date{font-size:13px;color:#555;margin-bottom:8px}
+  #printTranscript .pt-rule{border:none;border-top:1px solid #ccc;margin:20px 0}
+  #printTranscript .pt-q{font-weight:700;margin-top:22px;color:#000}
+  #printTranscript .pt-a{margin-top:6px;line-height:1.6;white-space:pre-wrap;color:#222}
+}

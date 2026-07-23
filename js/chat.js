@@ -17,7 +17,7 @@ const KB = [
   {
     chip:'What do people say about you?',
     keys:['people say','colleagues','managers','references','recommend','testimonial','feedback about','\u05d4\u05de\u05dc\u05e6\u05d5\u05ea','\u05de\u05de\u05dc\u05d9\u05e6\u05d9\u05dd','\u05e7\u05d5\u05dc\u05d2\u05d5\u05ea'],
-    text:'Here is what my design and engineering partners wrote about working with me on LinkedIn. Stas Fainberg, Staff Software Engineer: \'She has a rare talent for bridging design and complex architecture. She asks the right questions, understands system constraints, and builds systems that are intuitive for users and streamlined for developers.\' Michael Veltman, VP R&D: \'An exceptional Product Design Lead. She brings deep systemic thinking, solves heavy B2B data challenges, and leads product strategy with incredible professionalism and dedication.\' Full references and contacts are available on request - write me and I\'ll connect you.',
+    text:'Here is what my design and engineering partners wrote about working with me on LinkedIn.\n\n**Stas Fainberg, Staff Software Engineer:** \'She has a rare talent for bridging design and complex architecture. She asks the right questions, understands system constraints, and builds systems that are intuitive for users and streamlined for developers.\'\n\n**Michael Veltman, VP R&D:** \'An exceptional Product Design Lead. She brings deep systemic thinking, solves heavy B2B data challenges, and leads product strategy with incredible professionalism and dedication.\'\n\nFull references and contacts are available on request - write me and I\'ll connect you.',
     tags:['References on request']
   },
   {
@@ -37,7 +37,7 @@ const KB = [
   {
     chip:'Have you led teams?',
     keys:['lead','team','manage','management','mentor','head','hire','grew','leadership','\u05e6\u05d5\u05d5\u05ea','\u05e0\u05d9\u05d4\u05d5\u05dc'],
-    text:'Yes. At ElephantStock I was Head of UX/UI & Creative - I built and led the design team from scratch while the company grew from 30 to 200+ employees, contributing to 3x revenue growth and our Top 10 selection for Google\'s E-commerce Growth Lab. Today, at the Lead level, I drive impact less through direct management and more through systemic UX standards, design systems, and close partnership with dev and product leads.',
+    text:'Yes.\n\n**Building at ElephantStock:** At ElephantStock I was Head of UX/UI & Creative - I built and led the design team from scratch while the company grew from 30 to 200+ employees, contributing to 3x revenue growth and our Top 10 selection for Google\'s E-commerce Growth Lab.\n\n**Right now:** Today, at the Lead level, I drive impact less through direct management and more through systemic UX standards, design systems, and close partnership with dev and product leads.',
     more:'What building that team actually involved:\n\n**Hiring & Mentoring:** recruiting, structuring and mentoring designers and a video creator, plus managing external freelancers to scale when needed.\n\n**Standards:** setting a high bar for UI/UX quality, design-system adoption and design-to-dev handoff.\n\n**Business Alignment:** working directly with executive leadership, PMs and engineering leads to tie design to business KPIs.\n\n**Scaling:** building workflows that let the team scale smoothly alongside 30-to-200+ growth.',
     tags:['3x revenue growth','Team built from zero']
   },
@@ -60,14 +60,14 @@ const KB = [
     chip:'How do you use AI day to day?',
     hidden:true,
     keys:['use ai','daily','tools','tool','figma','stack','software','photoshop','illustrator','chatgpt','claude','midjourney','workflow ai','prototype','\u05e4\u05d9\u05d2\u05de\u05d4','\u05db\u05dc\u05d9\u05dd'],
-    text:'I use AI as a core operational layer in my daily workflow. Research, strategy and logic: Claude, ChatGPT and Gemini to analyze dense requirements, map edge cases, synthesize research and stress-test information architecture before touching pixels. Rapid prototyping: Claude Code and Lovable to build functional interactive prototypes early. Visual exploration and motion: Midjourney, Runway and Kling for conceptual assets, alongside Lottie for lightweight UI micro-animations. AI drastically accelerates my discovery and execution - but every architectural, UX and strategic decision remains human-led.',
+    text:'I use AI as a core operational layer in my daily workflow.\n\n**Research, strategy and logic:** Claude, ChatGPT and Gemini to analyze dense requirements, map edge cases, synthesize research and stress-test information architecture before touching pixels.\n\n**Rapid prototyping:** Claude Code and Lovable to build functional interactive prototypes early.\n\n**Visual exploration and motion:** Midjourney, Runway and Kling for conceptual assets, alongside Lottie for lightweight UI micro-animations.\n\nAI drastically accelerates my discovery and execution - but every architectural, UX and strategic decision remains human-led.',
     tags:['This site is the demo']
   },
   {
     chip:'What are you looking for?',
     hidden:true,
     keys:['looking for','next role','company','what role','job','position','seeking','\u05de\u05d7\u05e4\u05e9\u05ea','\u05de\u05e9\u05e8\u05d4'],
-    text:'I\'m looking for my next challenge as a Senior or Lead Product Designer - a role where I can build complex, meaningful products I believe in. I want a collaborative, strong team that values product vision, holds onto its why, and ships with impact - while keeping a healthy work-life balance. I thrive on deep systems and AI-driven platforms, with leading Israeli companies or global teams. What\'s the product you\'re hiring for?',
+    text:'**The role:** I\'m looking for my next challenge as a Senior or Lead Product Designer - a role where I can build complex, meaningful products I believe in.\n\n**The team:** I want a collaborative, strong team that values product vision, holds onto its why, and ships with impact - while keeping a healthy work-life balance.\n\n**The domain:** I thrive on deep systems and AI-driven platforms, with leading Israeli companies or global teams.\n\nWhat\'s the product you\'re hiring for?',
     tags:['Senior / Lead \u00b7 AI focus']
   },
   {
@@ -80,13 +80,13 @@ const KB = [
   {
     chip:null,
     keys:['real','really','fake','prove','actually','buzzword','believe','honest'],
-    text:'I completely understand the skepticism - there\'s a lot of hype around AI design that is often just surface-level decoration. Here\'s how I maintain transparency: live production products are explicitly marked as shipped, while speculative work is clearly labeled as a concept; operational estimates are stated as estimates, not absolute facts; and every process, OOUX architecture and AI-assisted workflow I present is grounded in real execution. If you\'d like to dive into any case, metric or prototype - I\'m happy to walk you through the exact process.',
+    text:'I completely understand the skepticism - there\'s a lot of hype around AI design that is often just surface-level decoration.\n\n**Here\'s how I maintain transparency:** live production products are explicitly marked as shipped, while speculative work is clearly labeled as a concept; operational estimates are stated as estimates, not absolute facts; and every process, OOUX architecture and AI-assisted workflow I present is grounded in real execution.\n\nIf you\'d like to dive into any case, metric or prototype - I\'m happy to walk you through the exact process.',
     tags:['Shipped marked shipped \u00b7 concepts marked concept']
   },
   {
     chip:null,
     keys:['why hire','why you','better than','special','stand out','why should','hire you','should i hire'],
-    text:'That\'s the right question to ask - you\'re evaluating strong talent. What I bring is a specific, battle-tested combination: 13+ years in complex systems - enterprise SaaS, OOUX, CRM, ERP and dense data-heavy architectures; a rich background in branding, graphic design and marketing strategy, which lets me align product experience and brand identity into one high-end narrative; proven team leadership - building, mentoring and scaling design teams through hyper-growth; and practical AI execution - integrating AI as a functional, trustworthy layer in real products rather than decorative hype. If you need a lead who solves deep systems while elevating the brand - let\'s talk.',
+    text:'That\'s the right question to ask - you\'re evaluating strong talent.\n\n**What I bring is a specific, battle-tested combination:** 13+ years in complex systems - enterprise SaaS, OOUX, CRM, ERP and dense data-heavy architectures; a rich background in branding, graphic design and marketing strategy, which lets me align product experience and brand identity into one high-end narrative; proven team leadership - building, mentoring and scaling design teams through hyper-growth; and practical AI execution - integrating AI as a functional, trustworthy layer in real products rather than decorative hype.\n\nIf you need a lead who solves deep systems while elevating the brand - let\'s talk.',
     tags:['larisamalyd@gmail.com']
   },
   {
@@ -98,7 +98,7 @@ const KB = [
   {
     chip:null,
     keys:['replace','obsolete','ai will','no need designers','replace designers','end of design'],
-    text:'Honestly? It will replace generic layout generation and designers who only push pixels. As AI produces interface components faster than ever, the real challenge shifts to systemic architecture, information architecture, human psychology, edge-case management and strategic alignment. AI is an extraordinary accelerator for execution and visual exploration - but defining the why, creating intuitive OOUX structures, and earning trust in complex enterprise workflows still requires deep human judgment. Designers who master AI won\'t be replaced; they\'ll lead.',
+    text:'Honestly? It will replace generic layout generation and designers who only push pixels.\n\n**Where the real challenge shifts:** As AI produces interface components faster than ever, the real challenge shifts to systemic architecture, information architecture, human psychology, edge-case management and strategic alignment.\n\n**What still requires human judgment:** AI is an extraordinary accelerator for execution and visual exploration - but defining the why, creating intuitive OOUX structures, and earning trust in complex enterprise workflows still requires deep human judgment.\n\nDesigners who master AI won\'t be replaced; they\'ll lead.',
     tags:['Designing the judgment layer']
   },
   {
@@ -170,7 +170,7 @@ const KB = [
   {
     chip:null,
     keys:['b2b','enterprise','business to business','internal tools','operational'],
-    text:'Most of my career is rooted in complex B2B and enterprise SaaS - recruitment platforms at Niloosoft, and deep operational, dispatch, CRM and ERP systems at Partner. In B2B, UX is directly tied to business value: professionals rely on these platforms for hours every day, so reducing friction and flattening learning curves drives adoption, cuts training and support costs, and reduces churn. Designing for B2B means turning systemic complexity into a scalable, revenue-driving asset.',
+    text:'Most of my career is rooted in complex B2B and enterprise SaaS - recruitment platforms at Niloosoft, and deep operational, dispatch, CRM and ERP systems at Partner.\n\n**In B2B, UX is directly tied to business value:** professionals rely on these platforms for hours every day, so reducing friction and flattening learning curves drives adoption, cuts training and support costs, and reduces churn.\n\nDesigning for B2B means turning systemic complexity into a scalable, revenue-driving asset.',
     tags:['CRM \u00b7 ERP \u00b7 Fintech at Partner']
   },
   {
@@ -182,7 +182,7 @@ const KB = [
   {
     chip:null,
     keys:['mobile','tablet','responsive','phone','app','ios','android'],
-    text:'Mobile has always been part of my process, tailored to the environment. At ElephantStock: strict mobile-first for high-volume B2C users, where conversion, speed and touch UX were top priorities. At Niloosoft: a dedicated mobile video-interviewing app, letting candidates complete live or recorded interviews from their phones. At Partner: complex enterprise tools - retail sales streams, store-agent workflows - adapted for mobile and tablets, so field representatives execute operations on the go without losing system capability.',
+    text:'Mobile has always been part of my process, tailored to the environment.\n\n**At ElephantStock:** strict mobile-first for high-volume B2C users, where conversion, speed and touch UX were top priorities.\n\n**At Niloosoft:** a dedicated mobile video-interviewing app, letting candidates complete live or recorded interviews from their phones.\n\n**At Partner:** complex enterprise tools - retail sales streams, store-agent workflows - adapted for mobile and tablets, so field representatives execute operations on the go without losing system capability.',
     tags:['Mobile-first e-commerce \u00b7 responsive systems']
   },
   {
@@ -219,7 +219,7 @@ const KB = [
   {
     chip:null,
     keys:['education','study','studies','studied','degree','diploma','college','university','courses','learned design'],
-    text:'My background combines design, code and sales psychology. Formal education: a Diploma in Graphic Design & Visual Communication from Western Galilee College. Additional studies: UX/UI and UX strategy, front-end development with Angular, video creation, web production and motion animation. Google\'s E-commerce Growth Lab - selected Top 10 cohort. And a unique specialty: certified Expert Marketing & Sales Coach - a deep program in sales psychology and marketing strategy. I treat education as ongoing; that mix is what fuels my product strategy today.',
+    text:'My background combines design, code and sales psychology.\n\n**Formal education:** a Diploma in Graphic Design & Visual Communication from Western Galilee College.\n\n**Additional studies:** UX/UI and UX strategy, front-end development with Angular, video creation, web production and motion animation. Google\'s E-commerce Growth Lab - selected Top 10 cohort.\n\n**And a unique specialty:** certified Expert Marketing & Sales Coach - a deep program in sales psychology and marketing strategy.\n\nI treat education as ongoing; that mix is what fuels my product strategy today.',
     tags:['Google E-commerce Growth Lab \u00b7 Top 10']
   },
   {
@@ -243,7 +243,7 @@ const KB = [
   {
     chip:null,
     keys:['ux strategy','strategy','strategic','design strategy'],
-    text:'UX strategy means connecting design decisions directly to business metrics. In high-scale e-commerce that means driving conversion - data and A/B testing across a 200K+ catalog. In enterprise and B2B it\'s operational: turning complex data into clear decision workflows, reducing cognitive load, preventing costly mistakes. My framework is consistent: research defines the real problem, OOUX structures the architecture, a robust design system scales it, and business metrics confirm whether it worked.',
+    text:'UX strategy means connecting design decisions directly to business metrics.\n\n**In high-scale e-commerce:** that means driving conversion - data and A/B testing across a 200K+ catalog.\n\n**In enterprise and B2B it\'s operational:** turning complex data into clear decision workflows, reducing cognitive load, preventing costly mistakes.\n\n**My framework is consistent:** research defines the real problem, OOUX structures the architecture, a robust design system scales it, and business metrics confirm whether it worked.',
     tags:['Strategy = a number that moves']
   },
   {
@@ -255,7 +255,7 @@ const KB = [
   {
     chip:null,
     keys:['code','coding','programming','develop','html','css','angular','typescript','technical','handoff','specs','hand off'],
-    text:'I write frontend code and understand the architecture inside out - Angular, TypeScript, HTML and CSS, including how components, data structures and state actually behave. In my role, though, my focus is product strategy and UX architecture - the technical depth is there to bridge the gap with engineering. I design within realistic constraints from day one, so handoffs are seamless and developers never have to say \'this can\'t be built.\'',
+    text:'**The technical side:** I write frontend code and understand the architecture inside out - Angular, TypeScript, HTML and CSS, including how components, data structures and state actually behave.\n\n**Where my focus sits:** In my role, though, my focus is product strategy and UX architecture - the technical depth is there to bridge the gap with engineering.\n\n**Why it matters for handoff:** I design within realistic constraints from day one, so handoffs are seamless and developers never have to say \'this can\'t be built.\'',
     tags:[]
   },
   {
@@ -285,7 +285,7 @@ const KB = [
   {
     chip:null,
     keys:['90 days','first days','first month','onboarding you','your first'],
-    text:'In an ideal world you get time to onboard, research and map everything first. In reality, companies usually hire a senior designer because there\'s immediate friction waiting for solutions. Having worked in high-velocity environments like Partner, I adapt to the ground truth: if there\'s urgency, I jump straight in - interviewing key operators, identifying pain points, and putting actionable concepts on the table fast. In parallel, as those early wins ship, I map the deeper architecture, build cross-functional alignment, and construct the long-term design framework that moves the business numbers.',
+    text:'In an ideal world you get time to onboard, research and map everything first. In reality, companies usually hire a senior designer because there\'s immediate friction waiting for solutions.\n\n**First month:** Having worked in high-velocity environments like Partner, I adapt to the ground truth: if there\'s urgency, I jump straight in - interviewing key operators, identifying pain points, and putting actionable concepts on the table fast.\n\n**Second month:** In parallel, as those early wins ship, I map the deeper architecture, build cross-functional alignment.\n\n**Third month:** and construct the long-term design framework that moves the business numbers.',
     tags:[]
   },
   {
@@ -304,13 +304,13 @@ const KB = [
   {
     chip:null,
     keys:['experience','years','how long','since when','background','career','\u05e0\u05d9\u05e1\u05d9\u05d5\u05df','\u05e9\u05e0\u05d5\u05ea','\u05e8\u05e7\u05e2'],
-    text:'I bring 13+ years of experience in product design, design systems and complex product architecture, across high-velocity scale-ups and enterprise environments. My strength is transforming deep operational and technical complexity - dense data, multi-role permissions, heavy workflows - into intuitive, high-impact systems. That work has consistently driven measurable outcomes: faster task completion, scalable design systems that accelerate delivery, fewer operator errors. Today I apply it to AI-driven interfaces - decision-support tools that reduce friction and move core business metrics.',
+    text:'I bring 13+ years of experience in product design, design systems and complex product architecture, across high-velocity scale-ups and enterprise environments.\n\n**Where I add the most value:** My strength is transforming deep operational and technical complexity - dense data, multi-role permissions, heavy workflows - into intuitive, high-impact systems.\n\n**That work has consistently driven measurable outcomes:** faster task completion, scalable design systems that accelerate delivery, fewer operator errors.\n\n**Now:** Today I apply it to AI-driven interfaces - decision-support tools that reduce friction and move core business metrics.',
     tags:['Designing since 2013']
   },
   {
     chip:null,
     keys:['pm','product manager','product managers','work with product','disagree'],
-    text:'I view the PM relationship as a strategic partnership: the PM drives business strategy and priorities, I make sure the solution is architecturally sound, scalable and intuitive. Disagreements usually come from competing priorities - speed to market versus product complexity. I don\'t treat it as a battle of opinions; I map the trade-offs clearly: impact on user workflows, technical risk, future scalability. The goal is a pragmatic solution or a phased rollout that meets the deadline without compromising the system\'s long-term integrity.',
+    text:'**I view the PM relationship as a strategic partnership:** the PM drives business strategy and priorities, I make sure the solution is architecturally sound, scalable and intuitive.\n\n**Where disagreements come from:** Disagreements usually come from competing priorities - speed to market versus product complexity. I don\'t treat it as a battle of opinions.\n\n**I map the trade-offs clearly:** impact on user workflows, technical risk, future scalability.\n\nThe goal is a pragmatic solution or a phased rollout that meets the deadline without compromising the system\'s long-term integrity.',
     tags:[]
   }
 ,
@@ -521,28 +521,54 @@ function ask(label,entry){
   setTimeout(()=>{
     h.innerHTML='';
     const p=document.createElement('div');h.appendChild(p);
-    scrollToBubbleTop(h);
     typeText(p,parts[0],()=>{
       function finish(lastBubble){
         if(data.more){
+          // sits right under the answer text, above tags/feedback - clicking it inserts the
+          // extra content right above itself, so it (and the tags/feedback below it) get
+          // pushed down instead of the button disappearing
           const mb=document.createElement('button');
-          mb.className='more-chip';mb.textContent='Tell me more';
+          mb.className='more-chip';
+          mb.setAttribute('aria-expanded','false');
+          mb.innerHTML='Tell me more<svg viewBox="0 0 24 24" aria-hidden="true"><polyline points="6 9 12 15 18 9"></polyline></svg>';
+          let hm=null,opened=false,transitioning=false;
           mb.onclick=()=>{
-            mb.remove();
-            const hm=document.createElement('div');hm.className='msg bot';
-            hm.innerHTML='<span class="typing"><i></i><i></i><i></i></span>';
-            col.appendChild(hm);scrollToBubbleTop(hm);
-            setTimeout(()=>{
-              hm.innerHTML='';
-              const pm=document.createElement('div');hm.appendChild(pm);
-              typeText(pm,data.more,()=>{});
-            },500);
+            if(transitioning) return;
+            transitioning=true;
+            mb.disabled=true;
+            if(!opened){
+              opened=true;
+              mb.classList.add('open');
+              mb.setAttribute('aria-expanded','true');
+              setTimeout(()=>{
+                mb.firstChild.textContent='Tell me less';
+                mb.disabled=false;
+                if(hm){ hm.hidden=false; followTyping(mb); transitioning=false; return; }
+                hm=document.createElement('div');hm.className='more-content';
+                hm.innerHTML='<span class="typing"><i></i><i></i><i></i></span>';
+                lastBubble.insertBefore(hm,mb);followTyping(hm);
+                setTimeout(()=>{
+                  hm.innerHTML='';
+                  const pm=document.createElement('div');hm.appendChild(pm);
+                  typeText(pm,data.more,()=>{followTyping(mb);transitioning=false});
+                },500);
+              },220);
+            } else {
+              opened=false;
+              mb.classList.remove('open');
+              mb.setAttribute('aria-expanded','false');
+              mb.firstChild.textContent='Tell me more';
+              if(hm) hm.hidden=true;
+              mb.disabled=false;
+              transitioning=false;
+            }
           };
           lastBubble.appendChild(mb);
         }
         if(data.tags&&data.tags.length){
           const ev=document.createElement('div');ev.className='evidence';
-          data.tags.forEach(t=>{const sp=document.createElement('span');sp.className='tag';sp.textContent=t;ev.appendChild(sp)});
+          const tagIcon='<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M20.59 13.41 11 3.83A2 2 0 0 0 9.59 3.24L4 3a1 1 0 0 0-1 1l.24 5.59a2 2 0 0 0 .59 1.41l9.58 9.58a2 2 0 0 0 2.83 0l4.35-4.35a2 2 0 0 0 0-2.82z"/><circle cx="7.5" cy="7.5" r="1" fill="currentColor" stroke="none"/></svg>';
+          data.tags.forEach(t=>{const sp=document.createElement('span');sp.className='tag';sp.innerHTML=tagIcon;sp.appendChild(document.createTextNode(t));ev.appendChild(sp)});
           lastBubble.appendChild(ev);
         }
         if(data.link){
@@ -551,12 +577,14 @@ function ask(label,entry){
           lastBubble.appendChild(a);
         }
         addFeedback(lastBubble, label);
+        // nudge into view rather than jump - tags/link/feedback just grew the bubble a bit more
+        followTyping(lastBubble);
         busy=false;
       }
       if(parts.length===1){finish(h);return}
       const h2=document.createElement('div');h2.className='msg bot';
       h2.innerHTML='<span class="typing"><i></i><i></i><i></i></span>';
-      col.appendChild(h2);scrollToBubbleTop(h2);
+      col.appendChild(h2);followTyping(h2);
       setTimeout(()=>{
         h2.innerHTML='';
         const p2=document.createElement('div');h2.appendChild(p2);
@@ -592,26 +620,47 @@ function addFeedback(holder, questionLabel){
   down.onclick=()=>react(down,up,false);
 }
 function fmt(t){
-  // escape, then apply **bold** and newlines
+  // escape, then apply **bold**; \n\n starts a new paragraph (own margin), single \n is a soft break
   let h=t.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');
   h=h.replace(/\*\*(.+?)\*\*/g,'<strong>$1</strong>');
-  h=h.replace(/\n/g,'<br>');
-  return h;
+  return h.split(/\n\n+/).map(p=>'<p class="msg-p">'+p.replace(/\n/g,'<br>')+'</p>').join('');
 }
 
 function scrollToBubbleTop(node){
   try{
     const row=node.closest('.bot-row')||node;
-    const top=row.offsetTop-8;
+    const prev=row.previousElementSibling;
+    // anchor on the user question above the row (if present) so the whole Q&A pair
+    // clears the top fade mask (38px) instead of landing inside it, half-hidden
+    const anchor=(prev&&prev.classList.contains('msg')&&prev.classList.contains('user'))?prev:row;
+    const top=anchor.offsetTop-44;
     thread.scrollTo({top:top,behavior:'smooth'});
   }catch(e){}
 }
+// nudges the thread down just enough to keep a growing bubble's bottom edge in view -
+// called on every typing tick so the reveal rises line by line instead of typing
+// off-screen and jump-scrolling once at the end
+function followTyping(el){
+  try{
+    const overflow=el.getBoundingClientRect().bottom-(thread.getBoundingClientRect().bottom-44);
+    if(overflow>0){
+      // force instant - CSS scroll-behavior:smooth queues/animates each of these frequent
+      // ticks, and once retargeted faster than the animation can keep up, some browsers
+      // stall and then snap to the latest value in one visible jump instead of a steady rise
+      const prevBehavior=thread.style.scrollBehavior;
+      thread.style.scrollBehavior='auto';
+      thread.scrollTop+=overflow;
+      thread.style.scrollBehavior=prevBehavior;
+    }
+  }catch(e){}
+}
 function typeText(el,text,done){
-  if(window.matchMedia('(prefers-reduced-motion: reduce)').matches){el.innerHTML=fmt(text);done();return}
+  if(window.matchMedia('(prefers-reduced-motion: reduce)').matches){el.innerHTML=fmt(text);done();followTyping(el);return}
   let i=0;
   (function step(){
-    el.innerHTML=fmt(text.slice(0,i))+'<span class="caret"></span>';
+    el.innerHTML=fmt(text.slice(0,i)).replace(/<\/p>$/,'<span class="caret"></span></p>');
     i+=3;
+    followTyping(el);
     if(i<=text.length+2){setTimeout(step,12)}else{el.innerHTML=fmt(text);done()}
   })();
 }
@@ -719,29 +768,125 @@ revealEls.forEach(el=>revealIO.observe(el));
 // --- chat controls: chips collapse (-/+), conversation clear, drag-resize ---
 const chipsToggle=document.getElementById('chipsToggle');
 const chatReset=document.getElementById('chatReset');
+const shareBtn=document.getElementById('shareBtn');
+const shareMenu=document.getElementById('shareMenu');
+const downloadBtn=document.getElementById('downloadBtn');
+let closeShareMenu=()=>{}; // real implementation wired up further below, once the menu exists
 const dragHandle=document.getElementById('dragHandle');
-const MINUS='<svg viewBox="0 0 24 24"><line x1="5" y1="12" x2="19" y2="12"/></svg>';
-const PLUS='<svg viewBox="0 0 24 24"><line x1="5" y1="12" x2="19" y2="12"/><line x1="12" y1="5" x2="12" y2="19"/></svg>';
+chipsToggle.innerHTML='<svg viewBox="0 0 24 24"><line x1="5" y1="12" x2="19" y2="12"/><line class="vbar" x1="12" y1="5" x2="12" y2="19"/></svg>';
+chipsToggle.setAttribute('aria-expanded','true');
 chipsToggle.addEventListener('click',()=>{
   const collapsed=chipsEl.classList.toggle('chips-collapsed');
-  chipsToggle.innerHTML=collapsed?PLUS:MINUS;
+  chipsToggle.setAttribute('aria-expanded',String(!collapsed));
   chipsToggle.title=collapsed?'Show questions':'Hide questions';
 });
 function updateChatButtons(){
   const has=thread.children.length>0;
   chatReset.hidden=!has;
+  shareBtn.hidden=!has;
+  downloadBtn.hidden=!has;
   dragHandle.style.display=has?'flex':'none';
+  if(!has) closeShareMenu();
 }
 new MutationObserver(updateChatButtons).observe(thread,{childList:true});
 updateChatButtons();
 chatReset.addEventListener('click',()=>{
-  thread.innerHTML='';
-  surpriseBag=[];
-  chipsEl.classList.remove('chips-collapsed');
-  chipsToggle.innerHTML=MINUS;
-  chipsToggle.title='Hide questions';
-  updateChatButtons();
+  if(!thread.children.length) return;
+  thread.classList.add('clearing');
+  setTimeout(()=>{
+    thread.innerHTML='';
+    thread.classList.remove('clearing');
+    thread.style.height='';thread.style.maxHeight='';
+    busy=false;
+    surpriseBag=[];
+    chipsEl.classList.remove('chips-collapsed');
+    chipsToggle.setAttribute('aria-expanded','true');
+    chipsToggle.title='Hide questions';
+    updateChatButtons();
+    document.querySelector('.chat').scrollIntoView({behavior:'smooth',block:'start'});
+  },220);
 });
+
+// --- transcript: read the live thread into plain Q/A pairs, skipping anything hidden (collapsed "more") ---
+function isRowVisible(el,stopAt){
+  let n=el;
+  while(n&&n!==stopAt){ if(n.hidden) return false; n=n.parentElement; }
+  return true;
+}
+function buildTranscript(){
+  const pairs=[];
+  [...thread.children].forEach(row=>{
+    if(row.classList.contains('user')){
+      pairs.push({q:row.textContent.trim(),a:''});
+    } else if(row.classList.contains('bot-row')&&pairs.length){
+      const paras=row.querySelectorAll('.bot-col .msg-p');
+      const text=[...paras].filter(p=>isRowVisible(p,row)).map(p=>p.textContent.trim()).join('\n');
+      pairs[pairs.length-1].a=text;
+    }
+  });
+  return pairs;
+}
+function transcriptText(){
+  const pairs=buildTranscript();
+  const body=pairs.map(p=>`Q: ${p.q}\nA: ${p.a}`).join('\n\n');
+  return `Conversation with Lora Maly\n\n${body}\n\n${location.href}`;
+}
+
+// --- share popover - reusable for both the chat's share button and the portfolio's ---
+const openShareMenus=[];
+function setupShareMenu(btn,menu,getText,subject){
+  function close(){
+    menu.classList.remove('open');
+    btn.setAttribute('aria-expanded','false');
+  }
+  openShareMenus.push(close);
+  btn.addEventListener('click',(e)=>{
+    e.stopPropagation();
+    openShareMenus.forEach(c=>{if(c!==close)c()}); // only one open at a time
+    const open=menu.classList.toggle('open');
+    btn.setAttribute('aria-expanded',String(open));
+  });
+  menu.querySelectorAll('.share-opt').forEach(opt=>{
+    opt.addEventListener('click',()=>{
+      const text=getText();
+      const network=opt.dataset.network;
+      if(network==='whatsapp'){
+        window.open('https://wa.me/?text='+encodeURIComponent(text),'_blank');
+      } else if(network==='telegram'){
+        window.open('https://t.me/share/url?url='+encodeURIComponent(location.href)+'&text='+encodeURIComponent(text),'_blank');
+      } else if(network==='email'){
+        location.href='mailto:?subject='+encodeURIComponent(subject)+'&body='+encodeURIComponent(text);
+      }
+      close();
+    });
+  });
+  return close;
+}
+document.addEventListener('click',(e)=>{
+  if(!e.target.closest('.share-wrap')) openShareMenus.forEach(c=>c());
+});
+document.addEventListener('keydown',(e)=>{
+  if(e.key==='Escape') openShareMenus.forEach(c=>c());
+});
+closeShareMenu=setupShareMenu(shareBtn,shareMenu,transcriptText,'My conversation with Lora Maly');
+const portfolioShareBtn=document.getElementById('portfolioShareBtn');
+const portfolioShareMenu=document.getElementById('portfolioShareMenu');
+if(portfolioShareBtn&&portfolioShareMenu){
+  setupShareMenu(portfolioShareBtn,portfolioShareMenu,
+    ()=>`Lora Maly - Senior Product Designer, AI & Agentic UX\n${location.href}`,
+    "Lora Maly's portfolio");
+}
+
+// --- download as PDF - fills the print-only container, then opens the browser's print dialog ---
+downloadBtn.addEventListener('click',()=>{
+  const pairs=buildTranscript();
+  const pt=document.getElementById('printTranscript');
+  const date=new Date().toLocaleDateString('en-US',{year:'numeric',month:'long',day:'numeric'});
+  pt.innerHTML='<div class="pt-brand">Hello</div><h1>Conversation with Lora Maly</h1><div class="pt-date">'+date+'</div><hr class="pt-rule">'+
+    pairs.map(p=>'<div class="pt-q">'+fmt(p.q)+'</div><div class="pt-a">'+fmt(p.a)+'</div>').join('');
+  window.print();
+});
+
 let dragY=0,dragH=0,dragging=false;
 function dragStart(y){dragging=true;dragY=y;dragH=thread.getBoundingClientRect().height;document.body.style.userSelect='none';}
 function dragMove(y){
