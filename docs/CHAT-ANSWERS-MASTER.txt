@@ -32,7 +32,7 @@ UX Strategy add-on: "Officially since 2019, when I took ownership of UX and prod
 strategy at ElephantStock. We worked data-driven - A/B tests on a 200K-product
 catalog - and were selected Top 10 for Google's E-commerce Growth Lab."
 Management add-on: "I built a team from scratch and led it for three years through
-rapid growth. Today, at the Lead level, I lead less through direct management and
+rapid growth. At the Lead level, I lead less through direct management and
 more through standards, systems and personal example."
 
 --- GROUP 2: HOW I WORK (methodology / work style / designing screens) ---
@@ -111,10 +111,10 @@ expandable layer - fix it the same way: "PART 3 #04 MORE: [text]".
 
 #04 Q: What shipped at Partner?
     A: "Between 2022 and 2026 I led product design across Partner's core enterprise ecosystem - CRM, ERP, Fintech and AI-driven operational tools. Key highlights: a company-wide design system adopted across products, the Partner Electric platform shipped in a record 2 months, and AI decision-support workflows designed to significantly cut task handling times for field and control-room teams - aiming for an estimated ~50% faster task assignment."
-    [+ Tell me more]: "The four pillars in more detail. Enterprise Operations & AI Dispatching: complex incident-management and field-dispatch workflows, integrating real-time multi-variable inputs (traffic, weather, technician availability) with Human-in-the-Loop UX. Partner Electric: end-to-end design for Partner's entry into the electricity market - concept to live production in 2 months, with full regulatory and billing compliance. Unified Design System: tokens and component libraries adopted across internal and customer-facing products, dramatically accelerating design-to-dev handoffs. Operational Portals: dense administrative tools for call centers and operations, turned from legacy screens into modern, task-focused workflows."
+    [+ Tell me more]: "The four pillars in more detail. Enterprise Operations & AI Dispatching: complex incident-management and field-dispatch workflows I designed, with an AI decision-support concept layer integrating real-time inputs (traffic, weather, technician availability) and Human-in-the-Loop UX. Partner Electric: end-to-end design for Partner's entry into the electricity market - concept to live production in 2 months, with full regulatory and billing compliance. Unified Design System: tokens and component libraries adopted across internal and customer-facing products, dramatically accelerating design-to-dev handoffs. Operational Portals: dense administrative tools for call centers and operations, turned from legacy screens into modern, task-focused workflows."
 
 #05 Q: Have you led teams?
-    A: "Yes. At ElephantStock I was Head of UX/UI & Creative - I built and led the design team from scratch while the company grew from 30 to 200+ employees, contributing to 3x revenue growth and our Top 10 selection for Google's E-commerce Growth Lab. Today, at the Lead level, I drive impact less through direct management and more through systemic UX standards, design systems, and close partnership with dev and product leads."
+    A: "Yes. At ElephantStock I was Head of UX/UI & Creative - I built and led the design team from scratch while the company grew from 30 to 200+ employees, contributing to 3x revenue growth and our Top 10 selection for Google's E-commerce Growth Lab. At the Lead level, I drive impact less through direct management and more through systemic UX standards, design systems, and close partnership with dev and product leads."
     [+ Tell me more]: "What building that team actually involved: recruiting, structuring and mentoring designers and a video creator, plus managing external freelancers to scale when needed; setting high standards for UI/UX quality, design-system adoption and design-to-dev handoff; working directly with executive leadership, PMs and engineering leads to tie design to business KPIs; and building workflows that let the team scale smoothly alongside 30-to-200+ growth."
 
 #06 Q: Have you built a design system?
@@ -224,7 +224,7 @@ expandable layer - fix it the same way: "PART 3 #04 MORE: [text]".
     A: "I write frontend code and understand the architecture inside out - Angular, TypeScript, HTML and CSS, including how components, data structures and state actually behave. In my role, though, my focus is product strategy and UX architecture - the technical depth is there to bridge the gap with engineering. I design within realistic constraints from day one, so handoffs are seamless and developers never have to say 'this can't be built.'"
 
 #41 Q: [typed only - caught by: proud, proudest, favorite project, best project, highlight, best work]
-    A: "The decision-support timeline at Partner. We transformed fragmented operational data into clear, actionable decision units - aiming for an estimated ~50% faster task assignment. But the part I'm proudest of is quieter: operators actually rely on it daily. Designing an interface where people trust AI-driven suggestions enough to act on them is the ultimate reward."
+    A: "The decision-support timeline for Partner's operations. We transformed fragmented operational data into clear, actionable decision units - and on top of it I designed an AI decision-support concept with confidence scores and human-in-the-loop control, aiming for an estimated ~50% faster task assignment. The part I'm proudest of: treating operator trust as a design requirement, not a hope."
 
 #42 Q: [typed only - caught by: intuition, gut, instinct, data or, decision, decisions]
     A: "Intuition generates the hypothesis; data validates it. After 13+ years in product design my intuition is grounded in deep pattern recognition - it lets me map solutions quickly. But data keeps us honest: high-scale A/B testing taught me to test assumptions early, and when data isn't available yet, I run rapid usability pilots to learn and adapt fast."
@@ -251,7 +251,7 @@ expandable layer - fix it the same way: "PART 3 #04 MORE: [text]".
     A: "I view the PM relationship as a strategic partnership: the PM drives business strategy and priorities, I make sure the solution is architecturally sound, scalable and intuitive. Disagreements usually come from competing priorities - speed to market versus product complexity. I don't treat it as a battle of opinions; I map the trade-offs clearly: impact on user workflows, technical risk, future scalability. The goal is a pragmatic solution or a phased rollout that meets the deadline without compromising the system's long-term integrity."
 
 #50 Q: [typed only - caught by: measured, measure the, how did you get, that number, fifty percent, 50%]
-    A: "By establishing a clear baseline with Product before any structural change - task completion time, error rates, drop-offs. Post-launch we measure impact through analytics and workflow observation: an estimated ~50% improvement, for instance, is verified by directly comparing time-on-task before and after the change. If a design doesn't measurably reduce friction or speed up execution - it isn't finished."
+    A: "By establishing a clear baseline with Product before any structural change - task completion time, error rates, drop-offs. The ~50% figure is an internal estimate built on that baseline plus structured operator and team feedback - and I present it as exactly that, an estimate. It also taught me my rule for every project since: define the measurement framework before launch, so the next number is measured, not estimated."
 
 #51 Q: [typed only - caught by: why, tell me more, more detail, more details, elaborate, go deeper]
     A: "Absolutely. I can take you through the specific architecture decisions, how we handled edge cases, or what almost went wrong and how we pivoted. Which angle would be most helpful for you right now?"

@@ -31,13 +31,13 @@ const KB = [
     chip:'What shipped at Partner?',
     keys:['partner','ship','telecom','crm','erp','fintech','electric','launch','built at','\u05e4\u05e8\u05d8\u05e0\u05e8'],
     text:'Between 2022 and 2026 I led product design across Partner\'s core enterprise ecosystem - CRM, ERP, Fintech and AI-driven operational tools. Key highlights: a company-wide design system adopted across products, the Partner Electric platform shipped in a record 2 months, and AI decision-support workflows designed to significantly cut task handling times for field and control-room teams - aiming for an estimated ~50% faster task assignment.',
-    more:'The four pillars in more detail:\n\n**Enterprise Operations & AI Dispatching:** complex incident-management and field-dispatch workflows, integrating real-time multi-variable inputs (traffic, weather, technician availability) with Human-in-the-Loop UX.\n\n**Partner Electric:** end-to-end design for Partner\'s entry into the electricity market - concept to live production in 2 months, with full regulatory and billing compliance.\n\n**Unified Design System:** tokens and component libraries adopted across internal and customer-facing products, dramatically accelerating design-to-dev handoffs.\n\n**Operational Portals:** dense administrative tools for call centers and operations, turned from legacy screens into modern, task-focused workflows.',
+    more:'The four pillars in more detail:\n\n**Enterprise Operations & AI Dispatching:** complex incident-management and field-dispatch workflows I designed, with an AI decision-support concept layer integrating real-time inputs (traffic, weather, technician availability) and Human-in-the-Loop UX.\n\n**Partner Electric:** end-to-end design for Partner\'s entry into the electricity market - concept to live production in 2 months, with full regulatory and billing compliance.\n\n**Unified Design System:** tokens and component libraries adopted across internal and customer-facing products, dramatically accelerating design-to-dev handoffs.\n\n**Operational Portals:** dense administrative tools for call centers and operations, turned from legacy screens into modern, task-focused workflows.',
     tags:['Launched in 2 months','Design system adopted across products']
   },
   {
     chip:'Have you led teams?',
     keys:['lead','team','manage','management','mentor','head','hire','grew','leadership','\u05e6\u05d5\u05d5\u05ea','\u05e0\u05d9\u05d4\u05d5\u05dc'],
-    text:'Yes.\n\n**Building at ElephantStock:** At ElephantStock I was Head of UX/UI & Creative - I built and led the design team from scratch while the company grew from 30 to 200+ employees, contributing to 3x revenue growth and our Top 10 selection for Google\'s E-commerce Growth Lab.\n\n**Right now:** Today, at the Lead level, I drive impact less through direct management and more through systemic UX standards, design systems, and close partnership with dev and product leads.',
+    text:'Yes.\n\n**Building at ElephantStock:** At ElephantStock I was Head of UX/UI & Creative - I built and led the design team from scratch while the company grew from 30 to 200+ employees, contributing to 3x revenue growth and our Top 10 selection for Google\'s E-commerce Growth Lab.\n\n**Right now:** At the Lead level, I drive impact less through direct management and more through systemic UX standards, design systems, and close partnership with dev and product leads.',
     more:'What building that team actually involved:\n\n**Hiring & Mentoring:** recruiting, structuring and mentoring designers and a video creator, plus managing external freelancers to scale when needed.\n\n**Standards:** setting a high bar for UI/UX quality, design-system adoption and design-to-dev handoff.\n\n**Business Alignment:** working directly with executive leadership, PMs and engineering leads to tie design to business KPIs.\n\n**Scaling:** building workflows that let the team scale smoothly alongside 30-to-200+ growth.',
     tags:['3x revenue growth','Team built from zero']
   },
@@ -261,7 +261,7 @@ const KB = [
   {
     chip:null,
     keys:['proud','proudest','favorite project','best project','highlight','best work'],
-    text:'The decision-support timeline at Partner. We transformed fragmented operational data into clear, actionable decision units - aiming for an estimated ~50% faster task assignment. But the part I\'m proudest of is quieter: operators actually rely on it daily. Designing an interface where people trust AI-driven suggestions enough to act on them is the ultimate reward.',
+    text:'The decision-support timeline for Partner\'s operations. We transformed fragmented operational data into clear, actionable decision units - and on top of it I designed an AI decision-support concept with confidence scores and human-in-the-loop control, aiming for an estimated ~50% faster task assignment. The part I\'m proudest of: treating operator trust as a design requirement, not a hope.',
     tags:['Estimated ~50% faster task assignment']
   },
   {
@@ -317,7 +317,7 @@ const KB = [
   {
     chip:null,
     keys:['measured','measure the','how did you get','that number','fifty percent','50%','50 percent'],
-    text:'By establishing a clear baseline with Product before any structural change - task completion time, error rates, drop-offs. Post-launch we measure impact through analytics and workflow observation: an estimated ~50% improvement, for instance, is verified by directly comparing time-on-task before and after the change. If a design doesn\'t measurably reduce friction or speed up execution - it isn\'t finished.',
+    text:'By establishing a clear baseline with Product before any structural change - task completion time, error rates, drop-offs. The ~50% figure is an internal estimate built on that baseline plus structured operator and team feedback - and I present it as exactly that, an estimate. It also taught me my rule for every project since: define the measurement framework before launch, so the next number is measured, not estimated.',
     tags:['Estimated - and labeled that way on purpose']
   },
   {
