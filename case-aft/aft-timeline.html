@@ -1,0 +1,576 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>AFT - Timeline for Syndicate Fintech Loans</title>
+<meta name="description" content="Senior AI Product Designer specializing in UX Strategy, AI-Driven Experiences & Agentic AI.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700&family=Luxurious+Script&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../css/styles.css?v=20260807">
+<link rel="stylesheet" href="../css/light.css?v=20260807">
+<link rel="icon" type="image/png" sizes="32x32" href="../assets/icons/favicon-32x32.png">
+<link rel="icon" type="image/png" sizes="16x16" href="../assets/icons/favicon-16x16.png">
+<link rel="apple-touch-icon" sizes="180x180" href="../assets/icons/apple-touch-icon.png">
+<script>/* dark is the default - only the visitor's own choice switches it, and the
+   attribute is set before first paint so the page never flashes the wrong theme */
+(function(){try{var t=localStorage.getItem('lm-theme-v2');
+document.documentElement.setAttribute('data-theme',t==='light'?'light':'dark');}
+catch(e){document.documentElement.setAttribute('data-theme','dark');}})();</script>
+
+<link rel="stylesheet" href="../css/case-study.css?v=20260807">
+<script>
+/* returning to home from anywhere on the site: replay the normal hero entrance
+   (portrait/text/chips/dice) like a fresh load, instead of showing a stale/settled page */
+addEventListener('pageshow', () => {
+  let fromSite = false;
+  try { fromSite = document.referrer && new URL(document.referrer).origin === location.origin; } catch(e) {}
+  if (!fromSite) return;
+  document.body.classList.add('reanim-lock');
+  void document.body.offsetWidth;
+  document.body.classList.remove('reanim-lock');
+});
+</script>
+</head>
+<body>
+<div class="bg-fx"></div>
+<div class="page">
+
+  <header>
+    <a class="logo" href="../index.html">
+      <img class="logo-mark" src="../assets/images/logoColorful.png" alt="" width="31" height="31">
+      <span class="logo-name">Lora Maly</span>
+    </a>
+    <nav class="main-nav" id="mainNav" aria-label="Main">
+      <a href="../index.html#recommendations"><svg viewBox="0 0 24 24"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg><span>Recommendations</span></a>
+      <a href="../index.html#works"><svg viewBox="0 0 24 24"><rect x="2" y="7" width="20" height="14" rx="2"/><path d="M16 21V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16"/></svg><span>Portfolio</span></a>
+      <a href="../resume.html"><svg viewBox="0 0 24 24"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/></svg><span>Resume</span></a>
+    </nav>
+    <button class="theme-toggle" type="button" aria-pressed="false" aria-label="Switch to light theme" title="Switch to light theme">
+      <svg class="ic-moon" viewBox="0 0 24 24" aria-hidden="true"><path d="M21 12.8A9 9 0 1 1 11.2 3a7 7 0 0 0 9.8 9.8z"/></svg>
+      <svg class="ic-sun" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="4.2"/><path d="M12 2.2v2.4M12 19.4v2.4M4.5 4.5l1.7 1.7M17.8 17.8l1.7 1.7M2.2 12h2.4M19.4 12h2.4M4.5 19.5l1.7-1.7M17.8 6.2l1.7-1.7"/></svg>
+    </button>
+    <button class="hamburger" id="hamburger" aria-label="Menu" aria-expanded="false" aria-controls="mainNav">
+      <span></span><span></span><span></span>
+    </button>
+  </header>
+  <div class="nav-overlay" id="navOverlay"></div>
+
+
+  <div class="case-shell">
+    <div class="case-head-sentinel" id="caseHeadSentinel"></div>
+    <nav class="case-head" id="caseNav" aria-label="Case study sections">
+      <div class="case-nav-items">
+        <a class="case-nav-item" href="#about">
+          <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><line x1="12" y1="16" x2="12" y2="12"/><line x1="12" y1="8" x2="12.01" y2="8"/></svg>
+          About
+        </a>
+        <a class="case-nav-item" href="#problem">
+          <svg viewBox="0 0 24 24"><path d="M12 2L1 21h22L12 2z"/><line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg>
+          Problem
+        </a>
+        <a class="case-nav-item" href="#research">
+          <svg viewBox="0 0 24 24"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+          Research
+        </a>
+        <a class="case-nav-item" href="#solution">
+          <svg viewBox="0 0 24 24"><line x1="18" y1="20" x2="18" y2="10"/><line x1="12" y1="20" x2="12" y2="4"/><line x1="6" y1="20" x2="6" y2="14"/></svg>
+          Solution
+        </a>
+        <a class="case-nav-item" href="#key-decisions">
+          <svg viewBox="0 0 24 24"><path d="M9 11l3 3L22 4"/><path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11"/></svg>
+          Key Decisions
+        </a>
+        <a class="case-nav-item magic" href="#magic-pro">
+          <svg viewBox="0 0 24 24"><path d="M12 2l2.2 6.8L21 11l-6.8 2.2L12 20l-2.2-6.8L3 11l6.8-2.2L12 2z"/></svg>
+          Magic Pro
+        </a>
+        <a class="case-nav-item" href="#outcomes">
+          <svg viewBox="0 0 24 24"><polyline points="23 6 13.5 15.5 8.5 10.5 1 18"/><polyline points="17 6 23 6 23 12"/></svg>
+          Outcomes
+        </a>
+        <a class="case-nav-item demo" href="aft-agent-demo.html" target="_blank" rel="noopener">
+          <span class="live-dot" aria-hidden="true"></span>
+          Live Demo
+        </a>
+      </div>
+    </nav>
+    <div class="case-breadcrumb">
+      <a href="../index.html">Home</a>
+      <svg class="bc-sep" viewBox="0 0 24 24" aria-hidden="true"><polyline points="9 18 15 12 9 6"/></svg>
+      <a href="../index.html#works">Portfolio</a>
+      <svg class="bc-sep" viewBox="0 0 24 24" aria-hidden="true"><polyline points="9 18 15 12 9 6"/></svg>
+      <span class="current">AFT - Timeline for Syndicate Fintech Loans</span>
+    </div>
+
+    <div class="cs">
+<!-- ============ HERO ============ -->
+<div class="cs-hero-bleed">
+<section class="cs-hero" id="about">
+  <div class="wrap cs-hero-wrap">
+    <div class="cs-hero-text">
+      <div class="cs-tags cs-reveal">
+        <span class="cs-tag">Agentic AI</span>
+        <span class="cs-tag">Enterprise B2B</span>
+      </div>
+      <h1 class="cs-reveal"><span class="light">Deals don&rsquo;t fail.</span><br>Visibility does!</h1>
+      <p class="lead cs-reveal">An AI-driven decision-support timeline for syndicated-loan finance - turning deal activity into decisions, with an agent that acts on them.</p>
+      <a class="cs-demo-btn cs-reveal" href="aft-agent-demo.html" target="_blank" rel="noopener"><span class="live-dot" aria-hidden="true"></span>Try the Live Demo<svg class="arrow" viewBox="0 0 24 24" aria-hidden="true"><path d="M7 17L17 7M9 7h8v8"/></svg><span class="sr-only"> (opens in a new tab)</span></a>
+    </div>
+    <div class="cs-hero-media" aria-hidden="true">
+      <img src="assets/aftCase.png" alt="">
+    </div>
+  </div>
+</section>
+
+<!-- ============ ABOUT THE PROJECT ============ -->
+<section class="cs-section on-purple" id="about-project">
+  <div class="wrap">
+    <div class="cs-about-grid cs-reveal-group">
+      <div class="cs-about-col">
+        <h5>The Product</h5>
+        <p>A real fintech client - syndicated-loan, cross-organizational deal operations.</p>
+      </div>
+      <div class="cs-about-col">
+        <h5>My Role</h5>
+        <p>Product Designer - domain research, UX strategy, and end-to-end UI design.</p>
+      </div>
+      <div class="cs-about-col">
+        <h5>Scope</h5>
+        <p>The decision-support timeline - my design end to end, from research to hi-fi UI.</p>
+      </div>
+    </div>
+  </div>
+</section>
+</div>
+
+<!-- ============ PROBLEM ============ -->
+<section class="cs-section" id="problem">
+  <div class="wrap">
+    <div class="cs-kicker"><span class="bar"></span><span>Problem</span></div>
+    <div class="cs-problem-grid">
+      <div class="cs-reveal">
+        <h2 class="cs-h2 grad-text">The Hidden Cost<br><span class="light">of Missing Visibility</span></h2>
+        <p class="cs-lead">Deals don&rsquo;t slow down because of decisions. They slow down when no one knows what&rsquo;s missing - or who owns it.</p>
+        <p class="cs-body">On a syndicated-loan fintech platform for cross-organizational trading data, teams couldn&rsquo;t answer one question: where does the deal stand? Management asked for confidence and transparency - that brief became the timeline.</p>
+      </div>
+      <div class="cs-problem-side cs-reveal">
+        <img class="cs-zoomable cs-problem-media" src="assets/userFlow.png" alt="Deal Workflow diagram - illustrative scenario, fictional data reflecting the platform's real client profile">
+      </div>
+    </div>
+
+    <div class="cs-problem-side cs-slip-block cs-reveal">
+      <div class="cs-slip-title">What kept slipping:</div>
+      <div class="cs-slip-list cs-reveal-group">
+        <div class="cs-pill">Approval bottlenecks</div>
+        <div class="cs-pill">Fragmented information</div>
+      </div>
+    </div>
+
+    <div class="cs-market-stat cs-reveal">
+      <h4>The market&rsquo;s own math: <a href="https://www.spglobal.com/marketintelligence/en/mi/research-analysis/2024-loan-platforms-update-accelerating-efficiency.html" target="_blank" rel="noopener">LSTA</a> data.</h4>
+      <p>Standard is T+7 &middot; 2024 average &asymp; 16 days<br>only ~29% settle within a week</p>
+    </div>
+
+    <p class="cs-flow-statement grad-text cs-reveal">Visibility alone doesn&rsquo;t solve the problem</p>
+    <h2 class="cs-h2 grad-text cs-reveal">Teams Didn&rsquo;t Need More Data <br class="br-wide">- They Needed Clarity on What to Act On</h2>
+
+    <div class="cs-flow cs-reveal-group">
+      <div class="cs-flow-col">
+        <img class="cs-flow-icon" src="assets/alert-octagon.svg" alt="">
+        <h5>PROBLEM</h5>
+        <ul>
+          <li>No visibility across deal stages</li>
+          <li>Delays caused by approvals</li>
+          <li>Cross-team coordination overhead</li>
+        </ul>
+      </div>
+      <div class="cs-flow-col">
+        <img class="cs-flow-icon" src="assets/dataIc.svg" alt="">
+        <h5>DATA</h5>
+        <ul>
+          <li>Dozens of tasks and documents</li>
+          <li>Many owners, many dates</li>
+          <li>Every status - no priority</li>
+        </ul>
+      </div>
+      <div class="cs-flow-col">
+        <img class="cs-flow-icon" src="assets/light.svg" alt="">
+        <h5>DECISION</h5>
+        <ul>
+          <li>What needs action now?</li>
+          <li>What&rsquo;s blocking progress?</li>
+          <li>What matters most?</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ RESEARCH ============ -->
+<section class="cs-section" id="research">
+  <div class="cs-research-bleed">
+    <div class="wrap">
+      <div class="cs-kicker"><span class="bar"></span><span>Research</span></div>
+      <div class="cs-research-grid">
+        <h2 class="cs-h2 grad-text cs-reveal"><span class="light">Exploring</span><br>Unfamiliar Domain</h2>
+        <div class="cs-reveal">
+          <ul class="cs-bullets">
+            <li>Mapped syndicated transactions: phases, documents, approvals</li>
+            <li>Analyzed where manual workflows create bottlenecks</li>
+            <li>Charted roles and approval responsibilities across organizations</li>
+            <li>Benchmarked the tools deal teams actually use</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+    <img class="cs-zoomable cs-research-shot cs-reveal" src="assets/planning.png" alt="Research artifact - mapping the syndicated-loan domain">
+  </div>
+
+  <div class="cs-section tint">
+    <div class="wrap">
+      <h2 class="cs-h2 grad-text cs-reveal"><span class="light">What Existing</span><br>Tools Miss</h2>
+      <p class="cs-lead xl cs-reveal">No tool combines Gantt-grade planning UX with loan-market semantics - that became the design opportunity.</p>
+      <div class="cs-landscape cs-reveal-group">
+        <div class="cs-landscape-card">
+          <img src="assets/finastra.png" alt="Finastra logo">
+          <p>The market&rsquo;s servicing backbone - used by 21 of the top 25 syndicated lenders.</p>
+          <div class="cs-gap"><b>Gap:</b> back-office servicing, not a planning UX for deal teams.</div>
+        </div>
+        <div class="cs-landscape-card">
+          <img src="assets/versana.png" alt="Versana logo">
+          <p>Industry-backed real-time agent-data platform (J.P. Morgan, BofA, Citi).</p>
+          <div class="cs-gap"><b>Gap:</b> data transparency - not workflow planning.</div>
+        </div>
+        <div class="cs-landscape-card">
+          <img src="assets/sp.png" alt="S&amp;P Global logo">
+          <p>The market-standard platform for settling syndicated loan trades between institutions.</p>
+          <div class="cs-gap"><b>Gap:</b> covers settlement at the end - not the planning and coordination before it.</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="wrap cs-roles-block">
+    <div class="cs-roles-grid">
+      <div class="cs-reveal">
+        <h2 class="cs-h2 grad-text">Roles</h2>
+        <p class="cs-lead muted">I evaluated each role through 4 lenses:</p>
+        <div class="cs-lens-tags">
+          <span class="cs-lens-tag">Pain points</span>
+          <span class="cs-lens-tag">Emotional impact</span>
+          <span class="cs-lens-tag">Solution</span>
+          <span class="cs-lens-tag">Target impact</span>
+        </div>
+        <h3 class="cs-h3">Insights</h3>
+        <p class="cs-body">Each role has unique needs within the transaction. One requires full control over deal progress, another prioritizes certainty in terms and commitments, a third focuses on regulation and risk, while the last demands full transparency in financing and financial conditions.</p>
+      </div>
+      <div class="cs-roles-photos cs-reveal-group">
+        <img class="cs-zoomable" src="../assets/images/case-timeline/roles-1.jpg" alt="Role persona 1">
+        <img class="cs-zoomable" src="../assets/images/case-timeline/roles-2.jpg" alt="Role persona 2">
+        <img class="cs-zoomable" src="../assets/images/case-timeline/roles-3.jpg" alt="Role persona 3">
+        <img class="cs-zoomable" src="../assets/images/case-timeline/roles-4.jpg" alt="Role persona 4">
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ SOLUTION ============ -->
+<section class="cs-section alt" id="solution">
+  <div class="wrap">
+    <div class="cs-kicker"><span class="bar"></span><span>Solution</span></div>
+    <div class="cs-coord-grid">
+      <div class="cs-reveal">
+        <h2 class="cs-h2 grad-text">Coordinating Work<br><span class="light">Across Teams</span></h2>
+        <p class="cs-lead lg">Designed around the Transaction Manager - the role that owns execution across banks, legal and compliance - with tailored views for underwriters, compliance officers and bankers.</p>
+        <p class="cs-body">Each role contributes tasks and approvals.<br>The timeline connects everything into one coordinated system.</p>
+        <p class="cs-caption spaced">The object model behind the timeline (OOUX): phases, tasks, documents and signatures as connected objects.</p>
+      </div>
+      <img class="cs-zoomable cs-coord-media cs-reveal" src="assets/userInteraction.png" alt="OOUX object model behind the AFT Timeline - user interaction diagram">
+    </div>
+  </div>
+
+  <div class="cs-blockers-bleed">
+   <div class="wrap">
+    <div class="cs-action-grid">
+     <div class="cs-reveal">
+      <h2 class="cs-h2"><span class="light grad-text">What Needs</span><br><span class="grad-text">Action Now</span></h2>
+      <p class="cs-body lg">A deal is months of dependent work under deadlines - exactly what a Gantt shows best. I built the solution as a Gantt: phases, dependencies and risks on a single time axis. No market tool offers this view.</p>
+
+      <div class="cs-numbered cs-reveal-group">
+        <div class="cs-numbered-row">
+          <div class="cs-num-badge">1</div>
+          <div><h5>Phases</h5><p>Structure the process.</p></div>
+        </div>
+        <div class="cs-numbered-row">
+          <div class="cs-num-badge">2</div>
+          <div><h5>Teams</h5><p>Every role works on the same shared time axis.</p></div>
+        </div>
+        <div class="cs-numbered-row">
+          <div class="cs-num-badge">3</div>
+          <div><h5>Decisions</h5><p>Highlight what needs attention and suggest next steps with AI.</p></div>
+        </div>
+      </div>
+     </div>
+     <img class="cs-zoomable cs-solution-shot cs-reveal" src="assets/action.png" alt="AFT Timeline product screenshot - Gantt view with numbered callouts">
+    </div>
+   </div>
+   <div class="wrap cs-blockers-block">
+    <div class="cs-coord-grid cs-blockers-grid">
+      <div class="cs-reveal">
+        <h2 class="cs-h2 grad-text">Blockers &amp; Risks</h2>
+        <div class="cs-risk-list cs-reveal-group">
+          <div class="cs-risk-row">
+            <div class="cs-num-badge">1</div>
+            <div><h5>What&rsquo;s blocking progress?</h5><p>AI identifies blockers that require action.</p></div>
+          </div>
+          <div class="cs-risk-row">
+            <div class="cs-num-badge">2</div>
+            <div><h5>What&rsquo;s at risk?</h5><p>Predicted risks help teams act before delays happen.</p></div>
+          </div>
+        </div>
+
+        <a class="cs-magic-link cs-reveal" href="#magic-pro">
+          <span class="grad-text">When flagging isn&rsquo;t enough, the agent acts. <strong>&#10022; Magic Pro</strong> - next</span>
+          <svg viewBox="0 0 24 24"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+        </a>
+      </div>
+      <img class="cs-zoomable cs-blockers-media cs-reveal" src="assets/blockers-risks.png" alt="Timeline showing blockers and risk flags, including a Missing Approvals alert">
+    </div>
+   </div>
+  </div>
+</section>
+
+<!-- ============ KEY DECISIONS ============ -->
+<section class="cs-section alt" id="key-decisions">
+  <div class="cs-explorations-bleed">
+    <div class="wrap">
+      <div class="cs-kicker"><span class="bar"></span><span>Key Decisions</span></div>
+      <h2 class="cs-h2 grad-text cs-reveal"><span class="light">Early Explorations -</span><br>Reconstructed</h2>
+      <div class="cs-explorations cs-reveal-group">
+        <div class="cs-exploration-col">
+          <h3>Direction A</h3>
+          <p>Flat task list. Rejected: months of deal work became an endless scroll; no sense of phase or progress.</p>
+          <img class="cs-zoomable" src="assets/DirectionA.png" alt="Direction A - flat task list wireframe (rejected)">
+        </div>
+        <div class="cs-exploration-col">
+          <h3>Direction B</h3>
+          <p>Alerts in a separate panel. Rejected: problems lost their time context; users had to map each alert back to the timeline themselves.</p>
+          <img class="cs-zoomable" src="assets/DirectionB.png" alt="Direction B - separate alerts panel wireframe (rejected)">
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="cs-choose-bleed">
+   <div class="wrap">
+    <h2 class="cs-h2 grad-text cs-reveal"><span class="light">What I Chose</span><br>&amp; What it Cost</h2>
+    <p class="cs-lead cs-reveal">Every decision below began as one of those explorations.</p>
+
+    <div class="cs-decisions cs-reveal-group">
+      <div class="cs-decision-card">
+        <div class="cs-decision-head"><span class="cs-decision-num">1</span><h5>Hierarchy over<br>flat list</h5></div>
+        <p class="considered">Considered: a flat task list - familiar, zero learning curve.</p>
+        <div class="cs-pill"><span><strong>Chose:</strong> Phase &rarr; Sub-phase &rarr; Tasks.</span></div>
+        <div class="cs-pill"><span><strong>Cost:</strong> Deeper navigation.</span></div>
+        <div class="cs-pill"><span><strong>Gain:</strong> Months of deal noise, filtered.</span></div>
+      </div>
+      <div class="cs-decision-card">
+        <div class="cs-decision-head"><span class="cs-decision-num">2</span><h5>Alerts inside the<br>timeline</h5></div>
+        <p class="considered">Considered: a separate alerts panel - a cleaner Gantt.</p>
+        <div class="cs-pill"><span><strong>Chose:</strong> Alerts on the bars themselves.</span></div>
+        <div class="cs-pill"><span><strong>Cost:</strong> Visual load.</span></div>
+        <div class="cs-pill"><span><strong>Gain:</strong> Problems visible in time context.</span></div>
+      </div>
+      <div class="cs-decision-card">
+        <div class="cs-decision-head"><span class="cs-decision-num">3</span><h5>Hidden by<br>default</h5></div>
+        <p class="considered">Considered: exposing every action and field - more discoverable.</p>
+        <div class="cs-pill"><span><strong>Chose:</strong> Hidden Actions + role-based Table Fields.</span></div>
+        <div class="cs-pill"><span><strong>Cost:</strong> Discoverability.</span></div>
+        <div class="cs-pill"><span><strong>Gain:</strong> A calm screen for all-day users.</span></div>
+      </div>
+    </div>
+   </div>
+  </div>
+</section>
+
+<!-- ============ MAGIC PRO ============ -->
+<section class="cs-section" id="magic-pro">
+  <div class="wrap">
+    <div class="cs-kicker"><span class="bar"></span><span>Magic Pro</span></div>
+    <div class="cs-mp-badge cs-reveal">&#10022; Magic Pro</div>
+    <h2 class="cs-h2 grad-text cs-reveal"><span class="light">From Showing Risk</span><br>to Proposing Action</h2>
+
+    <div class="cs-mp-top">
+      <div class="cs-mp-top-text cs-reveal">
+        <p class="cs-body">I mapped the agent&rsquo;s autonomy to its confidence - human-in-the-loop by design: it proposes when sure, steps back when unsure, and automates only what you approved in advance. Calibrated trust.</p>
+        <p class="cs-mp-result"><b>The result:</b> it earns trust one rung at a time, and never acts where you can&rsquo;t see it or stop it.</p>
+      </div>
+      <div class="cs-mp-example cs-reveal">
+        <div class="cs-mp-example-label">Simple Example</div>
+        <div class="cs-pill stack">
+          <span><strong>Problem:</strong> Deadline is close and 9 of 24 users haven&rsquo;t signed - a bottleneck that will delay Board Approval.</span>
+          <span><strong>Solution:</strong> Magic Pro detects it and reminds every pending user - fast.</span>
+          <span><strong>Decision:</strong> A routine, low-risk call - and it runs automatically.</span>
+        </div>
+      </div>
+      <svg class="cs-mp-arrow-connector" viewBox="0 0 361 355" fill="none" aria-hidden="true">
+        <path d="M359.3 1.8C258.3 5.4 172 33.5 110.5 90.8 48.9 148 12 234 9.2 352"/>
+        <path d="M1.5 344.8 8.7 351.6 16.2 344.8"/>
+      </svg>
+    </div>
+
+    <img class="cs-zoomable cs-mp-agent-shot cs-reveal" src="assets/agent.png" alt="Magic Pro flow: 1. Detects the bottleneck on the timeline, 2. Acts automatically behind the scenes, 3. Shows its work in the Gantt">
+    <div class="cs-mp-demo-cta"><a class="cs-demo-btn cs-reveal" href="aft-agent-demo.html" target="_blank" rel="noopener"><span class="live-dot" aria-hidden="true"></span>Try the Live Demo<svg class="arrow" viewBox="0 0 24 24" aria-hidden="true"><path d="M7 17L17 7M9 7h8v8"/></svg><span class="sr-only"> (opens in a new tab)</span></a></div>
+  </div>
+
+  <div class="cs-mp-compare-bleed">
+   <div class="wrap">
+    <h2 class="cs-h2 grad-text cs-reveal">Not Every Decision<br><span class="light">Is That Simple.</span></h2>
+    <div class="cs-mp-compare cs-reveal-group">
+      <div class="cs-mp-compare-col confident">
+        <div class="cs-mp-compare-text">
+          <div class="label">CONFIDENT</div>
+          <p class="sub">The agent proposes a complete action.</p>
+          <ul class="cs-bullets">
+            <li>Proposes the action, backed by evidence</li>
+            <li>Shows the cost of ignoring it</li>
+            <li>Waits for you: Approve &middot; Edit &middot; Dismiss</li>
+          </ul>
+        </div>
+        <img class="cs-zoomable cs-mp-card-shot" src="assets/CONFIDENT.png" alt="Magic Pro suggestion card - confident state, proposing Approve & Send">
+      </div>
+
+      <div class="cs-mp-compare-col uncertain">
+        <div class="cs-mp-compare-text">
+          <div class="label">UNCERTAIN</div>
+          <p class="sub">The agent steps back and stays honest.</p>
+          <ul class="cs-bullets">
+            <li>Not enough signal - it doesn&rsquo;t guess</li>
+            <li>Flags the risk and explains why</li>
+            <li>Nothing is sent</li>
+          </ul>
+        </div>
+        <img class="cs-zoomable cs-mp-card-shot" src="assets/UNCERTAIN.png" alt="Magic Pro suggestion card - uncertain state, flagging risk without acting">
+      </div>
+    </div>
+   </div>
+  </div>
+</section>
+
+<!-- ============ OUTCOMES ============ -->
+<!-- Outcomes + What I Learned share ONE continuous gradient (no seam between them) -->
+<div class="cs-closing-bleed">
+<section class="cs-section dark" id="outcomes">
+  <div class="wrap">
+    <div class="cs-kicker on-purple"><span class="bar"></span><span>Outcomes</span></div>
+    <h2 class="cs-h2 cs-reveal">Projected Impact -<br><span class="light">What Changes When The Timeline Goes Live</span></h2>
+
+    <div class="cs-outcomes-stats cs-reveal-group">
+      <div class="cs-stat-card">
+        <div class="cs-stat-num">
+          <svg class="stat-arrow" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 20V5M6 11l6-6 6 6"/></svg>
+          <span class="prefix">Up to</span><span class="val"><span class="num">50</span><span class="pct">%</span></span>
+        </div>
+        <div class="label">Approval-related delays</div>
+      </div>
+      <div class="cs-stat-card">
+        <div class="cs-stat-num">
+          <svg class="stat-arrow" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 20V5M6 11l6-6 6 6"/></svg>
+          <span class="prefix">Across</span><span class="val"><span class="num">100</span><span class="pct">%</span></span>
+        </div>
+        <div class="label">Real-time status of deal stages</div>
+      </div>
+      <div class="cs-stat-card">
+        <div class="cs-stat-num">
+          <svg class="stat-arrow" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 4v15M6 13l6 6 6-6"/></svg>
+          <span class="prefix">~</span><span class="val"><span class="num">35</span><span class="pct">%</span></span>
+        </div>
+        <div class="label">Coordination time</div>
+      </div>
+    </div>
+
+    <ul class="cs-disclaimer cs-reveal">
+      <li>These are projected design targets, benchmarked against McKinsey&rsquo;s 20-50% productivity-uplift range for modernized syndicated-loan operations.</li>
+    </ul>
+  </div>
+</section>
+
+<section class="cs-learned">
+  <div class="wrap">
+    <div class="eyebrow cs-reveal"><span class="light">What</span><br>I Learned</div>
+    <div class="cs-reveal">
+      <p>Good design respects how each role works - not averaging everyone into one &ldquo;user&rdquo;.</p>
+      <p>I learned to break a high-stakes, unfamiliar domain into small steps I could verify.</p>
+      <p class="lesson">The biggest lesson: teams don&rsquo;t need more information - they need to know what to act on.</p>
+    </div>
+    <div class="cs-thanks cs-reveal">
+      <img src="assets/heart.svg" alt="" width="96" height="93">
+      <span>Thank<br>You</span>
+    </div>
+    <a class="cs-demo-btn cs-close-demo cs-reveal" href="aft-agent-demo.html" target="_blank" rel="noopener">
+      <span class="live-dot" aria-hidden="true"></span>Try the Live Demo
+      <svg class="arrow" viewBox="0 0 24 24" aria-hidden="true"><path d="M7 17L17 7M9 7h8v8"/></svg>
+      <span class="sr-only"> (opens in a new tab)</span>
+    </a>
+  </div>
+</section>
+</div><!-- /.cs-closing-bleed -->
+    </div><!-- /.cs -->
+  </div><!-- /.case-shell -->
+
+  <section class="next-case" id="next-case">
+    <div class="next-case-head">
+      <h2>Next Case</h2>
+    </div>
+    <div class="cards">
+      <div class="case-card has-demo tint-blue">
+        <a class="case-card-link" href="../case-syncops/syncops.html" aria-label="Open the SyncOps case study"></a>
+        <div class="case-media"><img src="../assets/images/case-timeline.webp" alt="SyncOps - incident boards and live map"></div>
+        <div class="case-body">
+          <div class="case-tags">
+            <span class="case-tag">Agentic AI</span>
+            <span class="case-tag">Enterprise B2B</span>
+            <span class="case-tag">UX Research &amp; Design</span>
+          </div>
+          <h3>When every minute counts -<br><strong>Turn complex data into confident decisions.</strong></h3>
+          <p>AI decision support for incident management.</p>
+          <div class="case-stats">
+            <div class="stat-pill"><svg viewBox="0 0 24 24"><path d="M12 19V5M5 12l7-7 7 7"/></svg><span>Estimated <strong>~50%</strong> faster task assignment</span></div>
+          </div>
+          <a class="case-demo-link" href="../case-syncops/syncops-agent-demo.html" target="_blank" rel="noopener">
+            <span class="live-dot" aria-hidden="true"></span>Try the live demo<svg class="arrow" viewBox="0 0 24 24" aria-hidden="true"><path d="M7 17L17 7M9 7h8v8"/></svg><span class="sr-only"> (opens in a new tab)</span>
+          </a>
+        </div>
+        <div class="case-cta"><span class="case-explore">EXPLORE <svg viewBox="0 0 24 24"><path d="M5 12h14M13 6l6 6-6 6"/></svg></span></div>
+      </div>
+    </div>
+  </section>
+
+  <footer>
+    <span>&copy; 2026 Lora Maly. All rights reserved.</span>
+    <div class="social">
+      <a href="https://wa.me/972506763066" aria-label="WhatsApp"><svg viewBox="0 0 24 24"><path d="M3 21l1.65 -3.8a9 9 0 1 1 3.4 2.9l-5.05 .9"/><path d="M9 10a.5 .5 0 0 0 1 0v-1a.5 .5 0 0 0 -1 0v1a5 5 0 0 0 5 5h1a.5 .5 0 0 0 0 -1h-1a.5 .5 0 0 0 0 1"/></svg></a>
+      <a href="https://www.linkedin.com/in/darbiz/" aria-label="LinkedIn"><svg viewBox="0 0 24 24"><path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4V8h4v2"/><rect x="2" y="9" width="4" height="12"/><circle cx="4" cy="4" r="2"/></svg></a>
+    </div>
+  </footer>
+
+</div>
+
+<button id="backToTop" class="back-to-top" aria-label="Back to top">
+  <svg viewBox="0 0 24 24"><path d="M12 19V5M5 12l7-7 7 7"/></svg>
+</button>
+
+<div class="cs-lightbox" id="csLightbox" aria-hidden="true">
+  <button class="cs-lightbox-close" id="csLightboxClose" aria-label="Close">
+    <svg viewBox="0 0 24 24"><path d="M6 6l12 12M18 6L6 18"/></svg>
+  </button>
+  <img id="csLightboxImg" src="" alt="">
+</div>
+
+<script src="../js/back-to-top.js?v=20260807"></script>
+<script src="../js/case-study.js?v=20260807"></script>
+<script src="../js/theme.js?v=20260807"></script>
+</body>
+</html>

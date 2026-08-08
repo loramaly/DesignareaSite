@@ -1,0 +1,1202 @@
+/* ===== Case Study - light mode, one-pager (AFT Timeline / Amazon Global Syndicated Loan) ===== */
+html{scroll-behavior:smooth}
+/* Easing is the only thing shared with the site chrome (.case-head, breadcrumb,
+   lightbox all sit OUTSIDE .cs), so it stays global. styles.css declares the
+   same two values, so this is a safe duplicate. */
+:root{
+  --ease-out:cubic-bezier(.23,1,.32,1);
+  --ease-in-out:cubic-bezier(.77,0,.175,1);
+}
+
+/* ===== CASE TOKENS - scoped to .cs, never :root =====
+   On :root these would repaint the site header, footer and frame, which must
+   look identical on every page. Scoping them here makes that impossible.
+
+   A NEW CASE OVERRIDES ONLY THE ---- THEME ---- block, via a class on .cs:
+       <div class="cs theme-syncops">
+       .cs.theme-syncops{ --brand-a:#..; --brand-b:#..; ... }
+   Everything below THEME is locked and identical in every case. */
+.cs{
+  /* ---- THEME - the only tokens a case may override ---- */
+  --brand-a:#c66bf8;          /* gradient start                     */
+  --brand-b:#7447ea;          /* gradient end                       */
+  --brand:#8b5cf6;            /* solid accent                       */
+  --brand-cta:#7c3aed;        /* button fill - 5.7:1 on white       */
+  --brand-deep:#5b21b6;       /* button label on white - 9:1        */
+  --brand-edge:#d389fb;       /* card outline on the brand field    */
+  --brand-soft:#c5a8f7;       /* role-pill rule                     */
+  --brand-faint:#ddd8f7;      /* hairline rules on white            */
+  --brand-line:#9087ff;       /* pill + bullet rules                */
+  --brand-line-soft:#7c73e6;  /* lens tags, muted headings          */
+  --brand-line-strong:#8237f7;
+  --brand-num:#cdc9ff;        /* big decorative numerals            */
+  --grad:linear-gradient(180deg,var(--brand-a),var(--brand-b));
+
+  /* ---- LOCKED - identical in every case ---- */
+  --ink:#1f2937;--body:#535966;--body-2:#525466;
+  --soft-bg:#f2f3f6;--soft-bg-2:#f3f2f6;
+  --yellow:#ffd880;--teal:#50c9ba;--orange:#f90;--blue:#7cb5ff;
+  --white:#fff;
+  --font:'Instrument Sans',system-ui,sans-serif;
+  --font-ui:'DM Sans',system-ui,sans-serif;
+  --content-w:1680px;
+}
+
+/* ---- PER-CASE THEMES ----
+   One class per case. Override ONLY --brand-* here; touching anything else
+   breaks the promise that every case shares one layout. */
+.cs.theme-template{ /* same as default - the starting point for a new case */ }
+
+/* SyncOps - fiber network ops. Deepened from the product's #6991ed: white body
+   text on that blue is only 3.06:1, and the hero lead sits right on it. */
+.cs.theme-syncops{
+  --brand-a:#4a6fd8;
+  --brand-b:#2f3a7a;
+  --brand:#4a6fd8;
+  --brand-cta:#4364c9;
+  --brand-deep:#2c3470;
+  --brand-edge:#93b0f2;
+  --brand-soft:#9db6f5;
+  --brand-faint:#d7e0fa;
+  --brand-line:#6991ed;
+  --brand-line-soft:#4a6fd8;
+  --brand-line-strong:#3a4f9e;
+  --brand-num:#c5d5f8;
+}
+
+.cs *{margin:0;padding:0;box-sizing:border-box}
+.cs{
+  background:var(--white);color:var(--ink);
+  /* 1.375 x 16px = exactly 22px, so anything that just inherits (pills, badges,
+     future 16px text) lands on the 22px line-height instead of 22.4px */
+  font-family:var(--font);font-size:16px;line-height:1.375;
+  -webkit-font-smoothing:antialiased;
+}
+.cs img{max-width:100%;display:block}
+.cs a{color:inherit}
+.cs ul{list-style:disc;padding-left:1.2em}
+.cs .wrap{max-width:var(--content-w);margin-inline:auto;padding-inline:clamp(20px,5vw,72px)}
+/* background-clip:text paints only inside the element box - with line-height
+   50 on a 48px face the descenders (g, y, p) fall outside it and get cut off.
+   Pad the box and take the same amount off the margin so nothing moves. */
+.cs .cs-h2.grad-text{padding-bottom:10px;margin-bottom:16px}
+.cs .grad-text:not(.cs-h2){padding-bottom:.14em}
+.cs .grad-text{
+  background:var(--grad);background-clip:text;-webkit-background-clip:text;color:transparent;
+  -webkit-text-fill-color:transparent;
+}
+
+/* ===== dark site-chrome shell wrapping the case content (shares border rule with .works in styles.css) ===== */
+.case-shell{
+  padding:0 0 48px;
+}
+.case-head-sentinel{height:1px}
+.case-head{
+  position:sticky;top:24px;z-index:35;
+  /* hugs its buttons while they fit, then caps at the frame so it can never
+     spill past the purple border - the items scroll horizontally instead */
+  width:fit-content;max-width:100%;margin:0 auto;
+  border-radius:0 0 6px 6px;border:2px solid var(--frame-line);border-top:none;
+  background:transparent;box-shadow:none;
+  transition:background 220ms var(--ease-out),box-shadow 220ms var(--ease-out),border-color 220ms var(--ease-out),border-radius 220ms var(--ease-out);
+}
+.case-head.is-stuck{
+  margin-top:20px;
+  border-radius:6px;border-top:2px solid var(--frame-line);
+  background:var(--bg-page,#240C53);
+  border-color:var(--frame-line);
+  box-shadow:0 12px 32px rgba(0,0,0,.4);
+}
+/* once the items stop fitting the bar spans the full frame width, so its own
+   side borders would sit right on top of the frame's - drop them and square the
+   corners, leaving one clean line. Must come after .is-stuck to win on radius. */
+.case-head.is-full,
+.case-head.is-full.is-stuck{
+  border-left:none;border-right:none;
+  border-radius:0;
+}
+.case-breadcrumb{
+  display:flex;align-items:center;gap:8px;
+  margin:32px clamp(16px, 12vw - 74px, 176px) 0;
+  font-size:13px;color:var(--text-dim);
+  flex-wrap:nowrap;min-width:0;
+}
+.case-breadcrumb a{color:var(--text-dim);text-decoration:none;transition:color 160ms var(--ease-out);
+  white-space:nowrap;flex:none}
+.case-breadcrumb a:hover{color:#fff;text-decoration:underline;text-underline-offset:3px}
+.case-breadcrumb span{opacity:.6}
+.case-breadcrumb .bc-sep{
+  width:12px;height:12px;flex:none;opacity:.55;
+  fill:none;stroke:currentColor;stroke-width:2;stroke-linecap:round;stroke-linejoin:round;
+}
+/* the case title is the only part that may be long: it stays on one line and
+   trails off with an ellipsis instead of wrapping the whole trail to two rows */
+.case-breadcrumb .current{color:var(--text);opacity:.85;
+  min-width:0;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.case-nav-items{
+  display:flex;gap:14px;overflow-x:auto;scrollbar-width:none;
+  -webkit-overflow-scrolling:touch;
+  padding:12px;
+}
+.case-nav-items::-webkit-scrollbar{display:none}
+/* scroll affordance: fade whichever edge still has items hidden behind it,
+   so it reads as "there is more this way". Classes are set in js/case-study.js. */
+.case-head.can-scroll-right .case-nav-items{
+  -webkit-mask-image:linear-gradient(to right,#000 calc(100% - 64px),transparent 100%);
+          mask-image:linear-gradient(to right,#000 calc(100% - 64px),transparent 100%);
+}
+.case-head.can-scroll-left .case-nav-items{
+  -webkit-mask-image:linear-gradient(to right,transparent 0,#000 64px);
+          mask-image:linear-gradient(to right,transparent 0,#000 64px);
+}
+.case-head.can-scroll-left.can-scroll-right .case-nav-items{
+  -webkit-mask-image:linear-gradient(to right,transparent 0,#000 64px,#000 calc(100% - 64px),transparent 100%);
+          mask-image:linear-gradient(to right,transparent 0,#000 64px,#000 calc(100% - 64px),transparent 100%);
+}
+.case-nav-item{
+  display:inline-flex;align-items:center;gap:8px;flex:none;padding:9px 24px;border-radius:6px;
+  color:var(--text-dim);text-decoration:none;font-size:14px;font-weight:600;white-space:nowrap;
+  transition:background 160ms var(--ease-out),color 160ms var(--ease-out);
+}
+.case-nav-item svg{width:16px;height:16px;stroke:currentColor;fill:none;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round;flex:none}
+.case-nav-item:hover{background:rgba(255,255,255,.07);color:#fff}
+.case-nav-item.active{background:var(--btn);color:#fff}
+.case-nav-item.magic{color:#d6b8ff}
+.case-nav-item.magic.active{background:var(--btn);color:#fff}
+/* opens the prototype in a new tab - not a section, so it never gets .active */
+.case-nav-item.demo{color:#36E8B8;font-weight:700}
+.case-nav-item.demo:hover{background:rgba(54,232,184,.12);color:#6ff2d1}
+.case-nav-item.demo .live-dot{width:8px;height:8px;border-radius:50%;background:currentColor;flex:none;
+  position:relative}
+/* the same heartbeat the demo buttons have, so the bar reads as live too.
+   currentColor keeps the ring on the item's own green in either theme. */
+.case-nav-item.demo .live-dot::after{
+  content:"";position:absolute;inset:0;border-radius:50%;background:currentColor;
+  animation:demoPulse 1.9s var(--ease-out) infinite;
+}
+
+/* the light case content itself, sitting inside the dark shell */
+.case-shell .cs{
+  margin:16px clamp(16px, 12vw - 74px, 176px) 0;
+  border-radius:8px;overflow:hidden;box-shadow:0 24px 60px rgba(0,0,0,.35);
+}
+
+/* ===== next-case rail - shares border rules with .works / .works-head in styles.css ===== */
+.next-case{
+  margin-top:0;
+  padding:0 clamp(16px, 12vw - 74px, 176px) 48px;
+}
+.next-case-head h2{font-size:24px;font-weight:700}
+.next-cards{display:grid;grid-template-columns:repeat(2,1fr);gap:20px;margin-top:24px}
+.next-card{
+  display:flex;flex-direction:column;border:1px solid var(--card-line);border-radius:8px;
+  overflow:hidden;text-decoration:none;color:var(--text);
+  transition:transform 180ms var(--ease-out),border-color 180ms var(--ease-out);
+}
+.next-card:hover{transform:translateY(-3px);border-color:var(--chip-line)}
+.next-card:active{transform:scale(.99)}
+.next-card img{width:100%;height:160px;object-fit:cover;object-position:top}
+.next-card .body{padding:18px 20px}
+.next-card h3{font-size:18px;font-weight:700;margin-bottom:4px}
+.next-card p{font-size:14px;color:var(--text-dim)}
+@media (max-width:700px){.next-cards{grid-template-columns:1fr}}
+
+/* ===== kicker (nn · section name) ===== */
+.cs-kicker{display:flex;align-items:center;gap:10px;margin-bottom:38px}
+.cs-kicker .bar{width:18px;height:3px;border-radius:2px;background:var(--grad);flex:none}
+.cs-kicker span{font-size:20px;font-weight:400;color:var(--body)}
+.cs-kicker.on-purple .bar{background:var(--white)}
+.cs-kicker.on-purple span{color:rgba(255,255,255,.92)}
+
+/* ===== hero ===== */
+.cs-hero{
+  position:relative;background:var(--grad);color:var(--white);overflow:hidden;
+  padding:72px 0 80px;
+}
+.cs-hero-wrap{position:relative;z-index:2;min-height:clamp(380px,57.7vw - 238px,822px)}
+.cs-hero-text{position:relative;z-index:2;max-width:350px}
+.cs-hero h1{
+  font-size:56px;font-weight:600;line-height:58px;letter-spacing:-.02em;
+  margin-bottom:22px;width:max-content;max-width:440px;
+}
+.cs-hero h1 .light{font-weight:400}
+.cs-hero p.lead{
+  font-size:18px;font-weight:500;line-height:24px;
+  color:rgba(255,255,255,.94);
+}
+.cs-role{
+  display:inline-flex;align-items:center;gap:14px;border:1px solid rgba(255,255,255,.5);
+  border-radius:8px;padding:12px 24px 12px 24px;font-size:16px;line-height:22px;font-weight:600;position:relative;
+  margin-top:32px;
+}
+.cs-role::before{content:"";position:absolute;left:0;top:0;bottom:0;width:5px;border-radius:8px 0 0 8px;background:var(--brand-soft)}
+.cs-tags{display:flex;flex-wrap:wrap;gap:14px;margin-bottom:32px}
+.cs-tag{border:1px solid rgba(255,255,255,.5);border-radius:999px;padding:6px 22px;font-size:14px;font-weight:500}
+.cs-hero-media{
+  position:absolute;z-index:1;right:100px;top:80px;width:min(924px,calc(100% - 520px));
+  animation:csFloat 10s ease-in-out infinite;
+}
+@media (max-width:980px){
+  .cs-hero-wrap{min-height:0}
+  .cs-hero-media{position:relative;right:auto;top:auto;width:100%;max-width:440px;z-index:2;margin:48px auto 0}
+  .cs-hero-text{max-width:none}
+}
+/* phones: the h1 is sized max-content/440px, which is wider than the column -
+   and .cs-hero clips its overflow, so the headline was cut mid-word. It now
+   scales with the viewport and can never be wider than the text column. */
+@media (max-width:600px){
+  .cs-hero h1{font-size:clamp(30px,9vw,42px);line-height:1.08;width:auto;max-width:100%;
+    overflow-wrap:break-word}
+  .cs-hero{padding-top:32px}   /* 72px of air above the tags is desktop-only breathing room */
+}
+
+/* ===== section shells ===== */
+.cs-section{padding:80px 0}
+#problem{padding-bottom:0}
+/* the 100px top gap lives inside .cs-research-bleed so it carries the dot pattern */
+/* top spacing comes from the inner .cs-research-bleed; the bottom 80px is the
+   white breathing room under the Roles insights + photos before the grey section */
+#research{padding-top:0;padding-bottom:80px}
+#solution{padding-bottom:0}
+#key-decisions{padding-bottom:0;padding-top:0}
+#magic-pro{padding-bottom:0;background:var(--soft-bg)}
+.cs-section.alt{background:var(--soft-bg)}
+/* violet-tinted band - What Existing Tools Miss */
+.cs-section.tint{background:rgba(139,92,246,.1);margin-top:0}
+.cs-section.dark{background:var(--grad);color:var(--white)}
+.cs-h2{
+  font-size:48px;font-weight:600;letter-spacing:-.02em;line-height:50px;
+  margin-bottom:26px;max-width:900px;
+}
+.cs-h2 .light{font-weight:400}
+/* a hand-placed break that only holds on wide screens - below 1100px the
+   heading wraps on its own instead of being forced into an awkward split */
+@media (max-width:1100px){.cs-h2 br.br-wide{display:none}}
+.cs-lead{font-size:18px;font-weight:500;color:var(--body);line-height:24px;max-width:820px;margin-bottom:20px}
+.cs-body{font-size:16px;color:var(--body);line-height:22px;max-width:820px}
+.cs-body + .cs-body{margin-top:14px}
+/* size modifiers - use these instead of writing font-size in the HTML.
+   They sit above the 640px shrink rule on purpose: a lead that was set one
+   notch up keeps that size on mobile. */
+.cs-lead.lg{font-size:20px}
+.cs-lead.muted{color:var(--body-2)}
+.cs-lead.xl{font-size:24px;line-height:1.3;font-weight:400;max-width:500px}
+.cs-body.lg{font-size:20px;line-height:1.3}
+/* section sub-heading, one step under .cs-h2 */
+.cs-h3{font-size:26px;font-weight:700;color:#292638;margin-bottom:14px}
+@media (max-width:640px){
+  .cs-h2{font-size:34px;line-height:38px}
+  .cs-lead{font-size:16px;line-height:22px}
+}
+
+/* generic bordered callout / stat pill (reused everywhere) */
+.cs-pill{
+  display:flex;gap:14px;align-items:flex-start;border:1px solid var(--brand-line);border-left-width:4px;
+  border-radius:8px;padding:16px 22px;background:var(--white);
+}
+.cs-pill strong{color:var(--ink);font-weight:700}
+.cs-pill.tight{padding:12px 20px}
+.cs-pill.stack{flex-direction:column;gap:10px;align-items:flex-start}
+
+/* ===== About the project - three facts, each on its own rule =====
+   Columns are capped so they hold their measure on wide screens and shrink
+   instead of overflowing, same as every other fixed grid in this sheet. */
+.cs-about-grid{
+  display:grid;grid-template-columns:repeat(3,minmax(0,360px));
+  gap:clamp(24px,3.6vw,64px);align-items:start;
+}
+.cs-about-col{padding-left:16px;border-left:1px solid var(--brand-faint)}
+.cs-about-col h5{
+  font-size:24px;line-height:1.2;font-weight:600;
+  margin-bottom:14px;
+}
+.cs-about-col p{font-size:16px;line-height:22px;color:var(--body)}
+/* The hero and this block share ONE gradient painted on a wrapper, with both
+   children transparent - so there is no boundary between them to draw a line,
+   whatever the cause. Same technique as .cs-closing-bleed further down. */
+.cs-hero-bleed{background:var(--grad)}
+.cs-hero-bleed .cs-hero{background:transparent}
+.cs-section.on-purple{background:transparent;color:var(--white)}
+/* sitting under the hero inside the shared gradient, the hero's own 80px
+   bottom padding already carries the gap - paying it twice made 160px */
+.cs-hero-bleed .cs-section.on-purple{padding-top:0}
+.cs-section.on-purple .cs-about-col{border-left-color:rgba(255,255,255,.5)}
+.cs-section.on-purple .cs-about-col h5{color:var(--white)}
+.cs-section.on-purple .cs-about-col p{color:rgba(255,255,255,.88)}
+@media (max-width:900px){
+  .cs-about-grid{grid-template-columns:1fr;gap:28px}
+}
+
+/* ===== Problem section ===== */
+.cs-problem-grid{display:grid;grid-template-columns:350px 1fr;gap:16px;align-items:start}
+.cs-problem-grid h2.cs-h2{width:max-content;max-width:480px}
+.cs-problem-media{border-radius:14px;overflow:hidden;max-width:750px}
+.cs-problem-side{display:flex;flex-direction:column;gap:8px}
+/* the 'What kept slipping' block - a problem-side that stands on its own
+   below the grid, so it carries its own top gap and measure */
+.cs-slip-block{margin-top:24px;max-width:350px}
+.cs-slip-title{font-size:18px;line-height:24px;font-weight:600;color:var(--ink)}
+.cs-slip-list{display:grid;grid-template-columns:max-content;gap:14px}
+.cs-slip-list .cs-pill{padding:10px 16px;font-size:18px;line-height:24px}
+.cs-market-stat{padding:0 0 80px;margin-top:32px;max-width:560px}
+.cs-market-stat h4{font-size:18px;line-height:24px;font-weight:600;color:var(--ink);margin-bottom:10px}
+.cs-market-stat h4 a{color:inherit;text-decoration:underline;text-underline-offset:3px}
+.cs-market-stat p{color:var(--body);font-size:16px;line-height:22px}
+.cs-caption{color:var(--body);font-size:16px;line-height:22px;margin-top:14px;max-width:500px}
+.cs-caption.spaced{margin-top:32px}
+.cs-caption strong{display:block;font-size:18px;line-height:24px;color:var(--ink);font-weight:600;margin-bottom:4px}
+
+/* framework: PROBLEM -> DATA -> DECISION */
+.cs-flow-statement + .cs-h2{margin-top:16px}
+.cs-flow-statement{font-size:32px;line-height:38px;margin-top:48px;margin-bottom:16px;letter-spacing:-.02em}
+.cs-flow{display:grid;grid-template-columns:repeat(3,1fr);gap:40px;margin-top:64px;padding-bottom:80px;position:relative}
+.cs-flow-icon{width:64px;height:64px;object-fit:contain;object-position:left;display:block;margin-bottom:20px}
+.cs-flow-col h5{font-size:32px;line-height:38px;font-weight:700;color:var(--ink);letter-spacing:-.02em;margin-bottom:26px}
+.cs-flow-col ul{list-style:none;padding:0;display:flex;flex-direction:column;gap:18px}
+.cs-flow-col li{font-size:18px;line-height:24px;color:var(--body);padding-left:12px;position:relative}
+.cs-flow-col li::before{content:"";position:absolute;left:0;top:.6em;width:4px;height:4px;border-radius:50%;background:var(--body)}
+@media (max-width:900px){.cs-flow{grid-template-columns:1fr}}
+
+/* ===== Research section ===== */
+.cs .cs-bullets{list-style:none;padding:0;display:flex;flex-direction:column;gap:14px;margin-top:8px}
+.cs-bullets li{font-size:18px;line-height:24px;color:var(--body);padding-left:12px;position:relative}
+.cs-bullets li::before{content:"";position:absolute;left:0;top:.6em;width:4px;height:4px;border-radius:50%;background:var(--body)}
+.cs-research-grid{display:flex;flex-direction:column;margin-bottom:56px}
+.cs-research-grid h2{margin-bottom:0}
+.cs-research-grid > div{margin-top:32px;max-width:700px}
+.cs-research-bleed{
+  background-color:var(--soft-bg);
+  background-image:radial-gradient(rgba(107,114,128,.22) 1.2px,transparent 1.2px);
+  background-size:14px 14px;
+  padding-top:80px;padding-bottom:80px;
+}
+.cs-research-bleed .cs-research-shot{padding:0 80px;box-sizing:border-box}
+.cs-research-shot{width:100%;margin-inline:auto;display:block}
+@media (min-width:1400px){.cs-research-shot{max-width:1400px}}
+
+/* minmax(0,X) keeps the intended 300/300/400 widths while there is room, then lets
+   the columns shrink instead of spilling past the frame on narrower screens */
+.cs-landscape{display:grid;grid-template-columns:minmax(0,300px) minmax(0,300px) minmax(0,400px);gap:clamp(24px,3.5vw,50px);margin-top:56px}
+.cs-landscape-card{display:flex;flex-direction:column;gap:16px}
+.cs-landscape-card img{width:148px;height:60px;object-fit:contain;object-position:left}
+.cs-landscape-card p{font-size:16px;color:var(--ink);line-height:22px}
+.cs-gap{border:1px solid var(--brand-line);border-left-width:4px;border-radius:8px;padding:14px 20px;font-size:16px;line-height:22px;color:var(--ink)}
+.cs-gap b{font-weight:700}
+@media (max-width:900px){.cs-landscape{grid-template-columns:1fr}}
+
+/* the Roles block sits one standard 80px step below the band above it */
+.cs-roles-block{margin-top:80px}
+.cs-roles-grid{display:grid;grid-template-columns:.85fr 1.15fr;gap:56px;align-items:start;margin-top:16px}
+.cs-lens-tags{display:flex;flex-direction:column;align-items:flex-start;gap:10px;margin:24px 0 32px}
+.cs-lens-tag{
+  background:rgba(124,115,230,.11);color:var(--brand-line-soft);border-radius:999px;padding:9px 18px;
+  font-family:var(--font-ui);font-size:14px;font-weight:700;letter-spacing:.02em;text-transform:uppercase;
+}
+.cs-roles-photos{display:grid;grid-template-columns:1fr 1fr;gap:16px}
+.cs-roles-photos img{border-radius:10px;border:1px solid #e5e7eb}
+@media (max-width:900px){.cs-roles-grid{grid-template-columns:1fr}}
+
+/* ===== Solution section ===== */
+.cs-coord-grid{display:grid;grid-template-columns:1fr 1.48fr;gap:56px;align-items:start}
+.cs-coord-media{border-radius:12px;overflow:hidden}
+.cs-blockers-media{width:100%}
+.cs-blockers-grid{align-items:stretch}
+.cs-blockers-grid .cs-h2{margin-bottom:0}
+/* second block inside the Blockers band, one standard 80px step down */
+.cs-blockers-block{margin-top:80px}
+.cs-blockers-grid .cs-blockers-media{width:100%;height:100%;object-fit:cover;border-radius:12px}
+.cs-blockers-bleed{background:var(--white);margin-top:80px;padding:80px 0 0}
+.cs-numbered{display:flex;flex-direction:column;gap:36px;margin-top:56px}
+.cs-numbered-row{display:flex;gap:24px;align-items:flex-start}
+.cs-num-badge{
+  flex:none;width:44px;height:44px;border-radius:50%;background:var(--yellow);border:4px solid var(--white);
+  display:flex;align-items:center;justify-content:center;font-weight:700;font-size:20px;color:var(--body-2);
+  box-shadow:0 4px 8px rgba(12,12,13,.05),0 16px 8px -8px rgba(12,12,13,.1);
+}
+.cs-numbered-row h5{font-size:24px;line-height:1.2;font-weight:600;color:var(--ink);margin-bottom:6px}
+.cs-numbered-row p{font-size:18px;line-height:24px;color:var(--body)}
+.cs-action-grid{display:grid;grid-template-columns:350px 1fr;gap:100px;align-items:stretch}
+.cs-action-grid .cs-solution-shot{
+  width:calc(100% + clamp(20px,5vw,72px));max-width:none;height:85%;object-fit:contain;background:var(--white);
+  align-self:end;
+  margin-top:0;margin-right:calc(-1 * clamp(20px,5vw,72px));margin-bottom:0;
+  border-radius:0;overflow:hidden;
+}
+@media (max-width:900px){
+  .cs-coord-grid,.cs-action-grid{grid-template-columns:1fr}
+  .cs-action-grid .cs-solution-shot{width:100%;height:auto;object-fit:initial;margin-right:0;margin-top:32px}
+}
+
+.cs-risk-list{display:flex;flex-direction:column;gap:28px;margin-top:48px}
+.cs-risk-row{display:flex;gap:24px;align-items:flex-start}
+.cs-risk-row h5{font-size:24px;line-height:1.3;font-weight:600;color:var(--ink);margin-bottom:6px}
+.cs-risk-row p{font-size:18px;line-height:24px;color:var(--body)}
+.cs-magic-link{
+  display:inline-flex;align-items:center;gap:10px;margin-top:48px;text-decoration:none;max-width:100%;
+  border:1px solid var(--brand-line);border-left-width:4px;border-radius:8px;padding:14px 24px;
+  font-size:18px;line-height:24px;transition:border-color 180ms var(--ease-out),transform 180ms var(--ease-out),box-shadow 180ms var(--ease-out);
+}
+.cs-magic-link:hover{border-color:var(--brand-line-strong);box-shadow:0 8px 24px rgba(124,115,230,.18);transform:translateY(-2px)}
+.cs-magic-link:active{transform:scale(.98)}
+.cs-magic-link svg{width:18px;height:18px;stroke:var(--brand);fill:none;stroke-width:2.2;stroke-linecap:round;stroke-linejoin:round;transition:transform 180ms var(--ease-out)}
+.cs-magic-link:hover svg{transform:translateX(4px)}
+
+.cs-explorations-bleed{
+  margin-top:0;padding:80px 0;
+  background-color:var(--soft-bg);
+  background-image:radial-gradient(rgba(107,114,128,.22) 1.2px,transparent 1.2px);
+  background-size:14px 14px;
+}
+.cs-explorations{display:grid;grid-template-columns:1fr 1fr;gap:40px}
+.cs-exploration-col h3{font-size:24px;line-height:1.3;font-weight:700;color:var(--ink);margin-bottom:10px;max-width:400px}
+.cs-exploration-col p{color:var(--body);font-size:16px;line-height:22px;margin-bottom:20px;max-width:400px}
+.cs-exploration-col img{width:min(800px,100%);border-radius:10px}
+@media (max-width:800px){.cs-explorations{grid-template-columns:1fr}}
+
+/* ===== Key Decisions ===== */
+.cs-choose-bleed{background:var(--white);padding:80px 0}
+/* "Every decision below began as one of those explorations." - subtitle, not body copy */
+.cs-choose-bleed .cs-lead{font-size:24px;line-height:1.3}
+.cs-decisions{display:grid;grid-template-columns:repeat(3,minmax(0,300px));gap:clamp(24px,3.5vw,48px);margin-top:56px}
+.cs-decision-card{display:flex;flex-direction:column;gap:14px}
+.cs-decision-head{display:flex;gap:16px;align-items:flex-start;margin-bottom:2px}
+.cs-decision-num{font-size:56px;font-weight:600;color:var(--brand-line);letter-spacing:-.02em;line-height:1}
+/* two-line title beside the big number - break points and tight leading per Figma
+   (node 429:4913, 32px/36px there = 1.125 ratio, kept at the 24px size used here) */
+.cs-decision-head h5{font-size:24px;line-height:1.15;font-weight:600;color:var(--body-2);padding-top:8px}
+.cs-decision-card > p.considered{font-size:16px;color:var(--body);line-height:22px;margin-bottom:6px}
+.cs-decision-card .cs-pill{font-size:16px;line-height:22px}
+@media (max-width:1000px){.cs-decisions{grid-template-columns:1fr}}
+
+/* ===== Magic Pro ===== */
+.cs-mp-badge{
+  display:inline-flex;align-items:center;gap:8px;border:2px solid var(--brand-a);border-radius:24px;
+  padding:9px 22px;font-family:var(--font-ui);font-weight:700;color:var(--brand);font-size:16px;margin-bottom:28px;
+}
+.cs-mp-result{font-size:16px;line-height:22px;color:var(--ink);margin-top:18px;max-width:460px}
+.cs-mp-result b{font-weight:600}
+.cs-mp-top-text .cs-body{max-width:600px}
+.cs-mp-top{position:relative;display:grid;grid-template-columns:1fr 1fr;gap:56px;align-items:start;margin-top:32px}
+.cs-mp-example-label{font-size:24px;line-height:1.2;font-weight:600;color:var(--ink);margin-bottom:16px}
+/* curved connector from the Simple Example box down to the flow screenshot.
+   Absolute so it can hang out of .cs-mp-top into the gap below without
+   pushing any layout around. Asset: assets/portfolio/aft/arrowDown.svg */
+.cs-mp-arrow-connector{
+  position:absolute;z-index:5;pointer-events:none;
+  /* 40% smaller than the source asset (361x355) */
+  width:217px;height:213px;
+  /* right edge lands in the column gutter, just left of the Simple Example box;
+     bottom tip stops ~40px above the screenshot (which sits 200px below this block) */
+  right:50%;
+  top:calc(100% + 160px - 213px);
+}
+/* stroked, not filled - non-scaling-stroke holds the line at 2px no matter how
+   much the svg itself is scaled down */
+.cs-mp-arrow-connector path{
+  stroke:var(--brand);stroke-width:2;vector-effect:non-scaling-stroke;
+  fill:none;stroke-linecap:round;stroke-linejoin:round;
+}
+.cs-mp-agent-shot{width:71%;margin:200px auto 0;position:relative;z-index:1}
+/* narrower screens: shrink it so it still connects the two blocks */
+@media (max-width:1300px){
+  .cs-mp-arrow-connector{width:160px;height:157px;top:calc(100% + 160px - 157px)}
+}
+@media (max-width:900px){
+  .cs-mp-top{grid-template-columns:1fr;gap:32px}
+  /* stacked layout: the Simple Example box sits directly above the screenshot,
+     so the curve is kept but small and pulled to the right edge, with a short
+     tail so it reads as "this leads into the image below" */
+  .cs-mp-agent-shot{width:100%;margin-top:120px}
+  .cs-mp-arrow-connector{
+    display:block;
+    width:96px;height:94px;
+    right:8px;
+    /* sits inside the 120px gap: ~13px clear of the box above and of the image below */
+    top:calc(100% + 13px);
+  }
+}
+/* 80px margin + 80px padding = the 160px break after the agent shot on desktop.
+   On small screens that reads as dead space, so it collapses to 96px (-40%). */
+.cs-mp-compare-bleed{background:var(--soft-bg);margin-top:80px;padding:80px 0}
+@media (max-width:900px){.cs-mp-compare-bleed{margin-top:0;padding-top:96px}}
+.cs .cs-mp-card-shot{width:100%;max-width:400px;border-radius:8px;flex:none;background:#fff}
+
+/* columns are capped to the card width (350px) so the gap you see equals the gap
+   declared - with 1fr tracks the columns stretched and left ~180px of dead space */
+.cs-mp-compare{display:grid;grid-template-columns:repeat(2,minmax(0,400px));gap:80px;margin-top:56px;align-items:start}
+.cs-mp-compare-col{display:flex;flex-direction:column;gap:24px}
+.cs-mp-compare-text{flex:1;min-width:0}
+.cs-mp-compare-col .label{font-size:24px;line-height:1.3;font-weight:700;letter-spacing:0}
+.cs-mp-compare-col.confident .label{color:var(--blue)}
+.cs-mp-compare-col.uncertain .label{color:var(--orange)}
+.cs-mp-compare-col .sub{font-size:16px;line-height:22px;font-weight:500;color:var(--ink);margin-top:4px;margin-bottom:14px}
+@media (max-width:960px){.cs-mp-compare{grid-template-columns:1fr}}
+/* Text always sits ABOVE its card - label, sub and bullets read first, then the
+   screenshot. (A side-by-side variant used to kick in at 1500px+ to make room for
+   a connecting arrow; that arrow is gone and the row layout squeezed the text to
+   ~154px, so the column stays at every width.) */
+
+/* ===== Outcomes ===== */
+/* ===== Outcomes stat cards - Figma node 413:7205 ("15 - Target Outcomes") =====
+   Cards are transparent so the section's purple gradient reads through; the
+   depth comes entirely from the 2px #d389fb edge + the three-layer shadow.  */
+.cs-outcomes-stats{
+  /* capped at 350px on wide screens, shrinks below that instead of overflowing */
+  display:grid;grid-template-columns:repeat(3,minmax(0,350px));
+  gap:clamp(20px,2.6vw,32px);margin:56px 0 40px;align-items:stretch;
+}
+/* content sits centred in the card, both axes */
+.cs-stat-card{
+  border:2px solid var(--brand-edge);border-radius:24px;padding:clamp(20px,2.2vw,28px);
+  display:flex;flex-direction:column;justify-content:center;align-items:center;
+  text-align:center;gap:8px;
+  box-shadow:4px 4px 6px 0 rgba(58,38,119,.16),0 4px 4px 0 rgba(12,12,13,.16),6px 4px 60px 0 rgba(40,32,134,.16);
+}
+.cs-stat-num{display:flex;align-items:flex-end;justify-content:center;gap:6px;flex-wrap:wrap}
+/* straight round-capped arrow, mint - up for gains, down for reduced time */
+.stat-arrow{
+  width:26px;height:26px;flex:none;margin-bottom:6px;
+  fill:none;stroke:var(--accent-mint,#36E8B8);stroke-width:2;
+  stroke-linecap:round;stroke-linejoin:round;
+}
+/* prefix and label share one size in the design, with a soft white->grey fade */
+.cs-stat-num .prefix,
+.cs-stat-card .label{
+  font-size:20px;line-height:1.25;font-weight:400;
+  background:linear-gradient(180deg,#fff 60%,#e5e7eb 100%);
+  background-clip:text;-webkit-background-clip:text;
+  color:transparent;-webkit-text-fill-color:transparent;
+}
+.cs-stat-num .prefix{padding-bottom:4px}
+/* number + % are one unit - if the row wraps they move to the next line together,
+   the % must never be orphaned onto its own line */
+.cs-stat-num .val{display:inline-flex;align-items:flex-end;gap:6px;flex:none;white-space:nowrap}
+.cs-stat-num .num{
+  font-size:clamp(40px,4.2vw,56px);font-weight:700;letter-spacing:-.05em;
+  color:#fff;line-height:1;
+}
+.cs-stat-num .pct{font-size:26px;font-weight:700;color:#fff;line-height:1;padding-bottom:4px}
+.cs-stat-card .label{padding-top:0}
+@media (max-width:980px){.cs-outcomes-stats{grid-template-columns:1fr}}
+.cs-disclaimer{
+  list-style:disc;padding-left:26px;margin-top:8px;
+  font-size:18px;line-height:26px;color:rgba(255,255,255,.9);max-width:1000px;
+}
+
+/* one gradient spans Outcomes + What I Learned, so there is no seam where the
+   two sections meet - each child is transparent and inherits this backdrop */
+.cs-closing-bleed{background:var(--grad)}
+.cs-closing-bleed .cs-section.dark,
+.cs-closing-bleed .cs-learned{background:transparent}
+.cs-learned{padding:0 0 80px;color:#fff;text-align:left}
+/* hairline divider across the top of the closing slide */
+.cs-learned .wrap{border-top:1px solid rgba(255,255,255,.35);padding-top:64px}
+.cs-learned .eyebrow{font-weight:700;font-size:48px;line-height:50px;letter-spacing:-.01em;margin-bottom:24px}
+.cs-learned .eyebrow .light{font-weight:400}
+/* narrow column so each sentence lands on two lines, as in the deck */
+.cs-learned p.lesson{font-weight:500}
+.cs-learned p{font-size:18px;line-height:24px;max-width:450px}
+.cs-learned p + p{margin-top:20px}
+.cs-thanks{margin-top:72px;display:flex;align-items:center;gap:24px}
+/* the heart is an <img>, not an inline <svg> - the old rule targeted svg and never applied */
+.cs-thanks img{width:96px;height:auto;flex:none}
+.cs-thanks span{font-weight:700;font-size:40px;line-height:1.05;letter-spacing:-.01em;text-transform:uppercase}
+
+/* ===== footer ===== */
+.cs-footer{
+  padding:40px clamp(20px,6vw,48px);display:flex;align-items:center;justify-content:space-between;
+  border-top:1px solid #ececf3;color:var(--body);font-size:15px;
+}
+.cs-footer a{color:inherit}
+
+/* ===== reveal-on-scroll ===== */
+.cs-reveal{opacity:0;transform:translateY(28px)}
+.cs-reveal.in{opacity:1;transform:none;transition:opacity 700ms var(--ease-out),transform 700ms var(--ease-out)}
+.cs-reveal-group.in > *{opacity:1;transform:none}
+.cs-reveal-group > *{opacity:0;transform:translateY(20px);transition:opacity 600ms var(--ease-out),transform 600ms var(--ease-out)}
+.cs-reveal-group.in > *:nth-child(1){transition-delay:0ms}
+.cs-reveal-group.in > *:nth-child(2){transition-delay:60ms}
+.cs-reveal-group.in > *:nth-child(3){transition-delay:120ms}
+
+@keyframes csFloat{
+  0%,100%{transform:translateY(0)}
+  50%{transform:translateY(-14px)}
+}
+
+@media (prefers-reduced-motion:reduce){
+  .cs *,.cs *::before,.cs *::after{animation:none!important;transition:none!important}
+  /* the sticky bar lives outside .cs, so its pulsing dot needs its own line */
+  .case-nav-item.demo .live-dot::after{animation:none!important}
+  .cs-reveal,.cs-reveal-group>*{opacity:1!important;transform:none!important}
+}
+
+/* visible to screen readers only - used to announce "opens in a new tab" */
+.sr-only{
+  position:absolute;width:1px;height:1px;padding:0;margin:-1px;
+  overflow:hidden;clip:rect(0,0,0,0);white-space:nowrap;border:0;
+}
+
+/* ===== "Try the Live Demo" CTA =====
+   The demo is the strongest asset in the case, so it gets a real button rather
+   than a text link. Purple-filled by default (reads on the light sections);
+   inverted to white inside the purple hero. The mint dot pulses to signal
+   "this is live", and is the only motion on the button. */
+/* the `.cs ` prefix is required: `.cs a{color:inherit}` is (0,1,1) and would
+   otherwise win over a single class, painting the label dark on purple */
+.cs .cs-demo-btn{
+  display:inline-flex;align-items:center;gap:12px;
+  padding:16px 28px;border-radius:8px;
+  /* one step darker than --accent (#8b5cf6): that only reaches 4.23:1 against
+     white, and 18px bold sits just under WCAG's large-text threshold */
+  background:var(--brand-cta);color:#fff;text-decoration:none;
+  font-family:var(--font-ui);font-size:18px;font-weight:700;line-height:1;
+  letter-spacing:.01em;white-space:nowrap;
+  box-shadow:0 8px 24px rgba(139,92,246,.32);
+  transition:transform 180ms var(--ease-out),box-shadow 180ms var(--ease-out),background 180ms var(--ease-out);
+}
+.cs-demo-btn:hover{transform:translateY(-2px);box-shadow:0 14px 34px rgba(139,92,246,.42)}
+.cs-demo-btn:active{transform:translateY(0) scale(.99)}
+.cs-demo-btn:focus-visible{outline:3px solid var(--accent-mint,#36E8B8);outline-offset:3px}
+.cs-demo-btn .arrow{
+  width:18px;height:18px;flex:none;fill:none;stroke:currentColor;
+  stroke-width:2.2;stroke-linecap:round;stroke-linejoin:round;
+  transition:transform 200ms var(--ease-out);
+}
+.cs-demo-btn:hover .arrow{transform:translate(3px,-3px)}
+/* live indicator */
+.cs-demo-btn .live-dot{
+  width:10px;height:10px;flex:none;border-radius:50%;
+  background:var(--accent-mint,#36E8B8);position:relative;
+}
+.cs-demo-btn .live-dot::after{
+  content:"";position:absolute;inset:0;border-radius:50%;
+  background:var(--accent-mint,#36E8B8);
+  animation:demoPulse 1.9s var(--ease-out) infinite;
+}
+@keyframes demoPulse{
+  0%{transform:scale(1);opacity:.7}
+  70%{transform:scale(2.6);opacity:0}
+  100%{transform:scale(2.6);opacity:0}
+}
+/* inverted for the purple hero - and duplicated on the closing section, which
+   sits on the same gradient bleed background, so the button must match exactly */
+.cs-hero .cs-demo-btn,
+.cs-closing-bleed .cs-demo-btn,
+.sy-closing-bleed .cs-demo-btn{
+  background:#fff;color:var(--brand-deep);
+  box-shadow:0 10px 30px rgba(0,0,0,.28);
+}
+.cs-hero .cs-demo-btn{margin-top:28px}
+.cs-hero .cs-demo-btn:hover,
+.cs-closing-bleed .cs-demo-btn:hover,
+.sy-closing-bleed .cs-demo-btn:hover{background:#fff;box-shadow:0 16px 40px rgba(0,0,0,.36)}
+/* the Magic Pro placement sits under the agent flow shot */
+.cs-mp-demo-cta{display:flex;justify-content:center;margin-top:56px}
+@media (max-width:640px){
+  .cs-demo-btn{font-size:16px;padding:14px 22px;white-space:normal}
+}
+
+/* ===== SyncOps case - layouts taken from the Figma slides =====
+   Only the type scale and the 80px section rhythm carry over from AFT; every
+   composition below matches its slide (which side the image sits on, how big
+   it is, what the background does). */
+
+/* 01 · Cover - measured off the Figma frame (562:9381), which is 1548x826:
+     chips row  x=80  y=60   923x43
+     headline   x=80  y=149  56/60, three lines   -> 46px below the chips
+     lead       x=80  y=375  28/1.5, 484 wide     -> 46px below the headline
+     product    x=644 y=80   904x680, right edge flush with the frame at 1548 */
+/* the whole cover scales as ONE piece: every size below is its share of the
+   1548px Figma frame, measured in cqw against the blue field itself - not vw,
+   which tracks the window and let the artwork drift over the copy */
+.sy-cover{background:var(--brand-a);padding:60px 0 0;overflow:hidden;position:relative;
+  container-type:inline-size}
+/* static on purpose: the product shot must anchor to the blue field, not to
+   the wrap, or its top/right land inside the wrap's padding instead */
+.sy-cover .cs-hero-wrap{position:static;min-height:49.5cqw}
+.sy-cover .cs-hero-text{max-width:none}
+.sy-cover .cs-tags{flex-wrap:nowrap;gap:16px;margin:0 0 46px;width:max-content;max-width:100%}
+.sy-cover .cs-tag{white-space:nowrap}
+.sy-cover h1{font-size:clamp(26px,3.23cqw,50px);line-height:1.08;letter-spacing:-.01em;max-width:49%;width:auto;margin:0}
+.sy-cover p.lead{font-size:clamp(15px,1.55cqw,24px);line-height:1.21;font-weight:400;max-width:31.3%;margin-top:46px}
+.sy-cover .cs-demo-btn{margin-top:46px}
+/* absolutely placed, flush to the right edge of the blue field */
+/* positioned against the blue field itself, so right:0 is its true edge */
+.sy-cover .cs-hero-media{
+  position:absolute;top:80px;right:0;z-index:1;
+  width:58.4%;aspect-ratio:904/680;pointer-events:none;
+}
+.sy-cover .cs-hero-media img{width:100%;height:100%;object-fit:contain;object-position:top right;max-width:none}
+@media (max-width:1100px){
+  .sy-cover .cs-hero-wrap{min-height:0}
+  .sy-cover .cs-hero-media{position:static;width:100%;aspect-ratio:auto;margin-top:56px}
+  .sy-cover .cs-tags{flex-wrap:wrap;gap:12px}
+  /* the 49%/31.3% caps only make sense while the shot sits beside the copy.
+     Once it drops below, they starve the text into a thin column. */
+  .sy-cover h1{max-width:none}
+  .sy-cover p.lead{font-size:22px;max-width:none}
+  .sy-cover{padding-bottom:80px}
+}
+@media (max-width:640px){
+  .sy-cover h1{font-size:clamp(24px,7.4vw,34px)}
+  .sy-cover p.lead{font-size:17px;line-height:1.35;margin-top:28px}
+  .sy-cover .cs-demo-btn{margin-top:32px}
+}
+
+/* 02 · shared two-column split: copy left, artwork right */
+.sy-split{display:grid;grid-template-columns:minmax(0,450px) minmax(0,1fr);
+  gap:clamp(32px,5vw,88px);align-items:center}
+.sy-split-wide{grid-template-columns:minmax(0,620px) minmax(0,1fr);align-items:start}
+.sy-split-media{width:80%;height:auto;justify-self:center}
+.sy-block + .sy-block{margin-top:32px}
+/* the visible gap also carries the h3's half-leading (~32px), so the margin
+   goes to 0 to actually halve what you see */
+#about-project .cs-kicker{margin-bottom:0}
+.sy-h{font-size:24px;line-height:1.2;font-weight:700;color:var(--brand);margin-bottom:10px}
+.sy-block .cs-bullets{margin-top:0}
+
+/* 04 · Research - five stats, then two persona cards */
+#research .cs-kicker{margin-top:80px}
+.sy-stats{display:grid;grid-template-columns:repeat(5,minmax(0,200px));gap:clamp(16px,1.8vw,24px);margin-top:56px;justify-content:start}
+.sy-stat .n{font-size:48px;line-height:50px;font-weight:700;color:var(--brand);letter-spacing:-.02em}
+.sy-stat .n span{font-size:24px;font-weight:700;margin-left:2px}
+.sy-stat.accent .n{color:#f89123}
+.sy-stat p{font-size:16px;line-height:22px;color:var(--ink);margin-top:0}
+.sy-note{font-size:14px;line-height:20px;color:var(--body);margin-top:48px;max-width:620px}
+#map .sy-note{color:var(--ink);font-weight:500;margin-top:24px}
+.sy-personas{display:grid;grid-template-columns:repeat(2,minmax(0,450px));gap:clamp(24px,3.4vw,50px);margin-top:32px;justify-content:start}
+.sy-persona{border:2px solid var(--brand-faint);border-left:4px solid var(--brand);border-radius:12px;padding:24px 28px;background:#fff;max-width:450px}
+.sy-persona h5{font-size:18px;line-height:24px;font-weight:400;color:var(--body);margin-bottom:8px}
+.sy-persona h5 strong{font-weight:700;color:var(--ink)}
+.sy-persona > p{font-size:16px;line-height:22px;color:var(--body)}
+.sy-persona-quote{font-size:16px;line-height:22px;color:var(--body);font-style:italic;margin-top:16px}
+
+/* 05 · Insight - what they said -> what I designed */
+.sy-said-head{display:grid;grid-template-columns:minmax(0,1fr) 64px minmax(0,1fr);
+  gap:clamp(16px,2vw,28px);margin-top:56px;margin-bottom:16px}
+.sy-said-head span{font-size:24px;line-height:1.2;font-weight:500;color:var(--ink)}
+/* the pair wrapper exists only so small screens can box a question with its
+   answer; on the wide grid it dissolves and nothing moves */
+.sy-said-pair{display:contents}
+.sy-said-label{display:none}
+.sy-said{display:grid;grid-template-columns:minmax(0,1fr) 64px minmax(0,1fr);
+  gap:clamp(16px,2vw,28px);align-items:stretch}
+.sy-said-quote{position:relative;border:2px solid #fff;border-radius:50px;padding:30px 30px 22px;display:flex;flex-direction:column;justify-content:center}
+.sy-said-quote p{font-size:16px;line-height:22px;color:var(--ink)}
+.sy-said-quote cite{display:block;font-size:14px;line-height:20px;color:var(--body);font-style:normal;margin-top:6px}
+.sy-arrow{width:30px;height:30px;justify-self:center;align-self:center;flex:none;fill:none;stroke:var(--brand);
+  stroke-width:2;stroke-linecap:round;stroke-linejoin:round}
+.sy-said-answer{background:var(--brand);color:#fff;border-radius:50px;
+  padding:24px 34px;font-size:24px;line-height:1.2;font-weight:600;
+  display:flex;align-items:center}
+
+/* 06 · Directions - two struck through, one circled as chosen */
+.sy-dirs{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr) minmax(0,1.5fr);
+  gap:clamp(24px,3vw,48px);margin-top:56px;align-items:start}
+.sy-dir{position:relative;padding:8px 0}
+.sy-dir h5{font-size:24px;line-height:1.2;font-weight:400;color:var(--ink);margin-bottom:14px}
+.sy-dir .claim{font-size:18px;line-height:24px;color:var(--ink);margin-bottom:14px}
+.sy-dir .why{font-size:16px;line-height:22px;color:var(--body)}
+.sy-chosen{font-size:18px;line-height:24px;color:#2fae7d;font-weight:600;
+  display:flex;align-items:center;gap:8px;margin-bottom:14px;background:none}
+/* the red cross, drawn with the box's own edges - no image needed */
+/* her own hand-drawn marks, laid over the block - nothing redrawn in CSS */
+.sy-mark-x{position:absolute;top:-6%;left:-4%;width:66%;height:auto;pointer-events:none;z-index:2}
+.sy-dir.is-chosen{padding:0 44px 36px 0;position:relative}
+.sy-dir.is-chosen h5{font-weight:600}
+/* her drawn circle, used exactly as exported - already the right green */
+.sy-mark-circle{position:absolute;top:-10%;left:-6%;width:112%;height:auto;
+  pointer-events:none;z-index:2;max-width:none}
+/* the Chosen tick, recoloured green from its blue original */
+/* an <img> would still paint its own blue pixels through the mask, so the tick
+   is an empty span carrying her exact glyph as a mask, filled green */
+.sy-tick{display:inline-block;width:20px;height:15px;flex:none;background:#2fae7d;
+  -webkit-mask:url('../case-syncops/assets/tick.svg') center/contain no-repeat;
+          mask:url('../case-syncops/assets/tick.svg') center/contain no-repeat}
+
+/* 07 · Six signals - input list, agent, output pills */
+.sy-signals{display:grid;grid-template-columns:minmax(0,460px) minmax(0,300px) minmax(0,1fr);
+  gap:clamp(28px,4vw,72px);align-items:start;margin-top:32px}
+.sy-h-sm{font-size:18px;letter-spacing:.06em;margin-top:132px}
+.cs .sy-chips{list-style:none;padding:0;display:flex;flex-direction:column;gap:16px;margin-top:14px}
+.sy-chips li{border:1px solid var(--brand-faint);border-radius:999px;padding:16px 24px;
+  font-size:16px;line-height:22px;color:var(--ink);display:flex;justify-content:space-between;gap:12px;align-items:baseline}
+.sy-chips em{font-style:normal;font-size:14px;color:var(--body)}
+/* the agent is her drawn shape, not a photo: a stadium carrying the gradient,
+   the white spark above the name. Figma 306x468 r153, #5987eb -> #5469d4 top down */
+/* the mid column is pinned to the shape's own width so the arrows can hang off
+   its true edges rather than the column's */
+.sy-sig-mid{text-align:center;position:relative;width:100%;max-width:230px;margin:0 auto}
+.sy-agent-shape{position:relative;z-index:2;width:100%;margin:0 auto;
+  aspect-ratio:306/468;border-radius:999px;
+  background:linear-gradient(180deg,#ffdcad 0%,#ff8400 100%);
+  display:flex;flex-direction:column;align-items:center;justify-content:center;gap:18px}
+.sy-agent-ic{width:44%;height:auto;display:block}
+.sy-agent-name{font-size:26px;line-height:1.15;font-weight:600;color:#fff;margin:0}
+.sy-agent-name .light{font-weight:600}
+/* the two curved arrows, placed off the shape exactly as they sit in the deck */
+.sy-sig-down{display:none}
+.sy-sig-arrow{position:absolute;height:auto;pointer-events:none;z-index:1}
+.sy-sig-arrow.to-agent{right:100%;margin-right:6%;top:35.5%;width:84%}
+.sy-sig-arrow.from-agent{left:100%;margin-left:12%;top:21.4%;width:57%}
+@media (max-width:1240px){.cs img.sy-sig-arrow{display:none}}
+.sy-sig-out{padding-top:90px}
+.cs .sy-pills{list-style:none;padding:0;display:flex;flex-direction:column;gap:16px;margin-top:14px;align-items:flex-start}
+.sy-pills li{background:var(--brand);color:#fff;border-radius:999px;padding:16px 24px;
+  font-size:16px;line-height:22px;max-width:100%}
+.sy-security{display:flex;gap:18px;align-items:flex-start;background:#f9c7c7;
+  border-radius:24px 0 0 24px;padding:28px 32px;margin-top:80px;margin-left:auto;
+  width:400px;max-width:100%;margin-right:calc(-1 * clamp(20px,5vw,72px))}
+.sy-security img{width:34px;height:34px;flex:none}
+.sy-security p{font-size:16px;line-height:22px;color:var(--ink)}
+
+/* 09 · Reasoning - five columns on the brand field */
+.sy-brand{background:var(--grad);color:#fff}
+.sy-brand .cs-h2{color:#fff;-webkit-text-fill-color:#fff}
+.sy-steps{display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:0;margin-top:56px}
+.sy-step{padding:0 clamp(14px,1.6vw,26px);border-left:1px solid rgba(255,255,255,.4)}
+.sy-step:first-child{padding-left:0;border-left:none}
+.sy-step .n{font-size:48px;line-height:50px;font-weight:700;color:#fff;display:flex;align-items:center;gap:10px}
+.sy-step .n span{font-size:32px}
+.sy-step h5{font-size:18px;line-height:24px;font-weight:600;color:#fff;margin:14px 0 8px}
+.sy-step p{font-size:16px;line-height:22px;color:rgba(255,255,255,.9)}
+.sy-banner{background:rgba(255,255,255,.16);border-radius:999px;padding:20px 34px;
+  font-size:18px;line-height:24px;color:#fff;margin-top:64px}
+.sy-tint .sy-banner{background:linear-gradient(90deg,var(--brand-a),var(--brand-b));color:#fff;width:fit-content;max-width:100%}
+
+/* 10 · Before / after */
+.sy-ba{display:grid;grid-template-columns:minmax(0,1fr) clamp(110px,13vw,170px) minmax(0,1fr);
+  gap:clamp(16px,2vw,32px);align-items:start;margin-top:56px}
+.sy-arrow-lg{align-self:center}
+.sy-ba-col h5{font-size:18px;line-height:24px;font-weight:700;color:var(--ink);margin-bottom:18px}
+.sy-ba-col h5 .light{font-weight:400;color:var(--body)}
+.cs .sy-steps-list{list-style:none;padding:0;display:flex;flex-direction:column;gap:10px}
+.sy-steps-list li{background:#fff;border-radius:999px;padding:16px 24px;
+  font-size:16px;line-height:22px;color:var(--body)}
+.sy-steps-list li.is-primary{background:var(--brand-cta);color:#fff;font-weight:600}
+.sy-arrow-lg{width:64px;height:64px}
+.sy-ba-arrow{width:100%;height:auto;align-self:center;justify-self:center}
+.sy-ba-down{display:none}
+.sy-auto{display:grid;grid-template-columns:minmax(0,1.3fr) repeat(4,minmax(0,1fr));
+  gap:clamp(14px,2vw,28px);align-items:start;
+  border-top:2px solid #fff;border-bottom:2px solid #fff;
+  padding:24px 0;margin-top:80px}
+.sy-auto h5{font-size:18px;line-height:24px;font-weight:700;color:var(--ink)}
+.sy-auto div strong{display:block;font-size:16px;line-height:22px;font-weight:700;color:var(--ink)}
+.sy-auto div span{display:block;font-size:14px;line-height:20px;color:var(--body);margin-top:4px}
+
+/* 11 · Map + callouts   12 · Anatomy + callouts */
+.sy-map-intro{font-size:18px;line-height:24px;font-weight:500;color:var(--ink);margin-bottom:8px}
+.sy-map-grid{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,420px);
+  gap:clamp(24px,4vw,64px);align-items:start;margin-top:40px}
+.sy-map-shot{width:100%;border-radius:12px}
+.sy-anatomy{display:grid;grid-template-columns:minmax(0,420px) minmax(0,500px);
+  gap:clamp(24px,4vw,72px);align-items:center;margin-top:40px}
+.sy-anatomy-shot{width:100%;border-radius:12px}
+/* map + anatomy callouts use the same numbered outline bubble as slide 14 */
+.sy-callouts{display:flex;flex-direction:column;gap:18px}
+.sy-callout-row{display:flex;align-items:center}
+.sy-callout-row .cs-num-badge{margin-right:-16px;position:relative;z-index:2}
+.sy-callout{flex:1;min-width:0;background:transparent;border:2px solid #fff;
+  border-radius:40px;padding:18px 30px 18px 32px}
+/* 12 · Anatomy takes the true stadium: the ends are exact semicircles rather
+   than the 40px rounding the other callout lists use. A little more side
+   padding keeps the copy clear of the curve. */
+#anatomy .sy-callout{border-radius:999px;padding-left:40px;padding-right:38px}
+.sy-callout h5{font-size:22px;line-height:1.2;font-weight:700;color:var(--ink);margin-bottom:4px}
+.sy-callout p{font-size:16px;line-height:22px;color:var(--body)}
+
+/* 13 · Autonomy - three colour-coded cards */
+.sy-autonomy{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));
+  gap:clamp(20px,2.6vw,36px);margin-top:56px}
+.sy-auto-card{border:2px solid;border-radius:20px;padding:28px 30px}
+.sy-auto-card h5{font-size:24px;line-height:1.2;font-weight:700;margin-bottom:16px}
+.cs .sy-auto-card ul{list-style:none;padding:0;margin-bottom:16px}
+.sy-auto-card li{font-size:18px;line-height:24px;color:var(--body);padding-left:16px;position:relative;margin-bottom:8px}
+.sy-auto-card li::before{content:"\00b7";position:absolute;left:0;color:var(--body);font-size:1.1em;line-height:inherit}
+.sy-auto-card p{font-size:18px;line-height:24px;font-weight:500;color:var(--ink)}
+.sy-auto-card.is-green{border-color:#9fe3c6}.sy-auto-card.is-green h5{color:#2fae7d}
+.sy-auto-card.is-amber{border-color:#f7d08f}.sy-auto-card.is-amber h5{color:#e08a1e}
+.sy-auto-card.is-red{border-color:#f4a2a6}.sy-auto-card.is-red h5{color:#e2606a}
+
+/* 14 · Trust - five icons in a row */
+.sy-trust{display:grid;grid-template-columns:repeat(5,minmax(0,200px));
+  gap:clamp(20px,2.6vw,40px);margin-top:56px;justify-content:start}
+.sy-trust-item img{width:55px;height:55px;margin-bottom:18px}
+.sy-trust-item h5{font-size:32px;line-height:1.15;font-weight:700;color:var(--ink);margin-bottom:12px}
+.sy-trust-item p{font-size:18px;line-height:24px;color:var(--body)}
+
+/* 15 · Scenario - vertical timeline */
+.sy-scenario{display:block}
+/* one centre rail, cards alternating either side - as in the slide */
+.sy-tl{position:relative;display:flex;flex-direction:column;gap:64px}
+.sy-tl::before{content:"";position:absolute;left:50%;top:0;bottom:0;width:1px;background:var(--brand-faint)}
+.sy-tl-row{display:grid;grid-template-columns:1fr 1fr;position:relative}
+/* dot spacing is what reads as time: 08:00 -> 12:40 is doubled, and the
+   one-minute step is pulled in to 24px. The cards alternate sides, so the
+   negative pull never makes two of them collide. */
+.sy-tl-row:nth-child(2){margin-top:155px}
+.sy-tl-row.is-tight{margin-top:-175px}
+.sy-tl-row.is-right .sy-tl-card{grid-column:2;padding-left:22px}
+.sy-tl-row.is-left  .sy-tl-card{grid-column:1;padding-right:22px;text-align:right;justify-self:end}
+.sy-tl-card{position:relative;max-width:450px}
+.sy-tl-row::before{content:"";position:absolute;left:50%;top:6px;width:13px;height:13px;margin-left:-7px;
+  border-radius:50%;border:1px solid var(--brand-soft);background:#fff;z-index:1}
+.sy-tl-card .t{font-size:18px;line-height:24px;font-weight:600;color:var(--ink);margin-bottom:6px}
+.sy-tl-card h5{font-size:24px;line-height:1.2;font-weight:400;color:var(--ink);margin-bottom:10px}
+.sy-tl-card p{font-size:16px;line-height:22px;color:var(--body)}
+.sy-aside{background:var(--soft-bg);border-radius:20px;padding:28px 32px;margin-top:56px;max-width:460px;margin-left:auto}
+.sy-aside h5{font-size:18px;line-height:24px;font-weight:700;color:var(--ink);margin-bottom:10px}
+.sy-aside p{font-size:16px;line-height:22px;color:var(--body)}
+
+/* 16 · Prediction */
+.sy-predict{display:grid;grid-template-columns:minmax(0,1.6fr) minmax(0,1fr);
+  gap:clamp(24px,3vw,40px);margin-top:56px;align-items:stretch}
+.sy-predict-rows{display:flex;flex-direction:column;gap:20px}
+.sy-predict-row{background:#fff;border-radius:16px;padding:22px 28px;
+  display:grid;grid-template-columns:28px 130px 1fr;gap:16px;align-items:start}
+.sy-predict-row img{width:24px;height:24px}
+.sy-predict-row strong{font-size:18px;line-height:24px;font-weight:700;color:var(--brand)}
+.sy-predict-row p{font-size:16px;line-height:22px;color:var(--body)}
+.sy-predict-stat{background:#fff;border-radius:16px;padding:36px 34px;display:flex;
+  flex-direction:column;justify-content:center}
+.sy-predict-stat .n{font-size:108px;line-height:112px;font-weight:700;color:var(--brand);letter-spacing:-.02em}
+.sy-predict-stat .n span{font-size:54px}
+.sy-predict-stat p{font-size:16px;line-height:22px;color:var(--body);margin-top:16px}
+
+/* 17 · Measurement */
+.sy-metrics{display:grid;grid-template-columns:repeat(5,minmax(0,1fr));
+  gap:clamp(14px,1.8vw,24px);margin-top:56px}
+.sy-metric{background:var(--soft-bg);border-radius:12px;padding:24px 22px}
+.sy-metric img{height:60px;width:auto;display:block;margin-bottom:12px}
+.sy-metric h5{font-size:18px;line-height:24px;font-weight:700;color:var(--ink);margin-bottom:14px}
+.sy-metric p{font-size:16px;line-height:22px;color:var(--body)}
+.sy-metric.is-accent{background:#e4ecfd}
+.sy-metric.is-accent h5{color:var(--brand)}
+
+/* 18 + 19 · Reflection and closing share one brand field */
+.sy-closing-bleed{background:var(--grad)}
+.sy-reflection,.sy-closing{background:transparent;color:#fff}
+.sy-reflection .cs-h2{color:#fff;-webkit-text-fill-color:#fff}
+.cs .sy-lessons{display:flex;flex-direction:column;gap:26px;margin-top:40px;
+  list-style:disc;padding-left:26px}
+.sy-lessons li{font-size:24px;line-height:1.3;color:#fff;display:list-item}
+.sy-lessons li::marker{color:rgba(255,255,255,.75)}
+.sy-closing{padding-top:0}
+/* the closing demo button - sits under Thank You with room to breathe, and
+   keeps the light-on-brand treatment the hero button uses */
+.cs-close-demo{margin-top:52px}
+.sy-closing .cs-close-demo,
+.cs-closing-bleed .cs-close-demo{align-self:flex-start}
+.sy-thanks{display:flex;align-items:center;gap:18px;justify-content:flex-start;margin-top:64px}
+.sy-thanks img{width:64px;height:auto;flex:none}
+.sy-thanks span{font-weight:700;font-size:40px;line-height:1.05;text-transform:uppercase;color:#fff}
+
+@media (max-width:1100px){
+  .sy-steps,.sy-metrics,.sy-trust{grid-template-columns:repeat(2,minmax(0,1fr));gap:28px}
+  /* narrow items read better with the icon beside the pair, not stacked above it */
+  .sy-trust-item{display:grid;grid-template-columns:55px minmax(0,1fr);
+    column-gap:16px;row-gap:4px;align-items:start}
+  .sy-trust-item img{grid-row:1 / span 2;margin-bottom:0}
+  .sy-trust-item h5{grid-column:2;font-size:24px;margin-bottom:0}
+  .sy-trust-item p{grid-column:2}
+  .sy-step{border-left:none;padding-left:0}
+  /* stacked, the curved arrows read as cut-off strokes at the edges, so the
+     flow becomes vertical: chips -> agent -> pills, joined by the same compact
+     arrow the insight section uses */
+  .sy-signals{grid-template-columns:1fr;gap:24px;justify-items:center}
+  .cs img.sy-sig-arrow{display:none}
+  .sy-sig-in,.sy-sig-out{width:100%}
+  .cs .sy-signals .sy-sig-down{display:block;width:32px;height:32px;flex:none;fill:none;
+    stroke:var(--brand);stroke-width:2;stroke-linecap:round;stroke-linejoin:round;
+    transform:rotate(90deg);margin:4px auto}
+  .sy-sig-mid{max-width:170px}
+  .sy-agent-ic{width:40%}
+  .sy-autonomy,.sy-dirs{grid-template-columns:1fr}
+  /* stacked, each block is full width - the marks were sized for narrow
+     columns, so at 66%/112% they sprawl across the neighbours' text */
+  .sy-dirs{gap:88px}
+  .sy-mark-x{width:38%;top:-10%;left:-2%}
+  .cs img.sy-mark-circle{top:-7%;left:-3%;right:auto;bottom:auto;
+    width:106%;height:114%;max-width:none;object-fit:fill}
+  .sy-dir.is-chosen{border-radius:20px;padding:0 0 36px 0}
+  .sy-map-grid,.sy-anatomy,.sy-predict{grid-template-columns:1fr}
+  .sy-predict-row{grid-template-columns:28px minmax(0,1fr);row-gap:8px}
+  .sy-predict-row p{grid-column:1 / -1}
+  .sy-tl::before{left:6px}
+  .sy-tl-row{grid-template-columns:1fr}
+  .sy-tl-row.is-right .sy-tl-card,.sy-tl-row.is-left .sy-tl-card{grid-column:1;padding:0 0 0 34px;text-align:left}
+  .sy-tl-row::before{left:6px}
+  .sy-tl-row:nth-child(2){margin-top:96px}
+  .sy-tl-row.is-tight{margin-top:-40px}
+  .sy-security{width:100%;margin-right:0}
+  .sy-ba{grid-template-columns:1fr}
+  .sy-arrow-lg{transform:rotate(90deg);justify-self:start}
+  /* the drawn arrow is a wide-layout gesture; stacked it reads as decoration,
+     so the flow uses the same plain chevron as the signals column */
+  .cs img.sy-ba-arrow{display:none}
+  .cs .sy-ba .sy-ba-down{display:block;width:32px;height:32px;fill:none;
+    stroke:var(--brand);stroke-width:2;stroke-linecap:round;stroke-linejoin:round;
+    transform:rotate(90deg);margin:4px auto;justify-self:center}
+  .sy-h-sm{margin-top:32px}
+  .sy-sig-out{padding-top:0}
+  .sy-auto{grid-template-columns:repeat(2,minmax(0,1fr))}
+  .sy-security{margin-left:0;border-radius:24px}
+  .sy-aside{margin-left:0}
+}
+
+/* 03 · tinted problem field + the two quote cards */
+
+.sy-tint{background:#e8eefb}
+.sy-tint .cs-h2 .strong{font-weight:700}
+.sy-tint .cs-h2 .light{font-weight:300}
+.sy-stickies{width:480px;max-width:100%;justify-self:end}
+.sy-quotes{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));
+  gap:clamp(24px,3vw,44px);margin-top:80px;padding-bottom:80px}
+/* ---- the quote treatment, identical everywhere it appears ----
+   the mark straddles the card's top border and carries the field colour, so
+   the line breaks around it with a little air on each side */
+.sy-quote{border:2px solid #fff;border-radius:24px;padding:40px 36px 28px;position:relative}
+.sy-qmark{
+  position:absolute;top:0;left:32px;transform:translateY(-50%);
+  width:46px;height:28px;display:block;
+  background:#e8eefb;padding:0 14px;box-sizing:content-box;
+}
+.sy-qmark-sm{width:26px;height:16px;left:20px;padding:0 10px}
+.sy-quote p{font-size:18px;line-height:24px;color:var(--ink);margin-bottom:14px}
+.sy-quote cite{font-size:16px;line-height:22px;color:var(--body);font-style:normal}
+
+@media (max-width:900px){
+  .sy-split,.sy-split-wide{grid-template-columns:1fr;gap:32px}
+  .sy-stickies{justify-self:start;max-width:100%}
+  .sy-quotes{grid-template-columns:1fr}
+  .sy-stats{grid-template-columns:repeat(2,minmax(0,1fr))}
+  .sy-personas,.sy-trust{grid-template-columns:1fr}
+  .sy-stats{grid-template-columns:repeat(2,minmax(0,1fr))}
+  .sy-said{grid-template-columns:1fr;gap:20px}
+  /* the two column headers only read as a pair side by side - stacked they
+     detach from the quotes they label, so each box carries its own */
+  .sy-said-head{display:none}
+  .sy-said-pair{display:block;background:#fff;border-radius:28px;padding:24px 26px}
+  .sy-said-pair .sy-arrow{display:none}
+  .sy-said-label{display:block;font-size:13px;line-height:18px;font-weight:700;
+    letter-spacing:.06em;text-transform:uppercase;color:var(--ink);margin-bottom:10px}
+  /* the quote keeps its frame - white is invisible on the white box, so it
+     carries the tint colour instead, same weight and radius as the wide view */
+  .sy-said-pair .sy-said-quote{border:2px solid #e8eefb;border-radius:28px;
+    padding:22px 22px 18px;margin-bottom:22px}
+  .sy-said-pair .sy-qmark{display:none}
+  .sy-said-pair .sy-said-answer{border-radius:22px;padding:16px 22px;font-size:20px}
+  .sy-arrow{transform:rotate(90deg);margin:4px 0}
+  .sy-cover .cs-hero-media img{width:100%}
+}
+
+/* phones: two columns leave each step ~130px, so every line breaks - the five
+   steps read as one column instead */
+@media (max-width:600px){
+  .sy-cover{padding-top:32px}   /* same top gap as the other case hero */
+  /* every two-column grid drops to one: at this width a column is ~130px and
+     each label breaks over three or four lines */
+  .sy-steps{grid-template-columns:1fr;gap:32px}
+  .sy-metrics,.sy-stats{grid-template-columns:1fr}
+  .sy-auto{grid-template-columns:1fr}
+  /* the pill wraps to 5 lines here, so 999px reads as a blob - half the
+     roundness of the stadium shape (~80px at this height) */
+  .sy-banner{border-radius:40px;padding:20px 26px}
+  /* beside a 34px lock the paragraph is left with a ~10-character column,
+     so the icon sits above the text */
+  .sy-security{flex-direction:column;gap:12px}
+  /* reflection -> Thank You was 224px of air (80 + 80 + 64): the closing
+     section gets its desktop padding-top:0 back and the block tightens,
+     landing at 134px - 40% less */
+  .sy-closing-bleed .sy-closing{padding-top:0}   /* beats the later .cs-section{padding:80px 0} */
+  .sy-thanks{margin-top:54px}
+  /* same story as the banner: once a pill wraps to 3-4 lines the 999px radius
+     turns it into a blob. 40px matches the banner, and single-line pills are
+     short enough that they still render as capsules */
+  .sy-steps-list li,.sy-pills li{border-radius:40px}
+}
+
+/* ===== responsive tightening ===== */
+@media (max-width:900px){
+  .cs-section{padding:80px 0}
+  .cs-problem-grid{grid-template-columns:1fr}
+  .cs-decisions{gap:56px}
+}
+
+/* ===== click-to-zoom lightbox ===== */
+.cs-zoomable{cursor:zoom-in;transition:transform 220ms var(--ease-out),box-shadow 220ms var(--ease-out)}
+.cs-zoomable:hover{transform:scale(1.015)}
+.cs-lightbox{
+  position:fixed;inset:0;z-index:300;display:none;align-items:center;justify-content:center;
+  padding:56px;background:rgba(15,10,30,.86);backdrop-filter:blur(4px);
+  opacity:0;transition:opacity 220ms var(--ease-out);
+}
+.cs-lightbox.open{display:flex;opacity:1}
+.cs-lightbox img{
+  max-width:min(1300px,88vw);max-height:88vh;width:auto;border-radius:10px;
+  cursor:zoom-out;
+  transform:scale(.96);transition:transform 220ms var(--ease-out);
+}
+.cs-lightbox.open img{transform:scale(1)}
+.cs-lightbox-close{
+  position:absolute;top:28px;right:32px;width:44px;height:44px;border-radius:50%;
+  background:rgba(255,255,255,.1);border:1px solid rgba(255,255,255,.3);color:#fff;
+  display:flex;align-items:center;justify-content:center;cursor:pointer;
+  transition:background 160ms var(--ease-out);
+}
+.cs-lightbox-close:hover{background:rgba(255,255,255,.2)}
+.cs-lightbox-close svg{width:20px;height:20px;stroke:currentColor;fill:none;stroke-width:2;stroke-linecap:round}
+@media (max-width:640px){.cs-lightbox{padding:24px}}
+
+/* ============ 08 · MARKET POSITION ============
+   Her 2026 deck moves to a much rounder card (radius 60 on a 164-tall row in
+   Figma); kept proportional here rather than the 16px the older sections use. */
+.sy-market{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,320px);
+  gap:18px;align-items:stretch;margin-top:56px}
+.sy-market-col{display:flex;flex-direction:column;gap:14px}
+.sy-market-row{background:#fff;border-radius:30px;padding:26px 32px;flex:1;
+  display:grid;grid-template-columns:24px 132px minmax(0,1fr);gap:16px;align-items:start}
+.sy-market-row img{width:24px;height:24px}
+.sy-market-row strong{font-size:18px;line-height:24px;font-weight:700;color:var(--brand)}
+.sy-market-row p{font-size:16px;line-height:22px;color:var(--body)}
+.sy-market-zero{background:#fff;border-radius:30px;padding:34px 30px 34px 38px;
+  display:flex;flex-direction:column;justify-content:center;gap:14px}
+.sy-market-zero .n{font-size:72px;line-height:1;font-weight:600;
+  color:var(--brand);letter-spacing:-.02em}
+.sy-market-zero p{font-size:16px;line-height:22px;color:var(--body)}
+
+/* ============ 14 · WHEN THE AGENT ISN'T SURE ============
+   The five callouts sit in a loose arc in the deck; --off carries each row's
+   horizontal offset so the arc survives, and collapses to 0 on narrow screens. */
+.sy-unsure{display:grid;grid-template-columns:minmax(0,340px) minmax(0,1fr);
+  gap:clamp(24px,4vw,64px);align-items:center;margin-top:56px}
+.sy-unsure-shot{width:100%;max-width:340px;height:auto;display:block;border-radius:18px}
+.sy-unsure-rows{display:flex;flex-direction:column;gap:18px}
+.sy-unsure-row{display:flex;align-items:center;width:79%}
+.sy-unsure-row:nth-child(1){margin-left:0}
+.sy-unsure-row:nth-child(2){margin-left:14%}
+.sy-unsure-row:nth-child(3){margin-left:21%}
+.sy-unsure-row:nth-child(4){margin-left:16%}
+.sy-unsure-row:nth-child(5){margin-left:4%}
+.sy-unsure-row .cs-num-badge{margin-right:-16px;position:relative;z-index:2}
+/* outline only - the tinted field shows through, no white fill */
+.sy-unsure-bubble{background:transparent;border:2px solid #fff;border-radius:40px;
+  padding:18px 30px 18px 32px;min-width:0}
+.sy-unsure-bubble h5{font-size:22px;line-height:1.2;font-weight:700;
+  color:var(--ink);margin-bottom:4px}
+.sy-unsure-bubble p{font-size:16px;line-height:22px;color:var(--body)}
+
+/* the row keeps its 132px label column while the section is still two-up, which
+   squeezes the copy to ~180px between 900 and 1250 - drop the copy to its own row */
+@media (max-width:1250px){
+  .sy-market-row{grid-template-columns:24px minmax(0,1fr);row-gap:8px}
+  .sy-market-row p{grid-column:1 / -1}
+}
+@media (max-width:900px){
+  .sy-market{grid-template-columns:1fr}
+  .sy-unsure{grid-template-columns:1fr}
+  .sy-unsure-shot{max-width:100%;justify-self:center}
+  .sy-unsure-row,
+  .sy-unsure-row:nth-child(n){margin-left:0;width:100%}
+}

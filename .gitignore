@@ -3,3 +3,10 @@ Thumbs.db
 node_modules/
 *.log
 .vscode/
+
+# old demo copies, never publish
+_to_delete/
+case-syncops/_to_delete/
+
+# Mapbox token - kept out of the repo, upload manually with the rest of the site
+case-syncops/mapbox-config.js

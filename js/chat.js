@@ -17,7 +17,16 @@ const KB = [
   {
     chip:'What do people say about you?',
     keys:['people say','colleagues','managers','references','recommend','testimonial','feedback about','\u05d4\u05de\u05dc\u05e6\u05d5\u05ea','\u05de\u05de\u05dc\u05d9\u05e6\u05d9\u05dd','\u05e7\u05d5\u05dc\u05d2\u05d5\u05ea'],
-    text:'Here is what my design and engineering partners wrote about working with me on LinkedIn.\n\n**Stas Fainberg, Staff Software Engineer:** \'She has a rare talent for bridging design and complex architecture. She asks the right questions, understands system constraints, and builds systems that are intuitive for users and streamlined for developers.\'\n\n**Michael Veltman, VP R&D:** \'An exceptional Product Design Lead. She brings deep systemic thinking, solves heavy B2B data challenges, and leads product strategy with incredible professionalism and dedication.\'\n\nFull references and contacts are available on request - write me and I\'ll connect you.',
+    text:'Here is what colleagues and clients wrote about working with me on LinkedIn.',
+    people:[
+      {name:'Ronen Chen', role:'CEO \u00b7 DoubleRo', img:'assets/images/ronen.jpeg',
+       quote:'I had the pleasure of working with Larisa and she\u2019s easily one of the best designers I\u2019ve worked with. Larisa is the full package, she nails everything from UX and branding to high level creative direction. What always impressed me most was her pace: she is super fast and somehow always delivers top notch work even on crazy deadlines. Any team would be super lucky to have her. I\u2019d jump at the chance to work with her again!'},
+      {name:'Stas Fainberg', role:'Staff Software Engineer', img:'assets/images/stanislav.jpeg',
+       quote:'She has a rare talent for bridging design and complex architecture. She asks the right questions, understands system constraints, and builds systems that are intuitive for users and streamlined for developers.'},
+      {name:'Michael Chachashvili', role:'VP R&D', img:'assets/images/Michael.jpeg',
+       quote:'An exceptional Product Design Lead. She brings deep systemic thinking, solves heavy B2B data challenges, and leads product strategy with incredible professionalism and dedication.'}
+    ],
+    outro:'Full references and contacts are available on request - write me and I\u2019ll connect you.',
     tags:['References on request']
   },
   {
@@ -30,7 +39,7 @@ const KB = [
   {
     chip:'What shipped at Partner?',
     keys:['partner','ship','telecom','crm','erp','fintech','electric','launch','built at','\u05e4\u05e8\u05d8\u05e0\u05e8'],
-    text:'Between 2022 and 2026 I led product design across Partner\'s core enterprise ecosystem - CRM, ERP, Fintech and AI-driven operational tools. Key highlights: a company-wide design system adopted across products, the Partner Electric platform shipped in a record 2 months, and AI decision-support workflows designed to significantly cut task handling times for field and control-room teams - aiming for an estimated ~50% faster task assignment.',
+    text:'Cross-Functional Design Lead: Sole design lead on every new project across the full IT organization - designing the products for Communications, ERP, DevOps, Engineering, Fintech and CRM. Between 2022 and 2026, I built a company-wide design system adopted across products, shipped the Partner Electric platform in a record 2 months, and designed AI decision-support workflows to significantly cut task handling times for field and control-room teams - aiming for an estimated ~50% faster task assignment.',
     more:'The four pillars in more detail:\n\n**Enterprise Operations & AI Dispatching:** complex incident-management and field-dispatch workflows I designed, with an AI decision-support concept layer integrating real-time inputs (traffic, weather, technician availability) and Human-in-the-Loop UX.\n\n**Partner Electric:** end-to-end design for Partner\'s entry into the electricity market - concept to live production in 2 months, with full regulatory and billing compliance.\n\n**Unified Design System:** tokens and component libraries adopted across internal and customer-facing products, dramatically accelerating design-to-dev handoffs.\n\n**Operational Portals:** dense administrative tools for call centers and operations, turned from legacy screens into modern, task-focused workflows.',
     tags:['Launched in 2 months','Design system adopted across products']
   },
@@ -76,6 +85,12 @@ const KB = [
     keys:['contact','email','hire','available','start','remote','salary','location','reach','\u05e7\u05e9\u05e8','\u05d8\u05dc\u05e4\u05d5\u05df','\u05de\u05d9\u05d9\u05dc','\u05e9\u05db\u05e8'],
     text:'The fastest way to reach me is email at larisamalyd@gmail.com, or phone / WhatsApp at +972-50-6763066. I\'m based in Israel and typically respond very quickly.',
     tags:['larisamalyd@gmail.com']
+  },
+  {
+    chip:null,
+    keys:['failure','fail','failed','tell me about a failure','what didn\'t work','a project that failed','have you ever failed','biggest challenge','something you couldn\'t ship','a project that never launched','hardest constraint you faced','how do you handle regulation','a project you gave up on'],
+    text:'At Partner, fixed-line services, internet, and TV already come together in a single order. Cellular, however, lives in a separate world - plans, devices, accessories, and equipment, each with its own flow. That\'s how the industry has always worked, and no carrier in Israel has successfully unified both worlds into a single order.\n\nWe saw an opportunity hidden in this friction. Customers ready to buy everything still had to complete two separate journeys - exactly the kind of moment where sales are lost. Our vision was simple: one order, both worlds.\n\nUnfortunately, the project never launched. The blocker wasn\'t the user experience - it was the combination of architectural limitations, legacy systems, and regulatory constraints. The vision was sound, but the technology ecosystem wasn\'t ready to support it.\n\nWe\'re still hopeful that as technology evolves, the opportunity will return - and when it does, this vision will finally become possible.',
+    tags:[]
   },
   {
     chip:null,
@@ -133,12 +148,6 @@ const KB = [
   },
   {
     chip:null,
-    keys:['joke','funny','make me laugh'],
-    text:'A UX designer walks into a bar... and immediately redesigns the door handle, because clearly people kept pushing instead of pulling. (I have exactly one joke. It\u2019s this one.)',
-    tags:[]
-  },
-  {
-    chip:null,
     keys:['cv','resume','download resume','your cv','see your resume','\u05e7\u05d5\u05e8\u05d5\u05ea\u0020\u05d7\u05d9\u05d9\u05dd','\u05e8\u05d6\u05d5\u05de\u05d4'],
     text:'Of course - the Resume tab up top has the full story, with a PDF download inside. The short version: 13+ years, complex systems, AI-driven design.',
     tags:[]
@@ -190,7 +199,7 @@ const KB = [
     keys:['dashboard','dashboards','data visualization','charts','monitoring','kpi screen','incident','incidents','incident management'],
     text:'Dashboards are my home turf - operational systems live and die by them. My approach shifts dashboards from passive visualization to decision-making engines: complex data packaged into clear decision units that answer three questions instantly:\n\n**Is everything okay?** system health at a glance.\n**What needs attention now?** urgency and SLA risks.\n**What action do I take?** contextual, one-click resolution. In my fiber-network operations project we turned real-time telemetry into actionable decisions - aiming for an estimated ~50% faster technician assignment, with far less friction under pressure.',
     tags:['Estimated ~50% faster task assignment'],
-    link:{href:'case-timeline.html',label:'See the AFT Timeline case'}
+    link:{href:'case-aft/aft-timeline.html',label:'See the AFT Timeline case'}
   },
   {
     chip:null,
@@ -565,6 +574,30 @@ function ask(label,entry){
           };
           lastBubble.appendChild(mb);
         }
+        if(data.people&&data.people.length){
+          // one block per person: face + name + title on a line, quote beneath
+          data.people.forEach(pr=>{
+            const b=document.createElement('div');b.className='msg-person-block';
+            const head=document.createElement('div');head.className='msg-person';
+            const im=document.createElement('img');
+            im.src=pr.img;im.alt=pr.name;im.loading='lazy';
+            const cap=document.createElement('div');cap.className='msg-person-id';
+            cap.innerHTML='<b>'+pr.name+'</b><span>'+pr.role+'</span>';
+            head.appendChild(im);head.appendChild(cap);
+            b.appendChild(head);
+            if(pr.quote){
+              const qp=document.createElement('p');qp.className='msg-person-quote';
+              qp.textContent='\u201C'+pr.quote+'\u201D';
+              b.appendChild(qp);
+            }
+            lastBubble.appendChild(b);
+          });
+        }
+        if(data.outro){
+          const op=document.createElement('p');op.className='msg-p msg-outro';
+          op.textContent=data.outro;
+          lastBubble.appendChild(op);
+        }
         if(data.tags&&data.tags.length){
           const ev=document.createElement('div');ev.className='evidence';
           const tagIcon='<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M20.59 13.41 11 3.83A2 2 0 0 0 9.59 3.24L4 3a1 1 0 0 0-1 1l.24 5.59a2 2 0 0 0 .59 1.41l9.58 9.58a2 2 0 0 0 2.83 0l4.35-4.35a2 2 0 0 0 0-2.82z"/><circle cx="7.5" cy="7.5" r="1" fill="currentColor" stroke="none"/></svg>';
@@ -669,7 +702,11 @@ sendBtn.onclick=()=>{
   if(busy)return;
   if(!v){
     const rowEl=input.closest('.inputrow');
-    input.focus();
+    /* on a phone focus() throws the keyboard up - together with Android's
+       clipboard strip of past copied links - right over the hint this click is
+       meant to show. Touch devices get the glow + placeholder line only; the
+       keyboard opens when she actually taps the field. */
+    if(!window.matchMedia('(pointer:coarse)').matches)input.focus();
     rowEl.classList.remove('nudge');void rowEl.offsetWidth;
     rowEl.classList.add('nudge');
     input.placeholder='Waiting for your question - I\u2019m all ears :)';
@@ -716,7 +753,6 @@ const SURPRISES=[
   'I map system objects before drawing a single screen. OOUX is my architectural secret weapon.',
   'This site runs on a real design system - Figma variables, semantic tokens, two color modes. Ask me why that matters.',
   'Every answer in this chat was written by me in advance. You\'re reading preparation, not AI.',
-  'I have exactly one joke. Type \'joke\' if you\'re brave.',
   'I\'ve designed for recruitment, telecom, fintech and AI. Domains change; navigating complexity stays the same.'
 ];
 let surpriseBag=[];
@@ -728,7 +764,11 @@ function nextSurprise(){
 // dice: drop a surprise into the conversation
 const diceBtn=document.getElementById('dice');
 if(diceBtn){
-  const SPARK_COLORS=['#FFFFFF','#C3A7FF','#8C55FF','#B277FF'];
+  // white and pale lavender are invisible on the light theme, so the palette
+  // follows the theme rather than being fixed
+  const SPARK_COLORS = document.documentElement.getAttribute('data-theme') === 'light'
+    ? ['#6C3FE8','#8C55FF','#B277FF','#5A31CF']
+    : ['#FFFFFF','#C3A7FF','#8C55FF','#B277FF'];
   function sparkBurst(){
     for(let i=0;i<14;i++){
       const p=document.createElement('span');
@@ -756,7 +796,7 @@ if(diceBtn){
 }
 
 // scroll reveal for the case cards (progressive - without JS everything stays visible)
-const revealEls=[...document.querySelectorAll('.case-card'), document.querySelector('.works h2')].filter(Boolean);
+const revealEls=[...document.querySelectorAll('.case-card'), ...document.querySelectorAll('.works h2'), ...document.querySelectorAll('.rec-card')].filter(Boolean);
 revealEls.forEach(el=>el.classList.add('js-reveal'));
 const revealIO=new IntersectionObserver(entries=>{
   entries.forEach(e=>{
@@ -764,6 +804,21 @@ const revealIO=new IntersectionObserver(entries=>{
   });
 },{threshold:.15});
 revealEls.forEach(el=>revealIO.observe(el));
+
+/* The reveal runs with animation-fill-mode:both, so once it finishes the browser
+   keeps applying its last keyframe - transform:none - from the animation origin,
+   which outranks every normal declaration including :hover. That silently killed
+   the hover lift on the cards. Hand the element back to the plain cascade as soon
+   as the entrance is over. (If animations are off for reduced motion the event
+   never fires, and .js-reveal.in already sets opacity:1 on its own.) */
+const REVEAL_ANIMS=new Set(['cardReveal','recInLeft','recInRight']);
+revealEls.forEach(el=>{
+  el.addEventListener('animationend',ev=>{
+    if(ev.target!==el||!REVEAL_ANIMS.has(ev.animationName))return;   // ignore the floating screenshot
+    el.classList.remove('js-reveal','in');
+    el.classList.add('revealed');
+  });
+});
 
 // --- chat controls: chips collapse (-/+), conversation clear, drag-resize ---
 const chipsToggle=document.getElementById('chipsToggle');
@@ -873,8 +928,15 @@ const portfolioShareBtn=document.getElementById('portfolioShareBtn');
 const portfolioShareMenu=document.getElementById('portfolioShareMenu');
 if(portfolioShareBtn&&portfolioShareMenu){
   setupShareMenu(portfolioShareBtn,portfolioShareMenu,
-    ()=>`Lora Maly - Senior Product Designer, AI & Agentic UX\n${location.href}`,
+    ()=>`Lora Maly - Senior AI Product Designer, AI & Agentic UX\n${location.href}`,
     "Lora Maly's portfolio");
+}
+const recsShareBtn=document.getElementById('recsShareBtn');
+const recsShareMenu=document.getElementById('recsShareMenu');
+if(recsShareBtn&&recsShareMenu){
+  setupShareMenu(recsShareBtn,recsShareMenu,
+    ()=>`Recommendations for Lora Maly - Senior AI Product Designer\n${location.href}#recommendations`,
+    "Recommendations for Lora Maly");
 }
 
 // --- download as PDF - fills the print-only container, then opens the browser's print dialog ---

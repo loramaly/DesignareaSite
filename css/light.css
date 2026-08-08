@@ -1,0 +1,469 @@
+/* ===========================================================================
+   LIGHT THEME  -  an additive layer, loaded after styles.css on every page.
+   Nothing here is required for the site to work: remove the <link> and the
+   dark theme is untouched.
+
+   SCOPE - this repaints the CHROME only:
+     the page frame, header, footer, home page and resume.
+   It deliberately does NOT touch case-study content. Those tokens are declared
+   on `.cs` in case-study.css rather than on :root, so a case reads exactly the
+   same in either theme - only the frame around it changes.
+
+   Direction: light but not white-hot. A soft lavender-grey page, delicate
+   purple lines, ink that is deep rather than black, and shadows that are
+   tinted rather than grey. Nothing at full saturation.
+   =========================================================================== */
+
+:root[data-theme="light"]{
+  /* --- surfaces --- */
+  --bg-page:#F6F5FB;          /* lavender-grey, never pure white         */
+  --panel-grad-a:#FFFFFF;     /* the chat panel lifts off the page       */
+  --panel-grad-b:#F2F0FA;
+
+  /* --- lines: delicate purple, never grey-black --- */
+  --frame-line:#C8B2F6;      /* outer frames, light only                   */
+  --card-line:#E4DFF5;
+  --chip-line:#CDC2EA;
+  --input-line:#BC9CFF;
+  --line-vivid:#9B7BF0;      /* a notch more saturated than --chip-line */      /* the agreed light frame colour              */
+
+  /* --- actions: the brand purple still carries, one step deeper --- */
+  --btn:#6C3FE8;
+  --btn-see:#5A31CF;
+
+  /* --- type --- */
+  --text:#241C3D;             /* deep ink, 13.9:1 on the page            */
+  --text-dim:#635C7C;         /* 5.6:1 - passes AA for body copy         */
+
+  --accent-mint:#0E9E78;      /* the dark-mode mint is 1.6:1 here        */
+
+  color-scheme:light;
+}
+
+/* the dark starfield texture has no place on a light page - a soft, very wide
+   lavender wash sits in its stead */
+:root[data-theme="light"] .bg-fx{
+  background:
+    radial-gradient(1200px 460px at 50% -120px, rgba(95,59,196,.164), transparent 70%),
+    radial-gradient(760px 380px at 12% 40px, rgba(42,178,141,.089), transparent 70%);
+  background-size:auto;
+  opacity:1;
+}
+/* the dark texture, brought back on light at 10%. It lives on a pseudo-element
+   so its opacity does not drag the gradients down with it - trial only, one
+   line to delete if it does not read well. */
+:root[data-theme="light"] .bg-fx::before{
+  opacity:.30;
+}
+
+/* the portrait is a dark cut-out that blended into the dark page; on light it
+   reads as a grey block. Fade it on all four edges and lift it slightly so it
+   sits on the page instead of on top of it. */
+:root[data-theme="light"] .portrait{
+  /* her own light-mode cut of the portrait - it is authored for a white page,
+     so every correction the dark file needed here is gone. Only the soft top
+     and bottom fade stays, matching the dark theme's own edge. */
+  content:url('../assets/images/portraitLight.png');
+  -webkit-mask-image:linear-gradient(180deg,transparent 0,#000 9%,#000 86%,transparent 100%);
+  mask-image:linear-gradient(180deg,transparent 0,#000 9%,#000 86%,transparent 100%);
+  -webkit-mask-composite:source-over;
+          mask-composite:add;
+  filter:none;
+  opacity:1;
+  mix-blend-mode:normal;
+}
+:root[data-theme="light"] .chat:hover .portrait{filter:brightness(1.04)}
+
+/* panels and cards need a real edge once the page is light */
+:root[data-theme="light"] .chat{
+  box-shadow:0 18px 44px rgba(53,38,104,.10), 0 2px 8px rgba(53,38,104,.06);
+  border:1px solid var(--card-line);
+}
+:root[data-theme="light"] .card:hover{
+  box-shadow:0 16px 40px rgba(53,38,104,.14);
+}
+:root[data-theme="light"] .rec-card{
+  background:#FFFFFF;
+  border:1px solid var(--chip-line);
+  box-shadow:0 14px 32px rgba(53,38,104,.22);
+}
+/* the hover frame speaks the same language as every other frame: the line is
+   the frame colour, and the fill inside stays very light */
+:root[data-theme="light"] .main-nav a::before{
+  border-color:var(--frame-line);
+  background:#FFFFFF;
+}
+/* the page you are on stays the solid dark pill - the white above is a hover
+   treatment only, and it out-specified the active rule in the shared sheet */
+:root[data-theme="light"] .main-nav a.active::before{
+  background:var(--btn);
+  border-color:var(--btn);
+}
+
+/* On a case page nothing sits behind the case: no texture, no radial wash, no
+   page tint, and no shadow under the slides. Only the pages that hold a case
+   are touched - the home page and the resume keep their own background. */
+:root[data-theme="light"] body:has(.case-shell){background:#F6F5FB}
+:root[data-theme="light"] body:has(.case-shell) .bg-fx{display:none}
+:root[data-theme="light"] .case-shell .cs{box-shadow:none}
+:root[data-theme="light"] .case-head.is-stuck{
+  background:rgba(255,255,255,.92);
+  backdrop-filter:blur(8px);
+  box-shadow:0 10px 26px rgba(53,38,104,.12);
+}
+/* these two carried hardcoded dark-mode colours that vanish on light */
+:root[data-theme="light"] .case-nav-item.magic{color:#7B4BD8}
+:root[data-theme="light"] .case-nav-item.demo{color:#0E9E78}
+/* ...but both out-specified .active in the shared sheet, so the label of the
+   section you are on stayed purple (or green) on the solid purple pill and
+   went invisible. The active pill wins over every resting colour, hover too. */
+:root[data-theme="light"] .case-nav-item.active,
+:root[data-theme="light"] .case-nav-item.magic.active,
+:root[data-theme="light"] .case-nav-item.demo.active,
+:root[data-theme="light"] .case-nav-item.active:hover,
+:root[data-theme="light"] .case-nav-item.magic.active:hover,
+:root[data-theme="light"] .case-nav-item.demo.active:hover{
+  background:var(--btn);color:#FFFFFF;
+}
+:root[data-theme="light"] .case-nav-item.demo:hover{
+  background:rgba(14,158,120,.10);color:#0B7E60;
+}
+:root[data-theme="light"] .case-nav-item:hover{
+  background:rgba(36,28,61,.06);color:var(--text);
+}
+:root[data-theme="light"] .case-breadcrumb a:hover{color:var(--text)}
+
+/* mobile slide-out menu */
+:root[data-theme="light"] .nav-overlay{background:rgba(36,28,61,.32)}
+
+/* ---------------------------------------------------------------------------
+   resume.css declares its OWN token names on :root - none of the names above
+   reach it, so the resume page needs its own light set.
+   --------------------------------------------------------------------------- */
+:root[data-theme="light"]{
+  --bg-surface:#FFFFFF;
+  --accent-primary:#6C3FE8;
+  --accent-secondary:#7B4BD8;
+  --text-primary:#241C3D;
+  --text-soft:#5B5474;
+  --line:#E4DFF5;
+}
+:root[data-theme="light"] .btn-download{border-color:var(--chip-line);color:var(--text-primary)}
+:root[data-theme="light"] .btn-download:hover{background:rgba(108,63,232,.08)}
+:root[data-theme="light"] footer,
+:root[data-theme="light"] .social a{color:var(--text-primary)}
+:root[data-theme="light"] .social a:hover{color:var(--accent-primary)}
+:root[data-theme="light"] .head .title,
+:root[data-theme="light"] .contact,
+:root[data-theme="light"] .contact span,
+:root[data-theme="light"] .contact a{color:var(--text-primary)}
+:root[data-theme="light"] .contact a:hover{background:rgba(108,63,232,.07)}
+:root[data-theme="light"] .resume-note,
+:root[data-theme="light"] .summary,
+:root[data-theme="light"] .role li{color:var(--text-soft)}
+:root[data-theme="light"] .role{border-top-color:var(--card-line)}
+/* scoped to the resume's own columns - a bare `section` here also matched
+   .hero and .works on the home page and stole their 2px frame */
+:root[data-theme="light"] .main-col > section,
+:root[data-theme="light"] .sidebar > section{border:1px solid var(--card-line)}
+:root[data-theme="light"] .resume-avatar{box-shadow:0 8px 24px rgba(53,38,104,.16)}
+
+/* ---------------------------------------------------------------------------
+   White-alpha fills and hovers. Every one of these is invisible on a light
+   surface, so each becomes a soft ink wash instead.
+   --------------------------------------------------------------------------- */
+:root[data-theme="light"] .share-opt:hover,
+:root[data-theme="light"] .pf-btn:hover,
+:root[data-theme="light"] .cbtn:hover,
+:root[data-theme="light"] .more-chip:hover,
+:root[data-theme="light"] .chip:hover,
+:root[data-theme="light"] .dice:hover{background:rgba(36,28,61,.06)}
+:root[data-theme="light"] .msg.user{
+  background:#F1EEFB;
+  border:1px solid var(--line-vivid);border-right-width:4px;
+}
+
+/* near-white text and icons that would vanish */
+:root[data-theme="light"] .thread-actions .cbtn svg{stroke:#6C5F9A}
+:root[data-theme="light"] .tag{color:#0A7256;background:rgba(14,158,120,.09)}
+:root[data-theme="light"] .inputrow input::placeholder,
+:root[data-theme="light"] .inputrow.nudge input::placeholder{color:#8A83A3}
+:root[data-theme="light"] .inputrow.nudge{background:rgba(108,63,232,.07)}
+:root[data-theme="light"] .hello{color:var(--btn);opacity:1}
+
+/* the nudge glow was keyed to a pale lavender that does not read on light */
+@keyframes inputGlowLight{
+  0%,100%{border-color:var(--input-line);box-shadow:none}
+  35%{border-color:var(--btn);box-shadow:0 0 0 5px rgba(108,63,232,.14)}
+}
+:root[data-theme="light"] .inputrow.nudge{animation-name:inputGlowLight}
+
+/* scrollbar */
+:root[data-theme="light"] .chat:hover .thread{scrollbar-color:rgba(36,28,61,.28) transparent}
+:root[data-theme="light"] .chat:hover .thread::-webkit-scrollbar-thumb{background:rgba(36,28,61,.28)}
+
+/* shadows the first pass missed - all re-tinted, none left on black */
+:root[data-theme="light"] .share-menu{box-shadow:0 12px 32px rgba(53,38,104,.14)}
+:root[data-theme="light"] .case-media img{filter:drop-shadow(0 20px 40px rgba(53,38,104,.18))}
+:root[data-theme="light"] .rec-avatar{box-shadow:0 6px 16px rgba(53,38,104,.18)}
+:root[data-theme="light"] .case-head.is-stuck{box-shadow:0 10px 26px rgba(53,38,104,.12)}
+@media (max-width:900px){
+  :root[data-theme="light"] .main-nav{box-shadow:-24px 0 60px rgba(53,38,104,.18)}
+}
+
+/* the floating back-to-top pill was a dark purple lozenge */
+:root[data-theme="light"] .back-to-top{
+  background:rgba(255,255,255,.86);
+  border:2px solid var(--frame-line);
+  color:var(--btn);
+  box-shadow:0 8px 22px rgba(53,38,104,.14);
+}
+:root[data-theme="light"] .back-to-top:hover{background:#fff}
+
+/* the logo path carries a literal fill in the markup, so it is overridden here */
+:root[data-theme="light"] .logo svg path{fill:var(--btn)}
+
+/* the resume page paints the same dark texture from its own stylesheet */
+/* the light backdrop is defined once, above - it covers the resume too */
+
+/* ---------------------------------------------------------------------------
+   THE CHAT PANEL
+   The panel goes white, so every control that was "white on purple" inverts to
+   "purple on white". Left alone they inherit --text (deep ink) and the whole
+   panel reads grey and lifeless - so the brand purple carries them instead.
+   --------------------------------------------------------------------------- */
+
+/* send: the arrow must stay white on the purple fill, not turn to ink */
+:root[data-theme="light"] .send{color:#fff}
+:root[data-theme="light"] .send:hover{background:var(--btn-see)}
+
+/* surprise-me dice: purple ring and glyph, purple wash on hover */
+:root[data-theme="light"] .dice{
+  color:var(--btn);border-color:var(--chip-line);
+}
+:root[data-theme="light"] .dice:hover{
+  color:var(--btn-see);border-color:var(--btn);background:rgba(108,63,232,.08);
+}
+
+/* suggestion chips: purple label on a white pill, filling softly on hover */
+:root[data-theme="light"] .chip{color:#4A2CA8;border-color:var(--chip-line);background:#fff}
+:root[data-theme="light"] .chip:hover{
+  color:var(--btn-see);border-color:var(--btn);background:rgba(108,63,232,.07);
+}
+:root[data-theme="light"] .chip.more{color:#8A83A3;background:transparent;border-style:dashed}
+:root[data-theme="light"] .chip.more:hover{color:var(--btn)}
+
+/* the input row and its icons */
+:root[data-theme="light"] .inputrow{
+  background:#fff;border-color:var(--input-line);
+  transition:border-color .18s var(--ease-out), box-shadow .18s var(--ease-out);
+}
+:root[data-theme="light"] .inputrow:hover{border-color:var(--btn)}
+:root[data-theme="light"] .inputrow:focus-within{
+  border-color:var(--btn);box-shadow:0 0 0 4px rgba(108,63,232,.13);
+}
+:root[data-theme="light"] .inputrow input{color:var(--text)}
+
+/* small round controls above the thread (share, collapse, reset) */
+:root[data-theme="light"] .cbtn{color:#6C5F9A}
+:root[data-theme="light"] .cbtn:hover{background:rgba(108,63,232,.09);color:var(--btn)}
+:root[data-theme="light"] .cbtn.square{border-color:var(--chip-line)}
+:root[data-theme="light"] .thread-actions .cbtn svg{stroke:currentColor}
+:root[data-theme="light"] .share-menu{
+  background:#fff;border-color:var(--card-line);
+}
+:root[data-theme="light"] .share-opt{color:var(--text)}
+:root[data-theme="light"] .share-opt:hover{background:rgba(108,63,232,.08);color:var(--btn)}
+
+/* message bubbles + their feedback row */
+:root[data-theme="light"] .msg-link{color:var(--btn);border-bottom-color:var(--btn)}
+:root[data-theme="light"] .msg-link:hover{color:var(--btn-see)}
+:root[data-theme="light"] .fb{color:#8A83A3}
+:root[data-theme="light"] .fb:hover{color:var(--btn)}
+:root[data-theme="light"] .fb.active{color:var(--btn)}
+:root[data-theme="light"] .fb-note{color:#6E6786}
+:root[data-theme="light"] .fb-note a{color:var(--btn)}
+:root[data-theme="light"] .more-chip{
+  color:var(--btn);border-color:var(--line-vivid);background:#fff;
+}
+:root[data-theme="light"] .more-chip:hover{background:rgba(108,63,232,.08);border-color:var(--btn)}
+
+/* the dice sparkle particles were white and near-white */
+:root[data-theme="light"] .dice-spark{color:var(--btn)}
+
+/* faces read the same in both themes; only the lift under them changes */
+:root[data-theme="light"] .msg-person img{box-shadow:0 4px 12px rgba(53,38,104,.20)}
+/* light only: the role line needs to be solid rather than washed out */
+:root[data-theme="light"] .msg-person-id span{font-size:13.5px;color:#4A4363;font-weight:500}
+:root[data-theme="light"] .msg-person-quote{color:var(--text)}
+:root[data-theme="light"] .rec-avatar{box-shadow:0 6px 16px rgba(53,38,104,.18)}
+
+/* ===== case cards carry their own product colour - LIGHT ONLY =====
+   Dark mode keeps the plain cards it always had; the gradients belong to this
+   layer so removing the light stylesheet cannot change the dark site.
+   Each card is filled with the gradient of the work it links to - SyncOps blue,
+   AFT violet - so the row reads as two products rather than two grey boxes.
+   Everything inside then has to be white, in BOTH themes. */
+:root[data-theme="light"] .case-card{
+  /* The 2px ring is transparent, and a background is positioned against the
+     padding box but painted out to the border box - so the ring was filled
+     with the gradient's edge colours stretched, reading as a dark line on top
+     and a bright one down the right. Origin at the border box makes the
+     gradient span the whole card, ring included, and the edges disappear. */
+  /* The line is an outline, not a border: an outline is painted outside the
+     box, so it rings the card rather than eating into it, and changing it can
+     never move the content. The 2px border stays transparent underneath. */
+  border-color:transparent;
+  outline:3px solid #FFFFFF;
+  outline-offset:0;
+  box-shadow:0 14px 32px rgba(53,38,104,.22);   /* same lift as .rec-card */
+}
+/* the ring stays white - only the depth changes, so nothing about the card's
+   colour shifts under the cursor */
+:root[data-theme="light"] .case-card:hover{
+  outline-color:#FFFFFF;
+  box-shadow:0 42px 84px rgba(53,38,104,.42), 0 14px 30px rgba(53,38,104,.26)}
+:root[data-theme="light"] .case-card.tint-blue{
+  background:linear-gradient(158deg,#6991ED 0%,#4A63C4 52%,#38407F 100%) border-box}
+:root[data-theme="light"] .case-card.tint-violet{
+  background:linear-gradient(158deg,#C66BF8 0%,#9457F0 52%,#6B3FD4 100%) border-box}
+:root[data-theme="light"] .case-card.tint-blue,
+:root[data-theme="light"] .case-card.tint-violet{color:#fff}
+:root[data-theme="light"] .case-card.tint-blue .case-body h3,:root[data-theme="light"] .case-card.tint-violet .case-body h3,
+:root[data-theme="light"] .case-card.tint-blue .case-body p,:root[data-theme="light"] .case-card.tint-violet .case-body p{color:#fff}
+:root[data-theme="light"] .case-card.tint-blue .case-tag,:root[data-theme="light"] .case-card.tint-violet .case-tag{
+  color:#fff;border-color:rgba(255,255,255,.7);background:transparent}
+:root[data-theme="light"] .case-card.tint-blue .stat-pill,:root[data-theme="light"] .case-card.tint-violet .stat-pill{
+  color:#fff;border-color:rgba(255,255,255,.6);background:rgba(255,255,255,.08)}
+:root[data-theme="light"] .case-card.tint-blue .stat-pill svg,:root[data-theme="light"] .case-card.tint-violet .stat-pill svg{stroke:#fff}
+:root[data-theme="light"] .case-card.tint-blue .case-cta,:root[data-theme="light"] .case-card.tint-violet .case-cta{
+  border-color:#FFFFFF;border-left-width:1px}
+:root[data-theme="light"] .case-card.tint-blue.rev .case-cta,:root[data-theme="light"] .case-card.tint-violet.rev .case-cta{
+  border-color:#FFFFFF;border-right-width:1px}
+
+/* The seam between the story and the button, on wide screens only - this is the
+   one range where the panel sits beside the text. Below 1200 the card restacks
+   and the separator becomes the plain rule above the button again, so this
+   block must never apply there (an unscoped version once left a stray vertical
+   line down a phone layout).
+   It is not drawn as a line but as a fold: 2px of light with a soft shade cast
+   back onto the story side, so the panel reads as part of the same card turned
+   slightly toward you. */
+@media (min-width:1200px){
+  :root[data-theme="light"] .case-card.tint-blue .case-cta,:root[data-theme="light"] .case-card.tint-violet .case-cta{
+    border-left-color:transparent;position:relative}
+  :root[data-theme="light"] .case-card.tint-blue .case-cta::before,:root[data-theme="light"] .case-card.tint-violet .case-cta::before{
+    content:"";position:absolute;top:-2px;bottom:-2px;left:-1px;width:2px;
+    background:rgba(255,255,255,.92);
+    box-shadow:-10px 0 18px rgba(31,12,74,.22);
+    pointer-events:none}
+  :root[data-theme="light"] .case-card.tint-blue.rev .case-cta,:root[data-theme="light"] .case-card.tint-violet.rev .case-cta{
+    border-right-color:transparent}
+  :root[data-theme="light"] .case-card.tint-blue.rev .case-cta::before,:root[data-theme="light"] .case-card.tint-violet.rev .case-cta::before{
+    left:auto;right:-1px;box-shadow:10px 0 18px rgba(31,12,74,.22)}
+}
+/* white button on a coloured card - the same three layers, tinted to ink */
+:root[data-theme="light"] .case-card.tint-blue .case-explore,:root[data-theme="light"] .case-card.tint-violet .case-explore{
+  background:linear-gradient(180deg,#FFFFFF 0%,#EEE9FB 100%);color:#2B2350;
+  box-shadow:
+    inset 0 1px 0 #FFFFFF,
+    0 3px 0 rgba(43,35,80,.24),
+    0 12px 26px rgba(43,35,80,.32),
+    0 2px 6px rgba(43,35,80,.20)}
+:root[data-theme="light"] .case-card.tint-blue:hover .case-explore,:root[data-theme="light"] .case-card.tint-violet:hover .case-explore{
+  background:linear-gradient(180deg,#FFFFFF 0%,#E7E0F8 100%);color:#1D1740;
+  box-shadow:
+    inset 0 1px 0 #FFFFFF,
+    0 6px 0 rgba(43,35,80,.24),
+    0 22px 40px rgba(43,35,80,.38),
+    0 4px 10px rgba(43,35,80,.24)}
+:root[data-theme="light"] .case-demo-link{
+  background:var(--accent-mint);border-color:var(--accent-mint);color:#FFFFFF;
+  box-shadow:0 6px 16px rgba(9,20,64,.30);   /* same navy treatment as the tinted cards */
+}
+:root[data-theme="light"] .case-card.tint-blue .case-demo-link,:root[data-theme="light"] .case-card.tint-violet .case-demo-link{
+  background:linear-gradient(135deg,#14BE8D 0%,#0E9E78 55%,#0A7A5C 100%);
+  /* a pale green frame at rest; on hover it turns deeper than the fill itself */
+  border:1px solid #A8F0D6;
+  border-left:5px solid #A8F0D6;     /* the heavy rule, echoing the stat pills */
+  color:#FFFFFF;
+  /* a dark navy shadow, not a green one - the green face pops against it
+     instead of blending into a shadow of its own colour */
+  box-shadow:0 8px 20px rgba(9,20,64,.34);
+}
+/* the screenshot's own halo read as a smudge on the light gradients */
+:root[data-theme="light"] .case-card.tint-blue .case-media img,:root[data-theme="light"] .case-card.tint-violet .case-media img{filter:none}
+:root[data-theme="light"] .case-card.tint-blue .case-demo-link .live-dot,:root[data-theme="light"] .case-card.tint-violet .case-demo-link .live-dot,
+:root[data-theme="light"] .case-card.tint-blue .case-demo-link .live-dot::after,:root[data-theme="light"] .case-card.tint-violet .case-demo-link .live-dot::after{
+  background:#fff}
+/* hover keeps the resting green - the lift comes from the shadow and the
+   scale, not from darkening the fill */
+:root[data-theme="light"] .case-demo-link:hover{
+  background:var(--accent-mint);border-color:#FFFFFF;color:#FFFFFF;
+  box-shadow:0 12px 28px rgba(9,20,64,.48)}
+:root[data-theme="light"] .case-card.tint-blue .case-demo-link:hover,
+:root[data-theme="light"] .case-card.tint-violet .case-demo-link:hover{
+  background:linear-gradient(135deg,#14BE8D 0%,#0E9E78 55%,#0A7A5C 100%);
+  border-color:#FFFFFF;color:#FFFFFF;
+  box-shadow:0 12px 28px rgba(9,20,64,.48)}
+:root[data-theme="light"] .case-card.tint-blue .case-soon,:root[data-theme="light"] .case-card.tint-violet .case-soon{
+  color:rgba(255,255,255,.85);border-color:rgba(255,255,255,.45)}
+
+/* recommendations, light only: the raised state reads better here, and the
+   cards interlock further. Dark keeps its original flat cards. */
+/* recommendation geometry is shared - see styles.css. Only colour differs. */
+
+/* ===== the switch itself ===================================================
+   One control, one colour. Moon while the site is dark, sun once it is light;
+   the two icons cross-fade and rotate rather than swapping abruptly. */
+.theme-toggle{
+  display:inline-flex;align-items:center;justify-content:center;
+  width:40px;height:40px;flex:none;
+  margin-left:18px;padding:0;   /* clear of the Resume button */
+  background:transparent;border:2px solid var(--frame-line);border-radius:50%;
+  color:var(--text);cursor:pointer;position:relative;
+  transition:background .2s var(--ease-out), border-color .2s var(--ease-out),
+             transform .2s var(--ease-out);
+}
+.theme-toggle:hover{background:rgba(255,255,255,.09);border-color:var(--input-line)}
+:root[data-theme="light"] .theme-toggle:hover{background:rgba(108,63,232,.08)}
+.theme-toggle:active{transform:scale(.94)}
+.theme-toggle:focus-visible{outline:2px solid var(--btn);outline-offset:3px}
+.theme-toggle svg{
+  position:absolute;width:19px;height:19px;
+  fill:none;stroke:currentColor;stroke-width:1.7;
+  stroke-linecap:round;stroke-linejoin:round;
+  transition:opacity .24s var(--ease-out), transform .32s var(--ease-out);
+}
+/* dark = moon showing, sun parked */
+.theme-toggle .ic-moon{opacity:1;transform:rotate(0) scale(1)}
+.theme-toggle .ic-sun {opacity:0;transform:rotate(-90deg) scale(.6)}
+/* light = sun showing, moon parked */
+:root[data-theme="light"] .theme-toggle .ic-moon{opacity:0;transform:rotate(90deg) scale(.6)}
+:root[data-theme="light"] .theme-toggle .ic-sun {opacity:1;transform:rotate(0) scale(1)}
+
+@media (prefers-reduced-motion:reduce){
+  .theme-toggle,.theme-toggle svg{transition:none}
+}
+
+/* the toggle sits before the hamburger on small screens, still reachable */
+@media (max-width:900px){
+  .theme-toggle{margin-left:auto;margin-right:6px}
+}
+
+/* coming-soon dialog on the light theme */
+:root[data-theme="light"] .cs-modal{background:rgba(36,28,61,.42)}
+:root[data-theme="light"] .cs-modal-panel{
+  background:#FFFFFF;border-color:var(--frame-line);
+  box-shadow:0 30px 70px rgba(53,38,104,.22);
+}
+:root[data-theme="light"] .cs-modal-panel h3{color:#241C3D}
+/* the light theme softens --frame-line to a pale lavender, which would leave
+   white text unreadable - the badge and CTA keep the deep brand purple */
+:root[data-theme="light"] .cs-modal-badge,
+:root[data-theme="light"] .cs-modal-cta{background:linear-gradient(140deg,#854CFF,#5738B6)}
+:root[data-theme="light"] .cs-modal-panel p{color:#5B5474}
+:root[data-theme="light"] .cs-modal-ghost{border-color:rgba(36,28,61,.20);color:#5B5474}
+:root[data-theme="light"] .cs-modal-ghost:hover{border-color:rgba(36,28,61,.45);color:#241C3D}
+:root[data-theme="light"] .cs-modal-close{color:#7A7387}
+:root[data-theme="light"] .cs-modal-close:hover{background:rgba(36,28,61,.07);color:#241C3D}

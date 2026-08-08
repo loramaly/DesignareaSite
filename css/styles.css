@@ -10,8 +10,11 @@ html{scroll-behavior:smooth}
   --input-line:#9E70FF;
   --btn:#854CFF;--btn-see:#8C54D6;
   --text:#FFFFFF;--text-dim:#C3A7FF;
+  --accent-mint:#36E8B8;
   --font:'Nunito',system-ui,sans-serif;
   --script:'Luxurious Script',cursive;
+  --ease-out:cubic-bezier(.23,1,.32,1);
+  --ease-in-out:cubic-bezier(.77,0,.175,1);
 }
 *{margin:0;padding:0;box-sizing:border-box}
 body{
@@ -24,11 +27,26 @@ body{
 /* glow blobs + striped glass top band (from Figma bg groups) */
 .bg-fx{
   position:absolute;top:0;left:0;right:0;height:660px;pointer-events:none;z-index:0;
+  /* the texture layer below is 150% wide on phones and hangs ~94px past the
+     right edge. body's overflow-x:hidden hides the scrollbar, but the layout
+     viewport still widens on mobile browsers - which is what pushed the
+     position:fixed back-to-top button outside the frame. Clip it at the source. */
+  overflow:hidden;
+}
+/* The texture lives on its own layer, sized to the image's real 2400x611 so its
+   height is known. Only then can the fade be measured from the image's own
+   bottom edge - masking the 660px box faded 300px below where the strip ends,
+   which is why the hard edge stayed visible. */
+.bg-fx::before{
+  content:"";position:absolute;top:0;left:50%;transform:translateX(-50%);
+  width:min(100%, 2400px);aspect-ratio:2400/611;
   background:url('../assets/images/bg-texture.webp') top center no-repeat;
-  background-size:min(100%, 2400px) auto;
+  background-size:100% 100%;
+  -webkit-mask-image:linear-gradient(180deg,#000 0,#000 calc(100% - 56px),transparent 100%);
+          mask-image:linear-gradient(180deg,#000 0,#000 calc(100% - 56px),transparent 100%);
 }
 @media (max-width:1199px){
-  .bg-fx{background-size:150% auto}   /* 50% larger on middle and mobile screens */
+  .bg-fx::before{width:150%}   /* 50% larger on middle and mobile screens */
 }
 .page{position:relative;z-index:1;max-width:2000px;margin-inline:auto;padding:48px}
 /* ===== Portrait - Figma: x117 y2, 760x335, blended ===== */
@@ -44,18 +62,38 @@ body{
 /* ===== Header - h60, stroke #854CFF, pad 12/38 ===== */
 header{
   position:relative;z-index:2;
-  display:flex;align-items:center;justify-content:space-between;
-  height:60px;padding:12px 16px;
+  display:flex;align-items:center;justify-content:flex-start;
+  height:68px;padding:16px;
   border:2px solid var(--frame-line);
   border-radius:6px 6px 0 0;
 }
-.logo svg{display:block;height:36px;width:auto}
-.main-nav{display:flex;gap:48px}
-.main-nav a{color:var(--text);text-decoration:none;font-size:16px;
-  display:inline-flex;align-items:center;gap:10px}
+/* wordmark sits to the right of the mark, on every page */
+.logo{display:inline-flex;align-items:center;gap:12px;text-decoration:none;color:var(--text)}
+/* the theme switch made the header a three-child flex row, which pushed the nav
+   into the middle under space-between. Pin the nav to the right instead. */
+header .main-nav{margin-left:auto}
+.logo svg,
+.logo .logo-mark{display:block;height:31px;width:auto}
+.logo-name{font-size:18px;font-weight:700;letter-spacing:.01em;line-height:1;white-space:nowrap}
+@media (max-width:420px){
+  .logo{gap:9px}
+  .logo-name{font-size:16px}
+}
+.main-nav{display:flex;gap:24px}
+.main-nav a{position:relative;color:var(--text);text-decoration:none;font-size:16px;
+  display:inline-flex;align-items:center;gap:10px;
+  padding:6px 14px;border-radius:6px;}
 .main-nav a svg{width:18px;height:18px;fill:none;stroke:currentColor;stroke-width:1.6;
   stroke-linecap:round;stroke-linejoin:round}
-.main-nav a:hover{color:var(--text-dim)}
+/* hover: a full frame fades/scales in around the link, instead of an underline.
+   active (current page): the same frame, but solid-filled and always on. */
+.main-nav a::before{content:'';position:absolute;inset:0;z-index:-1;pointer-events:none;
+  border:1.5px solid var(--text-dim);border-radius:6px;background:rgba(255,255,255,.06);
+  opacity:0;transform:scale(.94);
+  transition:opacity .2s var(--ease-out),transform .2s var(--ease-out)}
+.main-nav a:hover::before{opacity:1;transform:scale(1)}
+.main-nav a.active{color:#fff}
+.main-nav a.active::before{opacity:1;transform:scale(1);background:var(--btn);border-color:var(--btn)}
 /* hamburger - mobile only, animates to an X */
 body.menu-open header{z-index:100}
 .hamburger{display:none;background:none;border:none;cursor:pointer;padding:8px;z-index:60;position:relative}
@@ -70,18 +108,20 @@ body.menu-open header{z-index:100}
 @media (max-width:900px){
   .hamburger{display:block}
   .main-nav{
-    position:fixed;top:0;right:0;bottom:0;width:272px;z-index:50;
+    position:fixed;top:0;right:0;bottom:0;width:min(320px,84vw);z-index:50;
     flex-direction:column;gap:8px;align-items:stretch;
     background:linear-gradient(180deg,var(--panel-grad-a),var(--panel-grad-b));
     box-shadow:-24px 0 60px rgba(0,0,0,.45);
-    padding:96px 28px 28px;
+    padding:96px 24px 28px;
     transform:translateX(100%);
     transition:transform .32s cubic-bezier(.22,.8,.36,1);
   }
   .main-nav.open{transform:translateX(0)}
   .main-nav a{font-size:17px;padding:14px 12px;border-radius:8px}
   .main-nav a svg{width:20px;height:20px}
+  .main-nav a::before{display:none}
   .main-nav a:hover{color:var(--text);background:rgba(255,255,255,.08)}
+  .main-nav a.active{background:var(--btn);color:#fff}
 }
 /* ===== Hero - stroke 2px, pad 16/176/56/176, gap 16 ===== */
 .hero{
@@ -92,10 +132,12 @@ body.menu-open header{z-index:100}
   display:flex;flex-direction:column;gap:16px;
 }
 .intro{display:flex;justify-content:center;padding-top:7px;min-height:195px}
-.intro-txt{position:relative;z-index:2;width:521px;max-width:100%;display:flex;flex-direction:column;
+.intro-txt{position:relative;z-index:2;width:521px;max-width:100%;min-width:0;display:flex;flex-direction:column;
   margin-left:415px}  /* text starts exactly at the image's right edge - 0 gap */
 .hello{font-family:var(--script);font-size:clamp(44px,3.8vw,55px);line-height:.92;opacity:.6}
-.iam{display:flex;align-items:baseline;gap:6px;margin-top:6px;white-space:nowrap}
+/* the name itself never breaks, but the two parts may drop to separate lines
+   rather than push past the frame */
+.iam{display:flex;align-items:baseline;flex-wrap:wrap;gap:6px;margin-top:6px;white-space:nowrap}
 .iam .i{font-size:clamp(19px,1.65vw,24px)}
 .iam .n{font-size:clamp(22px,1.95vw,28px);font-weight:600}
 .role{font-size:clamp(16px,1.4vw,20px);font-weight:600;margin-top:4px}
@@ -127,14 +169,16 @@ body.menu-open header{z-index:100}
   border:1px solid var(--chip-line);border-radius:8px;
   padding:6px;display:flex;flex-direction:column;gap:2px;min-width:168px;
   box-shadow:0 12px 32px rgba(0,0,0,.35);
-  opacity:0;transform:translateY(-6px);pointer-events:none;
-  transition:opacity .18s ease,transform .18s ease}
-.share-menu.open{opacity:1;transform:translateY(0);pointer-events:auto}
+  transform-origin:top right;
+  opacity:0;transform:scale(.96) translateY(-6px);pointer-events:none;
+  transition:opacity .16s var(--ease-out),transform .16s var(--ease-out)}
+.share-menu.open{opacity:1;transform:scale(1) translateY(0);pointer-events:auto}
 .share-opt{display:flex;align-items:center;gap:10px;width:100%;
   background:transparent;border:none;border-radius:5px;padding:8px 10px;
   color:var(--text);font-family:inherit;font-size:14px;cursor:pointer;text-align:left;
-  transition:background .15s ease}
+  transition:background .15s ease, transform .15s ease}
 .share-opt:hover{background:rgba(255,255,255,.08)}
+.share-opt:active{transform:translateY(1px) scale(.98)}
 .share-opt svg{width:18px;height:18px;flex:none;fill:none;stroke:currentColor;
   stroke-width:1;stroke-linecap:round;stroke-linejoin:round}
 #printTranscript{display:none}
@@ -199,7 +243,12 @@ body.menu-open header{z-index:100}
   transition:border-color .15s;
 }
 .inputrow:focus-within{border-color:var(--text-dim)}
-.inputrow input{flex:1;background:transparent;border:none;color:var(--text);font-family:var(--font);font-size:16px;outline:none}
+/* min-width:0 is what keeps the row on one line: a text input's intrinsic
+   minimum is ~20 characters (~177px), and on a phone that was wider than the
+   space left beside the two buttons, so the row wrapped. It may now shrink,
+   and the placeholder trails off with an ellipsis instead. */
+.inputrow input{flex:1;min-width:0;text-overflow:ellipsis;
+  background:transparent;border:none;color:var(--text);font-family:var(--font);font-size:16px;outline:none}
 .inputrow input::placeholder{color:var(--text)}
 .dice{width:52px;height:52px;flex:none;border-radius:50%;background:transparent;
   border:2px solid var(--input-line);cursor:pointer;display:flex;align-items:center;justify-content:center;
@@ -208,7 +257,6 @@ body.menu-open header{z-index:100}
 .dice svg{width:34px;height:34px;fill:none;stroke:currentColor;stroke-width:1.2;flex:none;
   stroke-linecap:round;stroke-linejoin:round;transition:transform .2s ease}
 .dice:hover{border-color:var(--text-dim);background:rgba(255,255,255,.06)}
-.dice:hover svg{transform:scale(1.08)}
 .dice:active svg{transform:scale(.92)}
 .dice-spark{position:absolute;left:50%;top:50%;font-size:11px;line-height:1;pointer-events:none;
   animation:sparkfly var(--dur) ease-out forwards}
@@ -224,39 +272,57 @@ body.menu-open header{z-index:100}
 }
 .send:hover{background:var(--btn-see)}
 /* ===== Works - stroke #854CFF, pad 48, rows gap 24 ===== */
-.works{
+/* ===== SITE FRAME - the single source of truth for every page =====
+   Every page is: header > .frame-section (one or more) > footer, all direct
+   children of .page, with NO margins between them so the 2px purple frame
+   reads as one continuous box. Never redefine these borders per-page -
+   add the new page's section class to the selector groups below instead.
+   Canonical starting point: _template.html                              */
+.works,.case-shell,.next-case,.frame-section{
   position:relative;z-index:1;
   border-left:2px solid var(--frame-line);border-right:2px solid var(--frame-line);
   border-bottom:2px solid var(--frame-line);border-top:none;
+}
+.works,.next-case,.frame-section{
   padding:0 48px 48px;
   display:flex;flex-direction:column;gap:10px;
 }
-.works-head{
+.works-head,.next-case-head,.frame-section-head{
   margin:0;
-  display:flex;align-items:center;justify-content:space-between;gap:12px;
-  padding:16px 28px;
+  /* 16 on top, bottom and right so the button sits in an even pocket; the
+     28 on the left keeps the heading where it was */
+  padding:16px 16px 16px 28px;
   border:2px solid var(--frame-line);border-top:none;   /* hangs from the top line */
   border-radius:0 0 6px 6px;             /* bottom corners 6px */
+  display:flex;align-items:center;justify-content:space-between;gap:12px;
 }
-.works h2{min-width:0}
+.works h2,.next-case h2,.frame-section h2{min-width:0}
 @media (min-width:1200px){
-  .works-head{margin-left:calc(clamp(16px, 12vw - 74px, 176px) - 48px);
+  .works-head,.next-case-head,.frame-section-head{
+              margin-left:calc(clamp(16px, 12vw - 74px, 176px) - 48px);
               margin-right:calc(clamp(16px, 12vw - 74px, 176px) - 48px)}
 }
-.works-actions{display:flex;align-items:center;gap:8px}
+.works-actions{display:flex;align-items:center;gap:18px}  /* share icon clear of the download button */
 .pf-btn{
   display:inline-flex;align-items:center;justify-content:center;flex:none;
   color:var(--text);text-decoration:none;
   background:transparent;font-family:inherit;cursor:pointer;
-  border:1px solid #fff;border-radius:4px;         /* corners 4px */
+  border:2px solid var(--frame-line);border-radius:4px;   /* corners 4px */
   width:36px;height:36px;
-  transition:background .18s ease, border-color .18s ease;
+  transition:background .18s ease, border-color .18s ease, transform .15s var(--ease-out);
 }
 .pf-btn:hover{background:rgba(255,255,255,.08)}
+.pf-btn:active{transform:translateY(1px) scale(.92)}
 .pf-ic{width:18px;height:18px;stroke-width:1.5}
-#portfolioShareBtn{border:none;width:auto;height:auto;padding:4px}
+#portfolioShareBtn,#recsShareBtn{border:none;width:auto;height:auto;padding:4px}
 #portfolioShareBtn .pf-ic{width:23px;height:23px}
-.works-actions .share-menu{right:auto;left:0}
+.works-actions .share-menu{right:auto;left:0;transform-origin:top left}
+/* the portfolio menu opens rightwards from a button that already sits near the
+   right edge - on a phone that put it (and 168px of page width) off-screen, so
+   it opens leftwards there, like the one in the chat panel */
+@media (max-width:600px){
+  .works-actions .share-menu{right:0;left:auto;transform-origin:top right}
+}
 .works h2{font-size:24px;font-weight:700;margin-bottom:0}
 .cards{display:flex;flex-direction:column;gap:24px;margin-top:10px}
 .card{display:flex;color:inherit;text-decoration:none}
@@ -308,6 +374,32 @@ footer{
 .social a{color:var(--text);opacity:.9;line-height:0}
 .social a svg{width:25px;height:25px;fill:none;stroke:currentColor;stroke-width:1.5;stroke-linecap:round;stroke-linejoin:round}
 .social a:hover{opacity:1;color:var(--text-dim)}
+
+/* ===== back to top - floating, subtle, appears once you've scrolled ===== */
+.back-to-top{
+  position:fixed;right:28px;bottom:28px;z-index:45;
+  width:46px;height:46px;border-radius:50%;
+  display:flex;align-items:center;justify-content:center;
+  background:rgba(56,35,118,.75);backdrop-filter:blur(8px);-webkit-backdrop-filter:blur(8px);
+  border:2px solid var(--frame-line);color:var(--text);cursor:pointer;
+  opacity:0;transform:translateY(10px) scale(.92);pointer-events:none;
+  transition:opacity .25s var(--ease-out),transform .25s var(--ease-out),
+    border-color .18s ease,background .18s ease;
+}
+.back-to-top.show{opacity:1;transform:translateY(0) scale(1);pointer-events:auto}
+.back-to-top:hover{border-color:var(--text-dim);background:rgba(56,35,118,.92)}
+.back-to-top:active{transform:scale(.9)}
+.back-to-top svg{width:22px;height:22px;fill:none;stroke:currentColor;stroke-width:2;
+  stroke-linecap:round;stroke-linejoin:round}
+body.menu-open .back-to-top{opacity:0;pointer-events:none}
+@media (max-width:900px){
+  /* 18px landed the button straight on top of the 2px frame line (page padding
+     is 16px there). It now sits inside the frame, clear of the rounded corners
+     and of the phone's own gesture bar. */
+  .back-to-top{right:max(26px, env(safe-area-inset-right) + 26px);
+    bottom:max(26px, env(safe-area-inset-bottom) + 26px);
+    width:42px;height:42px}
+}
 /* ===== Responsive ===== */
 @media (max-width:1199px){
   .intro{justify-content:flex-start}
@@ -344,17 +436,9 @@ footer{
 
 /* ===== micro-animations - elegant, quiet ===== */
 .chip{transition:background .18s ease, border-color .18s ease, transform .18s ease}
-.chip:hover{transform:translateY(-1px)}
 .chip:active{transform:translateY(0) scale(.97)}
 
-.main-nav a{position:relative}
-.main-nav a::after{content:'';position:absolute;left:0;right:100%;bottom:-4px;height:1.5px;
-  background:var(--text-dim);transition:right .22s ease}
-.main-nav a:hover::after{right:0}
-@media (max-width:900px){ .main-nav a::after{display:none} }
-
-.logo svg{transition:transform .25s ease}
-.logo:hover svg{transform:scale(1.06)}
+.logo svg,.logo .logo-mark{transition:transform .25s ease}
 
 .card{transition:transform .22s ease, box-shadow .22s ease}
 .card:hover{transform:translateY(-3px);box-shadow:0 14px 40px rgba(0,0,0,.25)}
@@ -364,10 +448,8 @@ footer{
 .card:hover .card-cta svg{transform:translateX(5px)}
 
 .send{transition:background .18s ease, transform .18s ease}
-.send:hover{transform:translateY(-1px)}
 .send:active{transform:scale(.95)}
 .send svg{transition:transform .2s ease}
-.send:hover svg{transform:translateY(-2px)}
 
 .msg{animation:msgIn .32s ease-out both}
 @keyframes msgIn{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:none}}
@@ -385,7 +467,6 @@ footer{
 .intro-txt>*:nth-child(4){animation-delay:.24s}
 .portrait{animation:heroImg .9s ease-out both, portraitBreathe 7s ease-in-out 1.2s infinite;
   transition:filter .35s ease}
-.chat:hover .portrait{filter:brightness(1.05)}
 @keyframes heroIn{from{opacity:0;transform:translateY(10px)}to{opacity:1;transform:none}}
 @keyframes heroImg{from{opacity:0;transform:translateY(6px)}to{opacity:1;transform:none}}
 @keyframes portraitBreathe{0%,100%{transform:scale(1)}50%{transform:scale(1.012)}}
@@ -396,6 +477,17 @@ input#q{transition:border-color .2s ease}
   *,*::before,*::after{animation:none!important;transition:none!important}
 }
 
+/* decorative hover-only transforms - gated so touch taps never leave things stuck mid-hover */
+@media (hover:hover) and (pointer:fine){
+  .chip:hover{transform:translateY(-1px)}
+  .logo:hover svg,
+  .logo:hover .logo-mark{transform:scale(1.06)}
+  .send:hover{transform:translateY(-1px)}
+  .send:hover svg{transform:translateY(-2px)}
+  .dice:hover svg{transform:scale(1.08)}
+  .chat:hover .portrait{filter:brightness(1.05)}
+}
+
 /* chat entrance sequence */
 .ask-title{animation:askIn .5s ease-out both}
 @keyframes askIn{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:none}}
@@ -404,88 +496,289 @@ input#q{transition:border-color .2s ease}
 .dice-in{animation:diceRoll .65s ease-out both}
 @keyframes diceRoll{from{opacity:0;transform:translateX(-34px) rotate(-200deg)}to{opacity:1;transform:none}}
 
-@media (max-width:380px){
+/* forces the hero entrance (portrait/text/chips/dice) to replay when landing back on home
+   from elsewhere on the site - see the inline script in index.html's <head> */
+body.reanim-lock .intro-txt>*,
+body.reanim-lock .portrait,
+body.reanim-lock .ask-title,
+body.reanim-lock .chip-in,
+body.reanim-lock .dice-in{
+  animation:none!important;
+}
+
+/* narrow phones: beside the 152px portrait the text column is left with ~130px and
+   bursts the frame - so the text moves up above the image and takes the full width */
+@media (max-width:600px){
   .intro{flex-direction:column;padding-bottom:132px}   /* room for the image below the text */
   .intro-txt{margin-left:0;width:100%;max-width:none}
   .portrait{left:7px}
 }
 
-/* mobile: slightly smaller input + buttons */
+/* mobile: slightly smaller input + buttons, tighter gaps - one row, always */
 @media (max-width:900px){
+  .inputrow{gap:10px;padding-left:12px}
   .inputrow input{height:46px;font-size:15px}
-  .dice{width:44px;height:44px}
-  .dice svg{width:27px;height:27px}
-  .send{width:44px;height:44px}
-  .send svg{width:20px;height:20px}
-}
-/* truly tight: buttons drop to their own row */
-@media (max-width:380px){
-  .inputrow input{flex:1 1 100%}
-  .dice{order:2}
-  .send{order:3;flex:1;width:auto}
+  /* both buttons 15% smaller than the 44px mobile size, glyphs scaled with them */
+  .dice{width:37px;height:37px}
+  .dice svg{width:19px;height:19px}
+  .send{width:37px;height:37px}
+  .send svg{width:17px;height:17px}
 }
 
 /* ===== case cards - image breaks out above the frame ===== */
-.cards{display:flex;flex-direction:column;gap:240px;margin-top:190px}
+/* 40px of visible air above every case. The image breaks out upward, and by
+   a different amount at each width, so each breakpoint carries its own
+   number: gap = 40 + breakout (211px here, 120px at <=1199, 145px at <=900). */
+.cards{display:flex;flex-direction:column;gap:220px;margin-top:210px}
 @media (min-width:1200px){
   .cards{margin-left:calc(clamp(16px, 12vw - 74px, 176px) - 48px);
          margin-right:calc(clamp(16px, 12vw - 74px, 176px) - 48px)}
 }
 .case-card{position:relative;display:flex;align-items:stretch;text-decoration:none;color:var(--text);
-  border:1px solid var(--card-line);border-radius:4px;min-height:230px;
-  transition:transform .22s ease, box-shadow .22s ease, border-color .22s ease}
-.case-card:hover{transform:translateY(-3px);box-shadow:0 16px 44px rgba(0,0,0,.28);border-color:var(--chip-line)}
+  border:2px solid var(--card-line);border-radius:6px;min-height:280px;
+  /* slow and eased - the card should seem to drift forward, not snap */
+  transform-origin:center;
+  transition:transform .5s var(--ease-out),
+             box-shadow .5s var(--ease-out),
+             outline-color .3s var(--ease-out),
+             border-color .3s var(--ease-out)}
+.case-card:hover{
+  transform:translateY(-4px) scale(1.015);
+  box-shadow:0 30px 72px rgba(0,0,0,.38);
+  border-color:var(--chip-line)}
 .case-media{flex:0 0 44%;position:relative;display:flex;align-items:flex-start;padding:0}
-.case-media img{width:628px;max-width:none;height:auto;
-  margin:-160px 0 0 0;                  /* breakout on top, 0 at the bottom */
+.case-media img{width:671px;max-width:none;height:auto;border-radius:14px;
+  margin:-182px 0 0 0;   /* breakout on top, 0 at the bottom - scaled with the width */
   filter:drop-shadow(0 24px 48px rgba(0,0,0,.35))}
-.case-body{flex:1;display:flex;flex-direction:column;justify-content:flex-end;gap:12px;padding:36px 32px;
-  margin-left:-180px;position:relative;z-index:2}  /* rides 180px into the image's empty margin */
-.case-card.rev .case-body{margin-left:0;margin-right:-80px}
-.case-body h3{font-size:24px;font-weight:700}
-.case-body p{font-size:17px;color:var(--text)}
-.case-body .metric{border:1px solid var(--btn);border-radius:4px;padding:0 16px;height:46px;
-  display:flex;align-items:center;width:max-content;max-width:100%;font-size:16px;font-weight:600}
-.case-cta{width:220px;flex:none;border-left:1px solid var(--card-line);
-  display:flex;align-items:flex-end;justify-content:center;padding:24px 24px 36px}
-.explore{background:var(--btn);color:#fff;padding:0 24px;height:46px;border-radius:4px;
-  display:inline-flex;gap:10px;align-items:center;font-size:15px;font-weight:600;letter-spacing:.05em;
-  transition:background .18s ease}
-.case-card:hover .explore{background:var(--btn-see)}
-.explore svg{width:18px;height:18px;fill:none;stroke:currentColor;stroke-width:2;
-  stroke-linecap:round;stroke-linejoin:round;transition:transform .22s ease}
-.case-card:hover .explore svg{transform:translateX(4px)}
+.case-body{flex:1;display:flex;flex-direction:column;justify-content:flex-end;padding:36px 32px;
+  margin-left:-210px;position:relative;z-index:2}  /* rides 210px into the image's empty margin */
 .case-card.rev{flex-direction:row-reverse}
-.case-card.rev .case-cta{border-left:none;border-right:1px solid var(--card-line)}
-.case-card.rev:hover .explore svg{transform:translateX(-4px)}
+.case-card.rev .case-body{margin-left:0;margin-right:-120px}
+@media (min-width:1200px){
+  .case-body{justify-content:flex-start;padding-top:100px}  /* fixed gap from frame top to the tag row, large screens only */
+  .case-media img{margin-left:-70px}   /* deliberately breaks the frame on the left */
+}
+
+/* one row, always - the chips shrink with the card rather than wrapping */
+.case-tags{display:flex;flex-wrap:nowrap;gap:clamp(5px,.7vw,9px);margin-bottom:24px}
+.case-tag{border:1px solid rgba(255,255,255,.7);border-radius:999px;
+  background:transparent;
+  padding:4px clamp(8px,.85vw,12px);white-space:nowrap;flex:none;
+  font-size:clamp(9px,.82vw,11.5px);font-weight:600;color:var(--text-dim);line-height:1.2}
+/* dark: frame and label both solid white, so the chip reads as one crisp outline */
+:root[data-theme="dark"] .case-tag{color:#FFFFFF;border-color:#FFFFFF}
+/* on a phone the font-size clamp bottoms out at 9px and the row still cannot
+   fit three chips, so it spills past the card. There they wrap instead. */
+@media (max-width:600px){
+  .case-tags{flex-wrap:wrap;row-gap:8px}
+}
+
+.case-body h3{font-size:24px;font-weight:600;margin-bottom:8px}
+.case-body h3 strong{font-weight:800}
+.case-body p{font-size:17px;color:var(--text);margin-bottom:24px}
+
+.case-stats{display:flex;flex-direction:column;gap:8px}
+.stat-pill{display:flex;align-items:center;gap:10px;border:1px solid var(--btn);border-left-width:4px;border-radius:4px;
+  padding:6px 16px;width:max-content;max-width:100%;font-size:15px}
+.stat-pill strong{font-size:17px;font-weight:800;margin:0 4px}
+.stat-pill svg{width:18px;height:18px;flex:none;fill:none;stroke:var(--accent-mint);
+  stroke-width:2.4;stroke-linecap:round;stroke-linejoin:round}
+
+.case-cta{width:275px;flex:none;border-left:2px solid var(--card-line);
+  display:flex;align-items:center;justify-content:center;padding:24px}
+.case-card.rev .case-cta{border-left:none;border-right:2px solid var(--card-line)}
+
+/* Three shadow layers do the work: a hairline of light along the top edge, a
+   solid lip underneath that reads as thickness, and a soft cast shadow. The
+   button lifts off its lip on hover and presses back into it on click. */
+.case-explore{
+  /* a light-to-shade wash over the theme colour, so the face is lit rather than flat */
+  background:linear-gradient(180deg,rgba(255,255,255,.18),rgba(0,0,0,.12)),var(--btn);
+  color:#fff;padding:0 24px;min-width:170px;height:46px;border-radius:4px;
+  display:inline-flex;gap:10px;align-items:center;justify-content:center;
+  font-size:15px;font-weight:600;letter-spacing:.05em;
+  box-shadow:
+    inset 0 1px 0 rgba(255,255,255,.30),
+    0 3px 0 rgba(31,12,74,.62),
+    0 12px 26px rgba(31,12,74,.44),
+    0 2px 6px rgba(31,12,74,.28);
+  transition:background .18s ease,
+             transform .26s var(--ease-out),
+             box-shadow .26s var(--ease-out)}
+.case-card:hover .case-explore{
+  background:linear-gradient(180deg,rgba(255,255,255,.24),rgba(0,0,0,.10)),var(--btn-see);
+  font-weight:800;
+  transform:translateY(-3px);
+  box-shadow:
+    inset 0 1px 0 rgba(255,255,255,.40),
+    0 6px 0 rgba(31,12,74,.62),
+    0 22px 40px rgba(31,12,74,.52),
+    0 4px 10px rgba(31,12,74,.32)}
+/* Dark, on hover only: the purple swings toward magenta and gains saturation,
+   and the lip and cast shadow follow it to a red-plum so the whole button
+   warms together instead of the face alone.
+   #854CFF -> #CA6AFF, the colour you picked. The lip and shadow are a deep
+   version of the same hue so the button sits in its own colour rather than on
+   a foreign plum. */
+:root[data-theme="dark"] .case-card:hover .case-explore{
+  background:linear-gradient(180deg,rgba(255,255,255,.16),rgba(0,0,0,.12)),#CA6AFF;
+  box-shadow:
+    inset 0 1px 0 rgba(255,255,255,.34),
+    0 6px 0 rgba(58,14,86,.66),
+    0 22px 40px rgba(58,14,86,.52),
+    0 4px 10px rgba(58,14,86,.32)}
+:root[data-theme="dark"] .case-card:hover .case-explore:active{
+  box-shadow:
+    inset 0 1px 0 rgba(255,255,255,.18),
+    0 1px 0 rgba(58,14,86,.66),
+    0 4px 10px rgba(58,14,86,.30)}
+
+.case-explore:active{
+  transform:translateY(2px);
+  box-shadow:
+    inset 0 1px 0 rgba(255,255,255,.18),
+    0 1px 0 rgba(31,12,74,.62),
+    0 4px 10px rgba(31,12,74,.30)}
+.case-explore svg{width:18px;height:18px;fill:none;stroke:currentColor;stroke-width:2;
+  stroke-linecap:round;stroke-linejoin:round;transition:transform .22s ease}
+.case-card:hover .case-explore svg{animation:exploreArrow 1.8s ease-in-out infinite}
+.case-card.rev:hover .case-explore svg{animation:exploreArrowRev 1.8s ease-in-out infinite}
+/* a single unhurried glide out and back - two stops only, so there is nothing
+   to stutter against; ease-in-out slows it at both ends of the travel */
+@keyframes exploreArrow{
+  0%  {transform:translateX(0)}
+  50% {transform:translateX(9px)}
+  100%{transform:translateX(0)}
+}
+@keyframes exploreArrowRev{
+  0%  {transform:translateX(0)}
+  50% {transform:translateX(-9px)}
+  100%{transform:translateX(0)}
+}
+@media (prefers-reduced-motion:reduce){
+  .case-card:hover .case-explore svg,
+  .case-card.rev:hover .case-explore svg{animation:none;transform:translateX(4px)}
+}
+
+/* ===== case-card states =====
+   A card that needs a second link (the live demo) can't be an <a> itself, so
+   the whole-card link is a stretched overlay and the demo link sits above it. */
+/* must clear .case-body, which is z-index:2 - otherwise the text area
+   swallows the click and only the image edge opens the case */
+.case-card-link{position:absolute;inset:0;z-index:3;border-radius:inherit}
+/* .case-body is z-index:2, so it forms a stacking context - a z-index on the
+   demo link inside it can never escape past .case-card-link. Lift the whole
+   body above the link instead and let clicks fall through it, so the text area
+   still opens the case while the demo link keeps its own click. */
+.case-card.has-demo .case-body{z-index:4;pointer-events:none}
+.case-card.has-demo .case-demo-link{pointer-events:auto}
+.case-demo-link{
+  position:relative;z-index:4;   /* above the stretched card link */
+  display:inline-flex;align-items:center;gap:9px;align-self:flex-start;
+  margin-top:14px;
+  color:var(--accent-mint);text-decoration:none;
+  font-size:14px;font-weight:700;letter-spacing:.01em;white-space:nowrap;
+  /* 4px rule on the left, echoing the stat pills directly above it */
+  padding:8px 16px;border-radius:4px;
+  border:1px solid rgba(54,232,184,.45);border-left-width:4px;
+  transform-origin:left center;
+  transition:background .3s var(--ease-out),border-color .3s var(--ease-out),
+             transform .3s var(--ease-out),box-shadow .3s var(--ease-out);
+}
+.case-demo-link .arrow{
+  width:15px;height:15px;flex:none;fill:none;stroke:currentColor;
+  stroke-width:2.2;stroke-linecap:round;stroke-linejoin:round;
+  transition:transform 200ms var(--ease-out);
+}
+.case-demo-link:hover .arrow{transform:translate(3px,-3px)}
+.case-demo-link:hover{
+  background:rgba(54,232,184,.12);border-color:var(--accent-mint);
+  transform:scale(1.05);
+  box-shadow:0 10px 22px rgba(54,232,184,.30)}
+.case-demo-link .live-dot{
+  width:8px;height:8px;flex:none;border-radius:50%;
+  background:var(--accent-mint);position:relative;
+}
+.case-demo-link .live-dot::after{
+  content:"";position:absolute;inset:0;border-radius:50%;background:var(--accent-mint);
+  animation:demoPulse 1.9s cubic-bezier(.23,1,.32,1) infinite;
+}
+@keyframes demoPulse{
+  0%{transform:scale(1);opacity:.7}
+  70%,100%{transform:scale(2.6);opacity:0}
+}
+/* no case study written yet - the card still shows the work, but must not
+   promise a page that doesn't exist */
+.case-card.is-upcoming{cursor:default}
+.case-card.is-upcoming:hover{transform:none;box-shadow:none;border-color:var(--card-line)}
+.case-soon{
+  display:inline-flex;align-items:center;height:46px;padding:0 20px;border-radius:4px;
+  border:1px dashed var(--card-line);color:var(--text-dim);
+  font-size:14px;font-weight:600;letter-spacing:.02em;
+}
+.sr-only{
+  position:absolute;width:1px;height:1px;padding:0;margin:-1px;
+  overflow:hidden;clip:rect(0,0,0,0);white-space:nowrap;border:0;
+}
+@media (prefers-reduced-motion:reduce){
+  .case-demo-link .live-dot::after{animation:none}
+}
+
 @media (max-width:1199px){
-  .cards{gap:290px}
-  .case-media img{width:100%;margin-top:-26%}
-  .case-body{margin-left:0}                 /* no overlap on medium - 0px between image and text */
-  .case-card{flex-wrap:wrap}
-  .case-card .case-body{padding:32px 28px}
-  .case-cta, .case-card.rev .case-cta{
+  /* The breakout is a percentage of the card, so it grows with the viewport and
+     a fixed gap only holds at one width. Both numbers track it instead:
+     media column = 52% of the card, image rises 26% of that column. */
+  .cards{
+    --breakout:calc(.26 * (100vw - 136px));
+    gap:calc(40px + var(--breakout));
+    margin-top:calc(40px + var(--breakout));
+  }
+  .case-media{flex-basis:100%}
+  .case-media img{width:min(671px,108%);margin-top:-26%}
+  .case-body,.case-card.rev .case-body{margin-left:0;margin-right:0}                 /* no overlap on medium - 0px between image and text */
+  .case-card,.case-card.rev{flex-wrap:wrap}
+  /* once the card stacks, the 420px floor is dead weight: the content is much
+     shorter than that and flex-end dumped all the slack above the tag row */
+  .case-card .case-body,.case-card.rev .case-body{
+    padding:32px 28px;min-height:0;justify-content:flex-start;
+  }
+  .case-cta,.case-card.rev .case-cta{
     flex:1 1 100%;width:auto;
     border-left:none;border-right:none;border-top:1px solid var(--card-line);
     justify-content:flex-start;padding:20px 26px}
 }
 @media (max-width:900px){
-  .cards{gap:210px;margin-top:130px}
+  /* the hero shrinks its side padding with the viewport, .works did not - which
+     is why the chat box was 307 wide and every other box 243. Same clamp, same
+     inner width, so all the boxes line up on a phone. */
+  .works,.next-case,.frame-section{
+    padding-left:clamp(16px, 12vw - 74px, 176px);
+    padding-right:clamp(16px, 12vw - 74px, 176px);
+  }
+  .cards{
+    --breakout:calc(.26 * (100vw - 40px - 2 * clamp(16px, 12vw - 74px, 176px)));
+    gap:calc(40px + var(--breakout));
+    margin-top:calc(40px + var(--breakout));
+  }
   .case-card,.case-card.rev{flex-direction:column;flex-wrap:nowrap;min-height:0}
-  .case-media,.case-card.rev .case-media{flex:none;padding:0 16px 8px 16px;justify-content:center}
-  .case-media img{width:100%;margin-top:-26%}
-  .case-card .case-body{padding:16px 20px 20px;margin-left:0;margin-right:0}
-  .case-card.rev .case-body{margin-right:0}
-  .case-body h3{font-size:20px}
+  /* full card width plus a small breakout, echoing the desktop treatment -
+     the side padding was making the screenshot read too small on a phone */
+  .case-media,.case-card.rev .case-media{flex:none;padding:0 0 8px;justify-content:center}
+  .case-media img{width:min(671px,108%);max-width:none;margin-top:-26%}
+  .case-card .case-body,.case-card.rev .case-body{padding:16px 20px 20px}
+  .case-body h3{font-size:21px}
   .case-body p{font-size:15px}
-  .case-body .metric{font-size:14px;padding:8px 12px}
+  .stat-pill{font-size:14px;padding:5px 14px}
+  .stat-pill strong{font-size:16px}
   .case-cta,.case-card.rev .case-cta{width:auto;border:none;border-top:1px solid var(--card-line);padding:16px 20px;justify-content:flex-start}
-  .explore{width:auto}
+  .case-explore{width:auto}
 }
 
 /* ===== case reveal + float - contemporary, quiet ===== */
 .js-reveal{opacity:0}
 .js-reveal.in{opacity:1;animation:cardReveal .8s cubic-bezier(.22,.8,.36,1) both}
+/* set by JS the moment the entrance finishes - see the note in chat.js */
+.revealed{opacity:1}
 @keyframes cardReveal{from{opacity:0;transform:translateY(34px)}to{opacity:1;transform:none}}
 .case-media img{animation:caseFloat 9s linear infinite}
 .case-card:nth-child(2) .case-media img{animation-duration:11s;animation-delay:1.2s}
@@ -500,6 +793,75 @@ input#q{transition:border-color .2s ease}
   75%  {transform:translate(-7px,-8px) rotate(-.3deg)}
   87.5%{transform:translate(-5px,-2.6px) rotate(-.15deg)}
   100% {transform:translate(0,0) rotate(0deg)}
+}
+
+/* ===== recommendations - quiet testimonial bubbles, alternating sides ===== */
+.rec-list{display:flex;flex-direction:column;gap:28px;margin-top:40px}
+/* empty content slot inside a .frame-section (used by _template.html) -
+   reserves the space so a brand-new page doesn't collapse before content is added */
+.case-body{min-height:420px}
+.rec-card{
+  /* fixed 480 - they must not grow with the viewport */
+  width:480px;max-width:100%;
+  padding:22px 26px;border-radius:16px;
+  background:rgba(255,255,255,.04);
+  border:1px solid var(--card-line);
+  box-shadow:0 14px 32px rgba(0,0,0,.34);
+  display:flex;flex-direction:column;gap:14px;
+  transition:transform .22s ease,box-shadow .22s ease,border-color .22s ease;
+}
+/* Ronen's quote runs long - his card alone gets more width to hold it */
+.rec-card.wide{width:600px}
+/* the chessboard is measured from the centre line, not the container edges,
+   so the cards stay together as a group instead of drifting to the margins */
+.rec-card:nth-child(odd){align-self:flex-start;margin-left:max(0px,calc(50% - 408px))}
+.rec-card:nth-child(even){align-self:flex-end;margin-right:max(0px,calc(50% - 408px))}
+.rec-top{display:flex;align-items:center;gap:14px}
+/* ===== recommendations: a chessboard that breathes =====
+   The cards alternate left/right. Their width grows with the viewport but is
+   capped, so on a wide screen they spread apart instead of stranding the row
+   in the middle of an empty band. */
+.rec-avatar{width:52px;height:52px;flex:none;border-radius:50%;overflow:hidden;position:relative;
+  display:flex;align-items:center;justify-content:center;
+  color:#fff;font-weight:700;font-size:16px;letter-spacing:.02em;
+  box-shadow:0 6px 16px rgba(0,0,0,.25)}
+/* avatar colourways - one per recommender, so the HTML carries no gradients */
+.rec-avatar.av-violet{background:linear-gradient(160deg,#C58FFF,#8B5CF6)}
+.rec-avatar.av-blue{background:linear-gradient(160deg,#8FC9FF,#5C8BF6)}
+.rec-avatar.av-mint{background:linear-gradient(160deg,#7FE9D2,#2FB89B)}
+.rec-avatar img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;border-radius:50%}
+
+/* a recommendation inside a chat answer: who it is, then what they said */
+.msg-person-block{margin-top:18px}
+.msg-person-block:first-of-type{margin-top:14px}
+.msg-person{display:flex;align-items:center;gap:12px;margin:0 0 8px}
+.msg-person img{width:44px;height:44px;border-radius:50%;object-fit:cover;flex:none;
+  box-shadow:0 4px 12px rgba(0,0,0,.25)}
+.msg-person-id{display:flex;align-items:baseline;flex-wrap:wrap;gap:4px 10px;min-width:0}
+.msg-person-id b{font-size:15px;font-weight:700}
+.msg-person-id span{font-size:13px;color:var(--text-dim)}
+.msg-person-quote{font-size:15px;line-height:1.55;padding-left:56px}
+.msg-outro{margin-top:18px}
+@media (max-width:560px){.msg-person-quote{padding-left:0}}
+.rec-who{display:flex;flex-direction:column;gap:2px;min-width:0}
+.rec-name{font-weight:700;font-size:16px}
+.rec-role{font-size:13.5px;color:var(--text-dim)}
+.rec-quote{font-size:15px;line-height:1.55}
+.rec-source{display:flex;align-items:center;justify-content:flex-end;gap:6px;font-size:12.5px;color:var(--text-dim)}
+.rec-source svg{width:15px;height:15px;flex:none;fill:currentColor;stroke:none}
+/* entrance: rises in from its own side, never from the center */
+.rec-card:nth-child(odd).js-reveal.in{animation:recInLeft .85s cubic-bezier(.22,.8,.36,1) both}
+.rec-card:nth-child(even).js-reveal.in{animation:recInRight .85s cubic-bezier(.22,.8,.36,1) both}
+@keyframes recInLeft{from{opacity:0;transform:translate(-96px,18px) scale(.97)}to{opacity:1;transform:none}}
+@keyframes recInRight{from{opacity:0;transform:translate(96px,18px) scale(.97)}to{opacity:1;transform:none}}
+/* recommendation cards are not interactive - no hover treatment */
+/* the 480 / 600 split is a wide-screen gesture; once the chessboard collapses
+   the differing widths just read as inconsistency, so every card matches */
+@media (max-width:900px){
+  .rec-card,.rec-card.wide{
+    width:100%;max-width:100%;align-self:stretch!important;
+    margin-left:0;margin-right:0;
+  }
 }
 
 /* empty-send nudge - soft glow, warm placeholder */
@@ -517,8 +879,9 @@ input#q{transition:border-color .2s ease}
 .cbtn[hidden]{display:none!important}
 .cbtn{width:26px;height:26px;border:none;border-radius:5px;background:transparent;
   cursor:pointer;display:flex;align-items:center;justify-content:center;color:var(--text-dim);
-  transition:background .18s ease,color .18s ease}
+  transition:background .18s ease,color .18s ease,transform .15s var(--ease-out)}
 .cbtn:hover{background:rgba(255,255,255,.08);color:var(--text)}
+.cbtn:active{transform:translateY(1px) scale(.9)}
 .cbtn svg{width:14px;height:14px;fill:none;stroke:currentColor;stroke-width:2;stroke-linecap:round;stroke-linejoin:round}
 #chipsToggle .vbar{transition:transform .28s cubic-bezier(.34,1.56,.64,1);transform-origin:center;transform-box:fill-box}
 #chipsToggle[aria-expanded="true"] .vbar{transform:scaleY(0)}
@@ -549,11 +912,12 @@ input#q{transition:border-color .2s ease}
 .more-chip{display:inline-flex;align-items:center;gap:6px;margin-top:10px;font-size:13.5px;color:var(--text);
   background:transparent;border:1px solid var(--chip-line);border-radius:4px;
   padding:5px 14px;cursor:pointer;font-family:inherit;
-  transition:background .18s ease,transform .18s ease}
+  transition:background .18s ease,transform .15s var(--ease-out)}
 .more-content{margin-top:10px}
 .more-chip:hover{background:rgba(255,255,255,.08);transform:translateY(-1px)}
+.more-chip:active{transform:translateY(0) scale(.97)}
 .more-chip svg{width:12px;height:12px;flex:none;fill:none;stroke:currentColor;stroke-width:2;
-  stroke-linecap:round;stroke-linejoin:round;transition:transform .25s ease}
+  stroke-linecap:round;stroke-linejoin:round;transition:transform .25s var(--ease-in-out)}
 .more-chip.open svg{transform:rotate(180deg)}
 
 /* printable transcript - everything else hides, only this prints (used for "download as PDF") */
@@ -569,4 +933,65 @@ input#q{transition:border-color .2s ease}
   #printTranscript .pt-rule{border:none;border-top:1px solid #ccc;margin:20px 0}
   #printTranscript .pt-q{font-weight:700;margin-top:22px;color:#000}
   #printTranscript .pt-a{margin-top:6px;line-height:1.6;white-space:pre-wrap;color:#222}
+}
+
+/* ============ COMING-SOON DIALOG ============
+   Used by the portfolio download until the file itself is ready. Same overlay
+   language as the case-study lightbox, so it reads as part of the system. */
+body.has-modal{overflow:hidden}
+.cs-modal{
+  position:fixed;inset:0;z-index:400;display:flex;align-items:center;justify-content:center;
+  padding:24px;background:rgba(15,10,30,.78);backdrop-filter:blur(6px);
+  opacity:0;transition:opacity 240ms var(--ease-out);
+}
+.cs-modal.is-open{opacity:1}
+.cs-modal[hidden]{display:none}
+.cs-modal-panel{
+  position:relative;width:min(460px,100%);
+  background:#241C3D;border:2px solid var(--frame-line);border-radius:20px;
+  padding:44px 36px 32px;text-align:center;
+  box-shadow:0 30px 80px rgba(8,4,24,.55);
+  transform:translateY(14px) scale(.97);
+  transition:transform 280ms var(--ease-out);
+}
+.cs-modal.is-open .cs-modal-panel{transform:none}
+.cs-modal-badge{
+  display:inline-flex;align-items:center;justify-content:center;
+  width:60px;height:60px;border-radius:50%;margin-bottom:20px;
+  background:linear-gradient(140deg,var(--frame-line),var(--panel-grad-a));
+}
+.cs-modal-badge svg{
+  width:28px;height:28px;fill:none;stroke:#fff;
+  stroke-width:2;stroke-linecap:round;stroke-linejoin:round;
+}
+.cs-modal-panel h3{font-size:26px;line-height:1.2;font-weight:700;color:#fff;margin-bottom:12px}
+.cs-modal-panel p{font-size:16px;line-height:24px;color:rgba(255,255,255,.76);margin:0 auto;max-width:36ch}
+.cs-modal-actions{display:flex;gap:12px;justify-content:center;flex-wrap:wrap;margin-top:26px}
+.cs-modal-cta,.cs-modal-ghost{
+  display:inline-flex;align-items:center;justify-content:center;
+  padding:11px 22px;border-radius:8px;font-size:15px;font-weight:700;
+  text-decoration:none;cursor:pointer;border:2px solid transparent;
+  transition:background 240ms var(--ease-out),border-color 240ms var(--ease-out),
+             transform 240ms var(--ease-out);
+}
+.cs-modal-cta{background:linear-gradient(140deg,var(--frame-line),var(--panel-grad-a));color:#fff}
+.cs-modal-cta:hover{transform:translateY(-2px)}
+.cs-modal-ghost{background:transparent;border-color:rgba(255,255,255,.28);color:rgba(255,255,255,.86)}
+.cs-modal-ghost:hover{border-color:rgba(255,255,255,.6);color:#fff}
+.cs-modal-close{
+  position:absolute;top:14px;right:14px;width:34px;height:34px;
+  display:inline-flex;align-items:center;justify-content:center;
+  background:transparent;border:none;border-radius:8px;cursor:pointer;
+  color:rgba(255,255,255,.7);transition:background 200ms var(--ease-out),color 200ms var(--ease-out);
+}
+.cs-modal-close:hover{background:rgba(255,255,255,.10);color:#fff}
+.cs-modal-close svg{width:18px;height:18px;fill:none;stroke:currentColor;stroke-width:2;stroke-linecap:round}
+.cs-modal-ghost.cs-modal-close{position:static;width:auto;height:auto}
+@media (prefers-reduced-motion:reduce){
+  .cs-modal,.cs-modal-panel,.cs-modal-cta{transition:none}
+  .cs-modal-panel{transform:none}
+}
+@media (max-width:480px){
+  .cs-modal-panel{padding:40px 24px 26px}
+  .cs-modal-actions{flex-direction:column}
 }

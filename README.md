@@ -1,6 +1,6 @@
 # Lora Maly - Portfolio Site
 
-A single-page portfolio for Lora (Larisa) Maly, Senior Product Designer, with a
+A single-page portfolio for Lora (Larisa) Maly, Senior AI Product Designer, with a
 scripted "Ask me anything" chat engine, an animated hero, a case-study section,
 and a matching resume page.
 

@@ -1,0 +1,299 @@
+<!DOCTYPE html>
+<html lang="en">
+<!--
+  ============================================================================
+  CASE TEMPLATE  -  copy this whole file into case-<name>/<name>.html
+  ============================================================================
+
+  HOW TO USE
+    1. Copy this file to  case-<name>/<name>.html
+    2. Create            case-<name>/assets/   and put every image there, FLAT
+    3. Replace every  [BRACKETED]  placeholder with real content
+    4. Swap  theme-template  on .cs for your case's theme class
+       and add that class to the THEME block in css/case-study.css
+    5. Run:  python3 tools/check-html.py
+
+  WHAT YOU CHANGE PER CASE
+    - texts, images, section headings, nav labels
+    - the theme colours (one class, ~12 tokens)
+
+  WHAT YOU MUST NEVER CHANGE PER CASE
+    - font sizes, line-heights, spacing, padding, structure, motion, scroll
+    - the site header / footer / frame - identical on every page of the site
+    All of that lives in css/case-study.css and css/styles.css. Change it
+    THERE once and every case moves together. Never override it in a page.
+
+  THE LOCKED TYPE SCALE - translate a Figma file INTO this, never the reverse:
+    14px  small text           .cs-tag .case-nav-item .cs-lens-tag
+    16px  body        / 22px   .cs-body .cs-pill .cs-caption
+    18px  bullets     / 24px   .cs-lead .cs-bullets li .cs-risk-row p
+    20px  lead, one notch up   .cs-lead.lg  .cs-body.lg  .cs-kicker
+    24px  sub-heading          .cs-about-col h5 .cs-numbered-row h5
+    48px  section heading/ 50   .cs-h2                    (34px under 640px)
+    56px  cover heading  / 58   .cs-hero h1               (cover only)
+
+  THE LOCKED SPACING
+    80px  between every section  (.cs-section)
+    Never pay it twice at one seam - if two blocks meet, only one has padding.
+
+  PATHS from inside a case folder
+    own images   assets/x.png          shared css/js  ../css/  ../js/
+    shared img   ../assets/images/     sibling pages  ../index.html
+  ============================================================================
+-->
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>[CASE TITLE - exactly as it should read, no suffix]</title>
+<meta name="description" content="Senior AI Product Designer specializing in UX Strategy, AI-Driven Experiences &amp; Agentic AI.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700&family=Luxurious+Script&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../css/styles.css?v=20260807">
+<link rel="stylesheet" href="../css/light.css?v=20260807">
+<link rel="icon" type="image/png" sizes="32x32" href="../assets/icons/favicon-32x32.png">
+<link rel="icon" type="image/png" sizes="16x16" href="../assets/icons/favicon-16x16.png">
+<link rel="apple-touch-icon" sizes="180x180" href="../assets/icons/apple-touch-icon.png">
+<script>/* dark is the default - only the visitor's own choice switches it, and the
+   attribute is set before first paint so the page never flashes the wrong theme */
+(function(){try{var t=localStorage.getItem('lm-theme-v2');
+document.documentElement.setAttribute('data-theme',t==='light'?'light':'dark');}
+catch(e){document.documentElement.setAttribute('data-theme','dark');}})();</script>
+
+<link rel="stylesheet" href="../css/case-study.css?v=20260807">
+<script>
+/* returning to home from anywhere on the site: replay the normal hero entrance
+   like a fresh load, instead of showing a stale/settled page */
+addEventListener('pageshow', () => {
+  let fromSite = false;
+  try { fromSite = document.referrer && new URL(document.referrer).origin === location.origin; } catch(e) {}
+  if (!fromSite) return;
+  document.body.classList.add('reanim-lock');
+  void document.body.offsetWidth;
+  document.body.classList.remove('reanim-lock');
+});
+</script>
+</head>
+<body>
+<div class="bg-fx"></div>
+<div class="page">
+
+  <!-- ===== SITE HEADER - copy as-is, never restyle per case ===== -->
+  <header>
+    <a class="logo" href="../index.html">
+      <svg width="52" height="36" viewBox="0 0 52 36" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <!-- paste the logo path from index.html -->
+      </svg>
+      <span class="logo-name">Lora Maly</span>
+    </a>
+    <nav class="main-nav" id="mainNav" aria-label="Main">
+      <a href="../index.html#recommendations"><span>Recommendations</span></a>
+      <a href="../index.html#works"><span>Portfolio</span></a>
+      <a href="../resume.html"><span>Resume</span></a>
+    </nav>
+    <button class="theme-toggle" type="button" aria-pressed="false" aria-label="Switch to light theme" title="Switch to light theme">
+      <svg class="ic-moon" viewBox="0 0 24 24" aria-hidden="true"><path d="M21 12.8A9 9 0 1 1 11.2 3a7 7 0 0 0 9.8 9.8z"/></svg>
+      <svg class="ic-sun" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="4.2"/><path d="M12 2.2v2.4M12 19.4v2.4M4.5 4.5l1.7 1.7M17.8 17.8l1.7 1.7M2.2 12h2.4M19.4 12h2.4M4.5 19.5l1.7-1.7M17.8 6.2l1.7-1.7"/></svg>
+    </button>
+    <button class="hamburger" id="hamburger" aria-label="Menu" aria-expanded="false" aria-controls="mainNav">
+      <span></span><span></span><span></span>
+    </button>
+  </header>
+  <div class="nav-overlay" id="navOverlay"></div>
+
+  <div class="case-shell">
+    <div class="case-head-sentinel" id="caseHeadSentinel"></div>
+
+    <!-- ===== SECTION NAV - labels change per case, styling never does.
+         Every item must be href="#<id>" of a real section, or the scrollspy
+         drops it. The Live Demo item is the one exception: it links out. ===== -->
+    <nav class="case-head" id="caseNav" aria-label="Case study sections">
+      <div class="case-nav-items">
+        <a class="case-nav-item" href="#about">[NAV 1]</a>
+        <a class="case-nav-item" href="#problem">[NAV 2]</a>
+        <a class="case-nav-item" href="#research">[NAV 3]</a>
+        <a class="case-nav-item" href="#solution">[NAV 4]</a>
+        <a class="case-nav-item" href="#outcomes">[NAV 5]</a>
+        <a class="case-nav-item demo" href="[CASE-DEMO].html" target="_blank" rel="noopener">
+          <span class="live-dot" aria-hidden="true"></span>
+          Live Demo
+        </a>
+      </div>
+    </nav>
+
+    <div class="case-breadcrumb">
+      <a href="../index.html">Home</a>
+      <svg class="bc-sep" viewBox="0 0 24 24"><path d="M9 18l6-6-6-6"/></svg>
+      <a href="../index.html#works">Portfolio</a>
+      <svg class="bc-sep" viewBox="0 0 24 24"><path d="M9 18l6-6-6-6"/></svg>
+      <span class="current">[CASE TITLE]</span>
+    </div>
+
+    <!-- ===== CASE CONTENT - swap theme-template for this case's theme ===== -->
+    <div class="cs theme-template">
+
+      <!-- COVER + ABOUT share one gradient so no seam can appear between them -->
+      <div class="cs-hero-bleed">
+        <section class="cs-hero" id="about">
+          <div class="wrap cs-hero-wrap">
+            <div class="cs-hero-text">
+              <div class="cs-tags cs-reveal">
+                <span class="cs-tag">[TAG]</span>
+                <span class="cs-tag">[TAG]</span>
+              </div>
+              <h1 class="cs-reveal"><span class="light">[COVER LINE 1]</span><br>[COVER LINE 2]</h1>
+              <p class="lead cs-reveal">[One sentence: what this is and who it is for.]</p>
+              <a class="cs-demo-btn cs-reveal" href="[CASE-DEMO].html" target="_blank" rel="noopener">
+                <span class="live-dot" aria-hidden="true"></span>Try the Live Demo
+                <svg class="arrow" viewBox="0 0 24 24" aria-hidden="true"><path d="M7 17L17 7M9 7h8v8"/></svg>
+                <span class="sr-only"> (opens in a new tab)</span>
+              </a>
+            </div>
+            <div class="cs-hero-media" aria-hidden="true">
+              <img src="assets/[COVER].png" alt="">
+            </div>
+          </div>
+        </section>
+
+        <!-- three facts, each on its own hairline rule. No heading by design:
+             this is a fast scan block, not a slide. -->
+        <section class="cs-section on-purple" id="about-project">
+          <div class="wrap">
+            <div class="cs-about-grid cs-reveal-group">
+              <div class="cs-about-col">
+                <h5>The Product</h5>
+                <p>[What the product is, in one line.]</p>
+              </div>
+              <div class="cs-about-col">
+                <h5>My Role</h5>
+                <p>[What you actually did.]</p>
+              </div>
+              <div class="cs-about-col">
+                <h5>Scope</h5>
+                <p>[Where your work started and stopped.]</p>
+              </div>
+            </div>
+          </div>
+        </section>
+      </div>
+
+      <!-- ============ PROBLEM ============ -->
+      <section class="cs-section" id="problem">
+        <div class="wrap">
+          <div class="cs-kicker"><span class="bar"></span><span>[Problem]</span></div>
+          <div class="cs-problem-grid">
+            <div class="cs-reveal">
+              <h2 class="cs-h2 grad-text">[HEADING LINE 1]<br><span class="light">[HEADING LINE 2]</span></h2>
+              <p class="cs-lead">[The sharp version of the problem, one or two lines.]</p>
+              <p class="cs-body">[The context a stranger needs to believe it.]</p>
+            </div>
+            <div class="cs-problem-side cs-reveal">
+              <img class="cs-zoomable cs-problem-media" src="assets/[PROBLEM].png" alt="[describe the image]">
+            </div>
+          </div>
+
+          <div class="cs-problem-side cs-slip-block cs-reveal">
+            <div class="cs-slip-title">[What kept slipping:]</div>
+            <div class="cs-slip-list cs-reveal-group">
+              <div class="cs-pill">[Symptom]</div>
+              <div class="cs-pill">[Symptom]</div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ============ RESEARCH ============ -->
+      <section class="cs-section" id="research">
+        <div class="wrap">
+          <div class="cs-kicker"><span class="bar"></span><span>[Research]</span></div>
+          <h2 class="cs-h2 grad-text cs-reveal"><span class="light">[LINE 1]</span><br>[LINE 2]</h2>
+          <div class="cs-reveal">
+            <ul class="cs-bullets">
+              <li>[What you did, concretely.]</li>
+              <li>[What you did, concretely.]</li>
+            </ul>
+          </div>
+        </div>
+      </section>
+
+      <!-- ============ SOLUTION ============ -->
+      <section class="cs-section" id="solution">
+        <div class="wrap">
+          <div class="cs-kicker"><span class="bar"></span><span>[Solution]</span></div>
+          <div class="cs-coord-grid">
+            <div class="cs-reveal">
+              <h2 class="cs-h2 grad-text">[LINE 1]<br><span class="light">[LINE 2]</span></h2>
+              <p class="cs-lead lg">[Who it was designed around and why.]</p>
+              <p class="cs-body">[How it works in one or two sentences.]</p>
+            </div>
+            <img class="cs-zoomable cs-coord-media cs-reveal" src="assets/[SOLUTION].png" alt="[describe]">
+          </div>
+
+          <!-- numbered rows: structure -> teams -> decisions -->
+          <div class="cs-numbered cs-reveal-group">
+            <div class="cs-numbered-row">
+              <div class="cs-num-badge">1</div>
+              <div><h5>[Point]</h5><p>[One line.]</p></div>
+            </div>
+            <div class="cs-numbered-row">
+              <div class="cs-num-badge">2</div>
+              <div><h5>[Point]</h5><p>[One line.]</p></div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ============ OUTCOMES ============ -->
+      <section class="cs-section dark" id="outcomes">
+        <div class="wrap">
+          <div class="cs-kicker on-purple"><span class="bar"></span><span>[Outcomes]</span></div>
+          <h2 class="cs-h2 cs-reveal">[LINE 1]<br><span class="light">[LINE 2]</span></h2>
+          <div class="cs-outcomes-stats cs-reveal-group">
+            <div class="cs-stat-card">
+              <div class="cs-stat-num">
+                <svg class="stat-arrow" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 20V5M6 11l6-6 6 6"/></svg>
+                <span class="prefix">[Up to]</span><span class="val"><span class="num">[00]</span><span class="pct">%</span></span>
+              </div>
+              <div class="label">[what it measures]</div>
+            </div>
+          </div>
+          <ul class="cs-disclaimer"><li>[Where the number comes from - always say.]</li></ul>
+        </div>
+      </section>
+
+      <!-- ============ CLOSING - one gradient across both blocks ============ -->
+      <div class="cs-closing-bleed">
+        <section class="cs-section dark cs-learned">
+          <div class="wrap">
+            <div class="eyebrow cs-reveal"><span class="light">What</span><br>I Learned</div>
+            <div class="cs-reveal">
+              <p>[Lesson.]</p>
+              <p>[Lesson.]</p>
+              <p class="lesson">[The one that matters most.]</p>
+            </div>
+            <div class="cs-thanks cs-reveal">
+              <img src="assets/heart.svg" alt="">
+              <span>Thank<br>You</span>
+            </div>
+          </div>
+        </section>
+      </div>
+
+    </div><!-- /.cs -->
+  </div><!-- /.case-shell -->
+
+  <!-- click-to-zoom lightbox - sits OUTSIDE .cs on purpose -->
+  <div class="cs-lightbox" id="csLightbox" aria-hidden="true">
+    <button class="cs-lightbox-close" id="csLightboxClose" aria-label="Close">
+      <svg viewBox="0 0 24 24"><path d="M18 6L6 18M6 6l12 12"/></svg>
+    </button>
+    <img id="csLightboxImg" alt="">
+  </div>
+
+</div><!-- /.page -->
+
+<script src="../js/back-to-top.js?v=20260807"></script>
+<script src="../js/case-study.js?v=20260807"></script>
+<script src="../js/theme.js?v=20260807"></script>
+</body>
+</html>

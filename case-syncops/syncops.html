@@ -1,0 +1,713 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>SyncOps - Agentic Dispatch for Fiber Network Operations</title>
+<meta name="description" content="Senior AI Product Designer specializing in UX Strategy, AI-Driven Experiences &amp; Agentic AI.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700&family=Luxurious+Script&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../css/styles.css?v=20260807">
+<link rel="stylesheet" href="../css/light.css?v=20260807">
+<link rel="icon" type="image/png" sizes="32x32" href="../assets/icons/favicon-32x32.png">
+<link rel="icon" type="image/png" sizes="16x16" href="../assets/icons/favicon-16x16.png">
+<link rel="apple-touch-icon" sizes="180x180" href="../assets/icons/apple-touch-icon.png">
+<script>/* dark is the default - only the visitor's own choice switches it, and the
+   attribute is set before first paint so the page never flashes the wrong theme */
+(function(){try{var t=localStorage.getItem('lm-theme-v2');
+document.documentElement.setAttribute('data-theme',t==='light'?'light':'dark');}
+catch(e){document.documentElement.setAttribute('data-theme','dark');}})();</script>
+
+<link rel="stylesheet" href="../css/case-study.css?v=20260807">
+<script>
+addEventListener('pageshow', () => {
+  let fromSite = false;
+  try { fromSite = document.referrer && new URL(document.referrer).origin === location.origin; } catch(e) {}
+  if (!fromSite) return;
+  document.body.classList.add('reanim-lock');
+  void document.body.offsetWidth;
+  document.body.classList.remove('reanim-lock');
+});
+</script>
+</head>
+<body>
+<div class="bg-fx"></div>
+<div class="page">
+
+  <header>
+    <a class="logo" href="../index.html">
+      <img class="logo-mark" src="../assets/images/logoColorful.png" alt="" width="31" height="31">
+      <span class="logo-name">Lora Maly</span>
+    </a>
+    <nav class="main-nav" id="mainNav" aria-label="Main">
+      <a href="../index.html#recommendations"><svg viewBox="0 0 24 24"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg><span>Recommendations</span></a>
+      <a href="../index.html#works"><svg viewBox="0 0 24 24"><rect x="2" y="7" width="20" height="14" rx="2"/><path d="M16 21V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16"/></svg><span>Portfolio</span></a>
+      <a href="../resume.html"><svg viewBox="0 0 24 24"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/></svg><span>Resume</span></a>
+    </nav>
+    <button class="theme-toggle" type="button" aria-pressed="false" aria-label="Switch to light theme" title="Switch to light theme">
+      <svg class="ic-moon" viewBox="0 0 24 24" aria-hidden="true"><path d="M21 12.8A9 9 0 1 1 11.2 3a7 7 0 0 0 9.8 9.8z"/></svg>
+      <svg class="ic-sun" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="4.2"/><path d="M12 2.2v2.4M12 19.4v2.4M4.5 4.5l1.7 1.7M17.8 17.8l1.7 1.7M2.2 12h2.4M19.4 12h2.4M4.5 19.5l1.7-1.7M17.8 6.2l1.7-1.7"/></svg>
+    </button>
+    <button class="hamburger" id="hamburger" aria-label="Menu" aria-expanded="false" aria-controls="mainNav">
+      <span></span><span></span><span></span>
+    </button>
+  </header>
+  <div class="nav-overlay" id="navOverlay"></div>
+
+  <div class="case-shell">
+    <div class="case-head-sentinel" id="caseHeadSentinel"></div>
+    <nav class="case-head" id="caseNav" aria-label="Case study sections">
+      <div class="case-nav-items">
+        <a class="case-nav-item" href="#about">
+          <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><line x1="12" y1="16" x2="12" y2="12"/><line x1="12" y1="8" x2="12.01" y2="8"/></svg>
+          About
+        </a>
+        <a class="case-nav-item" href="#problem">
+          <svg viewBox="0 0 24 24"><path d="M12 2L1 21h22L12 2z"/><line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg>
+          Problem
+        </a>
+        <a class="case-nav-item" href="#research">
+          <svg viewBox="0 0 24 24"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+          Research
+        </a>
+        <a class="case-nav-item" href="#insight">
+          <svg viewBox="0 0 24 24"><path d="M12 2a7 7 0 0 0-4 12.7V18h8v-3.3A7 7 0 0 0 12 2z"/><path d="M9.5 21h5"/></svg>
+          Insight
+        </a>
+        <a class="case-nav-item" href="#directions">
+          <svg viewBox="0 0 24 24"><path d="M3 3v18h18"/><path d="M7 15l4-4 3 3 5-6"/></svg>
+          Directions
+        </a>
+        <a class="case-nav-item" href="#signals">
+          <svg viewBox="0 0 24 24"><path d="M12 3l1.9 4.6L18.5 9l-4.6 1.9L12 15.5l-1.9-4.6L5.5 9l4.6-1.4L12 3z"/></svg>
+          The Agent
+        </a>
+        <a class="case-nav-item" href="#map">
+          <svg viewBox="0 0 24 24"><path d="M9 20l-6-3V4l6 3 6-3 6 3v13l-6-3-6 3z"/><path d="M9 7v13M15 4v13"/></svg>
+          Map
+        </a>
+        <a class="case-nav-item" href="#trust">
+          <svg viewBox="0 0 24 24"><path d="M12 3l8 3v6c0 4.5-3.2 7.9-8 9-4.8-1.1-8-4.5-8-9V6l8-3z"/><path d="M9 12l2 2 4-4"/></svg>
+          Trust
+        </a>
+        <a class="case-nav-item" href="#measurement">
+          <svg viewBox="0 0 24 24"><path d="M3 17l6-6 4 4 8-8"/><polyline points="17 7 21 7 21 11"/></svg>
+          Outcomes
+        </a>
+        <a class="case-nav-item demo" href="syncops-agent-demo.html" target="_blank" rel="noopener">
+          <span class="live-dot" aria-hidden="true"></span>
+          Live Demo
+        </a>
+      </div>
+    </nav>
+
+    <div class="case-breadcrumb">
+      <a href="../index.html">Home</a>
+      <svg class="bc-sep" viewBox="0 0 24 24"><path d="M9 18l6-6-6-6"/></svg>
+      <a href="../index.html#works">Portfolio</a>
+      <svg class="bc-sep" viewBox="0 0 24 24"><path d="M9 18l6-6-6-6"/></svg>
+      <span class="current">SyncOps - Agentic Dispatch</span>
+    </div>
+
+    <div class="cs theme-syncops">
+
+      <!-- ============ 01 · COVER - flat brand field, text left / product shot right ============ -->
+      <section class="cs-hero sy-cover" id="about">
+        <div class="wrap cs-hero-wrap">
+          <div class="cs-hero-text">
+            <div class="cs-tags cs-reveal">
+              <span class="cs-tag">Enterprise B2B</span>
+              <span class="cs-tag">AI-Driven Experiences</span>
+              <span class="cs-tag">Agentic AI</span>
+              <span class="cs-tag">UX Strategy</span>
+              <span class="cs-tag">UI Design</span>
+            </div>
+            <h1 class="cs-reveal"><span class="light">When Every Minute Counts -</span><br>Turn complex data<br>into confident decisions.</h1>
+            <p class="lead cs-reveal">How I redesigned network operations from monitoring to decision-making - estimated ~50% faster task assignment.</p>
+            <a class="cs-demo-btn cs-reveal" href="syncops-agent-demo.html" target="_blank" rel="noopener">
+              <span class="live-dot" aria-hidden="true"></span>Try the Live Demo
+              <svg class="arrow" viewBox="0 0 24 24" aria-hidden="true"><path d="M7 17L17 7M9 7h8v8"/></svg>
+              <span class="sr-only"> (opens in a new tab)</span>
+            </a>
+          </div>
+          <div class="cs-hero-media" aria-hidden="true">
+            <img src="assets/sinCover.png" alt="">
+          </div>
+        </div>
+      </section>
+
+      <!-- ============ 02 · THE SHIPPED FOUNDATION - copy left / system diagram right ============ -->
+      <section class="cs-section" id="about-project">
+        <div class="wrap">
+          <div class="cs-kicker"><span class="bar"></span><span>Foundation</span></div>
+          <div class="sy-split">
+            <div class="cs-reveal">
+              <div class="sy-block">
+                <h3 class="sy-h">About SyncOps</h3>
+                <p class="cs-body">Real-time SaaS for fiber-network operations at a large telecom - shipped and in daily use. The agentic layer shown here is designed ahead of its build.</p>
+              </div>
+              <div class="sy-block">
+                <h3 class="sy-h">My Role</h3>
+                <ul class="cs-bullets">
+                  <li>Research</li>
+                  <li>User Interviews</li>
+                  <li>Personas and Journeys</li>
+                  <li>UX Strategy</li>
+                  <li>AI Agentic Design</li>
+                  <li>Wireframes &amp; Prototypes</li>
+                  <li>Usability testing</li>
+                </ul>
+              </div>
+              <div class="sy-block">
+                <h3 class="sy-h">Scope</h3>
+                <p class="cs-body">My scope: the admin dashboard - research to UI. It syncs in real time with the technicians&rsquo; mobile app - a separate product.</p>
+                <p class="sy-note">Under NDA - every name, screen and data point here was recreated from scratch. Nothing is client material.</p>
+              </div>
+            </div>
+            <img class="cs-zoomable sy-split-media cs-reveal" src="assets/system.png" alt="How SyncOps connects the administrator, the platform and the technician mobile app">
+          </div>
+        </div>
+      </section>
+
+      <!-- ============ 03 · THE PROBLEM THAT REMAINED - tinted field, stickies top-right, two quotes ============ -->
+      <section class="cs-section sy-tint" id="problem">
+        <div class="wrap">
+          <div class="cs-kicker"><span class="bar"></span><span>Problem</span></div>
+          <div class="sy-split sy-split-wide">
+            <div class="cs-reveal">
+              <h2 class="cs-h2 grad-text">The Issue Wasn&rsquo;t Visibility.<br><span class="strong">It Was Time-to-Decision.</span></h2>
+              <p class="cs-lead">Every assignment still fused location, skills, workload, traffic and weather - in the admin&rsquo;s head, under SLA pressure.</p>
+            </div>
+            <img class="cs-zoomable sy-stickies cs-reveal" src="assets/yellowpPages.png" alt="Quotes from field technicians captured during the interviews">
+          </div>
+
+          <div class="sy-quotes cs-reveal-group">
+            <blockquote class="sy-quote">
+              <img class="sy-qmark" src="assets/sitate.svg" alt="">
+              <p>I&rsquo;m wasting too much time finding an available technician! Why isn&rsquo;t there a tool that does this for me?</p>
+              <cite>- Administrator, user interviews</cite>
+            </blockquote>
+            <blockquote class="sy-quote">
+              <img class="sy-qmark" src="assets/sitate.svg" alt="">
+              <p>Issues remain open for hours because no one notices they haven&rsquo;t been assigned.</p>
+              <cite>- Administrator, user interviews</cite>
+            </blockquote>
+          </div>
+        </div>
+      </section>
+
+      <!-- ============ 04 · RESEARCH - five stats, then two persona cards ============ -->
+      <section class="cs-section" id="research">
+        <div class="wrap">
+          <div class="cs-kicker"><span class="bar"></span><span>Research</span></div>
+          <h2 class="cs-h2 grad-text cs-reveal"><span class="light">Grounded in the</span><br>Original Study.</h2>
+
+          <div class="sy-stats cs-reveal-group">
+            <div class="sy-stat"><div class="n">70<span>%</span></div><p>Prefer Map-Based, Real-Time Operations</p></div>
+            <div class="sy-stat"><div class="n">All</div><p>Admins Asked For Faster Response Times</p></div>
+            <div class="sy-stat"><div class="n">80<span>%</span></div><p>Of Technicians Want Simpler Reporting</p></div>
+            <div class="sy-stat"><div class="n">65<span>%</span></div><p>Point To Admin - Tech Communication Gaps</p></div>
+            <div class="sy-stat accent"><div class="n">50<span>%</span></div><p>Ask For Predictive Maintenance Alerts</p></div>
+          </div>
+
+          <p class="sy-note cs-reveal">Interviews with administrators and field technicians &middot; development-team consultations &middot; conducted for the original SyncOps project.</p>
+
+          <div class="sy-personas cs-reveal-group">
+            <div class="sy-persona">
+              <h5><strong>Tamar Prinsy</strong> Administrator</h5>
+              <p>Coordinates a central-region team in real time. Rates her own real-time decision-making at 70%.</p>
+              <p class="sy-persona-quote">&ldquo;I&rsquo;m wasting too much time finding an available technician.&rdquo;</p>
+            </div>
+            <div class="sy-persona">
+              <h5><strong>Avi Oren</strong> Field Technician</h5>
+              <p>Ten years in fiber optics. Slowed by unclear briefs; blocked by weather in exposed areas.</p>
+              <p class="sy-persona-quote">&ldquo;I have multiple open jobs, but no clear priority.&rdquo;</p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ============ 05 · THE INSIGHT - said -> arrow -> designed ============ -->
+      <section class="cs-section sy-tint" id="insight">
+        <div class="wrap">
+          <div class="cs-kicker"><span class="bar"></span><span>Insight</span></div>
+          <h2 class="cs-h2 grad-text cs-reveal"><span class="light">Users Asked For An Agent -</span><br><span class="strong">Before The Word Existed.</span></h2>
+
+          <div class="sy-said-head cs-reveal">
+            <span>What they said</span>
+            <span></span>
+            <span>What I designed</span>
+          </div>
+
+          <div class="sy-said cs-reveal-group">
+            <div class="sy-said-pair">
+              <span class="sy-said-label">What they said</span>
+              <div class="sy-said-quote">
+                <img class="sy-qmark sy-qmark-sm" src="assets/sitate.svg" alt="">
+                <p>Why isn&rsquo;t there a tool that does this for me?</p>
+                <cite>- Administrator</cite>
+              </div>
+              <svg class="sy-arrow" viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+              <span class="sy-said-label">What I designed</span>
+              <div class="sy-said-answer">Assignment Agent - Requested Explicitly</div>
+            </div>
+
+            <div class="sy-said-pair">
+              <span class="sy-said-label">What they said</span>
+              <div class="sy-said-quote">
+                <img class="sy-qmark sy-qmark-sm" src="assets/sitate.svg" alt="">
+                <p>No one notices they haven&rsquo;t been assigned.</p>
+                <cite>- Administrator</cite>
+              </div>
+              <svg class="sy-arrow" viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+              <span class="sy-said-label">What I designed</span>
+              <div class="sy-said-answer">Proactive Watchdog</div>
+            </div>
+
+            <div class="sy-said-pair">
+              <span class="sy-said-label">What they said</span>
+              <div class="sy-said-quote">
+                <img class="sy-qmark sy-qmark-sm" src="assets/sitate.svg" alt="">
+                <p>I&rsquo;d love to get break recommendations when the workload is low.</p>
+                <cite>- Field technician</cite>
+              </div>
+              <svg class="sy-arrow" viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+              <span class="sy-said-label">What I designed</span>
+              <div class="sy-said-answer">Proactive Agent Suggestions</div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ============ 06 · DIRECTIONS CONSIDERED - two struck out, one circled ============ -->
+      <section class="cs-section" id="directions">
+        <div class="wrap">
+          <div class="cs-kicker"><span class="bar"></span><span>Directions Considered</span></div>
+          <h2 class="cs-h2 grad-text cs-reveal"><span class="light">Three Ways</span><br>to Add Intelligence.</h2>
+          <div class="sy-dirs cs-reveal-group">
+            <div class="sy-dir is-out">
+              <img class="sy-mark-x" src="assets/red_x_A.svg" alt="">
+              <h5>Full Automation</h5>
+              <p class="claim">Agent assigns silently.</p>
+              <p class="why">Rejected - trust dies on the first hidden mistake.</p>
+            </div>
+            <div class="sy-dir is-out">
+              <img class="sy-mark-x" src="assets/red_x_b.svg" alt="">
+              <h5>Smarter Alerts</h5>
+              <p class="claim">More sorted alerts</p>
+              <p class="why">Rejected - Tamar still manually weighs everything.</p>
+            </div>
+            <div class="sy-dir is-chosen">
+              <img class="sy-mark-circle" src="assets/approveCircle.svg" alt="">
+              <h5>Graduated Autonomy</h5>
+              <p class="claim">The agent acts where safe, proposes where high-stakes, and always explains its reasoning.</p>
+              <p class="sy-chosen"><span class="sy-tick" aria-hidden="true"></span>Chosen</p>
+              <p class="why">Solves the actual problem - Time-to-Decision - without giving up human control. Reduces load on the operator while building system trust over time.</p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ============ 07 · SIX SIGNALS, ONE DECISION - input / agent / output ============ -->
+      <section class="cs-section" id="signals">
+        <div class="wrap">
+          <div class="cs-kicker"><span class="bar"></span><span>Agent Design &middot; Data &amp; Security</span></div>
+          <div class="sy-signals cs-reveal-group">
+            <div class="sy-sig-in">
+              <h2 class="cs-h2 grad-text"><span class="light">Six Signals,</span><br>One Decision!</h2>
+              <p class="cs-body">The agent continuously fuses operational data into one actionable proposal.</p>
+              <h3 class="sy-h sy-h-sm">INPUT</h3>
+              <ul class="sy-chips">
+                <li>Live GPS &amp; workload</li>
+                <li>Skills &amp; shift hours</li>
+                <li>SLA clocks &amp; issue history</li>
+                <li>Admin rules &amp; Zone constraints</li>
+                <li>Traffic &amp; ETA <em>Public APIs &middot; external, non-sensitive</em></li>
+                <li>Weather <em>Public APIs &middot; external, non-sensitive</em></li>
+              </ul>
+            </div>
+            <svg class="sy-sig-down" viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+            <div class="sy-sig-mid">
+              <img class="sy-sig-arrow to-agent" src="assets/arrowCircleRight.svg" alt="">
+              <div class="sy-agent-shape">
+                <img class="sy-agent-ic" src="assets/magic.svg" alt="">
+                <div class="sy-agent-name"><span class="light">Dispatch</span><br>Agent</div>
+              </div>
+              <img class="sy-sig-arrow from-agent" src="assets/arrowCircleDown.svg" alt="">
+            </div>
+            <svg class="sy-sig-down" viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+            <div class="sy-sig-out">
+              <h3 class="sy-h sy-h-sm">OUTPUT</h3>
+              <ul class="sy-pills">
+                <li>One ranked proposal</li>
+                <li>Confidence score</li>
+                <li>Plain-language reasoning</li>
+              </ul>
+            </div>
+          </div>
+          <div class="sy-security cs-reveal">
+            <img src="assets/lock.png" alt="">
+            <p>The agent fuses internal operational data with public traffic and weather APIs - no new data exposure, no proprietary data leaves the platform.</p>
+          </div>
+        </div>
+      </section>
+
+
+      <!-- ============ 08 · MARKET POSITION - where this sits in 2026 ============ -->
+      <section class="cs-section sy-tint" id="market">
+        <div class="wrap">
+          <div class="cs-kicker"><span class="bar"></span><span>Market</span></div>
+          <h2 class="cs-h2 grad-text cs-reveal"><span class="light">Where This</span><br>Sits in 2026.</h2>
+          <div class="sy-market cs-reveal-group">
+            <div class="sy-market-col">
+              <div class="sy-market-row">
+                <img src="assets/market-standard.svg" alt="">
+                <strong>Standard</strong>
+                <p>Agent proposes, human approves - Salesforce, GA May 2025. Traffic-aware ETAs - Salesforce, Oracle, Microsoft.</p>
+              </div>
+              <div class="sy-market-row">
+                <img src="assets/market-designed.svg" alt="">
+                <strong>Designed here</strong>
+                <p>Visible confidence with a threshold. Weather-aware re-planning. Coverage alerts. A dispatcher digest.</p>
+              </div>
+              <div class="sy-market-row">
+                <img src="assets/market-sources.svg" alt="">
+                <strong>Sources</strong>
+                <p>Vendor release notes and product docs, 2025 - verified Aug 2026.</p>
+              </div>
+            </div>
+            <div class="sy-market-zero cs-reveal">
+              <div class="n">0</div>
+              <p>major field-service suites ship the designed-here list today.</p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ============ 09 · HOW THE AGENT REACHES A PROPOSAL - five columns on brand ============ -->
+      <section class="cs-section sy-brand" id="reasoning">
+        <div class="wrap">
+          <div class="cs-kicker on-purple"><span class="bar"></span><span>Agent Design &middot; Reasoning</span></div>
+          <h2 class="cs-h2 cs-reveal"><span class="light">How the Agent</span><br>Reaches a Proposal</h2>
+          <div class="sy-steps cs-reveal-group">
+            <div class="sy-step"><div class="n">01 <span>&rarr;</span></div><h5>Collect</h5><p>All six signals, continuously</p></div>
+            <div class="sy-step"><div class="n">02 <span>&rarr;</span></div><h5>Filter</h5><p>Hard constraints: skill, area, shift hours, safety</p></div>
+            <div class="sy-step"><div class="n">03 <span>&rarr;</span></div><h5>Rank</h5><p>Travel time, workload balance, SLA risk</p></div>
+            <div class="sy-step"><div class="n">04 <span>&rarr;</span></div><h5>Score</h5><p>Confidence based on data freshness and margin</p></div>
+            <div class="sy-step"><div class="n">05</div><h5>Decide</h5><p>Above threshold &rarr; propose &middot; below &rarr; hold and ask</p></div>
+          </div>
+          <p class="sy-banner cs-reveal">The threshold is a design decision, not a model setting: high-stakes dispatch stays above it, or the agent asks.</p>
+        </div>
+      </section>
+
+      <!-- ============ 10 · BEFORE / AFTER ============ -->
+      <section class="cs-section sy-tint" id="before-after">
+        <div class="wrap">
+          <div class="cs-kicker"><span class="bar"></span><span>Agent Design &middot; Before / After</span></div>
+          <h2 class="cs-h2 grad-text cs-reveal"><span class="light">From Five Manual Steps</span><br>to One Decision!</h2>
+          <div class="sy-ba cs-reveal-group">
+            <div class="sy-ba-col">
+              <h5><span class="light">Before -</span> The manual loop</h5>
+              <ul class="sy-steps-list">
+                <li>Spot the issue</li>
+                <li>Scan the technician table</li>
+                <li>Check availability</li>
+                <li>Weigh skills &amp; distance</li>
+                <li>Assign &amp; notify</li>
+              </ul>
+            </div>
+            <img class="sy-ba-arrow" src="assets/arrowLeft.svg" alt="">
+            <svg class="sy-ba-down" viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+            <div class="sy-ba-col">
+              <h5><span class="light">After -</span> With the dispatch agent</h5>
+              <ul class="sy-steps-list">
+                <li>Review the proposal - confidence + reasoning</li>
+                <li class="is-primary">Approve. One click.</li>
+              </ul>
+            </div>
+          </div>
+          <div class="sy-auto cs-reveal">
+            <h5>What the Agent Does<br>Automatically &rarr;</h5>
+            <div><strong>Proposes</strong><span>best technician + reasoning</span></div>
+            <div><strong>Warns</strong><span>before the SLA breaks</span></div>
+            <div><strong>Re-plans</strong><span>when traffic or weather shifts</span></div>
+            <div><strong>Hands off</strong><span>briefed task to the field app</span></div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ============ 11 · THE MAP IS THE AGENT'S CANVAS ============ -->
+      <section class="cs-section sy-tint" id="map">
+        <div class="wrap">
+          <div class="cs-kicker"><span class="bar"></span><span>Map</span></div>
+          <h2 class="cs-h2 grad-text cs-reveal"><span class="light">The Map Is</span><br>The Agent&rsquo;s Canvas.</h2>
+          <div class="sy-map-grid">
+            <div class="cs-reveal">
+              <img class="cs-zoomable sy-map-shot" src="assets/map.png" alt="The live map with the agent's proposals, risk flags and clusters shown in place">
+              <p class="sy-note">Why the map leads: spatial decisions are the fastest to make visually - the queue and roster answer what the map can&rsquo;t.</p>
+            </div>
+            <div class="sy-callouts cs-reveal-group">
+              <p class="sy-map-intro">What the admin used to hold in her head, the agent now shows on the map - proposals, risks, and clusters, in place.</p>
+              <div class="sy-callout-row"><div class="cs-num-badge">1</div><div class="sy-callout"><h5>Assignment Proposal</h5><p>&ldquo;Nearest, 15m away &middot; low workload&rdquo; - the agent&rsquo;s pick, one click to accept.</p></div></div>
+              <div class="sy-callout-row"><div class="cs-num-badge">2</div><div class="sy-callout"><h5>SLA Watchdog</h5><p>&ldquo;Prevent SLA Breach&rdquo; - flagged before the clock runs out, not after.</p></div></div>
+              <div class="sy-callout-row"><div class="cs-num-badge">3</div><div class="sy-callout"><h5>Cluster Detection</h5><p>&ldquo;Multiple incidents detected&rdquo; - the agent spots a pattern a human would miss.</p></div></div>
+              <div class="sy-callout-row"><div class="cs-num-badge">4</div><div class="sy-callout"><h5>Coverage Alert</h5><p>&ldquo;Low coverage in Ramat Gan&rdquo; - a gap surfaced before it becomes a problem.</p></div></div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ============ 12 · ANATOMY OF A DECISION ============ -->
+      <section class="cs-section sy-tint" id="anatomy">
+        <div class="wrap">
+          <div class="cs-kicker"><span class="bar"></span><span>Core Pattern</span></div>
+          <h2 class="cs-h2 grad-text cs-reveal"><span class="light">Anatomy of</span><br>a Decision.</h2>
+          <div class="sy-anatomy">
+            <img class="cs-zoomable sy-anatomy-shot cs-reveal" src="assets/job.png" alt="A single decision row: urgency, context, confidence, reasoning and one primary action">
+            <div class="sy-callouts cs-reveal-group">
+              <div class="sy-callout-row"><div class="cs-num-badge">1</div><div class="sy-callout"><h5>Urgency</h5><p>Severity + SLA clock set the row&rsquo;s priority and colour</p></div></div>
+              <div class="sy-callout-row"><div class="cs-num-badge">2</div><div class="sy-callout"><h5>Context</h5><p>Nearest technician, workload, distance - fused automatically</p></div></div>
+              <div class="sy-callout-row"><div class="cs-num-badge">3</div><div class="sy-callout"><h5>Confidence</h5><p>A score on the match, so the operator knows how much to trust it</p></div></div>
+              <div class="sy-callout-row"><div class="cs-num-badge">4</div><div class="sy-callout"><h5>Reasoning</h5><p>Why this technician - one line, always visible</p></div></div>
+              <div class="sy-callout-row"><div class="cs-num-badge">5</div><div class="sy-callout"><h5>Next Action</h5><p>One primary button: Assign. Everything else is secondary</p></div></div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ============ 13 · AUTONOMY, BY DESIGN - three colour-coded cards ============ -->
+      <section class="cs-section" id="autonomy">
+        <div class="wrap">
+          <div class="cs-kicker"><span class="bar"></span><span>Core Artifact</span></div>
+          <h2 class="cs-h2 grad-text cs-reveal">Autonomy,<br><span class="light">By Design.</span></h2>
+          <p class="cs-lead cs-reveal">Risk and reversibility set the level. Nothing acts silently.</p>
+          <div class="sy-autonomy cs-reveal-group">
+            <div class="sy-auto-card is-green">
+              <h5>Acts Alone</h5>
+              <ul><li>Queue triage &amp; prioritization</li><li>Status sync &amp; closure</li><li>Event digests</li></ul>
+              <p>Low-risk, reversible, always logged.</p>
+            </div>
+            <div class="sy-auto-card is-amber">
+              <h5>Suggests</h5>
+              <ul><li>Technician assignment</li><li>SLA-risk reassignment</li><li>Preventive tasks</li></ul>
+              <p>One-click approve; confidence + reasoning attached.</p>
+            </div>
+            <div class="sy-auto-card is-red">
+              <h5>Never</h5>
+              <ul><li>Silent dispatching</li><li>Acting below the confidence threshold</li></ul>
+              <p>The agent steps back and asks.</p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+            <!-- ============ 14 · WHEN THE AGENT ISN'T SURE - the failure state ============ -->
+      <section class="cs-section sy-tint" id="unsure">
+        <div class="wrap">
+          <div class="cs-kicker"><span class="bar"></span><span>Trust &middot; The Failure State</span></div>
+          <h2 class="cs-h2 grad-text cs-reveal"><span class="light">When the Agent</span><br>Isn&rsquo;t Sure.</h2>
+          <div class="sy-unsure">
+            <img class="cs-zoomable sy-unsure-shot cs-reveal" src="assets/unsure-panel.png" alt="The decision panel below the confidence threshold - the agent flags the job and waits instead of proposing">
+            <div class="sy-unsure-rows cs-reveal-group">
+              <div class="sy-unsure-row">
+                <div class="cs-num-badge">1</div>
+                <div class="sy-unsure-bubble"><h5>Held, Not Pushed</h5><p>Below the threshold the agent proposes nothing - it flags and waits</p></div>
+              </div>
+              <div class="sy-unsure-row">
+                <div class="cs-num-badge">2</div>
+                <div class="sy-unsure-bubble"><h5>Why It&rsquo;s Unsure</h5><p>Two reasons, in plain language - never a black box</p></div>
+              </div>
+              <div class="sy-unsure-row">
+                <div class="cs-num-badge">3</div>
+                <div class="sy-unsure-bubble"><h5>58% - Under The Bar</h5><p>High-stakes dispatch stays above the threshold. This one doesn&rsquo;t</p></div>
+              </div>
+              <div class="sy-unsure-row">
+                <div class="cs-num-badge">4</div>
+                <div class="sy-unsure-bubble"><h5>Paths, Not A Pick</h5><p>Tamar compares options or asks the agent to dig deeper</p></div>
+              </div>
+              <div class="sy-unsure-row">
+                <div class="cs-num-badge">5</div>
+                <div class="sy-unsure-bubble"><h5>Her Call</h5><p>The decision stays human. The agent records the outcome</p></div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ============ 14 · HUMAN-IN-THE-LOOP - five icons in a row ============ -->
+      <section class="cs-section sy-tint" id="trust">
+        <div class="wrap">
+          <div class="cs-kicker"><span class="bar"></span><span>Trust</span></div>
+          <h2 class="cs-h2 grad-text cs-reveal">Human-in-the-Loop,<br><span class="light">By Design.</span></h2>
+          <div class="sy-trust cs-reveal-group">
+            <div class="sy-trust-item"><img src="assets/confidence.svg" alt=""><h5>Confidence</h5><p>A score on every proposal</p></div>
+            <div class="sy-trust-item"><img src="assets/quest.svg" alt=""><h5>Explainability</h5><p>&ldquo;Why this technician&rdquo; - one tap</p></div>
+            <div class="sy-trust-item"><img src="assets/settingsIC.svg" alt=""><h5>Control</h5><p>Approve &middot; edit &middot; override, one click</p></div>
+            <div class="sy-trust-item"><img src="assets/undo.svg" alt=""><h5>Undo</h5><p>Agent actions are reversible</p></div>
+            <div class="sy-trust-item"><img src="assets/eye.svg" alt=""><h5>Transparency</h5><p>Activity log of every agent step</p></div>
+          </div>
+          <p class="sy-banner cs-reveal">Below the confidence threshold, the agent steps back and asks.</p>
+        </div>
+      </section>
+
+      <!-- ============ 15 · A DAY WITH THE AGENT - vertical timeline ============ -->
+      <section class="cs-section" id="scenario">
+        <div class="wrap">
+          <div class="cs-kicker"><span class="bar"></span><span>Scenario</span></div>
+          <div class="sy-scenario">
+            <h2 class="cs-h2 grad-text cs-reveal"><span class="light">A day with the agent -</span><br>Tamar Prinsy</h2>
+            <div class="sy-tl cs-reveal-group">
+              <div class="sy-tl-row is-right">
+                <div class="sy-tl-card">
+                  <div class="t">08:00</div>
+                  <h5>A digest, not noise</h5>
+                  <p>One prioritized morning summary replaces a wall of alerts.</p>
+                </div>
+              </div>
+              <div class="sy-tl-row is-left">
+                <div class="sy-tl-card">
+                  <div class="t">12:40</div>
+                  <h5>The watchdog catches a delay</h5>
+                  <p>Traffic holds a technician; the agent proposes a reassignment before the SLA breaks - a scenario straight from the original journey map.</p>
+                </div>
+              </div>
+              <div class="sy-tl-row is-right is-tight">
+                <div class="sy-tl-card">
+                  <div class="t">12.41</div>
+                  <h5>One click. Her call.</h5>
+                  <p>Tamar approves. The system executes. Credit stays with the admin.</p>
+                </div>
+              </div>
+            </div>
+            <div class="sy-aside cs-reveal">
+              <h5>And on Avi&rsquo;s side</h5>
+              <p>Avi once asked for break recommendations on slow days. The agent surfaces that - as a proposal on Tamar&rsquo;s board. The approved task lands in his field app, briefed and complete.</p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ============ 16 · FROM REACTIVE TO PREVENTIVE ============ -->
+      <section class="cs-section sy-tint" id="prediction">
+        <div class="wrap">
+          <div class="cs-kicker"><span class="bar"></span><span>Prediction</span></div>
+          <h2 class="cs-h2 grad-text cs-reveal"><span class="light">From Reactive</span><br>to Preventive.</h2>
+          <div class="sy-predict">
+            <div class="sy-predict-rows cs-reveal-group">
+              <div class="sy-predict-row"><img src="assets/flag.svg" alt=""><strong>Flag</strong><p>Risk areas surface on the map - issue clusters, construction zones, incoming weather.</p></div>
+              <div class="sy-predict-row"><img src="assets/propose.svg" alt=""><strong>Propose</strong><p>The agent drafts preventive tasks for at-risk segments - never silently scheduled.</p></div>
+              <div class="sy-predict-row"><img src="assets/approve.svg" alt=""><strong>Approve</strong><p>Admins turn proposals into work orders. Prevention becomes routine, not luck.</p></div>
+            </div>
+            <div class="sy-predict-stat cs-reveal">
+              <div class="n">50<span>%</span></div>
+              <p>of research participants asked for predictive alerts - in the original study.</p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ============ 17 · DEFINED, NOT CLAIMED - five metric cards ============ -->
+      <section class="cs-section" id="measurement">
+        <div class="wrap">
+          <div class="cs-kicker"><span class="bar"></span><span>Measurement</span></div>
+          <h2 class="cs-h2 grad-text cs-reveal">Defined,<br><span class="light">Not Claimed!</span></h2>
+          <div class="sy-metrics cs-reveal-group">
+            <div class="sy-metric"><img src="assets/timer-reset.svg" alt=""><h5>Time to assignment</h5><p>from issue to technician</p></div>
+            <div class="sy-metric"><img src="assets/shield-check.svg" alt=""><h5>SLA breaches prevented</h5><p>watchdog effectiveness</p></div>
+            <div class="sy-metric"><img src="assets/hourglass.svg" alt=""><h5>Decisions per hour</h5><p>admin throughput</p></div>
+            <div class="sy-metric"><img src="assets/scale.svg" alt=""><h5>Utilization balance</h5><p>fair load across the field</p></div>
+            <div class="sy-metric is-accent"><img src="assets/hand.svg" alt=""><h5>Override rate &darr;</h5><p>falling overrides = growing trust</p></div>
+          </div>
+          <p class="sy-note">The agentic layer is design work ahead of its build - it ships with its yardstick already defined. The ~50% gain is an internal estimate, against a baseline of about 8 minutes per manual assignment - observed and sized with the ops team. The next number gets measured.</p>
+        </div>
+      </section>
+
+      <!-- ============ 18 + 19 · REFLECTION AND CLOSING - one brand field ============ -->
+      <div class="sy-closing-bleed">
+        <section class="cs-section sy-reflection" id="reflection">
+          <div class="wrap">
+            <div class="cs-kicker on-purple"><span class="bar"></span><span>Reflection</span></div>
+            <h2 class="cs-h2 cs-reveal">What Designing An<br>Agent Taught Me</h2>
+            <ul class="sy-lessons cs-reveal-group">
+              <li>Designing autonomy is designing trust.</li>
+              <li>Suggest first - expand autonomy as trust grows.</li>
+              <li>Agent UX lives in its failure states.</li>
+              <li>First thing I would usability-test: the low-confidence moment.</li>
+            </ul>
+          </div>
+        </section>
+        <section class="cs-section sy-closing">
+          <div class="wrap">
+            <div class="sy-thanks cs-reveal">
+              <img src="assets/heart.svg" alt="">
+              <span>Thank<br>You</span>
+            </div>
+            <a class="cs-demo-btn cs-close-demo cs-reveal" href="syncops-agent-demo.html" target="_blank" rel="noopener">
+              <span class="live-dot" aria-hidden="true"></span>Try the Live Demo
+              <svg class="arrow" viewBox="0 0 24 24" aria-hidden="true"><path d="M7 17L17 7M9 7h8v8"/></svg>
+              <span class="sr-only"> (opens in a new tab)</span>
+            </a>
+          </div>
+        </section>
+      </div>
+
+
+    </div><!-- /.cs -->
+  </div><!-- /.case-shell -->
+
+  <section class="next-case" id="next-case">
+    <div class="next-case-head">
+      <h2>Next Case</h2>
+    </div>
+    <div class="cards">
+      <div class="case-card has-demo tint-violet">
+        <a class="case-card-link" href="../case-aft/aft-timeline.html" aria-label="Open the AFT Timeline case study"></a>
+        <div class="case-media"><img src="../assets/images/case-gantt.webp" alt="Amazon Global Syndicated Loan - AI decision-support timeline"></div>
+        <div class="case-body">
+          <div class="case-tags">
+            <span class="case-tag">Agentic AI</span>
+            <span class="case-tag">Enterprise B2B</span>
+            <span class="case-tag">UX Research &amp; Design</span>
+          </div>
+          <h3>Deals don&rsquo;t fail. <strong>Visibility does!</strong></h3>
+          <p>An AI-driven decision-support timeline for syndicated-loan fintech.</p>
+          <div class="case-stats">
+            <div class="stat-pill"><svg viewBox="0 0 24 24"><path d="M12 19V5M5 12l7-7 7 7"/></svg><span>Up to <strong>50%</strong> fewer approval-related delays</span></div>
+            <div class="stat-pill"><svg viewBox="0 0 24 24"><path d="M12 5v14M19 12l-7 7-7-7"/></svg><span><strong>~35%</strong> less coordination time</span></div>
+          </div>
+          <a class="case-demo-link" href="../case-aft/aft-agent-demo.html" target="_blank" rel="noopener">
+            <span class="live-dot" aria-hidden="true"></span>Try the live demo<svg class="arrow" viewBox="0 0 24 24" aria-hidden="true"><path d="M7 17L17 7M9 7h8v8"/></svg><span class="sr-only"> (opens in a new tab)</span>
+          </a>
+        </div>
+        <div class="case-cta"><span class="case-explore">EXPLORE <svg viewBox="0 0 24 24"><path d="M5 12h14M13 6l6 6-6 6"/></svg></span></div>
+      </div>
+    </div>
+  </section>
+
+  <div class="cs-lightbox" id="csLightbox" aria-hidden="true">
+    <button class="cs-lightbox-close" id="csLightboxClose" aria-label="Close">
+      <svg viewBox="0 0 24 24"><path d="M18 6L6 18M6 6l12 12"/></svg>
+    </button>
+    <img id="csLightboxImg" alt="">
+  </div>
+
+  <footer>
+    <span>&copy; 2026 Lora Maly. All rights reserved.</span>
+    <div class="social">
+      <a href="https://wa.me/972506763066" aria-label="WhatsApp"><svg viewBox="0 0 24 24"><path d="M3 21l1.65 -3.8a9 9 0 1 1 3.4 2.9l-5.05 .9"/><path d="M9 10a.5 .5 0 0 0 1 0v-1a.5 .5 0 0 0 -1 0v1a5 5 0 0 0 5 5h1a.5 .5 0 0 0 0 -1h-1a.5 .5 0 0 0 0 1"/></svg></a>
+      <a href="https://www.linkedin.com/in/darbiz/" aria-label="LinkedIn"><svg viewBox="0 0 24 24"><path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4V8h4v2"/><rect x="2" y="9" width="4" height="12"/><circle cx="4" cy="4" r="2"/></svg></a>
+    </div>
+  </footer>
+
+<button id="backToTop" class="back-to-top" aria-label="Back to top">
+  <svg viewBox="0 0 24 24"><path d="M12 19V5M5 12l7-7 7 7"/></svg>
+</button>
+
+</div><!-- /.page -->
+
+<script src="../js/back-to-top.js?v=20260807"></script>
+<script src="../js/case-study.js?v=20260807"></script>
+<script src="../js/theme.js?v=20260807"></script>
+</body>
+</html>
