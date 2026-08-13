@@ -547,7 +547,26 @@ addEventListener('pageshow', () => {
             <div class="sy-trust-item"><img src="assets/undo.svg" alt=""><h5>Undo</h5><p>Agent actions are reversible</p></div>
             <div class="sy-trust-item"><img src="assets/eye.svg" alt=""><h5>Transparency</h5><p>Activity log of every agent step</p></div>
           </div>
-          <p class="sy-banner cs-reveal">Below the confidence threshold, the agent steps back and asks.</p>
+          <!-- the banner and the two proof cards read as one row on wide
+               screens, exactly as on the slide; below 900px they stack -->
+          <div class="sy-trust-foot cs-reveal">
+            <p class="sy-banner">Below the confidence threshold, the agent steps back and asks.</p>
+            <div class="sy-proof">
+              <div class="sy-proof-toast">
+                <svg class="sy-proof-check" viewBox="0 0 24 24" aria-hidden="true"><path d="M4 12.5 9.5 18 20 6"/></svg>
+                <span>Approved - reassigned to Dan Morano</span>
+                <span class="sy-proof-undo">Undo</span>
+              </div>
+              <div class="sy-proof-log">
+                <h5>Agent activity</h5>
+                <ul>
+                  <li><span class="t">12:41</span> &middot; Tamar approved the proposal</li>
+                  <li><span class="t">12:41</span> &middot; Briefed task sent to the field app</li>
+                  <li><span class="t">12:38</span> &middot; Proposal created - confidence 92%</li>
+                </ul>
+              </div>
+            </div>
+          </div>
         </div>
       </section>
 
@@ -709,5 +728,6 @@ addEventListener('pageshow', () => {
 <script src="../js/back-to-top.js?v=20260807"></script>
 <script src="../js/case-study.js?v=20260807"></script>
 <script src="../js/theme.js?v=20260807"></script>
+<script src="../js/nav-back.js?v=20260812"></script>
 </body>
 </html>

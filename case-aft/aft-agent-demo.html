@@ -114,6 +114,32 @@ svg{display:block}
 .bar-act{display:flex;align-items:center;gap:9px;color:var(--ink-2);font-size:14px;font-weight:500;padding:6px 10px;border-radius:6px;position:relative}
 .bar-act:hover{background:var(--bg)}
 .bar-act .badge{position:absolute;top:-4px;left:15px;background:var(--red);color:#fff;font-size:10px;font-weight:700;min-width:15px;height:15px;border-radius:999px;display:grid;place-items:center;padding:0 3px}
+/* the deal actions are a group only so a phone can fold them behind the ⋮ -
+   display:contents makes the wrapper vanish from the layout everywhere else */
+.dealbar-acts{display:contents}
+.mlbl{display:none}          /* row labels - they exist only inside the ⋮ menu */
+.deal-more{display:none;position:relative;color:var(--ink-2);width:36px;height:36px;border-radius:8px;
+  place-items:center;flex:0 0 36px;margin-left:auto;transition:background .18s,color .18s}
+.deal-more:hover{background:var(--bg);color:var(--ink)}
+.deal-more.on{background:var(--bg);color:var(--ink)}
+/* the three balls roll into the middle and become the X that closes the panel -
+   they leave one stagger step apart and the X fades in behind them - no
+   overshoot anywhere, the motion glides and stops */
+.deal-more svg circle,.deal-more svg line{transform-box:fill-box;transform-origin:center;
+  transition:transform .46s cubic-bezier(.2,.8,.3,1), opacity .22s ease}
+.deal-more .d2{transition-delay:.05s}
+.deal-more .d3{transition-delay:.1s}
+/* Dots and X swap outright - no fade, no scale. The close button is the only
+   way out of the panel, so it must never hang on an animation finishing: a
+   transition that stalls left an empty square and no exit. It is either the
+   three dots or the X, always one of them, always at full size. */
+.deal-more .x1,.deal-more .x2{stroke:currentColor;stroke-width:2;stroke-linecap:round;display:none}
+.deal-more.on circle{display:none}
+.deal-more.on .x1,.deal-more.on .x2{display:block}
+/* something inside the menu is asking for attention - say so on the closed ⋮ */
+.deal-more::after{content:"";position:absolute;top:5px;right:6px;width:7px;height:7px;
+  border-radius:50%;background:var(--red);transition:opacity .2s}
+.deal-more.on::after{opacity:0}
 
 .tabs{background:var(--bg);display:flex;align-items:flex-end;gap:4px;padding:10px 18px 0}
 .tab{padding:9px 16px 10px;font-size:14px;font-weight:500;color:var(--ink-2);border-radius:6px 6px 0 0}
@@ -170,7 +196,7 @@ svg{display:block}
   border-radius:6px;padding:7px 10px;color:var(--ink-2);margin-bottom:8px;
   transition:border-color .15s ease, box-shadow .15s ease;
 }
-.tf-search:focus-within{border-color:#d8c6fb;box-shadow:0 2px 10px rgba(130,55,247,.10)}
+.tf-search:focus-within{border-color:#aeb6c2;box-shadow:0 2px 10px rgba(31,41,55,.10)}
 .tf-search input{flex:1;border:none!important;outline:none!important;box-shadow:none;font:inherit;font-size:13px;color:var(--ink);background:transparent}
 .tf-search input::placeholder{color:#a9b0bb}
 .tf-sec{font-size:11.5px;font-weight:600;color:#a9b0bb;padding:8px 6px 4px}
@@ -224,6 +250,16 @@ svg{display:block}
 }
 .newphase:hover{background:#f7f2ff}
 .tree-head .th-ics{display:flex;gap:12px;color:var(--ink-2);align-items:center}
+.tree-head .th-chev,.tree-head .th-x{display:none}   /* phone only - see the responsive block */
+/* the two knobs on the Table Fields icon slide along their tracks - a nudge on
+   hover, the full travel once the panel is open, each one a beat after the other */
+#treeSettings circle{transform-box:fill-box;transform-origin:center;
+  transition:transform .46s cubic-bezier(.2,.8,.3,1)}
+#treeSettings .s2{transition-delay:.06s}
+#treeSettings:hover .s1{transform:translateX(4px)}
+#treeSettings:hover .s2{transform:translateX(-4px)}
+#treeSettings.on .s1{transform:translateX(12px)}
+#treeSettings.on .s2{transform:translateX(-12px)}
 .tree-rows{overflow-y:auto;scrollbar-width:none;padding-bottom:120px}
 .tree-rows::-webkit-scrollbar{display:none}
 .trow{
@@ -366,7 +402,11 @@ svg{display:block}
 .trow:hover .grip{opacity:1}
 .trow .chev{cursor:pointer;border-radius:4px;padding:1px}
 .trow .chev:hover{background:#eceef2;color:var(--ink)}
-button:focus-visible,input:focus-visible{outline:2px solid var(--purple);outline-offset:1px}
+/* keyboard focus stays visible but in grey - the purple ring read as a second
+   border inside every field that already has one */
+button:focus-visible,input:focus-visible{outline:2px solid #aeb6c2;outline-offset:1px}
+/* fields that sit inside a bordered box show focus with that box, not a ring */
+.tool input:focus-visible,.tf-search input:focus-visible,.creator input:focus-visible{outline:none}
 .trow.creator-row{padding:0 6px;position:relative;z-index:65}
 .creator{
   flex:1;display:flex;align-items:center;gap:8px;height:34px;padding:0 8px 0 44px;
@@ -436,7 +476,13 @@ button:focus-visible,input:focus-visible{outline:2px solid var(--purple);outline
 .tree-expand[hidden]{display:none}
 .th-btn{padding:3px;border-radius:6px;color:var(--ink-2);display:grid;place-items:center}
 .th-btn:hover{background:var(--bg);color:var(--ink)}
-.gantt{flex:1;overflow:auto;position:relative;padding-top:0}
+/* Touch, on every size that has it - a tablet is as much a finger device as a
+   phone. pan-x pan-y keeps the native scroll and stops the browser swallowing
+   the two-finger gesture, so the pinch handler actually receives it. */
+.gantt{flex:1;overflow:auto;position:relative;padding-top:0;touch-action:pan-x pan-y}
+/* a bar belongs to the bar: touching one moves or resizes it instead of
+   handing the gesture to the scroller, which is what dropped every finger drag */
+[data-drag]{touch-action:none}
 .g-inner{position:relative;min-width:calc(var(--wk) * 14);min-height:100%;display:flex;flex-direction:column}
 .g-months{display:flex;height:26px;font-size:11.5px;font-weight:500;color:var(--ink-2);border-bottom:1px solid #ececf0;position:sticky;top:0;background:#fff;z-index:12}
 .g-month:last-child,.g-week:last-child,.g-grid .col:last-child{border-right:none}
@@ -772,6 +818,7 @@ body.dragging-x, body.dragging-x *{user-select:none}
   transform:translateY(0);transition:transform .4s cubic-bezier(.2,.8,.3,1);
 }
 .demo-ctl.min{transform:translateY(102%)}
+.ctl-head{display:none}   /* phone only - see the responsive block */
 .demo-ctl #demoToggle{color:#e8eaef;font-size:12.5px;font-weight:600;padding:4px 8px;border-radius:6px;cursor:default}
 .demo-ctl .ctl-min{color:#fff;width:26px;height:26px;border:1px solid #56637c;border-radius:6px;
   display:grid;place-items:center;cursor:pointer;flex:0 0 auto;margin-left:2px}
@@ -950,50 +997,123 @@ body.dragging-x, body.dragging-x *{user-select:none}
   .demo-ctl{gap:8px;padding:9px 12px}
 }
 /* ---- mobile: the purple rail folds into a top bar ---- */
-.r-ham{display:none;color:#fff;width:36px;height:36px;border-radius:6px;place-items:center;margin-left:auto;cursor:pointer}
-.r-ham:hover{background:rgba(255,255,255,.16)}
+/* the burger is the only control up here - it stays put and folds into the X,
+   so it has to sit dead centre in the 50px bar (equal air above and below) */
+.r-ham{display:none;color:#fff;width:36px;height:36px;border-radius:8px;
+  place-items:center;place-self:center;margin-left:auto;cursor:pointer;flex:0 0 36px;
+  -webkit-tap-highlight-color:transparent;transition:background .2s ease}
+/* no hover plate and no pressed plate - the lines folding into the X are the
+   whole feedback, a grey square behind them only muddies it */
+/* three lines fold into an X: the middle one leaves first, the outer two
+   travel to the centre and cross - one transform each, so it stays smooth */
 .r-ham svg line{transform-box:fill-box;transform-origin:center;
-  transition:transform .3s cubic-bezier(.2,.8,.3,1), opacity .18s}
-.r-ham.on .l1{transform:translateY(5px) rotate(45deg)}
-.r-ham.on .l2{opacity:0}
-.r-ham.on .l3{transform:translateY(-5px) rotate(-45deg)}
-/* mobile nav drawer - purple gradient, slides in from the right */
+  transition:transform .38s cubic-bezier(.2,.8,.3,1), opacity .16s ease}
+.r-ham .l2{transition-delay:.08s}
+.r-ham.on .l1{transform:translateY(5px) rotate(45deg) scaleX(.94)}
+.r-ham.on .l2{opacity:0;transform:scaleX(.25);transition-delay:0s}
+.r-ham.on .l3{transform:translateY(-5px) rotate(-45deg) scaleX(.94)}
+/* mobile nav drawer - purple gradient, slides in from the right.
+   It stops under the top bar so the burger stays visible as the X that closes it. */
 .mnav{display:none;position:fixed;top:0;right:0;bottom:0;width:230px;z-index:60;
   background:linear-gradient(180deg,#9a63f2,#7443ea);
-  box-shadow:-18px 0 40px rgba(31,41,55,.35);padding:58px 14px 16px;flex-direction:column;gap:10px;
+  box-shadow:-18px 0 40px rgba(31,41,55,.35);padding:62px 14px 16px;flex-direction:column;gap:10px;
   transform:translateX(105%);transition:transform .34s cubic-bezier(.2,.8,.3,1)}
 .mnav.open{transform:none}
-.mnav .mn-x{position:absolute;top:12px;right:12px;width:32px;height:32px;border-radius:6px;
-  color:#fff;display:grid;place-items:center;cursor:pointer}
-.mnav .mn-x:hover{background:rgba(255,255,255,.15)}
-.mnav button:not(.mn-x){display:flex;align-items:center;gap:12px;padding:12px;border-radius:6px;
-  font-size:14px;font-weight:500;color:#fff;text-align:left;width:100%}
-.mnav button:not(.mn-x):hover{background:rgba(255,255,255,.12)}
+.mnav button{display:flex;align-items:center;gap:12px;padding:12px;border-radius:6px;
+  font-size:14px;font-weight:500;color:#fff;text-align:left;width:100%;
+  opacity:0;transform:translateX(16px);
+  transition:opacity .26s ease, transform .36s cubic-bezier(.2,.8,.3,1), background .18s}
+.mnav.open button{opacity:1;transform:none}
+.mnav.open button:nth-of-type(1){transition-delay:.09s}
+.mnav.open button:nth-of-type(2){transition-delay:.14s}
+.mnav.open button:nth-of-type(3){transition-delay:.19s}
+.mnav.open button:nth-of-type(4){transition-delay:.24s}
+.mnav button:hover{background:rgba(255,255,255,.12)}
+/* the board dims behind the drawer so the menu reads as the only live layer */
+.mnav-scrim{display:none;position:fixed;left:0;right:0;top:50px;bottom:0;z-index:55;
+  background:rgba(31,41,55,.34);opacity:0;pointer-events:none;transition:opacity .3s ease}
+.mnav-scrim.on{opacity:1;pointer-events:auto}
 .mnav .ic{color:rgba(255,255,255,.9)}
 .mn-badge{margin-left:auto;background:var(--red);color:#fff;font-size:10.5px;font-weight:700;
   min-width:17px;height:17px;border-radius:999px;display:grid;place-items:center;padding:0 4px}
-@media (max-width:760px){
+@media (max-width:900px){   /* was 760 - iPad portrait is 768 and fell through to the desktop layout */
   .main{min-width:0}
   body{flex-direction:column}
-  .rail{width:100%;flex:0 0 50px;height:50px;flex-direction:row;align-items:center;padding:0 12px;z-index:40;
+  /* No z-index on the bar: that made it a stacking context and trapped the
+     burger inside it, so the drawer could never rise past the bar. Without it
+     the drawer's purple runs from the very top of the screen and the burger,
+     which carries its own z-index below, floats on top of it. */
+  .rail{width:100%;flex:0 0 50px;height:50px;flex-direction:row;align-items:center;padding:0 12px;z-index:auto;
     position:relative;background:linear-gradient(90deg,#9a63f2,#7a4aec)}   /* softer than the side-rail gradient */
   .rail .logo{display:flex;align-items:center;height:100%;margin:0}
   .rail .logo svg{width:30px !important;height:32px !important}
-  .r-ham{display:grid}
+  /* the burger sits above the drawer so it stays visible - and reachable - once
+     the purple has risen over the whole bar */
+  .r-ham{display:grid;position:relative;z-index:66}
   .rail .r-ic{display:none}
-  .mnav{display:flex}
+  .mnav{display:flex;padding-top:64px}   /* clears the burger it now runs behind */
+  .mnav-scrim{display:block;top:0}       /* the dim starts at the top too, no seam */
   .appbar{display:none}
-  .dealbar{height:auto;flex-wrap:wrap;row-gap:0;gap:6px;padding:8px 12px 4px}
-  .dealbar h1{flex:1 1 100%;font-size:15px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;min-width:0}
+  /* ---- phone and tablet: the deal actions fold behind the ⋯ and come back as
+          a panel that slides in from the right, the same motion as the burger
+          menu - white, half height, lifted off the page by its shadow. ---- */
+  .dealbar{height:auto;flex-wrap:nowrap;row-gap:0;gap:8px;padding:8px 10px 8px 12px;position:relative}
+  .dealbar h1{flex:1 1 auto;font-size:15px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;min-width:0}
   .dealbar .spacer{display:none}
+  /* the button rides above the panel, so the balls that become the X land
+     inside the white, just above the first row */
+  .deal-more{display:grid;z-index:57}
+  .dealbar-acts{
+    display:flex;position:fixed;right:0;bottom:0;top:102px;z-index:56;
+    flex-direction:column;gap:20px;
+    width:min(268px, 78vw);padding:8px;overflow-y:auto;
+    background:#fff;border-left:1px solid var(--line);border-radius:0;
+    box-shadow:-20px 0 44px -12px rgba(31,41,55,.42);
+    transform:translateX(105%);
+    /* it glides in from the edge and stops - no overshoot, no bounce */
+    transition:transform .46s cubic-bezier(.2,.8,.3,1);
+  }
+  .dealbar-acts.open{transform:none}
+  .dealbar-acts .bar-act{width:100%;justify-content:flex-start;gap:12px;padding:12px;
+    font-size:14px;color:var(--ink);border-radius:8px}
+  .dealbar-acts .bal,.dealbar-acts .mlbl{display:inline}   /* in a menu every row gets a name */
+  .dealbar-acts .badge{position:static;order:9;margin-left:auto}   /* count belongs at the end of the row */
   .dealbar .bar-act{padding:5px 8px}
   /* floating pieces respect the small screen */
   #detailOv .task-modal{width:min(350px, calc(100vw - 28px))}
   .drawer{width:min(350px, calc(100vw - 36px))}
   .ctl-pop{width:min(330px, calc(100vw - 28px))}
-  .tour-card{width:min(300px, calc(100vw - 28px))}
+  /* The card is exactly as tall as its own text: 16px of padding all round and
+     nothing after the buttons. It only gets a cap and a scroll on the rare step
+     whose text genuinely will not fit the space beside the spotlight, and only
+     then does the footer pin itself so Skip/Back/Next stay reachable. */
+  .tour-card{width:min(300px, calc(100vw - 28px));padding:16px;overflow:visible}
+  .tour-card.tc-scroll{overflow-y:auto;overscroll-behavior:contain;-webkit-overflow-scrolling:touch}
+  .tour-card.tc-scroll .tc-foot{position:sticky;bottom:-16px;background:#fff;padding:10px 0 0}
+  .tour-card .tc-tx{margin-bottom:14px}
+  /* while the tour runs the dock's own tab steps aside - the tour has its own
+     buttons and needs the room more than a second handle does */
+  body.tour-on .dock-tab{display:none!important}
+  /* The 14-week floor is a wide-screen guarantee. On a phone or a tablet it was
+     wider than any zoomed-out timeline, so min-width beat the width the zoom
+     code sets and the canvas stayed 1064px whatever you pressed - which is why
+     +/- and the view menu looked dead on both. computeScale already stops the
+     timeline from ending mid-screen, so nothing is lost by dropping it here. */
+  .g-inner{min-width:0}
   /* the black dock wraps into rows that fit, and starts folded */
   .demo-ctl{flex-wrap:wrap;row-gap:10px;padding:10px 12px}
+  /* the ⓘ explains the three agent modes, so it rides with them on the second
+     row instead of sitting next to Tour. Explicit order on every child - one
+     stray order:0 would jump the queue and re-flow the whole dock. */
+  .demo-ctl .ctl-tour{order:0}
+  .demo-ctl #demoToggle{order:0}
+  .demo-ctl .seg{order:1}
+  .demo-ctl .ctl-info{order:2}
+  .demo-ctl .ctl-sp{order:3}
+  .demo-ctl .ctl-credit{order:4}
+  .demo-ctl .disc-back{order:5}
+  .demo-ctl .reset{order:6}
+  .demo-ctl .ctl-min{order:7}
   .tabs{overflow-x:auto;scrollbar-width:none;flex-wrap:nowrap;
     -webkit-mask-image:linear-gradient(90deg,#000 calc(100% - 36px),transparent);
     mask-image:linear-gradient(90deg,#000 calc(100% - 36px),transparent)}
@@ -1002,6 +1122,194 @@ body.dragging-x, body.dragging-x *{user-select:none}
   .work{padding:0}
   .toolbar{margin:0}
   .tree-expand{top:8px;left:8px}
+
+  /* ---- toolbar on a phone: one rhythm for every control ----
+     The flexible spacers that separate the desktop groups go, so the gap
+     between Person, Search, Sort & Filter and the rest is the same 8px
+     everywhere, and every button carries the same padding and height. */
+  .toolbar{gap:8px;padding:10px 12px}
+  .toolbar .gap{display:none}
+  .tool{padding:0 12px;height:36px;font-size:13px}
+  .tool.square{width:36px;height:36px;flex:0 0 36px;min-width:36px;padding:0}
+  .zoom-seg button{width:36px;height:34px}
+
+  /* ---- search collapses to its icon and opens on tap ----
+     A 90px input costs more room than it earns on a phone. Closed it is the
+     same 36px square as every other control; open it slides out to full width
+     and takes the focus with it. */
+  #searchTool{
+    width:36px;min-width:36px;flex:0 0 36px;padding:0;justify-content:center;gap:0;
+    transition:width .34s cubic-bezier(.2,.8,.3,1), flex-basis .34s cubic-bezier(.2,.8,.3,1),
+               padding .34s cubic-bezier(.2,.8,.3,1), border-color .2s;
+  }
+  #searchTool input{
+    width:0;min-width:0;padding:0;opacity:0;
+    transition:width .34s cubic-bezier(.2,.8,.3,1), opacity .2s ease .06s;
+  }
+  /* open it reads as a field, not as an accent: the same grey a shade darker,
+     lifted by a soft shadow. No purple, and no ring inside the border. */
+  #searchTool.open{width:min(230px, 62vw);flex-basis:min(230px, 62vw);padding:0 10px;gap:8px;
+    justify-content:flex-start;border-color:#aeb6c2;box-shadow:0 2px 10px rgba(31,41,55,.10)}
+  #searchTool.open input{width:100%;opacity:1}
+  #searchTool.open svg{color:var(--ink-2)}
+}
+
+/* ==========================================================================
+   RESPONSIVE, PART 2 - phone and small tablet.
+   Additive: this block sits after every other rule, so it wins ties without a
+   single edit above. Nothing here applies at 901px and up. Delete this block
+   and the script tagged "responsive:" at the end of <body> to revert.
+   ========================================================================== */
+
+/* a flex child with content wider than the screen has to be allowed to shrink,
+   or it pushes the whole page sideways - this was the 32px overflow on iPad */
+.main{min-width:0}
+
+/* ---- Below 700px the 452px phase panel no longer fits beside the timeline.
+        Instead of floating over the map, the board stacks: the task list gets a
+        real place of its own at the top and the timeline keeps everything under
+        it. Folded, the panel leaves its header strip behind - that strip is the
+        handle that opens it again, so nothing ever covers the map.
+        Between 700 and 900 it still fits side by side, so it stays there. ---- */
+@media (max-width:700px){
+  /* the two panes now share the height, so the column has to stop at the
+     viewport instead of growing with its content (flex items default to
+     min-height:auto, which is what let it run past the fold) */
+  .main{min-height:0}
+  .work{min-height:0}
+  .board{flex-direction:column;min-height:0}
+  /* a card of its own, 16px of air on every side, with the header acting as the
+     tab you press - so it reads as a panel that opens rather than a loose list.
+     The split is a flex ratio, not a percentage height: a percentage resolves
+     against the board only while its height is definite, and when it wasn't the
+     card silently collapsed to the height of its own tab. Ratios always resolve. */
+  .board > .tree{
+    position:relative;left:auto;right:auto;top:auto;bottom:auto;
+    width:auto!important;flex:9 1 54px!important;min-height:0;
+    margin:16px;z-index:6;
+    border:1px solid var(--line);border-radius:12px;
+    box-shadow:0 10px 22px -16px rgba(31,41,55,.45);
+  }
+  /* The flex change itself is instant on purpose: transitioning flex-grow (or
+     flex-basis) here leaves a running transition frozen at its start value and
+     the card never opens. The rows fade in instead, which reads just as soft. */
+  /* folded - only the tab survives (52px tab + the card's own hairlines) */
+  .board.tree-min > .tree{display:flex!important;flex-grow:0!important}
+  .board.tree-min > .tree .tree-rows{opacity:0;pointer-events:none}
+  .tree-rows{transition:opacity .18s ease;padding-bottom:40px;min-height:0}   /* folds to nothing under the tab */
+  /* a full-width rule between the two halves - it draws the line under the task
+     card so the list reads as its own band and the map starts below it */
+  .gantt{flex:11 1 0;min-height:0;border-top:1px solid var(--line)}
+  .g-rows{padding-bottom:40px}
+  /* the panel has a fixed slot, so the floating "Tasks" button is redundant */
+  .tree-expand{display:none!important}
+  .tree-resizer{display:none!important}
+  /* the tab itself: chevron first, then the word, hard left. Folded it rounds
+     off on all four corners; open, it hands over to the list underneath. */
+  .tree-head{padding:0 10px 0 12px;flex:0 0 52px;height:52px;background:#f7f8fa;
+    border-radius:11px 11px 0 0;border-bottom:1px solid var(--line);
+    transition:border-radius .2s ease,border-color .2s ease}
+  .board.tree-min .tree-head{border-radius:11px;border-bottom-color:transparent}
+  .tree-head .newphase{display:none}   /* reachable from inside the panel */
+  .tree-head .th-ics{flex:1;gap:6px;justify-content:space-between}
+  .tree-head .th-panel,.tree-head .th-x{display:none}
+  /* closed, the V lies on its side pointing at the word; open, it drops to face
+     down over the list it just revealed */
+  .tree-head .th-chev{display:block;transform:none;transition:transform .3s cubic-bezier(.2,.8,.3,1)}
+  .board.tree-min .tree-head .th-chev{transform:rotate(-90deg)}
+  .tree-head #treeCollapse{order:-1;display:flex;align-items:center;gap:6px;width:auto;height:36px;
+    padding:0 10px 0 6px;font-size:13px;font-weight:600;color:var(--ink)}
+  .tree-head #treeCollapse::after{content:"Tasks"}
+  /* the wide label button lit up a slab of the tab on hover - it has no business
+     drawing a box around the panel's own title */
+  .tree-head #treeCollapse:hover{background:none;color:var(--ink)}
+  .tree-head .th-btn{width:36px;height:36px;padding:0}
+  .tree-head .th-btn svg{width:19px;height:19px}
+
+  /* ---- the demo dock: one object that slides up and down ----
+     The tab used to be a separate thing that vanished the moment the panel
+     appeared, so there was nothing left to press to put it away. Now the tab is
+     the panel's own header: folded, only that 44px strip shows; open, it stays
+     on top with an X beside the title. */
+  /* Closed, the panel gets out of the way completely and leaves the same small
+     tab it always had - it never covered the board and it shouldn't start now.
+     Open, that name comes back as the panel's own title with the close right
+     beside it, not stretched across the width. */
+  .demo-ctl{padding:8px 12px 10px;row-gap:8px}
+  .demo-ctl .ctl-min{display:none}    /* closing lives in the title row now */
+  .ctl-head{
+    display:flex;align-items:center;gap:6px;order:-1;flex:1 0 100%;
+    padding:0;background:none;border:none;
+    color:rgba(255,255,255,.92);font-size:12.5px;font-weight:700;
+    letter-spacing:.2px;cursor:pointer;justify-content:flex-start;
+  }
+  .ctl-head .ch-up{display:none}      /* the tab is what opens it */
+  .ctl-head .ch-x{display:block;width:15px;height:15px;flex:0 0 15px;opacity:.75}
+  .ctl-head:hover .ch-x{opacity:1}
+
+  /* row 1: the tour on the left, the way out on the right.
+     row 2: the three modes and the ⓘ that explains them.
+     row 3: the credit, one quiet line you can open if you care. */
+  .demo-ctl .ctl-tour{order:0;margin-right:0}
+  .demo-ctl #demoToggle{display:none}
+  .demo-ctl .ctl-sp{order:1;flex:1 1 auto;min-width:8px}
+  .demo-ctl .disc-back{order:2}
+  .demo-ctl .reset{order:3}
+  .demo-ctl .seg{order:4}
+  .demo-ctl .ctl-info{order:5}
+  .demo-ctl .ctl-credit{
+    order:6;display:block;flex:1 0 100%;
+    font-size:10.5px;line-height:1.45;color:rgba(255,255,255,.62);
+    white-space:nowrap;overflow:hidden;text-overflow:ellipsis;cursor:pointer;
+  }
+  .demo-ctl .ctl-credit.open{white-space:normal;overflow:visible;color:rgba(255,255,255,.8)}
+
+  /* ---- Table Fields arrives from the side too, the same panel language as the
+          ⋯ menu: white, square, right to the bottom edge, shadowed. Its inline
+          left/top are skipped on the phone (see place()), so CSS owns it. ---- */
+  .tfields{
+    left:auto;right:0;top:50px;bottom:0;
+    width:min(300px, 86vw);max-height:none;
+    border:none;border-left:1px solid var(--line);border-radius:0;
+    box-shadow:-20px 0 44px -12px rgba(31,41,55,.42);
+    padding:18px 16px;
+    opacity:1;transform:translateX(105%);
+    transition:transform .46s cubic-bezier(.2,.8,.3,1);
+  }
+  .tfields.show{opacity:1;transform:none}
+
+  /* The panel exists to say what each task is called, so the name gets the room.
+     The duration and the reserved-but-invisible status slot go; the dates stay. */
+  .trow{padding-right:12px;gap:6px}
+  .trow .meta{gap:6px}
+  .trow .meta .st.raw{display:none}
+  .trow .meta .m-days{display:none}
+}
+@media (max-width:480px){
+  /* at this width the phase date range costs more than it tells - the timeline
+     is showing the same span, and the progress bar under it survives */
+  .trow.phase .meta .range{display:none}
+}
+
+@media (max-width:900px){
+  /* ---- the button that brings the panel back says what it opens ---- */
+  .tree-expand{
+    width:auto;height:34px;padding:0 13px;gap:7px;
+    display:inline-flex;align-items:center;justify-content:center;
+    font-size:12.5px;font-weight:600;
+  }
+  .tree-expand::after{content:"Tasks"}
+  .tree-expand svg{width:16px;height:16px}
+
+  /* ---- with the panel closed the bars were anonymous rectangles.
+          The name comes from the matching row in the panel (see the script). ---- */
+  .board.tree-min .g-row > .bar[data-name]::after{
+    content:attr(data-name);
+    position:absolute;left:0;top:100%;margin-top:1px;
+    font-size:9.5px;line-height:11px;font-weight:600;letter-spacing:.1px;
+    color:var(--ink-2);white-space:nowrap;pointer-events:none;
+  }
+  .board.tree-min .g-row.phase > .bar[data-name]::after{font-size:10.5px;color:var(--ink)}
 }
 </style>
 </head>
@@ -1010,7 +1318,11 @@ body.dragging-x, body.dragging-x *{user-select:none}
   <!-- ===== left rail ===== -->
   <nav class="rail" aria-label="App">
     <div class="logo">
-      <svg width="39" height="41" viewBox="0 0 39 41" fill="none" style="width:38px;height:40px">
+      <!-- viewBox trimmed to the artwork (the circle is x2..37, y0..35). It used
+           to be 39x41, so the mark sat against the top of its own box with ~5px
+           of dead space under it - which read as a logo pushed off-centre no
+           matter how the element itself was aligned. -->
+      <svg width="39" height="41" viewBox="2 0 35 35" fill="none" style="width:38px;height:40px">
         <rect x="2" width="35" height="35" rx="17.5" fill="url(#spLogoGrad)"/>
         <path fill-rule="evenodd" clip-rule="evenodd" d="M23.0424 10.8462C23.2815 11.1189 23.3237 11.5222 23.1468 11.8426L21.1203 15.5123L23.9283 17.2073C24.1901 17.3653 24.346 17.6624 24.3329 17.9782C24.3197 18.2939 24.1396 18.5757 23.8657 18.7093L14.8985 23.0826C14.5779 23.2389 14.1973 23.1598 13.9582 22.8871C13.7192 22.6144 13.6769 22.2111 13.8538 21.8908L15.8804 18.221L13.0723 16.526C12.8105 16.368 12.6546 16.0709 12.6678 15.7552C12.6809 15.4395 12.861 15.1576 13.1349 15.0241L22.1021 10.6508C22.4228 10.4944 22.8034 10.5735 23.0424 10.8462Z" fill="white"/>
         <defs><linearGradient id="spLogoGrad" x1="19.5" y1="0" x2="19.5" y2="35" gradientUnits="userSpaceOnUse">
@@ -1024,8 +1336,10 @@ body.dragging-x, body.dragging-x *{user-select:none}
     <button class="r-ic" aria-label="Messages"><svg class="ic lg" viewBox="0 0 24 24"><path d="M14 9a2 2 0 0 1-2 2H6l-4 4V4c0-1.1.9-2 2-2h8a2 2 0 0 1 2 2v5z"/><path d="M18 9h2a2 2 0 0 1 2 2v11l-4-4h-6a2 2 0 0 1-2-2v-1"/></svg></button>
     <button class="r-ham" id="railHam" aria-label="Menu"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" style="width:21px;height:21px"><line class="l1" x1="4" y1="7" x2="20" y2="7"/><line class="l2" x1="4" y1="12" x2="20" y2="12"/><line class="l3" x1="4" y1="17" x2="20" y2="17"/></svg></button>
   </nav>
+  <div class="mnav-scrim" id="mnavScrim" aria-hidden="true"></div>
+  <div class="mnav-scrim" id="dealScrim" aria-hidden="true"></div>
+  <div class="mnav-scrim" id="tfScrim" aria-hidden="true"></div>
   <nav class="mnav" id="mnav" aria-label="Menu">
-    <button class="mn-x" id="mnavX" aria-label="Close"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" style="width:16px;height:16px"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg></button>
     <button><svg class="ic" viewBox="0 0 24 24"><rect x="3" y="3" width="7" height="9" rx="1"/><rect x="14" y="3" width="7" height="5" rx="1"/><rect x="14" y="12" width="7" height="9" rx="1"/><rect x="3" y="16" width="7" height="5" rx="1"/></svg>Dashboard</button>
     <button><svg class="ic" viewBox="0 0 24 24"><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M22 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>Team</button>
     <button><svg class="ic" viewBox="0 0 24 24"><polyline points="22 12 16 12 14 15 10 15 8 12 2 12"/><path d="M5.45 5.11 2 12v6a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2v-6l-3.45-6.89A2 2 0 0 0 16.76 4H7.24a2 2 0 0 0-1.79 1.11z"/></svg>Inbox<span class="mn-badge">3</span></button>
@@ -1049,12 +1363,16 @@ body.dragging-x, body.dragging-x *{user-select:none}
     <div class="dealbar">
       <h1>Amazon Global Syndicated Loan<span class="dot"></span></h1>
       <div class="spacer"></div>
+      <!-- on a phone these fold behind the ⋮ below (see .dealbar-acts) -->
+      <div class="dealbar-acts" id="dealActs">
       <button class="bar-act"><span class="badge">1</span><svg class="ic sm" viewBox="0 0 20 20" style="fill:none;stroke-width:1.4"><path d="M15 17.5C16.3807 17.5 17.5 16.3807 17.5 15C17.5 13.6193 16.3807 12.5 15 12.5C13.6193 12.5 12.5 13.6193 12.5 15C12.5 16.3807 13.6193 17.5 15 17.5Z"/><path d="M5 7.5C6.38071 7.5 7.5 6.38071 7.5 5C7.5 3.61929 6.38071 2.5 5 2.5C3.61929 2.5 2.5 3.61929 2.5 5C2.5 6.38071 3.61929 7.5 5 7.5Z"/><path d="M5 17.5V7.5C5 9.48912 5.79018 11.3968 7.1967 12.8033C8.60322 14.2098 10.5109 15 12.5 15"/></svg><span class="bal">Countertrade</span></button>
       <button class="bar-act"><svg class="ic sm" viewBox="0 0 24 24"><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><line x1="19" y1="8" x2="19" y2="14"/><line x1="22" y1="11" x2="16" y2="11"/></svg><span class="bal">Invite</span></button>
       <button class="bar-act"><svg class="ic sm" viewBox="0 0 24 24"><rect x="3" y="3" width="7" height="7" rx="1"/><rect x="14" y="3" width="7" height="7" rx="1"/><rect x="3" y="14" width="7" height="7" rx="1"/><line x1="17.5" y1="14" x2="17.5" y2="21"/><line x1="14" y1="17.5" x2="21" y2="17.5"/></svg><span class="bal">Add Board</span></button>
-      <button class="a-ic bar-act" id="mpPresence" title="Magic Pro" aria-label="Magic Pro"><svg class="ic" viewBox="0 0 24 24"><path d="M12 3l2.2 6.8L21 12l-6.8 2.2L12 21l-2.2-6.8L3 12l6.8-2.2L12 3z"/></svg></button>
-      <button class="a-ic bar-act" aria-label="Notifications"><svg class="ic" viewBox="0 0 24 24"><path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"/><path d="M13.73 21a2 2 0 0 1-3.46 0"/></svg></button>
-      <button class="a-ic bar-act" aria-label="Settings"><svg class="ic" viewBox="0 0 24 24"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 1 1-2.83 2.83l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 1 1-4 0v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 1 1-2.83-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 1 1 0-4h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 1 1 2.83-2.83l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 1 1 4 0v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 1 1 2.83 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 1 1 0 4h-.09a1.65 1.65 0 0 0-1.51 1z"/></svg></button>
+      <button class="a-ic bar-act" id="mpPresence" title="Magic Pro" aria-label="Magic Pro"><svg class="ic" viewBox="0 0 24 24"><path d="M12 3l2.2 6.8L21 12l-6.8 2.2L12 21l-2.2-6.8L3 12l6.8-2.2L12 3z"/></svg><span class="mlbl">Magic Pro</span></button>
+      <button class="a-ic bar-act" aria-label="Notifications"><svg class="ic" viewBox="0 0 24 24"><path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"/><path d="M13.73 21a2 2 0 0 1-3.46 0"/></svg><span class="mlbl">Notifications</span></button>
+      <button class="a-ic bar-act" aria-label="Settings"><svg class="ic" viewBox="0 0 24 24"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 1 1-2.83 2.83l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 1 1-4 0v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 1 1-2.83-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 1 1 0-4h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 1 1 2.83-2.83l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 1 1 4 0v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 1 1 2.83 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 1 1 0 4h-.09a1.65 1.65 0 0 0-1.51 1z"/></svg><span class="mlbl">Settings</span></button>
+      </div>
+      <button class="deal-more" id="dealMore" aria-label="Deal actions" aria-expanded="false"><svg viewBox="0 0 24 24" style="width:20px;height:20px"><circle class="d1" cx="5" cy="12" r="2" fill="currentColor"/><circle class="d2" cx="12" cy="12" r="2" fill="currentColor"/><circle class="d3" cx="19" cy="12" r="2" fill="currentColor"/><line class="x1" x1="5" y1="5" x2="19" y2="19"/><line class="x2" x1="19" y1="5" x2="5" y2="19"/></svg></button>
     </div>
 
     <!-- ===== tabs ===== -->
@@ -1069,7 +1387,7 @@ body.dragging-x, body.dragging-x *{user-select:none}
     <!-- ===== toolbar ===== -->
     <div class="toolbar">
       <button class="tool"><svg class="ic sm" viewBox="0 0 24 24"><circle cx="12" cy="8" r="4"/><path d="M20 21a8 8 0 0 0-16 0"/></svg><span class="tl">Person</span></button>
-      <label class="tool"><input type="text" placeholder="Search"><svg class="ic sm" viewBox="0 0 24 24"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg></label>
+      <label class="tool" id="searchTool"><input type="text" placeholder="Search" id="searchInput"><svg class="ic sm" viewBox="0 0 24 24"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg></label>
       <div class="gap" style="max-width:60px"></div>
       <button class="tool"><svg class="ic sm" viewBox="0 0 24 24"><path d="M11 5h10"/><path d="M11 9h7"/><path d="M11 13h4"/><path d="m3 17 3 3 3-3"/><path d="M6 18V4"/></svg><span class="tl">Sort &amp; Filter</span></button>
       <button class="tool"><svg class="ic sm" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg><span class="tl">Critical</span></button>
@@ -1099,8 +1417,8 @@ body.dragging-x, body.dragging-x *{user-select:none}
           <div class="tree-head">
             <button class="newphase" id="newPhaseBtn"><svg viewBox="0 0 12 12" style="width:13px;height:13px" fill="none"><path d="M8.20372 10.1075C5.78747 10.1075 3.875 8.16617 3.875 5.74992C3.875 3.33367 5.78747 1.39247 8.20372 1.39247M10.75 5.75C10.75 8.51142 8.51142 10.75 5.75 10.75C2.98858 10.75 0.75 8.51142 0.75 5.75C0.75 2.98858 2.98858 0.75 5.75 0.75C8.51142 0.75 10.75 2.98858 10.75 5.75Z" stroke="currentColor" stroke-width="1.5"/></svg>New Phase<svg class="ic sm" viewBox="0 0 24 24"><polyline points="6 9 12 15 18 9"/></svg></button>
             <div class="th-ics">
-              <button class="th-btn" id="treeSettings" title="Table Fields"><svg class="ic sm" viewBox="0 0 24 24"><line x1="21" y1="7" x2="10" y2="7"/><line x1="14" y1="17" x2="3" y2="17"/><circle cx="6" cy="7" r="2.6"/><circle cx="18" cy="17" r="2.6"/></svg></button>
-              <button class="th-btn" id="treeCollapse" title="Hide panel"><svg class="ic sm" viewBox="0 0 24 24"><rect x="3" y="3" width="18" height="18" rx="2"/><line x1="9" y1="3" x2="9" y2="21"/></svg></button>
+              <button class="th-btn" id="treeSettings" title="Fields"><svg class="ic sm" viewBox="0 0 24 24"><line x1="21" y1="7" x2="10" y2="7"/><line x1="14" y1="17" x2="3" y2="17"/><circle class="s1" cx="6" cy="7" r="2.6"/><circle class="s2" cx="18" cy="17" r="2.6"/></svg></button>
+              <button class="th-btn" id="treeCollapse" title="Hide panel"><svg class="ic sm th-panel" viewBox="0 0 24 24"><rect x="3" y="3" width="18" height="18" rx="2"/><line x1="9" y1="3" x2="9" y2="21"/></svg><svg class="ic sm th-chev" viewBox="0 0 24 24"><polyline points="6 9 12 15 18 9"/></svg><svg class="ic sm th-x" viewBox="0 0 24 24"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg></button>
             </div>
           </div>
           <div class="tree-rows" id="treeRows"></div>
@@ -1145,7 +1463,7 @@ body.dragging-x, body.dragging-x *{user-select:none}
   <div class="tfields" id="tfields" hidden>
     <div class="tf-head">
       <button class="tf-ic-btn" id="tfBack"><svg class="ic sm" viewBox="0 0 24 24"><line x1="21" y1="7" x2="10" y2="7"/><line x1="14" y1="17" x2="3" y2="17"/><circle cx="6" cy="7" r="2.6"/><circle cx="18" cy="17" r="2.6"/></svg></button>
-      <span class="tf-title">Table Fields</span>
+      <span class="tf-title">Fields</span>
       <button class="tf-ic-btn" id="tfClose"><svg class="ic sm" viewBox="0 0 24 24"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg></button>
     </div>
     <div class="tf-search">
@@ -1167,6 +1485,13 @@ body.dragging-x, body.dragging-x *{user-select:none}
 
   <!-- ===== demo chrome ===== -->
   <div class="demo-ctl" id="demoCtl">
+    <!-- phone only: the tab rides on top of the panel instead of being swapped
+         out for it, and carries the control that closes it again -->
+    <button class="ctl-head" id="ctlHead" aria-label="Demo Panel">
+      <span class="ch-label">Demo Panel</span>
+      <svg class="ch-up" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 15 12 9 18 15"/></svg>
+      <svg class="ch-x" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+    </button>
     <button class="ctl-tour" id="tourBtn">
       <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><polygon points="10 8.5 15.5 12 10 15.5 10 8.5" fill="currentColor" stroke="none"/></svg>
       Tour
@@ -1196,7 +1521,7 @@ body.dragging-x, body.dragging-x *{user-select:none}
       <button class="cp-x" id="cpClose" aria-label="Close">
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
       </button>
-      <div class="cp-t">How the Magic Pro agent works</div>
+      <div class="cp-t">How This Works</div>
       <div class="cp-sub">Three modes - each gives the agent a different level of freedom:</div>
       <p><b>Automated</b> - the action is simple and covered by a rule the team pre-approved, so the agent acts by itself and shows its work afterwards.</p>
       <p><b>Confident</b> - the agent knows what to do, but the action matters - so it proposes, explains why, and waits for your approval.</p>
@@ -1204,7 +1529,7 @@ body.dragging-x, body.dragging-x *{user-select:none}
       <div class="cp-f">Pick a mode, then press any <span class="cp-spark"><svg width="13" height="13" viewBox="0 0 24 24" fill="currentColor" style="display:block"><path d="M12 3l2.2 6.8L21 12l-6.8 2.2L12 21l-2.2-6.8L3 12l6.8-2.2L12 3z"/></svg></span> on the board.</div>
     </div>
   </div>
-  <button class="dock-tab" id="dockTab">✦ Demo panel</button>
+  <button class="dock-tab" id="dockTab"><svg class="tabi" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><circle cx="12" cy="12" r="9"/><line x1="12" y1="11" x2="12" y2="16"/><line x1="12" y1="7.5" x2="12.01" y2="7.5"/></svg><span class="tabt">How It Works</span></button>
   <div class="toast" id="toast"></div>
   <div class="tour" id="tour" hidden>
     <div class="tour-catch"></div>
@@ -2541,10 +2866,28 @@ function listOf(id){
     if(!row || row.dataset.row==='__creator') return;
     const list=listOf(row.dataset.row);
     if(!list || list.length<2) return;
-    rd={row, id:row.dataset.row, list, y0:e.clientY, active:false, target:null};
+    rd={row, id:row.dataset.row, list, y0:e.clientY, active:false, target:null,
+        touch:e.pointerType==='touch', pid:e.pointerId, armed:e.pointerType!=='touch'};
+    /* With a finger, dragging a row up and down is how you SCROLL the list, so
+       a drag cannot mean reorder straight away. Hold still for a moment and the
+       row hands itself over - the pattern every touch list uses. */
+    if(rd.touch) rd.holdT=setTimeout(()=>{
+      if(!rd) return;
+      rd.armed=true; rd.y0=rd.lastY!=null?rd.lastY:rd.y0;
+      row.style.touchAction='none';
+      try{ row.setPointerCapture(rd.pid); }catch(_){}
+      if(navigator.vibrate) navigator.vibrate(10);
+    }, 380);
   });
   tree.addEventListener('pointermove', e=>{
     if(!rd) return;
+    rd.lastY=e.clientY;
+    if(!rd.armed){
+      /* moved before the hold completed - the finger meant to scroll */
+      if(Math.abs(e.clientY-rd.y0)>8){ clearTimeout(rd.holdT); rd.row.style.touchAction=''; rd=null; }
+      return;
+    }
+    if(rd.touch) e.preventDefault();
     if(!rd.active && Math.abs(e.clientY-rd.y0)>6){
       rd.active=true; rd.row.classList.add('drag-src'); document.body.classList.add('dragging-x');
     }
@@ -2569,6 +2912,7 @@ function listOf(id){
   });
   tree.addEventListener('pointerup', ()=>{
     if(!rd) return;
+    clearTimeout(rd.holdT); rd.row.style.touchAction='';
     document.body.classList.remove('dragging-x');
     if(rd.active){ window.__justDragged=true; setTimeout(()=>window.__justDragged=false,150); }
     if(rd.active && rd.target){
@@ -2585,7 +2929,8 @@ function listOf(id){
     rd=null;
   });
   tree.addEventListener('pointercancel', ()=>{
-    if(rd){ rd.row.classList.remove('drag-src'); if(rd.target) rd.target.classList.remove('drop-target'); rd=null; }
+    if(rd){ clearTimeout(rd.holdT); rd.row.style.touchAction='';
+      rd.row.classList.remove('drag-src'); if(rd.target) rd.target.classList.remove('drop-target'); rd=null; }
     document.body.classList.remove('dragging-x');
   });
 })();
@@ -2648,19 +2993,90 @@ document.getElementById('zoomIn').onclick = ()=>zoomSmooth(()=>{ VIEW.zoom=Math.
 document.getElementById('zoomOut').onclick = ()=>zoomSmooth(()=>{ VIEW.zoom=Math.max(0.5, VIEW.zoom/1.25); });
 document.getElementById('boardMore').onclick = ()=>showToast('Board actions - export, share & settings live here in the full product.');
 document.getElementById('mpPresence').onclick = ()=>toggleAgent();
+/* ---------- phone: search is an icon until you ask for it ---------- */
+(function(){
+  const tool=document.getElementById('searchTool'), inp=document.getElementById('searchInput');
+  const MOB=()=>window.innerWidth<=700;
+  let closedAt=0;
+  const close=()=>{ tool.classList.remove('open'); closedAt=Date.now(); };
+  tool.addEventListener('click', e=>{
+    if(!MOB()) return;
+    if(tool.classList.contains('open')){
+      /* the magnifier is the way back out too - pressing it again clears and
+         folds. Tapping into the text itself still just moves the caret. */
+      if(e.target.closest('input')) return;
+      e.preventDefault();
+      inp.value=''; inp.blur(); close();
+      return;
+    }
+    /* A tap on the magnifier while the field has focus fires blur FIRST, and
+       that blur already closed it. Without this the very same tap would read the
+       field as closed and open it straight back up - so it never closed at all. */
+    if(Date.now()-closedAt < 350){ e.preventDefault(); return; }
+    /* the label would hand focus to a 0px-wide input - open it first, then focus */
+    e.preventDefault();
+    tool.classList.add('open');
+    setTimeout(()=>inp.focus(), 240);
+  });
+  /* it folds back only when it has nothing to show for itself - on blur, and on
+     a tap anywhere else, because a tap outside does not always blur an input */
+  inp.addEventListener('blur', ()=>{ if(MOB() && !inp.value.trim()) close(); });
+  document.addEventListener('click', e=>{
+    if(tool.classList.contains('open') && !e.target.closest('#searchTool') && !inp.value.trim()) close();
+  });
+  inp.addEventListener('keydown', e=>{
+    if(e.key==='Escape'){ inp.value=''; inp.blur(); close(); }
+  });
+  window.addEventListener('resize', ()=>{ if(!MOB()) close(); });
+})();
+/* ---------- phone: the deal actions live behind the ⋮ ---------- */
+(function(){
+  const more=document.getElementById('dealMore'), acts=document.getElementById('dealActs'),
+        scrim=document.getElementById('dealScrim'), bar=document.querySelector('.dealbar');
+  /* The panel starts at the TOP of the deal bar and runs to the bottom edge, so
+     the ⋯ - which sits in that bar and turns into the X - ends up inside the
+     white, above the first row. Read the bar instead of hard-coding it. */
+  const anchor=()=>{
+    const r=bar.getBoundingClientRect();
+    acts.style.top=Math.round(r.top)+'px';
+    acts.style.paddingTop=Math.round(r.height+6)+'px';
+  };
+  const setOpen=o=>{ if(o) anchor();
+    acts.classList.toggle('open',o); more.classList.toggle('on',o);
+    scrim.classList.toggle('on',o);
+    more.setAttribute('aria-expanded', o?'true':'false'); };
+  window.addEventListener('resize', ()=>{ if(acts.classList.contains('open')) anchor(); });
+  more.onclick=e=>{ e.stopPropagation(); setOpen(!acts.classList.contains('open')); };
+  /* picking anything from the menu closes it - the action speaks for itself */
+  acts.addEventListener('click', e=>{ if(e.target.closest('.bar-act')) setOpen(false); });
+  document.addEventListener('click', e=>{
+    if(acts.classList.contains('open') && !e.target.closest('#dealActs')) setOpen(false);
+  });
+  document.addEventListener('keydown', e=>{ if(e.key==='Escape') setOpen(false); });
+})();
 /* Table Fields panel - opens from the panel settings gear */
 (function(){
   const tf=document.getElementById('tfields'), gear=document.getElementById('treeSettings');
+  const sideways=()=>window.innerWidth<=700;   /* phone: it is a side panel, CSS places it */
+  const tfScrim=document.getElementById('tfScrim');
   const place=()=>{
+    if(sideways()){ tf.style.left=''; tf.style.top=''; return; }
     const tr=document.querySelector('.tree').getBoundingClientRect();
     const g=gear.getBoundingClientRect();
     /* open BESIDE the tree (over the timeline) so the columns stay visible */
     tf.style.left=Math.min(tr.right+14, window.innerWidth-tf.offsetWidth-16)+'px';
     tf.style.top=Math.max(10, g.top-8)+'px';
   };
-  const open=()=>{ clearTimeout(tf.__hideT); tf.hidden=false; place(); requestAnimationFrame(()=>tf.classList.add('show')); };
+  /* a timeout rather than rAF: the panel has to be laid out before the class
+     flips or the slide has nothing to animate from, and rAF is throttled when
+     the tab is not painting - which would leave the panel open but invisible */
+  const open=()=>{ clearTimeout(tf.__hideT); tf.hidden=false; place(); gear.classList.add('on');
+    setTimeout(()=>{ tf.classList.add('show'); if(tfScrim) tfScrim.classList.toggle('on', sideways()); }, 20); };
   window.__tfPlace = ()=>{ if(!tf.hidden) place(); };
-  const close=()=>{ tf.classList.remove('show'); clearTimeout(tf.__hideT); tf.__hideT=setTimeout(()=>{ tf.hidden=true; },250); };
+  /* the phone slide runs longer than the desktop fade - hide only once it is done */
+  const close=()=>{ tf.classList.remove('show'); gear.classList.remove('on');
+    if(tfScrim) tfScrim.classList.remove('on');
+    clearTimeout(tf.__hideT); tf.__hideT=setTimeout(()=>{ tf.hidden=true; }, sideways()?480:250); };
   gear.onclick = e=>{ e.stopPropagation(); tf.hidden ? open() : close(); };
   document.getElementById('tfClose').onclick=close;
   document.getElementById('tfBack').onclick=close;
@@ -2735,10 +3151,12 @@ document.getElementById('autoFit').onclick = ()=>{
   window.__segPlace=placeThumb;
   requestAnimationFrame(placeThumb);
   window.addEventListener('resize', placeThumb);
-  const mnav=document.getElementById('mnav'), ham=document.getElementById('railHam');
-  const setNav=o=>{ mnav.classList.toggle('open',o); ham.classList.toggle('on',o); };
+  const mnav=document.getElementById('mnav'), ham=document.getElementById('railHam'),
+        scrim=document.getElementById('mnavScrim');
+  /* the burger is also the close button - it folds into the X and stays on top */
+  const setNav=o=>{ mnav.classList.toggle('open',o); ham.classList.toggle('on',o);
+    scrim.classList.toggle('on',o); ham.setAttribute('aria-expanded', o?'true':'false'); };
   ham.onclick=e=>{ e.stopPropagation(); setNav(!mnav.classList.contains('open')); };
-  document.getElementById('mnavX').onclick=e=>{ e.stopPropagation(); setNav(false); };
   document.addEventListener('click', e=>{
     if(mnav.classList.contains('open') && !e.target.closest('#mnav')) setNav(false);
   });
@@ -2753,6 +3171,17 @@ document.getElementById('autoFit').onclick = ()=>{
     tab.classList.remove('show');
     setTimeout(()=>ctl.classList.remove('min'), 180);
   };
+  /* phone: the title row closes the panel and hands the name back to the tab */
+  const head=document.getElementById('ctlHead');
+  if(head) head.onclick = e=>{
+    e.stopPropagation();
+    pop.classList.remove('open'); info.classList.remove('on');
+    ctl.classList.add('min');
+    setTimeout(()=>tab.classList.add('show'), 260);
+  };
+  /* the credit is one clipped line until someone is curious enough to press it */
+  const credit=ctl.querySelector('.ctl-credit');
+  if(credit) credit.onclick = e=>{ e.stopPropagation(); credit.classList.toggle('open'); };
   /* ⓘ - the reviewer's explainer popover */
   const info=document.getElementById('ctlInfo'), pop=document.getElementById('ctlPop');
   info.onclick = e=>{ e.stopPropagation(); const o=pop.classList.toggle('open'); info.classList.toggle('on',o); };
@@ -2785,25 +3214,50 @@ document.getElementById('autoFit').onclick = ()=>{
     if(!el||!gs) return;
     const r=el.getBoundingClientRect(), g=gs.getBoundingClientRect();
     gs.scrollLeft += (r.left+r.width/2)-(g.left+g.width/2);
+    /* on a phone the timeline is only a band, so a bar near its bottom edge gets
+       clipped by the spotlight - centre it vertically too */
+    if(innerWidth<=700) gs.scrollTop += (r.top+r.height/2)-(g.top+g.height/2);
     const board=document.querySelector('.board'); board.scrollLeft=0; board.scrollTop=0;
   };
+  /* On a phone the panels the tour talks about start folded, and a spotlight on
+     a folded panel explains nothing. Each step opens what it is about to show,
+     and gets a longer settle delay so the rect is measured after the motion. */
+  const MOB=()=>innerWidth<=700;
+  const bd=document.querySelector('.board');
+  const openTasks=()=>{ if(MOB() && bd.classList.contains('tree-min'))
+    document.getElementById('treeCollapse').click(); };
+  const openDock=()=>{ const c=document.getElementById('demoCtl'), t=document.getElementById('dockTab');
+    if(c && c.classList.contains('min') && t) t.click(); };
+  /* "How It Works" is a second explanation competing with this one, and on a
+     phone it eats the room the tour card needs. It goes away while the tour
+     runs and comes back only on the step that is actually about the agent. */
+  const popEl=()=>document.getElementById('ctlPop');
+  const infoEl=()=>document.getElementById('ctlInfo');
+  const setPop=on=>{ const p=popEl(), i=infoEl();
+    if(p) p.classList.toggle('open', on);
+    if(i) i.classList.toggle('on', on); };
   const STEPS=[
-    {sel:'.tree', pad:6, before:closeDrawer, title:'The deal, phase by phase',
+    {sel:'.tree', pad:6, dMob:460, before:()=>{ closeDrawer(); openTasks(); }, title:'The deal, phase by phase',
      tx:'Deals like this are complex, so the work breaks into phases and sub-phases.<br><br>Each phase starts from a template - deals repeat the same patterns - or free-form when they don’t. Tasks are templated too, so nobody fills in the same data twice.<br><br>Every phase owns a color that everything inside inherits. Purple belongs to one thing only - the agent.'},
     {sel:'.gantt', pad:0, title:'A timeline that answers back',
      tx:'The timeline and the phase panel are one system - each side completes the other.<br><br>Drag a bar, resize it, zoom - the whole plan re-flows live on both sides, each phase in its own color.'},
-    {sel:'#treeSettings', pad:8, title:'Your columns, your call',
-     tx:'Table Fields adds or hides columns - the frame glides to make room, nothing ever jumps.'},
+    {sel:'#treeSettings', pad:8, dMob:460, before:openTasks, title:'Your columns, your call',
+     tx:'Fields adds or hides columns - the frame glides to make room, nothing ever jumps.'},
     {sel:'#missPill', pad:8, d:350, title:'Red means a human',
      before:()=>{ closeDrawer(); centerInGantt('#missPill'); },
      tx:'The deal is blocked - 9 signatures are missing. This is exactly the moment an agent is for.'},
     {sel:'#sparkBtn', pad:8, d:250, title:'Meet the ✦',
      before:()=>{ centerInGantt('#sparkBtn'); },
      tx:'One press asks Magic Pro to look at the problem and come back with a plan.'},
-    {sel:'.demo-ctl .seg', pad:8, lit:true, before:closeDrawer, title:'Three levels of trust',
+    {sel:'.demo-ctl .seg', pad:8, lit:true, dMob:820, before:()=>{ closeDrawer(); openDock();
+       /* The How It Works note stays shut here on a phone: it runs ~900px tall,
+          taller than the screen, so opening it buries this step instead of
+          supporting it. The step's own text says the same three things, and the
+          ⓘ is right there the moment the tour ends. */
+       if(!MOB()) setTimeout(()=>setPop(true), 0); }, title:'Three levels of trust',
      tx:'Automated acts alone, Confident proposes first, Uncertain steps back and asks. You choose which story to watch.'},
     {sel:'#drawer', pad:0, d:650, title:'Nothing without evidence',
-     before:()=>{ if(!drawer.classList.contains('open')) openAgent(); },
+     before:()=>{ setPop(false); if(!drawer.classList.contains('open')) openAgent(); },
      tx:'Magic Pro explains why, shows exactly who it reminded and who signed, and logs every action it takes.'},
     {sel:null, before:closeDrawer, title:'Now it’s yours',
      tx:'Pick a mode, press any ✦ on the board, and watch the agent work. Enjoy.'}
@@ -2817,7 +3271,56 @@ document.getElementById('autoFit').onclick = ()=>{
     return {x:r.x-p, y:r.y-p, w:r.width+p*2, h:r.height+p*2};
   }
   function placeCard(r){
-    const cw=300, ch=card.offsetHeight||190, m=18;
+    const cw=card.offsetWidth||300, ch=card.offsetHeight||190, m=18;
+    if(MOB()){
+      /* phone: there is never room beside the target - every step is full width.
+         The card takes whichever band the spotlight leaves free, is capped to
+         that band (it scrolls inside, footer pinned), and stays clear of the
+         dock. It must never cover the thing it is describing. */
+      /* Reserve only what the dock actually covers right now. Assuming its open
+         height while it is folded away threw ~40px of usable screen out for
+         every early step, which is what forced the first card to scroll. */
+      const dockEl=document.getElementById('demoCtl'), popNote=document.getElementById('ctlPop');
+      let occupiedTop=dockEl ? dockEl.getBoundingClientRect().top : innerHeight-76;
+      /* the note floats above the dock, so when it is open IT is the ceiling of
+         the taken area - otherwise the card lands on top of what it just opened */
+      if(popNote && popNote.classList.contains('open'))
+        occupiedTop=Math.min(occupiedTop, popNote.getBoundingClientRect().top);
+      const dock=Math.max(0, Math.min(innerHeight*0.62, innerHeight-occupiedTop));
+      const gap=14, edge=12, PAD=32;   /* 16px of padding top and bottom */
+      const x2=Math.max(edge, (innerWidth-cw)/2);
+      /* Measure the CONTENT, not the card. The card carries the position and
+         max-height transitions, and mid-flight its own box reports a stale size
+         - deciding on that is what capped short steps and left dead air under
+         the buttons. The inner block always reports its true height. */
+      const inn=card.querySelector('.tc-in');
+      const natural=(inn?Math.ceil(inn.getBoundingClientRect().height):0)+PAD;
+      const fit=(band)=>{
+        if(natural>band){ card.style.maxHeight=band+'px'; card.classList.add('tc-scroll'); return band; }
+        card.style.maxHeight=''; card.classList.remove('tc-scroll'); return natural;
+      };
+      if(!STEPS[cur].sel){
+        card.classList.remove('tc-scroll'); card.style.maxHeight='';
+        const h=fit(innerHeight-edge*2);
+        card.style.left=x2+'px';
+        card.style.top=Math.max(edge, (innerHeight-h)/2)+'px';
+        return;
+      }
+      const belowBand=(innerHeight-dock)-(r.y+r.h)-gap-edge, aboveBand=r.y-gap-edge;
+      const below=belowBand>=aboveBand;
+      card.classList.remove('tc-scroll'); card.style.maxHeight='';
+      /* When the free band is too tight for the text the card leans over the
+         spotlight rather than turning into a scrollbox - it may take everything
+         except a 96px sliver of the highlight, so you always still see what is
+         being pointed at, and you never have to scroll to reach the buttons. */
+      const free=below?belowBand:aboveBand;
+      const ch2=fit(Math.max(240, free + Math.max(0, r.h-96)));
+      let y2 = below ? r.y+r.h+gap : r.y-ch2-gap;
+      card.style.left=x2+'px';
+      card.style.top=Math.max(edge, Math.min(y2, innerHeight-ch2-edge))+'px';
+      return;
+    }
+    card.style.maxHeight=''; card.classList.remove('tc-scroll');
     let x=r.x+r.w+m, y=r.y;
     if(x+cw>innerWidth-12) x=r.x-cw-m;
     if(x<12){ x=Math.min(Math.max(16,r.x), innerWidth-cw-16); y=r.y+r.h+m;
@@ -2843,24 +3346,43 @@ document.getElementById('autoFit').onclick = ()=>{
     const bk=document.getElementById('tcBack'); if(bk) bk.onclick=()=>go(cur-1);
     const sk=document.getElementById('tcSkip'); if(sk) sk.onclick=end;
   }
+  function paint(withRender){
+    const s=STEPS[cur], r=rectFor(s);
+    hole.style.left=r.x+'px'; hole.style.top=r.y+'px';
+    hole.style.width=r.w+'px'; hole.style.height=r.h+'px';
+    hole.classList.toggle('lit', !!s.lit);
+    if(withRender) render();
+    placeCard(r);
+  }
   function go(i){
     cur=i; const s=STEPS[cur];
     if(s.before) s.before();
     clearTimeout(moveT);
     moveT=setTimeout(()=>{
-      const r=rectFor(s);
-      hole.style.left=r.x+'px'; hole.style.top=r.y+'px';
-      hole.style.width=r.w+'px'; hole.style.height=r.h+'px';
-      hole.classList.toggle('lit', !!s.lit);
-      render(); placeCard(r);
-    }, s.d||60);
+      paint(true);
+      /* second pass, no re-render: the panel and the dock animate open, and a
+         rect measured mid-motion leaves the spotlight sitting on empty space */
+      setTimeout(()=>{ if(cur===i) paint(false); }, 420);
+    }, (MOB() && s.dMob!=null) ? s.dMob : (s.d||60));
   }
   function start(){
+    /* The tour is the explanation now, so everything else that explains gets
+       out of its way: the How It Works note, its tab, and the dock itself.
+       They come back when the tour ends - and the dock reappears on its own
+       step, because that step is about it. */
+    setPop(false);
+    document.body.classList.add('tour-on');
+    const dk=document.getElementById('demoCtl');
+    if(MOB() && dk && !dk.classList.contains('min')) dk.classList.add('min');
     tourEl.hidden=false; tourEl.style.opacity='0';
-    requestAnimationFrame(()=>{ tourEl.style.opacity='1'; });
+    /* a timeout, not rAF: rAF is throttled while the tab is not painting and
+       the overlay would stay at opacity 0 with the tour running underneath */
+    setTimeout(()=>{ tourEl.style.opacity='1'; }, 20);
     go(0);
   }
   function end(){
+    setPop(false);
+    document.body.classList.remove('tour-on');
     clearTimeout(moveT);
     tourEl.style.opacity='0';
     setTimeout(()=>{ tourEl.hidden=true; }, 320);
@@ -3147,8 +3669,19 @@ document.getElementById('treeRows').addEventListener('click', e=>{
   const end=()=>{ if(drag){ drag=null; rz.classList.remove('on'); document.body.classList.remove('dragging-x'); renderAll(); } };
   rz.addEventListener('pointerup', end); rz.addEventListener('pointercancel', end);
   /* minimize/restore with motion: the panel slides left and shrinks into the icon */
+  const stacked=()=>window.innerWidth<=700;   /* phone: the panel sits above the map, not beside it */
   const setMin=v=>{
     const ex=document.getElementById('treeExpand');
+    if(stacked()){
+      /* stacked layout - the card folds down into its own header strip. The
+         desktop width animation would fight the full-width slot, so the class
+         flip does the work here and the rows fade (see the responsive block). */
+      tree.style.width=''; tree.style.flex=''; tree.style.opacity='';
+      board.classList.toggle('tree-min', v);
+      ex.hidden=true;
+      renderAll();
+      return;
+    }
     if(v){
       const w=tree.getBoundingClientRect().width;
       tree.dataset.w=w;
@@ -3173,7 +3706,9 @@ document.getElementById('treeRows').addEventListener('click', e=>{
       });
     }
   };
-  document.getElementById('treeCollapse').onclick=()=>setMin(true);
+  /* on the phone the header strip is the handle, so the same button opens it back */
+  document.getElementById('treeCollapse').onclick=()=>
+    setMin(!(stacked() && board.classList.contains('tree-min')));
   document.getElementById('treeExpand').onclick=()=>setMin(false);
   /* responsive: below 1000px the phase panel folds away by itself and returns when there is room */
   let autoMin=false, rzT;
@@ -3198,13 +3733,59 @@ document.getElementById('treeRows').addEventListener('click', e=>{
     sc.style.cursor='grabbing';
   });
   sc.addEventListener('pointermove', e=>{
-    if(!pan) return;
+    if(!pan || window.__pinch) return;   /* two fingers down: the pinch owns it */
     sc.scrollLeft = pan.l - (e.clientX - pan.x);
     sc.scrollTop  = pan.t - (e.clientY - pan.y);
   }, {passive:true});
   const end=()=>{ pan=null; sc.style.cursor=''; };
   sc.addEventListener('pointerup', end);
   sc.addEventListener('pointercancel', end);
+  window.__panEnd=end;
+})();
+
+/* ---------- pinch to zoom the timeline (touch only) ----------
+   The +/- buttons and the view menu are the mouse answer; on a phone the plan
+   is a map and a map zooms with two fingers. The date under the midpoint of the
+   pinch stays put, the same promise the buttons make. */
+(function wirePinch(){
+  const sc=document.getElementById('ganttScroll');
+  const pts=new Map();
+  let base=null, last=0;
+  const dist=(a,b)=>Math.hypot(a.clientX-b.clientX, a.clientY-b.clientY);
+  sc.addEventListener('pointerdown', e=>{
+    if(e.pointerType!=='touch') return;
+    pts.set(e.pointerId, e);
+    if(pts.size===2){
+      const [a,b]=[...pts.values()];
+      base={d:Math.max(1,dist(a,b)), zoom:VIEW.zoom};
+      window.__pinch=true;
+      if(window.__panEnd) window.__panEnd();   /* stop the one-finger drag */
+    }
+  });
+  sc.addEventListener('pointermove', e=>{
+    if(!pts.has(e.pointerId)) return;
+    pts.set(e.pointerId, e);
+    if(pts.size!==2 || !base) return;
+    e.preventDefault();
+    const now=Date.now();
+    if(now-last < 55) return;              /* a full re-render per frame is too much */
+    const [a,b]=[...pts.values()];
+    const next=Math.max(0.5, Math.min(2.2, base.zoom * (dist(a,b)/base.d)));
+    if(Math.abs(next-VIEW.zoom) < 0.004) return;
+    last=now;
+    /* hold the date under the middle of the two fingers */
+    const box=sc.getBoundingClientRect();
+    const mid=(a.clientX+b.clientX)/2 - box.left;
+    const dayAtMid=(sc.scrollLeft+mid)/dayPx;
+    VIEW.zoom=next;
+    renderAll();
+    sc.scrollLeft=Math.max(0, dayAtMid*dayPx - mid);
+  }, {passive:false});
+  const drop=e=>{
+    pts.delete(e.pointerId);
+    if(pts.size<2){ base=null; window.__pinch=false; }
+  };
+  ['pointerup','pointercancel','pointerleave'].forEach(ev=>sc.addEventListener(ev, drop));
 })();
 
 /* ---------- shared vertical scroll: tree + timeline always move together ---------- */
@@ -3287,5 +3868,263 @@ if(mode==='auto'){
       showToast('CONFIDENT mode - the agent proposes, you approve. Click the ✦ next to “Missing Approvals”.'); }, 1400);
 }
 </script>
+
+<script>
+/* responsive: bar names when the panel is closed, and an opening frame that
+   shows more than a quarter of the plan. Additive - reads the existing markup
+   and reuses the existing Auto Fit; nothing above this line is modified. */
+(function(){
+ var MOBILE=900;
+ var board=document.querySelector('.board'), rows=document.getElementById('gRows');
+ if(!board||!rows)return;
+
+ /* Each timeline row carries data-grow and its twin in the panel carries the
+    matching data-row, so the name is a lookup away. The label is written onto
+    the bar and drawn by CSS, which keeps it glued to the bar when it moves. */
+ var t=0;
+ function syncBarLabels(){
+  var on = window.innerWidth<=MOBILE && board.classList.contains('tree-min');
+  rows.querySelectorAll('.g-row').forEach(function(row){
+   var bar=row.querySelector('.bar');
+   if(!bar)return;
+   if(!on){bar.removeAttribute('data-name');return;}
+   var key=row.getAttribute('data-grow');
+   var twin=key&&document.querySelector('.trow[data-row="'+key+'"] .name');
+   var name=twin?twin.textContent.trim():'';
+   if(name)bar.setAttribute('data-name',name); else bar.removeAttribute('data-name');
+  });
+ }
+ function queue(){clearTimeout(t);t=setTimeout(syncBarLabels,60);}
+
+ /* the timeline redraws on zoom, scale and every edit - relabel after each one */
+ try{new MutationObserver(queue).observe(rows,{childList:true,subtree:true});}catch(e){}
+ /* and whenever the panel folds or unfolds */
+ try{new MutationObserver(queue).observe(board,{attributes:true,attributeFilter:['class']});}catch(e){}
+ window.addEventListener('resize',queue);
+ queue();
+
+ /* On a phone the opening frame showed about a quarter of the plan, so the
+    first thing you met was a fragment. Auto Fit already exists and does the
+    right thing - it just was never reached. Fire it once, without its toast,
+    and only if nobody has touched the timeline yet. */
+ if(window.innerWidth<=MOBILE){
+  var touched=false, sc=document.getElementById('ganttScroll');
+  if(sc)['pointerdown','wheel'].forEach(function(ev){
+   sc.addEventListener(ev,function(){touched=true;},{once:true,passive:true});});
+  setTimeout(function(){
+   var af=document.getElementById('autoFit');
+   if(!af||touched)return;
+   var toast=window.showToast;
+   window.showToast=function(){};
+   try{af.click();}catch(e){}
+   setTimeout(function(){window.showToast=toast;queue();},60);
+  },1000);
+ }
+})();
+</script>
+<style>
+/* ==========================================================================
+   Demo shell - the same frame the SyncOps demo uses, ported here.
+   Only the frame: the dock's contents, the tour's words, the agent and the
+   board are AFT's own and are not touched. What is shared is how the frame
+   behaves - how it opens, what carries attention, and where things stand.
+   ========================================================================== */
+
+/* ---- The tab is the dock's handle at every width. It used to trade places
+        with the dock - the dock slid down and the tab slid up, two elements
+        swapping, so the thing you pressed to open was never the thing you
+        pressed to close. Fastened to the dock's top edge they move as one
+        piece, and one control does both jobs. ---- */
+.dock-tab{position:absolute;left:16px;bottom:100%;top:auto;
+  transform:none;border-radius:8px 8px 0 0;
+  display:flex;align-items:center;gap:9px;
+  transition:background-color .15s ease}
+.dock-tab.show{transform:none}
+.demo-ctl{overflow:visible}
+/* the panel drops by exactly its own height, leaving the tab on the screen edge */
+.demo-ctl.min{transform:translateY(100%)}
+/* the minus is gone - the tab does both jobs now */
+.demo-ctl .ctl-min{display:none}
+/* An earlier pass solved this same problem here in a different way, with a
+   header row inside the dock reading Demo Panel and carrying its own closer.
+   Two handles for one panel is worse than either, and the point of this port is
+   that both demos work the same way - so the header goes and the tab stays. */
+.demo-ctl .ctl-head{display:none!important}
+
+/* ---- The mark that says there is an explanation behind this. It takes the
+        agent's own purple rather than the dock's white, because one warm point
+        in a navy bar is what the eye finds first, and in this demo purple
+        belongs to the agent and nothing else. It breathes only while the panel
+        is shut: once you are inside, the nudge has done its job and a pulse you
+        keep seeing is just noise. ---- */
+.dock-tab .tabi{width:15px;height:15px;flex:0 0 15px;border-radius:50%;color:#c9aef9}
+@keyframes tabPulse{
+  0%{box-shadow:0 0 0 0 rgba(201,174,249,.70);transform:scale(1)}
+  40%{transform:scale(1.1)}
+  70%{box-shadow:0 0 0 8px rgba(201,174,249,0);transform:scale(1)}
+  100%{box-shadow:0 0 0 0 rgba(201,174,249,0);transform:scale(1)}}
+.demo-ctl.min .dock-tab .tabi{animation:tabPulse 2.2s ease infinite}
+.dock-tab:hover .tabi{animation:none}
+
+/* ---- One chevron rather than a cross. It points up while the panel is down -
+        open me - and turns over once it is up - put me away. A cross could only
+        say one of those two things. ---- */
+.dock-tab .tabc{width:15px;height:15px;flex:0 0 15px;opacity:.9;
+  transform:rotate(0deg);transition:transform 300ms cubic-bezier(.23,1,.32,1)}
+.demo-ctl:not(.min) .dock-tab .tabc{transform:rotate(180deg)}
+.dock-tab:active{transform:scale(.98)}
+
+@media (prefers-reduced-motion:reduce){
+  .demo-ctl.min .dock-tab .tabi{animation:none}
+  .dock-tab .tabc{transition:none}
+}
+
+/* a touch larger where there is room, so it carries across a wide screen
+   without becoming a banner */
+@media (min-width:701px){
+  .dock-tab{padding:10px 22px;font-size:13.5px;gap:10px;border-radius:9px 9px 0 0}
+  .dock-tab .tabi,.dock-tab .tabc{width:17px;height:17px;flex-basis:17px}
+}
+
+/* ---- The tab is the panel's own edge, not a separate control sitting on it,
+        so pointing at it lifts the whole panel rather than one corner. ---- */
+.demo-ctl{transition:transform .4s cubic-bezier(.2,.8,.3,1),
+                    background-color 200ms cubic-bezier(.23,1,.32,1)}
+@media (hover:hover) and (pointer:fine){
+  .demo-ctl:has(.dock-tab:hover),
+  .demo-ctl:has(.dock-tab:hover) .dock-tab{background:#35426b}
+}
+
+@media (max-width:700px){
+  /* ---- The credit line is switched off on phones in most layouts, which
+          quietly drops the one sentence saying this is a concept, the data is
+          invented, and who built it. It belongs on its own row at the foot of
+          the dock, small and clipped to a single line, opening on a tap. ---- */
+  .demo-ctl .ctl-credit{
+    display:block;flex:0 0 100%;order:99;
+    margin-top:2px;padding-right:14px;position:relative;
+    font-size:10.5px;line-height:1.5;color:#fff;
+    /* a 16px line is a thin thing to hit, so the row carries real height */
+    padding-top:5px;padding-bottom:3px;
+    white-space:nowrap;overflow:hidden;text-overflow:ellipsis;cursor:pointer}
+  .demo-ctl .ctl-credit::after{content:"⋯";position:absolute;right:0;top:5px;
+    color:#fff;font-size:12px;line-height:1.4}
+  .demo-ctl .ctl-credit.open{white-space:normal;overflow:visible;text-overflow:clip}
+  .demo-ctl .ctl-credit.open::after{content:""}
+
+  /* The tour card must NOT get a bottom. placeCard already gives it a top, and
+     top + bottom on a fixed box with height:auto stretches it between the two -
+     which is exactly what left a slab of empty white under Next on every step.
+     Clearing the dock is placeCard's job: it measures the dock's real height
+     and keeps the card above it. */
+  .tour-card{bottom:auto}
+}
+
+/* No back-to-top here. SyncOps needed one because its phone layout is a single
+   long column; this demo is a fixed app shell whose document is exactly one
+   viewport tall - the board scrolls inside itself, the page never does. A
+   control that can never appear is not a safeguard, it is dead weight. */
+</style>
+<script>
+/* ================= demo shell behaviour, ported from SyncOps ================= */
+(function(){
+ var dock=document.getElementById('demoCtl'),tab=document.getElementById('dockTab');
+ if(!dock||!tab)return;
+ /* The original wiring made this tab open-only - it removed .min and hid
+    itself, because a second control did the closing. Cloning the node drops
+    those listeners so the toggle below is the only thing bound to it. */
+ var fresh=tab.cloneNode(true);
+ tab.parentNode.replaceChild(fresh,tab);
+ tab=fresh;
+
+ var chev=document.createElementNS('http://www.w3.org/2000/svg','svg');
+ chev.setAttribute('viewBox','0 0 24 24');chev.setAttribute('fill','none');
+ chev.setAttribute('stroke','currentColor');chev.setAttribute('stroke-width','2.4');
+ chev.setAttribute('stroke-linecap','round');chev.setAttribute('stroke-linejoin','round');
+ chev.setAttribute('class','tabc');
+ chev.innerHTML='<polyline points="6 15 12 9 18 15"/>';
+ tab.appendChild(chev);
+
+ /* every width: the tab lives inside the dock and is always on screen */
+ if(tab.parentNode!==dock)dock.appendChild(tab);
+ tab.classList.add('show');
+
+ function label(){
+  var open=!dock.classList.contains('min');
+  tab.setAttribute('aria-expanded',open?'true':'false');
+  tab.title=open?'Hide the demo panel':'Show the demo panel';
+ }
+ /* one handler, both directions - this is the whole point of the change */
+ tab.addEventListener('click',function(e){
+  e.stopPropagation();
+  dock.classList.toggle('min');
+  label();
+ },true);
+ try{new MutationObserver(label).observe(dock,{attributes:true,attributeFilter:['class']});}catch(e){}
+ label();
+
+ /* The height everything else reserves at the foot of the screen: the whole
+    panel while it is up, the tab alone while it is down. Hardcoding it is how
+    floating controls end up landing inside the dock. */
+ function heights(){
+  var th=Math.round(tab.getBoundingClientRect().height||32);
+  var min=dock.classList.contains('min');
+  document.documentElement.style.setProperty('--ctlh',
+   (min?th:Math.round(dock.getBoundingClientRect().height||78))+'px');
+  /* the tab stands on top of the dock, so anything floating above the dock has
+     to clear the tab as well */
+  document.documentElement.style.setProperty('--tabh',min?'0px':th+'px');
+ }
+ var t=0;function queue(){clearTimeout(t);t=setTimeout(heights,60);}
+ try{new MutationObserver(queue).observe(dock,{attributes:true,attributeFilter:['class']});}catch(e){}
+ try{new ResizeObserver(queue).observe(dock);}catch(e){}
+ window.addEventListener('resize',queue);
+ heights();setTimeout(heights,500);
+
+ /* the top edge of whatever is visible down there, for anything that floats */
+ window._dockFloor=function(){
+  var el=dock.classList.contains('min')?tab:dock;
+  return el.getBoundingClientRect().top;
+ };
+
+ /* The credit line opens and closes on a tap, phone only. Delegated from the
+    document rather than bound to the node: a direct listener on this element
+    did not survive here, while a delegated one is immune to whatever replaces
+    or re-renders it. */
+ var mq=window.matchMedia('(max-width:700px)');
+ var credit=dock.querySelector('.ctl-credit');
+ if(credit){
+  credit.setAttribute('role','button');credit.tabIndex=0;
+  credit.title='Read the full note';
+ }
+ function toggleCredit(el){
+  if(!mq.matches)return;
+  el.classList.toggle('open');
+  el.title=el.classList.contains('open')?'Hide the note':'Read the full note';
+  queue();
+ }
+ document.addEventListener('click',function(e){
+  var el=e.target.closest&&e.target.closest('#demoCtl .ctl-credit');
+  if(!el)return;
+  e.stopPropagation();
+  toggleCredit(el);
+ },true);
+ document.addEventListener('keydown',function(e){
+  if(e.key!=='Enter'&&e.key!==' ')return;
+  var el=document.activeElement;
+  if(!el||!el.closest||!el.closest('#demoCtl .ctl-credit'))return;
+  e.preventDefault();toggleCredit(el.closest('#demoCtl .ctl-credit'));
+ },true);
+})();
+
+/* the explanation opens above the dock, and the tab now stands on the dock's
+   top edge - so it has to clear the tab, not the dock, with 30px of air */
+(function(){
+ var s=document.createElement('style');
+ s.textContent='.demo-ctl .ctl-pop{bottom:calc(100% + var(--tabh,0px) + 30px)}';
+ document.head.appendChild(s);
+})();
+</script>
+<script src="../js/nav-back.js?v=20260812"></script>
 </body>
 </html>

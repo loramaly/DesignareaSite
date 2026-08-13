@@ -323,6 +323,12 @@ html{scroll-behavior:smooth}
 .cs-section.on-purple .cs-about-col{border-left-color:rgba(255,255,255,.5)}
 .cs-section.on-purple .cs-about-col h5{color:var(--white)}
 .cs-section.on-purple .cs-about-col p{color:rgba(255,255,255,.88)}
+/* Fine print under the three facts - deliberately the smallest type on the
+   page, so it reads as a footnote and never competes with the columns. */
+.cs-about-note{
+  font-size:12px;line-height:17px;letter-spacing:.01em;
+  color:rgba(255,255,255,.62);max-width:620px;margin-top:32px;
+}
 @media (max-width:900px){
   .cs-about-grid{grid-template-columns:1fr;gap:28px}
 }
@@ -373,6 +379,20 @@ html{scroll-behavior:smooth}
 .cs-research-bleed .cs-research-shot{padding:0 80px;box-sizing:border-box}
 .cs-research-shot{width:100%;margin-inline:auto;display:block}
 @media (min-width:1400px){.cs-research-shot{max-width:1400px}}
+/* The board is 28k px wide - fitting it to a narrow screen turns every artefact
+   into a speck. Below 900px it stops fitting and starts cropping: edge to edge,
+   sized by height, so the narrower the screen the deeper it zooms and the more
+   falls off the sides. The horizontal offset is left of centre because that is
+   where all three rows of the board carry content - dead centre lands on empty
+   canvas. The whole board is still one tap away in the lightbox. */
+@media (max-width:900px){
+  .cs-research-bleed{padding-top:56px;padding-bottom:56px}
+  .cs-research-bleed .cs-research-shot{
+    padding:0;width:100%;
+    height:min(70vh,480px);
+    object-fit:cover;object-position:32% 50%;
+  }
+}
 
 /* minmax(0,X) keeps the intended 300/300/400 widths while there is room, then lets
    the columns shrink instead of spilling past the frame on narrower screens */
@@ -746,7 +766,15 @@ html{scroll-behavior:smooth}
 /* 02 · shared two-column split: copy left, artwork right */
 .sy-split{display:grid;grid-template-columns:minmax(0,450px) minmax(0,1fr);
   gap:clamp(32px,5vw,88px);align-items:center}
-.sy-split-wide{grid-template-columns:minmax(0,620px) minmax(0,1fr);align-items:start}
+/* the problem row: a fixed copy column starved the artwork - at 1280 the
+   stickies were left a ~230px track and shrank to a thumbnail. Both columns
+   are proportional now, so the pair keeps the slide's ~1.4:1 balance at every
+   width and the stickies scale with the layout instead of collapsing.
+   The 1.4 ratio is what the headline needs - "The Issue Wasn't Visibility."
+   fills the copy column exactly - so the artwork buys its extra width back
+   from the gutter instead. */
+.sy-split-wide{grid-template-columns:minmax(0,1.4fr) minmax(0,1fr);
+  gap:clamp(28px,3.4vw,56px);align-items:start}
 .sy-split-media{width:80%;height:auto;justify-self:center}
 .sy-block + .sy-block{margin-top:32px}
 /* the visible gap also carries the h3's half-leading (~32px), so the margin
@@ -890,7 +918,9 @@ html{scroll-behavior:smooth}
 .sy-map-grid{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,420px);
   gap:clamp(24px,4vw,64px);align-items:start;margin-top:40px}
 .sy-map-shot{width:100%;border-radius:12px}
-.sy-anatomy{display:grid;grid-template-columns:minmax(0,420px) minmax(0,500px);
+/* the callout column takes the grid's spare width so the arc below has room
+   to swing without squeezing the bubbles */
+.sy-anatomy{display:grid;grid-template-columns:minmax(0,420px) minmax(0,640px);
   gap:clamp(24px,4vw,72px);align-items:center;margin-top:40px}
 .sy-anatomy-shot{width:100%;border-radius:12px}
 /* map + anatomy callouts use the same numbered outline bubble as slide 14 */
@@ -903,6 +933,15 @@ html{scroll-behavior:smooth}
    than the 40px rounding the other callout lists use. A little more side
    padding keeps the copy clear of the curve. */
 #anatomy .sy-callout{border-radius:999px;padding-left:40px;padding-right:38px}
+/* the five bubbles bow out and back exactly as in the deck - identical
+   treatment to .sy-unsure-row further down, same 79% width and same offsets,
+   so the two sections read as one pattern */
+#anatomy .sy-callout-row{width:79%}
+#anatomy .sy-callout-row:nth-child(1){margin-left:0}
+#anatomy .sy-callout-row:nth-child(2){margin-left:14%}
+#anatomy .sy-callout-row:nth-child(3){margin-left:21%}
+#anatomy .sy-callout-row:nth-child(4){margin-left:16%}
+#anatomy .sy-callout-row:nth-child(5){margin-left:4%}
 .sy-callout h5{font-size:22px;line-height:1.2;font-weight:700;color:var(--ink);margin-bottom:4px}
 .sy-callout p{font-size:16px;line-height:22px;color:var(--body)}
 
@@ -925,6 +964,27 @@ html{scroll-behavior:smooth}
 .sy-trust-item img{width:55px;height:55px;margin-bottom:18px}
 .sy-trust-item h5{font-size:32px;line-height:1.15;font-weight:700;color:var(--ink);margin-bottom:12px}
 .sy-trust-item p{font-size:18px;line-height:24px;color:var(--body)}
+/* the closing row: the gradient pill on the left, the two proof cards beside
+   it. Both columns are capped rather than fluid so the pair keeps the slide's
+   left-weighted proportions instead of stretching across the full measure */
+.sy-trust-foot{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,430px);
+  gap:clamp(24px,3.6vw,68px);align-items:center;max-width:1070px;margin-top:64px}
+.sy-trust-foot .sy-banner{margin-top:0}
+.sy-tint .sy-trust-foot .sy-banner{width:auto}
+.sy-proof{display:flex;flex-direction:column;gap:18px}
+/* the padding and gap are trimmed to what the pill needs: at 26/14 the line
+   fell 6px short of fitting and broke in two, which the slide never does */
+.sy-proof-toast{display:flex;align-items:center;gap:12px;background:#fff;
+  border-radius:999px;padding:16px 22px;font-size:16px;line-height:22px;color:var(--ink)}
+.sy-proof-check{width:20px;height:20px;flex:none;fill:none;stroke:#2fae7d;
+  stroke-width:2.4;stroke-linecap:round;stroke-linejoin:round}
+.sy-proof-toast span:not(.sy-proof-undo){flex:1;min-width:0}
+.sy-proof-undo{flex:none;font-weight:700;color:var(--brand-cta)}
+.sy-proof-log{background:#fff;border-radius:20px;padding:22px 26px}
+.sy-proof-log h5{font-size:18px;line-height:24px;font-weight:700;color:var(--ink);margin-bottom:12px}
+.cs .sy-proof-log ul{list-style:none;padding:0;display:flex;flex-direction:column;gap:8px}
+.sy-proof-log li{font-size:16px;line-height:22px;color:var(--body)}
+.sy-proof-log .t{font-variant-numeric:tabular-nums}
 
 /* 15 · Scenario - vertical timeline */
 .sy-scenario{display:block}
@@ -994,6 +1054,12 @@ html{scroll-behavior:smooth}
 
 @media (max-width:1100px){
   .sy-steps,.sy-metrics,.sy-trust{grid-template-columns:repeat(2,minmax(0,1fr));gap:28px}
+  /* the proof cards drop under the banner - side by side from here down the
+     toast is left a ~300px pill and its one line breaks in three */
+  .sy-trust-foot{grid-template-columns:1fr;gap:28px;align-items:start;max-width:none}
+  /* stacked the pill hugs its text again, as it does everywhere else */
+  .sy-tint .sy-trust-foot .sy-banner{width:fit-content}
+  .sy-trust-foot .sy-proof{max-width:460px}
   /* narrow items read better with the icon beside the pair, not stacked above it */
   .sy-trust-item{display:grid;grid-template-columns:55px minmax(0,1fr);
     column-gap:16px;row-gap:4px;align-items:start}
@@ -1021,6 +1087,11 @@ html{scroll-behavior:smooth}
     width:106%;height:114%;max-width:none;object-fit:fill}
   .sy-dir.is-chosen{border-radius:20px;padding:0 0 36px 0}
   .sy-map-grid,.sy-anatomy,.sy-predict{grid-template-columns:1fr}
+  /* stacked, width:100% hands these shots the full measure and the decision
+     card balloons to ~720px - far larger than the 420px it gets beside the
+     callouts. They keep their desktop size instead */
+  .cs img.sy-anatomy-shot{max-width:460px}
+  .cs img.sy-map-shot{max-width:560px}
   .sy-predict-row{grid-template-columns:28px minmax(0,1fr);row-gap:8px}
   .sy-predict-row p{grid-column:1 / -1}
   .sy-tl::before{left:6px}
@@ -1050,7 +1121,9 @@ html{scroll-behavior:smooth}
 .sy-tint{background:#e8eefb}
 .sy-tint .cs-h2 .strong{font-weight:700}
 .sy-tint .cs-h2 .light{font-weight:300}
-.sy-stickies{width:480px;max-width:100%;justify-self:end}
+/* img.* to clear the .cs img{max-width:100%} baseline, which otherwise wins
+   on specificity and pins the artwork to its track */
+.cs img.sy-stickies{width:100%;max-width:680px;height:auto;justify-self:end}
 .sy-quotes{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));
   gap:clamp(24px,3vw,44px);margin-top:80px;padding-bottom:80px}
 /* ---- the quote treatment, identical everywhere it appears ----
@@ -1068,7 +1141,9 @@ html{scroll-behavior:smooth}
 
 @media (max-width:900px){
   .sy-split,.sy-split-wide{grid-template-columns:1fr;gap:32px}
-  .sy-stickies{justify-self:start;max-width:100%}
+  /* stacked, the artwork gets the full measure - capped so it does not end up
+     larger here than it is beside the copy */
+  .cs img.sy-stickies{justify-self:start;max-width:560px}
   .sy-quotes{grid-template-columns:1fr}
   .sy-stats{grid-template-columns:repeat(2,minmax(0,1fr))}
   .sy-personas,.sy-trust{grid-template-columns:1fr}
@@ -1100,9 +1175,16 @@ html{scroll-behavior:smooth}
   .sy-steps{grid-template-columns:1fr;gap:32px}
   .sy-metrics,.sy-stats{grid-template-columns:1fr}
   .sy-auto{grid-template-columns:1fr}
+  /* stacked, the arc costs the bubbles more width than the stagger is worth -
+     same rule the unsure rows use at 900px */
+  #anatomy .sy-callout-row,
+  #anatomy .sy-callout-row:nth-child(n){margin-left:0;width:100%}
   /* the pill wraps to 5 lines here, so 999px reads as a blob - half the
      roundness of the stadium shape (~80px at this height) */
   .sy-banner{border-radius:40px;padding:20px 26px}
+  /* the toast wraps to two lines here, so it loses the stadium ends too */
+  .sy-proof-toast{flex-wrap:wrap;border-radius:24px;padding:16px 22px;column-gap:12px;row-gap:6px}
+  .sy-proof-toast span:not(.sy-proof-undo){flex:1 1 auto}
   /* beside a 34px lock the paragraph is left with a ~10-character column,
      so the icon sits above the text */
   .sy-security{flex-direction:column;gap:12px}
@@ -1199,4 +1281,18 @@ html{scroll-behavior:smooth}
   .sy-unsure-shot{max-width:100%;justify-self:center}
   .sy-unsure-row,
   .sy-unsure-row:nth-child(n){margin-left:0;width:100%}
+}
+
+/* Scrollbar
+   The browser default thumb is near black and reads as a hard edge against the
+   page. Kept light everywhere. Anything that styles or hides its own scrollbar
+   through a class still wins on specificity. */
+html{scrollbar-color:#d8e0ee transparent}
+*{scrollbar-color:#d8e0ee transparent}
+::-webkit-scrollbar{width:8px;height:8px}
+::-webkit-scrollbar-track{background:transparent}
+::-webkit-scrollbar-thumb{background:#d8e0ee;border-radius:8px}
+::-webkit-scrollbar-corner{background:transparent}
+@media (hover:hover) and (pointer:fine){
+  ::-webkit-scrollbar-thumb:hover{background:#c6d2e4}
 }

@@ -1,10 +1,10 @@
 {
   "version": "0.0.1",
+  "_comment": "The preview runner's child process cannot read the project files (every request 404s), so the static server is started from the shell instead and this entry only attaches to it. To start it by hand: python3 -c \"import sys, os; os.chdir('/Users/loramaly/Documents/portfolio/site2027/designareaSite2027'); sys.path = [p for p in sys.path if p not in ('', '.')]; import functools, http.server, socketserver; H = functools.partial(http.server.SimpleHTTPRequestHandler, directory='/Users/loramaly/Documents/portfolio/site2027/designareaSite2027'); socketserver.TCPServer.allow_reuse_address = True; socketserver.TCPServer(('127.0.0.1', 8900), H).serve_forever()\"",
   "configurations": [
     {
       "name": "static-site",
-      "runtimeExecutable": "python3",
-      "runtimeArgs": ["-m", "http.server", "8900", "--directory", "/Users/loramaly/Documents/portfolio/site2027/designareaSite2027"],
+      "url": "http://localhost:8900",
       "port": 8900
     }
   ]

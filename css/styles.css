@@ -50,7 +50,7 @@ body{
 }
 .page{position:relative;z-index:1;max-width:2000px;margin-inline:auto;padding:48px}
 /* ===== Portrait - Figma: x117 y2, 760x335, blended ===== */
-.portrait{
+.portrait,.portrait-robot{
   position:absolute;z-index:1;
   bottom:calc(100% - 2px);          /* glued to the chat top */
   left:calc(50% - 468px);           /* image 415 + text 521 centered as a pair */
@@ -403,12 +403,12 @@ body.menu-open .back-to-top{opacity:0;pointer-events:none}
 /* ===== Responsive ===== */
 @media (max-width:1199px){
   .intro{justify-content:flex-start}
-  .portrait{height:300px;left:0}                    /* 370 image + text, left-anchored */
+  .portrait,.portrait-robot{height:300px;left:0}    /* 370 image + text, left-anchored */
   .intro-txt{margin-left:370px;width:calc(100% - 375px);max-width:521px}
 }
 @media (max-width:840px){
   .intro{justify-content:flex-start}
-  .portrait{height:152px;left:7px}                  /* 15px from the frame */
+  .portrait,.portrait-robot{height:152px;left:7px}  /* 15px from the frame */
   .intro-txt{margin-left:194px;width:calc(100% - 199px);max-width:none}
 }
 
@@ -465,7 +465,7 @@ body.menu-open .back-to-top{opacity:0;pointer-events:none}
 .intro-txt>*:nth-child(2){animation-delay:.08s}
 .intro-txt>*:nth-child(3){animation-delay:.16s}
 .intro-txt>*:nth-child(4){animation-delay:.24s}
-.portrait{animation:heroImg .9s ease-out both, portraitBreathe 7s ease-in-out 1.2s infinite;
+.portrait,.portrait-robot{animation:heroImg .9s ease-out both, portraitBreathe 7s ease-in-out 1.2s infinite;
   transition:filter .35s ease}
 @keyframes heroIn{from{opacity:0;transform:translateY(10px)}to{opacity:1;transform:none}}
 @keyframes heroImg{from{opacity:0;transform:translateY(6px)}to{opacity:1;transform:none}}
@@ -500,6 +500,7 @@ input#q{transition:border-color .2s ease}
    from elsewhere on the site - see the inline script in index.html's <head> */
 body.reanim-lock .intro-txt>*,
 body.reanim-lock .portrait,
+body.reanim-lock .portrait-robot,
 body.reanim-lock .ask-title,
 body.reanim-lock .chip-in,
 body.reanim-lock .dice-in{
@@ -511,7 +512,7 @@ body.reanim-lock .dice-in{
 @media (max-width:600px){
   .intro{flex-direction:column;padding-bottom:132px}   /* room for the image below the text */
   .intro-txt{margin-left:0;width:100%;max-width:none}
-  .portrait{left:7px}
+  .portrait,.portrait-robot{left:7px}
 }
 
 /* mobile: slightly smaller input + buttons, tighter gaps - one row, always */
@@ -995,3 +996,79 @@ body.has-modal{overflow:hidden}
   .cs-modal-panel{padding:40px 24px 26px}
   .cs-modal-actions{flex-direction:column}
 }
+
+/* ===== Robot reveal - the cursor "lens" that exposes the android portrait =====
+   Three moving parts:
+   1) .portrait-robot        - a div that shares ALL the placement rules of
+                               .portrait (same selectors above), so the robot
+                               layer is always pixel-aligned with the original
+                               at every breakpoint. aspect-ratio gives the div
+                               the image's own proportions, since a div (unlike
+                               an <img>) has no natural width.
+   2) .portrait-robot-reveal - the actual robot image + scanline overlay,
+                               masked by a radial-gradient circle whose center
+                               (--lx/--ly) and radius (--lr) are CSS variables
+                               driven from js/portrait-reveal.js each frame.
+                               Radius 0 = fully hidden.
+   3) .portrait-lens         - the HUD ring drawn around the lens: outer ring,
+                               rotating dashed ring, tick marks, crosshair.  */
+.portrait-robot{
+  z-index:2;                              /* paints above the original */
+  aspect-ratio:1239/1005;                 /* portrait.png's own proportions */
+  --lx:50%; --ly:50%; --lr:0px;
+}
+.portrait-robot-reveal{
+  position:absolute; inset:0;
+  -webkit-mask-image:radial-gradient(circle var(--lr) at var(--lx) var(--ly),
+      #000 58%, rgba(0,0,0,.5) 82%, transparent 100%);
+  mask-image:radial-gradient(circle var(--lr) at var(--lx) var(--ly),
+      #000 58%, rgba(0,0,0,.5) 82%, transparent 100%);
+}
+.portrait-robot-reveal img{
+  display:block; width:100%; height:100%; object-fit:contain;
+  -webkit-user-select:none; user-select:none;
+}
+/* scanlines + a slow vertical sheen, visible only inside the lens because the
+   whole .portrait-robot-reveal is masked */
+.robot-scan{
+  position:absolute; inset:0;
+  background:
+    repeating-linear-gradient(180deg,
+      rgba(125,227,255,.07) 0 1px, transparent 1px 5px),
+    linear-gradient(180deg,
+      transparent 0%, rgba(125,227,255,.12) 46%,
+      rgba(133,76,255,.10) 54%, transparent 100%);
+  background-size:100% 100%, 100% 240%;
+  mix-blend-mode:screen;
+  animation:robotSheen 4.5s linear infinite;
+}
+@keyframes robotSheen{
+  from{background-position:0 0, 0 -120%}
+  to  {background-position:0 0, 0  120%}
+}
+/* the HUD ring - centered on the same variables the mask uses */
+.portrait-lens{
+  position:absolute;
+  left:var(--lx); top:var(--ly);
+  width:calc(var(--lr)*2); height:calc(var(--lr)*2);
+  transform:translate(-50%,-50%);
+  opacity:0; transition:opacity .28s ease;
+  filter:drop-shadow(0 0 6px rgba(125,227,255,.55));
+}
+.portrait-robot.is-on .portrait-lens{opacity:1}
+.portrait-lens svg{width:100%; height:100%; overflow:visible}
+.lens-ring{
+  fill:none; stroke:rgba(155,215,255,.85); stroke-width:.9;
+}
+.lens-dash{
+  fill:none; stroke:rgba(133,76,255,.95); stroke-width:1.1;
+  stroke-dasharray:10 14; stroke-linecap:round;
+  transform-origin:50% 50%;
+  animation:lensSpin 9s linear infinite;
+}
+.lens-ticks path, .lens-cross path{
+  fill:none; stroke:rgba(155,215,255,.9);
+  stroke-width:1; stroke-linecap:round;
+}
+.lens-cross path{stroke:rgba(125,227,255,.7); stroke-width:.8}
+@keyframes lensSpin{to{transform:rotate(360deg)}}
