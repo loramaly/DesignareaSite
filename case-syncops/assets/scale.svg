@@ -1,7 +1,7 @@
 <svg width="120" height="120" viewBox="0 0 120 120" fill="none" xmlns="http://www.w3.org/2000/svg">
-<path id="Vector" d="M80 80L95 40L110 80C105.65 83.25 100.4 85 95 85C89.6 85 84.35 83.25 80 80Z" stroke="#6A91EE" stroke-width="6" stroke-linecap="round" stroke-linejoin="round"/>
-<path id="Vector_2" d="M10 80L25 40L40 80C35.65 83.25 30.4 85 25 85C19.6 85 14.35 83.25 10 80Z" stroke="#6A91EE" stroke-width="6" stroke-linecap="round" stroke-linejoin="round"/>
-<path id="Vector_3" d="M35 105H85" stroke="#6A91EE" stroke-width="6" stroke-linecap="round" stroke-linejoin="round"/>
-<path id="Vector_4" d="M60 15V105" stroke="#6A91EE" stroke-width="6" stroke-linecap="round" stroke-linejoin="round"/>
-<path id="Vector_5" d="M15 35H25C35 35 50 30 60 25C70 30 85 35 95 35H105" stroke="#6A91EE" stroke-width="6" stroke-linecap="round" stroke-linejoin="round"/>
+<path d="M80 74L95 34L110 74C105.65 77.25 100.4 79 95 79C89.6 79 84.35 77.25 80 74Z" stroke="#6A91EE" stroke-width="6" stroke-linecap="round" stroke-linejoin="round"/>
+<path d="M10 74L25 34L40 74C35.65 77.25 30.4 79 25 79C19.6 79 14.35 77.25 10 74Z" stroke="#6A91EE" stroke-width="6" stroke-linecap="round" stroke-linejoin="round"/>
+<path d="M35 112H85" stroke="#6A91EE" stroke-width="6" stroke-linecap="round" stroke-linejoin="round"/>
+<path d="M60.5 8L60.5 112" stroke="#6A91EE" stroke-width="6" stroke-linecap="round" stroke-linejoin="round"/>
+<path d="M15 29H25C35 29 50 24 60 19C70 24 85 29 95 29H105" stroke="#6A91EE" stroke-width="6" stroke-linecap="round" stroke-linejoin="round"/>
 </svg>

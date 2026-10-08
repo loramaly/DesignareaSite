@@ -4,26 +4,28 @@ const AVATAR='assets/images/avatar.webp';
 const KB = [
   {
     chip:"What's your AI work?",
-    keys:['ai','artificial','ml','machine','decision support','shipped ai'],
-    text:'My AI work focuses on decision support and Human-in-the-Loop architectures in complex enterprise environments. At Partner, I designed technician field-dispatch operations where multi-agent workflows evaluate real-time variables - traffic patterns, weather constraints, technician schedules, admin priorities - to generate optimal route recommendations. My focus was the UX logic: managing latency, building user trust, handling edge cases, and keeping the dispatcher in control - aiming for an estimated ~50% faster task assignment. Beyond product features, I use AI daily in my design process - Claude and Gemini for research and synthetic user testing, Midjourney and Runway for quick conceptual assets, and rapid prototyping tools. I\'m always transparent about what is live in production versus conceptual exploration.',
-    tags:['Estimated ~50% faster task assignment']
+    hidden:true,
+    keys:['ai','artificial','ml','machine','decision support'],
+    text:'My AI work focuses on decision support and Human-in-the-Loop architectures in complex enterprise environments. At Partner, I designed AI Call Summary - an agent that condenses customer calls into summaries reps and managers use daily, always linked back to the source. I also redesigned technician field dispatch from tables to a live map with prioritization - assignment went from ~8 to ~4 minutes, and it\'s in daily use. On top of it I designed an agentic layer as a concept, where multi-agent workflows evaluate real-time variables - traffic patterns, weather constraints, technician schedules, admin priorities - to generate route recommendations. My focus was the UX logic: managing latency, building user trust, handling edge cases, and keeping the dispatcher in control. Beyond product features, I use AI daily in my design process - Claude and ChatGPT for research and synthetic user testing, Midjourney and Runway for quick conceptual assets, and rapid prototyping tools. I\'m always transparent about what is live in production versus conceptual exploration.',
+    tags:['Assignment ~8 to ~4 min','Agentic layer - concept']
   },
   {
     chip:'How do you design AI agents?',
-    keys:['agent','agentic','autonomous','trust','confidence','loop','hitl','control'],
+    keys:['agent','agents','ai agents','agentic','autonomous','trust','confidence','loop','hitl','control'],
     text:'I approach agentic design through four core principles. \n\n**Control & Boundaries:** the agent automates complex logic, but the human retains decision authority - especially for high-stakes or irreversible actions.\n\n**Explainability & Trust:** instead of a black box, the system clearly presents its reasoning - why a specific decision or route was generated, based on real-time constraints like weather, traffic or user preferences.\n\n**Latency & Uncertainty:** clear visual feedback for processing times, with confidence indicators so users know when a suggestion needs quick verification.\n\n**Graceful Override:** a great agent UX makes it seamless to adjust, tweak or completely override suggestions without breaking the workflow.',
     tags:['Human-in-the-loop by default','Concept work - clearly labeled']
   },
   {
     chip:'What do people say about you?',
+    chipShort:'What do people say?',
     keys:['people say','colleagues','managers','references','recommend','testimonial','feedback about','\u05d4\u05de\u05dc\u05e6\u05d5\u05ea','\u05de\u05de\u05dc\u05d9\u05e6\u05d9\u05dd','\u05e7\u05d5\u05dc\u05d2\u05d5\u05ea'],
     text:'Here is what colleagues and clients wrote about working with me on LinkedIn.',
     people:[
-      {name:'Ronen Chen', role:'CEO \u00b7 DoubleRo', img:'assets/images/ronen.jpeg',
+      {name:'Ronen Chen', role:'CEO \u00b7 DoubleRo (ElephantStock)', img:'assets/images/ronen.jpeg',
        quote:'I had the pleasure of working with Larisa and she\u2019s easily one of the best designers I\u2019ve worked with. Larisa is the full package, she nails everything from UX and branding to high level creative direction. What always impressed me most was her pace: she is super fast and somehow always delivers top notch work even on crazy deadlines. Any team would be super lucky to have her. I\u2019d jump at the chance to work with her again!'},
-      {name:'Stas Fainberg', role:'Staff Software Engineer', img:'assets/images/stanislav.jpeg',
+      {name:'Stas Birman', role:'IT SOA/EAI Development Team Leader at Partner Israel', img:'assets/images/stanislav.jpeg',
        quote:'She has a rare talent for bridging design and complex architecture. She asks the right questions, understands system constraints, and builds systems that are intuitive for users and streamlined for developers.'},
-      {name:'Michael Chachashvili', role:'VP R&D', img:'assets/images/Michael.jpeg',
+      {name:'Michael Chachashvili', role:'Founder @ Shopping Ads Solutions & Customer acquisition specialist', img:'assets/images/Michael.jpeg',
        quote:'An exceptional Product Design Lead. She brings deep systemic thinking, solves heavy B2B data challenges, and leads product strategy with incredible professionalism and dedication.'}
     ],
     outro:'Full references and contacts are available on request - write me and I\u2019ll connect you.',
@@ -31,20 +33,22 @@ const KB = [
   },
   {
     chip:'What is your methodology?',
-    keys:['methodology','process','method','approach','how do you work','workflow','design process','research','ux','user experience','ux design','\u05de\u05ea\u05d5\u05d3\u05d5\u05dc\u05d5\u05d2\u05d9\u05d4','\u05ea\u05d4\u05dc\u05d9\u05da','\u05e2\u05d9\u05e6\u05d5\u05d1'],
+    hidden:true,
+    keys:['methodology','process','method','approach','production-ready','production ready','dev-ready','how do you work','workflow','design process','research','ux','user experience','ux design','\u05de\u05ea\u05d5\u05d3\u05d5\u05dc\u05d5\u05d2\u05d9\u05d4','\u05ea\u05d4\u05dc\u05d9\u05da','\u05e2\u05d9\u05e6\u05d5\u05d1'],
     text:'My methodology is built for complex, data-heavy systems where clarity and precision are non-negotiable. \n\n**Domain & Data Alignment:** I start by mapping the business logic, backend constraints and data flows with tech leads and product managers, so feasibility is checked early.\n\n**OOUX & Information Architecture:** I use Object-Oriented UX to structure complex entities and workflows into clear, scalable mental models.\n\n**Validation & Iteration:** I test assumptions with real user feedback, analytics and AI-assisted research before finalizing pixels.\n\n**Systemic & Dev-Ready Design:** production-ready interfaces on advanced Figma architecture - tokens, variables, clear state management - for a seamless handoff.',
     more:'Day to day it looks like this:\n\n**Brief & Scope:** I take a high-level brief, define success metrics with Product, evaluate scope with management and set the timeline - operating with high autonomy and regular check-ins.\n\n**Alignment:** I partner with PMs, system architects and tech leads to analyze requirements and constraints; depending on the feature I present to focused teams or run workshops with up to 30 cross-department stakeholders.\n\n**Research & Design:** I interview users and observe real workflows, then move from low-fidelity sketches to high-fidelity through our design system.\n\n**Build & Rollout:** I hand off full specs, run UX/UI QA during the build, and before rollout we pilot with select teams in a dedicated war room - frontend, backend and product together - until production is smooth.',
     tags:['Research \u2192 OOUX \u2192 HITL patterns']
   },
   {
     chip:'What shipped at Partner?',
-    keys:['partner','ship','telecom','crm','erp','fintech','electric','launch','built at','\u05e4\u05e8\u05d8\u05e0\u05e8'],
-    text:'Cross-Functional Design Lead: Sole design lead on every new project across the full IT organization - designing the products for Communications, ERP, DevOps, Engineering, Fintech and CRM. Between 2022 and 2026, I built a company-wide design system adopted across products, shipped the Partner Electric platform in a record 2 months, and designed AI decision-support workflows to significantly cut task handling times for field and control-room teams - aiming for an estimated ~50% faster task assignment.',
-    more:'The four pillars in more detail:\n\n**Enterprise Operations & AI Dispatching:** complex incident-management and field-dispatch workflows I designed, with an AI decision-support concept layer integrating real-time inputs (traffic, weather, technician availability) and Human-in-the-Loop UX.\n\n**Partner Electric:** end-to-end design for Partner\'s entry into the electricity market - concept to live production in 2 months, with full regulatory and billing compliance.\n\n**Unified Design System:** tokens and component libraries adopted across internal and customer-facing products, dramatically accelerating design-to-dev handoffs.\n\n**Operational Portals:** dense administrative tools for call centers and operations, turned from legacy screens into modern, task-focused workflows.',
-    tags:['Launched in 2 months','Design system adopted across products']
+    chipShort:'Your work at Partner?',
+    keys:['partner','ship','telecom','crm','erp','electric','launch','built at','\u05e4\u05e8\u05d8\u05e0\u05e8'],
+    text:'Cross-Functional Design Lead: Sole design lead on every new project across the full IT organization - designing the products for Communications, ERP, DevOps, Engineering, Fintech and CRM. Between 2022 and 2026, I built a company-wide design system adopted across products, shipped the Partner Electric platform in a record 2 months, and shipped AI Call Summary - an AI feature reps and managers use daily. For field teams I redesigned fiber technician dispatch into a live map - assignment from ~8 to ~4 minutes, in daily use - and designed and demoed an agentic layer on top as a concept. On the sales side, I redesigned the bundled cellular order flow - average handling time went from 9 minutes to 1.5.',
+    more:'The main pillars in more detail:\n\n**Fiber Dispatch & AI Decision Support:** technician dispatch redesigned from tables to a live map with prioritization - the assignment loop dropped from ~8 to ~4 minutes, estimated with ops, and it\'s in daily use. On top of it, an agentic decision-support layer designed and demoed as a concept, integrating real-time inputs (traffic, weather, technician availability) with Human-in-the-Loop UX.\n\n**Core CRM & Sales Platform:** Partner\'s operational backbone with role- and department-based views - serving a subscriber base that covers roughly a third of Israel. Includes the bundled cellular order redesign: 9 minutes down to 1.5 per order.\n\n**B2B Provisioning & Billing:** complex telecom projects - nested orders, engineering, automation - dense specs turned into simple quotes. Throughput up ~30%; billing leakage closed from ~10% to zero.\n\n**Partner Electric:** end-to-end design for Partner\'s entry into the electricity market - concept to live production in 2 months, with full regulatory and billing compliance.\n\n**Unified Design System:** tokens and component libraries adopted across internal and customer-facing products, dramatically accelerating design-to-dev handoffs.\n\n**Operational Portals:** dense administrative tools for call centers and operations, turned from legacy screens into modern, task-focused workflows.',
+    tags:['Launched in 2 months','Order time: 9 min to 1.5','Design system adopted across products']
   },
   {
-    chip:'Have you led teams?',
+    chip:'Have you led a team?',
     keys:['lead','team','manage','management','mentor','head','hire','grew','leadership','\u05e6\u05d5\u05d5\u05ea','\u05e0\u05d9\u05d4\u05d5\u05dc'],
     text:'Yes.\n\n**Building at ElephantStock:** At ElephantStock I was Head of UX/UI & Creative - I built and led the design team from scratch while the company grew from 30 to 200+ employees, contributing to 3x revenue growth and our Top 10 selection for Google\'s E-commerce Growth Lab.\n\n**Right now:** At the Lead level, I drive impact less through direct management and more through systemic UX standards, design systems, and close partnership with dev and product leads.',
     more:'What building that team actually involved:\n\n**Hiring & Mentoring:** recruiting, structuring and mentoring designers and a video creator, plus managing external freelancers to scale when needed.\n\n**Standards:** setting a high bar for UI/UX quality, design-system adoption and design-to-dev handoff.\n\n**Business Alignment:** working directly with executive leadership, PMs and engineering leads to tie design to business KPIs.\n\n**Scaling:** building workflows that let the team scale smoothly alongside 30-to-200+ growth.',
@@ -52,8 +56,8 @@ const KB = [
   },
   {
     chip:'Have you built a design system?',
-    hidden:true,
-    keys:['design system','tokens','variables','component library','ui language','atomic','\u05d3\u05d9\u05d6\u05d9\u05d9\u05df\u0020\u05e1\u05d9\u05e1\u05d8\u05dd','\u05de\u05e2\u05e8\u05db\u05ea\u0020\u05e2\u05d9\u05e6\u05d5\u05d1'],
+    chipShort:'Design systems?',
+    keys:['design system','design systems','tokens','variables','dark mode','light mode','color modes','theming','themes','component library','ui language','atomic','\u05d3\u05d9\u05d6\u05d9\u05d9\u05df\u0020\u05e1\u05d9\u05e1\u05d8\u05dd','\u05de\u05e2\u05e8\u05db\u05ea\u0020\u05e2\u05d9\u05e6\u05d5\u05d1'],
     text:'Yes. At Partner I built and scaled a unified design system adopted across CRM, ERP and Fintech products, which significantly streamlined design-to-dev handoffs. I structure systems with Atomic Design principles and Figma variables - raw primitives mapped to semantic tokens, then production-ready components. This exact architecture powers both Partner\'s ecosystem and this portfolio site.',
     tags:['Adopted across products','Shorter design-to-dev cycles']
   },
@@ -61,15 +65,15 @@ const KB = [
     chip:'How do you measure success?',
     hidden:true,
     keys:['measure','success','metrics','kpi','impact','results','data','analytics','numbers'],
-    text:'By concrete impact on business goals and user efficiency. In B2C and e-commerce, success is conversion rates, A/B testing and revenue growth. In enterprise SaaS it\'s operational: cutting task assignment times (aiming for an estimated ~50% faster dispatching at Partner), reducing manual errors, and streamlining complex daily workflows for operations teams.',
+    text:'By concrete impact on business goals and user efficiency. In B2C and e-commerce, success is conversion rates, A/B testing and revenue growth. In enterprise SaaS it\'s operational: cutting handling time (9 minutes down to 1.5 per cellular order at Partner; technician assignment from ~8 to ~4 minutes), closing billing leakage, reducing manual errors, and streamlining complex daily workflows for operations teams.',
     more:'The metric sets I track, by world:\n\n**Enterprise operations:** task-efficiency (reduction in handling time and friction), error reduction and trust (how often recommendations are accepted without manual overrides), and system adoption across call centers and field teams.\n\n**E-commerce:** conversion and revenue validated through strict A/B testing across a 200K+ SKU catalog, plus funnel optimization - drop-off points, engagement, checkout completion.',
-    tags:['A/B tested conversion lifts','Estimated ~50% faster task assignment']
+    tags:['A/B tested conversion lifts','Order time: 9 min to 1.5']
   },
   {
     chip:'How do you use AI day to day?',
     hidden:true,
-    keys:['use ai','daily','tools','tool','figma','stack','software','photoshop','illustrator','chatgpt','claude','midjourney','workflow ai','prototype','\u05e4\u05d9\u05d2\u05de\u05d4','\u05db\u05dc\u05d9\u05dd'],
-    text:'I use AI as a core operational layer in my daily workflow.\n\n**Research, strategy and logic:** Claude, ChatGPT and Gemini to analyze dense requirements, map edge cases, synthesize research and stress-test information architecture before touching pixels.\n\n**Rapid prototyping:** Claude Code and Lovable to build functional interactive prototypes early.\n\n**Visual exploration and motion:** Midjourney, Runway and Kling for conceptual assets, alongside Lottie for lightweight UI micro-animations.\n\nAI drastically accelerates my discovery and execution - but every architectural, UX and strategic decision remains human-led.',
+    keys:['use ai','daily','tools','tool','figma','stack','software','photoshop','illustrator','chatgpt','claude','midjourney','workflow ai','prototype','prototypes','high-fidelity prototypes','high fidelity prototypes','framer','copilot','claude design','lovable','\u05e4\u05d9\u05d2\u05de\u05d4','\u05db\u05dc\u05d9\u05dd'],
+    text:'I use AI as a core operational layer in my daily workflow.\n\n**Research, strategy and logic:** Claude, ChatGPT and Copilot to analyze dense requirements, map edge cases, synthesize research and stress-test information architecture before touching pixels.\n\n**Rapid prototyping:** Claude Code, Claude Design, Framer and Lovable to build functional, interactive prototypes early.\n\n**Visual exploration and motion:** Midjourney, Runway and Kling for conceptual assets, alongside Lottie for lightweight UI micro-animations.\n\nAI drastically accelerates my discovery and execution - but every architectural, UX and strategic decision remains human-led.',
     tags:['This site is the demo']
   },
   {
@@ -101,7 +105,7 @@ const KB = [
   {
     chip:null,
     keys:['why hire','why you','better than','special','stand out','why should','hire you','should i hire'],
-    text:'That\'s the right question to ask - you\'re evaluating strong talent.\n\n**What I bring is a specific, battle-tested combination:** 13+ years in complex systems - enterprise SaaS, OOUX, CRM, ERP and dense data-heavy architectures; a rich background in branding, graphic design and marketing strategy, which lets me align product experience and brand identity into one high-end narrative; proven team leadership - building, mentoring and scaling design teams through hyper-growth; and practical AI execution - integrating AI as a functional, trustworthy layer in real products rather than decorative hype.\n\nIf you need a lead who solves deep systems while elevating the brand - let\'s talk.',
+    text:'That\'s the right question to ask - you\'re evaluating strong talent.\n\n**What I bring is a specific, battle-tested combination:** 13+ years in complex systems - enterprise SaaS, OOUX, CRM, ERP and dense data-heavy architectures; a rich background in branding, graphic design and marketing strategy, which lets me align product experience and brand identity into one high-end narrative; real UI craft - I care how a product looks and feels, not only how it works; proven team leadership - building, mentoring and scaling a design team through hyper-growth; and practical AI execution - integrating AI as a functional, trustworthy layer in real products rather than decorative hype.\n\nIf you need a lead who solves deep systems while elevating the brand - let\'s talk.',
     tags:['larisamalyd@gmail.com']
   },
   {
@@ -172,9 +176,152 @@ const KB = [
   },
   {
     chip:null,
-    keys:['ui','visual design','interface design','visual','craft','pixel'],
-    text:'UI and craft are where strategy, typography and visual precision meet. A strong foundation in branding and visual craftsmanship means every component is polished and intentional. And in complex enterprise products, true craft creates clarity and calm - the interface should lower the user\'s pulse, not raise it.',
+    keys:['ui','visual design','interface design','visual','craft','pixel','ui craft','visual craft','ui craftsmanship','craftsmanship','attention to detail','small details','design details','detail oriented','typography','fonts','composition','hierarchy','visual hierarchy','layout','spacing','color','colors','visual rhythm','iconography','icons','grid','polished','polish','high-fidelity','high fidelity','perceived quality','pixel perfect','look and feel','aesthetics','ui designer','senior ui designer','ui focus','premium','look premium','interface','good interface','grids','font','with fonts','typefaces','mockups','visual skills','visual designer'],
+    text:'UI craft is what I do best. I design interfaces with intention. Every spacing, weight and color is a decision. The small details are where a product starts to feel premium - and that\'s where I invest my time.',
     tags:[]
+  },
+  {
+    chip:null,
+    keys:['design qa','ui qa','ux qa','qa','implementation','check the implementation','developers','with developers','build it right','after handoff','quality assurance','design review','implementation review','after release','build review'],
+    text:'I stay with my design through development. I review the real build in the browser, compare it with the design down to spacing, type and states, and close the gaps together with the developers. After release I keep improving it in rounds, based on feedback and findings from real use.',
+    tags:[]
+  },
+  {
+    chip:null,
+    keys:['detailed states','states','error message','error messages','loading','empty and error','ui states','component states','interaction states','hover','focus state','pressed','loading state','loading states','error state','error states','success state','disabled','disabled state'],
+    text:'I design every state of a component, so the interface is clear at each moment.\n\n**Hover, focus and pressed** show what is interactive and that the click registered.\n**Loading** keeps the layout stable and shows progress.\n**Error** says what happened and how to fix it.\n**Success** confirms the action.\n**Disabled** stays readable and explains why.\n**Empty** guides the next step.',
+    tags:[]
+  },
+  {
+    chip:null,
+    keys:['visual direction','direction','design style','your style','style','taste','own look','look and identity','art direction','creative direction','branding','brand','brand identity','visual identity','visual language','imagery'],
+    text:'I set the visual direction of a product: color, typography, imagery, and the idea that ties them together. As Head of UX/UI & Creative at ElephantStock I led branding and creative strategy and guided the visual and UX direction across product, front-end and art teams, so the brand felt like one experience everywhere. My background in graphic design and advertising is the base for this.',
+    tags:[]
+  },
+  {
+    chip:'Are you more UI or UX?',
+    chipShort:'More UI or UX?',
+    keys:['ui or ux','ux or ui','ui or','or ux','ui better','ux better','than your ux','than your ui','better at ui','better at ux','kind of designer','type of designer','what designer','ux designer','ux balance','ui balance','visual or','ui or a ux','ux or a ui','ux vs ui','ui vs ux','ui/ux balance','ui ux balance','ux/ui balance','more ui','more ux','ux and ui','ui and ux','both ux and ui','both ui and ux','main strength','strongest skill','strength','stronger','generalist','specialist','end-to-end','end to end','visual or product','ux or visual'],
+    text:'UI or UX? Both, fifty-fifty, and that is my strength.\n\nUX is how I think. UI is my big love. I do them together, so the product works well and looks great.',
+    more:'UX is where I start: the user, the flow and the logic of the system. I bring order to complex products with many roles, rules and data, so people reach their goal fast and with confidence.\n\nUI is where I bring the craft. Every spacing, weight and color is a decision, and each product gets its own visual idea. The small details make it feel premium.\n\nIf I have to choose one, UI craft is where I stand out. And my UI is strong because the UX under it is solid.',
+    tags:[]
+  },
+  {
+    chip:null,
+    keys:['choose one','had to choose','have to choose','pick one','if you had to','only one'],
+    text:'UI craft is where I stand out. And my UI is strong because the UX under it is solid.',
+    tags:[]
+  },
+  {
+    chip:null,
+    keys:['good ux','ux mean','ux means','what is ux','great ux','ux to you'],
+    text:'The user reaches the goal fast, with confidence, in a complex system too.',
+    tags:[]
+  },
+  {
+    chip:null,
+    /* 'ui','ui craft','craft' repeat the UI craft entry's keys on purpose:
+       a plain "ui craft" ties and the main answer (listed first) wins; only
+       the "mean to you" phrasing adds the extra point that lands here */
+    keys:['ui','ui craft','craft','craft mean','craft means','ui craft mean','ui craft means','what is ui craft','craft to you'],
+    text:'Every spacing, weight and color is a decision. The small details make a product feel premium.',
+    tags:[]
+  },
+  {
+    chip:null,
+    keys:['start with','do you start','which one do you start','where do you start','start first','ux first','ui first','which first','begin with'],
+    text:'Always UX: the problem, the flow, the structure. Then UI gives it clarity and character.',
+    tags:[]
+  },
+  {
+    chip:null,
+    keys:['strengths','your strengths','best at','you best at','superpower','super power','what makes you different','makes you different','biggest strength'],
+    text:'I make complex products clear and beautiful. I think in UX and I craft in UI, so one person takes a product from logic to the last pixel. I work fast, I stay calm under pressure, and I follow my design all the way into the build.',
+    tags:[],
+    link:{href:'#works',label:'See my work'}
+  },
+  {
+    chip:null,
+    keys:['weaknesses','weakness','your weakness','areas to improve','area to improve','improve in yourself','what is hard for you','hard for you','biggest weakness'],
+    text:'I take a lot of responsibility for the result. In every role I held, a lot rested on me, so I got used to carrying everything myself and checking that it all went well. Today I work differently: I bring people in early, agree on clear checkpoints, and trust the team between them. The result is better and faster.',
+    tags:[]
+  },
+  {
+    chip:null,
+    /* the B2B-inside-the-CRM story (Partner, B2B provisioning) - answers the
+       conflict / pushback / persuasion / difficult-stakeholder family. Plain
+       'disagree' stays on the PM answer; the past-tense story forms land here */
+    chip:'A conflict you solved?',
+    keys:['conflict','conflicts','disagreed','disagreement','disagreements','stakeholder disagreement','push back','pushback','pushed back','say no','said no','convince','convinced','changed someone','change someone','changed their mind','without authority','difficult stakeholder','difficult stakeholders','conflicting needs','in trouble','refused','accept your design','don\'t accept','not accept','technical constraints','tough constraints','constraints','simplified','complex process'],
+    text:'At Partner, the B2B sales managers refused to work inside our shared CRM. It was built around consumer sales, they wanted a separate system, and they had rejected every solution before I joined. I disagreed: orders, catalog and pricing had to live in one place. So I sat with each team, asked what they wanted, and designed a B2B flow inside the existing CRM. I showed it as a prototype they could click through, and the argument ended. It shipped and is in use today.',
+    more:'Their work is complex: one deal is a project with many orders, products, engineering involvement and branch addresses. The consumer flow demanded all of it up front - every form and compliance step - before a quote could go out.\n\nThe new flow lets a rep quote quickly, keeps the order flexible, moves forms and compliance to the stage where they\'re needed, and gives engineering a structured place in the project.\n\n**The result:** throughput up an estimated 30%, and billing leakage down from about 10% to zero once the manual steps were automated.\n\nThey were right about the problem, not about the solution. Listening first, then a prototype people can try, resolves more than any debate.',
+    tags:['Throughput up an estimated ~30%','Billing leakage ~10% to zero']
+  },
+  {
+    chip:null,
+    keys:['earlier solutions','previous solutions','part of the earlier','were you part','before you joined'],
+    text:'No. I joined the project later, after those had been rejected.',
+    tags:[]
+  },
+  {
+    chip:null,
+    keys:['separate system','own system','their own system','why couldn\'t they','why not a separate'],
+    text:'Orders, catalog and pricing had to live in one place. Splitting them into a second system would have broken that.',
+    tags:[]
+  },
+  {
+    chip:null,
+    keys:['how was the 30','the 30','30 percent','thirty percent','measure the 30','throughput'],
+    text:'It\'s an estimate, and I always present it that way. The leakage number, about 10% to zero, came from automating the manual steps.',
+    tags:[]
+  },
+  {
+    chip:null,
+    keys:['compliance steps','compliance removed','remove compliance','removed compliance','skip compliance','compliance'],
+    text:'No. They moved to the stage where they\'re actually needed - nothing was dropped.',
+    tags:[]
+  },
+  {
+    chip:null,
+    keys:['partner electric','partner','electric','electricity','under pressure','pressure','tight deadline','tight deadlines','deadline','deadlines','in 2 months','2 months','two months','outsource','outsourced'],
+    text:'Partner Electric was Partner\'s entry into the electricity market. The plan was to outsource it - everyone assumed it was too complex for our CRM and would take half a year and a big budget. We took it on instead. Research showed we could run it through the existing CRM and adapt what was needed, even though selling electricity works nothing like selling telecom. It went live in 2 months, with full regulatory and billing compliance.',
+    tags:['Live in 2 months']
+  },
+  {
+    chip:null,
+    keys:['international teams','international','us teams','american teams','global teams','worked remotely','remotely','time zones','time zone','abroad','overseas'],
+    text:'Yes. At ElephantStock I worked from Israel with US teams - the company and the market were American. Working across time zones taught me to write clearly, decide fast in the hours we shared, and leave nothing open overnight.',
+    tags:[]
+  },
+  {
+    chip:null,
+    keys:['video','videos','ai video','video creation','capcut','kling','runway','google flow','social media','ads','advertising','reels','commercials'],
+    text:'Yes - I create video for marketing, social and ads, from concept to the final cut. I work with AI video tools like Kling, Runway and Google Flow, and edit in CapCut. At ElephantStock I led creative across campaigns, email and video, so I know video has to work for the brand, not just look good.',
+    tags:[]
+  },
+  {
+    chip:null,
+    keys:['adapt','adaptable','adaptability','adapt to change','handle change','new domain','new domains','learn fast','learn quickly'],
+    text:'Very. I\'ve moved between recruitment SaaS, US e-commerce, telecom, fintech and AI - and between being a team of one and leading a team. Each time the domain changed, the way I work stayed: learn the field fast, find the people who know it, and start delivering early.',
+    tags:[]
+  },
+  {
+    chip:null,
+    keys:['gap','gaps','career gap','gap in your resume','gap in your cv','why the gap','2018','2019','between 2018','maternity','maternity leave','career break','time off','year off'],
+    text:'Between mid-2018 and mid-2019 I was on maternity leave. I came back straight into building a design team from scratch at ElephantStock.',
+    tags:[]
+  },
+  {
+    chip:null,
+    keys:['elephantstock','elephant stock','elephant','head of ux','head of creative','home decor','home d\u00e9cor','wall art'],
+    text:'At ElephantStock - a US direct-to-consumer brand for art and home décor - I was Head of UX/UI & Creative from 2019 to 2022. I built, hired and mentored the design team from scratch, and led UX, product, branding and creative strategy - campaigns, email and video. I cut the mobile-first checkout from 5 steps to 3 across a 200K+ SKU catalog, lifting conversion through A/B testing, polls and funnel analytics. I contributed to 3x revenue growth as the company scaled from 30 to 200+ employees, worked from Israel with US teams, and we were selected Top 10 in Google\'s E-commerce Growth Lab.',
+    tags:['2019-2022 \u00b7 Head of UX/UI & Creative']
+  },
+  {
+    chip:null,
+    keys:['call summary','ai call summary','summary','summaries','summarization','summarize','call recording','shipped ai','ai in production','in production','production ai','ai feature','shipped','is any of your ai','ai work live','work live','ai live'],
+    text:'AI Call Summary is an AI feature I designed at Partner, and reps and managers use it daily. An AI agent listens to the call with the customer and condenses the recording into a summary. The user picks the depth - a short part, the full summary, or the call itself - and every summary links back to the source, so nobody trusts it blind.',
+    tags:['Live - used daily']
   },
   {
     chip:null,
@@ -191,44 +338,57 @@ const KB = [
   {
     chip:null,
     keys:['mobile','tablet','responsive','phone','app','ios','android'],
-    text:'Mobile has always been part of my process, tailored to the environment.\n\n**At ElephantStock:** strict mobile-first for high-volume B2C users, where conversion, speed and touch UX were top priorities.\n\n**At Niloosoft:** a dedicated mobile video-interviewing app, letting candidates complete live or recorded interviews from their phones.\n\n**At Partner:** complex enterprise tools - retail sales streams, store-agent workflows - adapted for mobile and tablets, so field representatives execute operations on the go without losing system capability.',
+    text:'Mobile has always been part of my process, tailored to the environment.\n\n**At ElephantStock:** strict mobile-first for high-volume B2C users, where conversion, speed and touch UX were top priorities.\n\n**At Niloosoft:** a dedicated mobile video-interviewing app, letting candidates complete live or recorded interviews from their phones.\n\n**At Partner:** the Core CRM adapted for tablet and mobile, plus a standalone tablet rapid-sales system - so field and store reps work on the go without losing system capability.',
     tags:['Mobile-first e-commerce \u00b7 responsive systems']
   },
   {
     chip:null,
-    keys:['dashboard','dashboards','data visualization','charts','monitoring','kpi screen','incident','incidents','incident management'],
-    text:'Dashboards are my home turf - operational systems live and die by them. My approach shifts dashboards from passive visualization to decision-making engines: complex data packaged into clear decision units that answer three questions instantly:\n\n**Is everything okay?** system health at a glance.\n**What needs attention now?** urgency and SLA risks.\n**What action do I take?** contextual, one-click resolution. In my fiber-network operations project we turned real-time telemetry into actionable decisions - aiming for an estimated ~50% faster technician assignment, with far less friction under pressure.',
-    tags:['Estimated ~50% faster task assignment'],
+    keys:['dashboard','dashboards','charts','charts & dashboards','monitoring','kpi screen','incident','incidents','incident management'],
+    text:'Dashboards are my home turf - operational systems live and die by them. My approach shifts dashboards from passive visualization to decision-making engines: complex data packaged into clear decision units that answer three questions instantly:\n\n**Is everything okay?** system health at a glance.\n**What needs attention now?** urgency and SLA risks.\n**What action do I take?** contextual, one-click resolution. In my fiber-network operations project I redesigned technician dispatch from tables to a live map with prioritization - the assignment loop went from ~8 to ~4 minutes, and it\'s in daily use.',
+    tags:['Assignment ~8 to ~4 min'],
     link:{href:'case-aft/aft-timeline.html',label:'See the AFT Timeline case'}
   },
   {
     chip:null,
-    keys:['ecommerce','e-commerce','conversion','shop','store','checkout','funnel','online store','retail','growth lab','google lab'],
+    keys:['data visualization','data viz','viz','complex data','dataviz','visualization','visualisation','visualize','infographic','infographics','animated infographics','animated infographic','animated charts'],
+    text:'I turn complex data into visuals people read at a glance. I design custom infographics with their own visual idea, static and animated. Motion guides the eye and shows how the numbers connect. Every label, scale and color is a decision.',
+    tags:[]
+  },
+  {
+    chip:null,
+    keys:['fiber','dispatch','dispatcher','dispatchers','dispatching','technician','technicians','syncops','field dispatch','field service','live map'],
+    text:'Fiber Dispatch was one of my Partner projects. Dispatchers were assigning technicians from tables. I redesigned it into a live map with prioritization - the assignment loop dropped from ~8 to ~4 minutes, estimated with ops, and it\'s in daily use. Then I designed and demoed an agentic layer on top, as a concept: the agent proposes, the admin decides. It\'s designed to halve that time again - a target, not a result yet.',
+    tags:['Assignment ~8 to ~4 min','Agentic layer - concept'],
+    link:{href:'case-syncops/syncops.html',label:'See the SyncOps case'}
+  },
+  {
+    chip:null,
+    keys:['ecommerce','e-commerce','conversion','shop','store','checkout','funnel','online store','retail','growth lab','google lab','cro','conversion rate'],
     text:'Three years at ElephantStock at scale - a 200K+ product catalog with high-volume, mobile-first traffic where conversion was the daily metric. We worked strictly evidence-first with A/B testing and funnel analytics. One key win: redesigning the checkout flow from 5 complex steps down to 3, which significantly reduced cart abandonment and lifted conversion. E-commerce taught me that design opinions are cheap; tested ones are not.',
     tags:['3x revenue growth \u00b7 A/B tested']
   },
   {
     chip:null,
-    keys:['fintech','finance','banking','payments','financial'],
-    text:'I design for complex Fintech systems where high-stakes financial decisions happen daily - from AI-driven loan underwriting and risk prediction to cross-organizational loan syndications. In these environments, clarity is money: I streamline dense application forms, map multi-stakeholder approval flows, and use AI to parse incoming data into actionable decision scores. When a mistake costs real money, smart UX patterns, clear verification and transparent AI reasoning are what create trust.',
+    keys:['fintech','finance','banking','payments','financial','billing','invoice','invoices','invoicing','pricing','regulation','regulatory','regulated'],
+    text:'At Partner I worked on B2B provisioning and billing - nested enterprise orders turned into simple quotes, throughput up ~30%, billing leakage from ~10% to zero. I also designed Partner Electric, live in 2 months with full regulatory and billing compliance.\n\nMy latest fintech work goes into high-stakes lending - AI-driven loan underwriting, risk prediction and cross-organizational loan syndications. In these environments, clarity is money: I streamline dense application forms, map multi-stakeholder approval flows, and use AI to parse incoming data into actionable decision scores. When a mistake costs real money, smart UX patterns, clear verification and transparent AI reasoning are what create trust.',
     tags:[]
   },
   {
     chip:null,
-    keys:['accessibility','a11y','wcag','contrast','inclusive'],
-    text:'Accessibility is an integral part of my process, not an afterthought. My foundation comes from ElephantStock, where we trained with a US accessibility expert to bring everything up to standard for the American market. Since then I build with it from day one: clear contrast, robust typographic hierarchy, keyboard navigation, screen-reader-friendly structures. Designing accessibly simply means designing better products for everyone.',
+    keys:['accessibility','a11y','elephantstock','wcag','contrast','inclusive','accessible','accessible design','inclusive design','keyboard navigation','accessibility standards'],
+    text:'Accessibility is part of my process on every project, including when nobody asks for it. My foundation comes from ElephantStock, where we trained with a US accessibility expert to bring the product up to standard for the American market. Since then I bring each design as close to the standard as possible: readable contrast, clear focus states, comfortable text sizes and touch targets, keyboard navigation, and meaning that is carried by more than color.',
     tags:[]
   },
   {
     chip:null,
-    keys:['empty state','empty states','onboarding','first use','blank'],
+    keys:['empty state','empty states','empty','onboarding','first use','blank'],
     text:'Empty states are often treated as an afterthought - but in complex SaaS and AI products they are the most critical onboarding moment. A blank screen creates hesitation. I design empty states as active guides: actionable entry points, clear next steps, or suggested AI prompts that build immediate trust and momentum. The first interaction sets the tone for the whole product.',
     tags:[]
   },
   {
     chip:null,
     keys:['education','study','studies','studied','degree','diploma','college','university','courses','learned design'],
-    text:'My background combines design, code and sales psychology.\n\n**Formal education:** a Diploma in Graphic Design & Visual Communication from Western Galilee College.\n\n**Additional studies:** UX/UI and UX strategy, front-end development with Angular, video creation, web production and motion animation. Google\'s E-commerce Growth Lab - selected Top 10 cohort.\n\n**And a unique specialty:** certified Expert Marketing & Sales Coach - a deep program in sales psychology and marketing strategy.\n\nI treat education as ongoing; that mix is what fuels my product strategy today.',
+    text:'My background combines design, code and sales psychology.\n\n**Formal education:** a Diploma in Graphic Design & Visual Communication from Western Galilee College.\n\n**Additional studies:** UX/UI and UX strategy, front-end development with Angular, video creation, web production, motion animation and AI Security. Google\'s E-commerce Growth Lab - selected Top 10 cohort.\n\n**And a unique specialty:** certified Expert Marketing & Sales Coach - a deep program in sales psychology and marketing strategy.\n\nI treat education as ongoing; that mix is what fuels my product strategy today.',
     tags:['Google E-commerce Growth Lab \u00b7 Top 10']
   },
   {
@@ -239,13 +399,13 @@ const KB = [
   },
   {
     chip:null,
-    keys:['usability','usability test','usability testing','user testing','test with users'],
+    keys:['usability','usability test','war room','war rooms','pilot','pilots','usability testing','user testing','test with users'],
     text:'Continuously, and as early as possible. Beyond formal tests, I run live pilots and set up war rooms to watch how real users behave under pressure. A rough prototype in front of five real operators beats a month of internal debate - they find the edge cases and friction points no one else can.',
     tags:[]
   },
   {
     chip:null,
-    keys:['user interview','user interviews','interview users','talk to users','user research'],
+    keys:['user interview','user interviews','field studies','field study','field research','in the field','field','interview users','talk to users','user research'],
     text:'User interviews and field research are where real product clarity happens. Beyond surveys, I go directly to the field and talk with people inside the actual workflow - watching how they operate under pressure. Requirements documents tell you what to build; real users reveal the hidden friction, unstated needs and operational shortcuts that actually define the strategy.',
     tags:[]
   },
@@ -263,25 +423,25 @@ const KB = [
   },
   {
     chip:null,
-    keys:['code','coding','programming','develop','html','css','angular','typescript','technical','handoff','specs','hand off'],
-    text:'**The technical side:** I write frontend code and understand the architecture inside out - Angular, TypeScript, HTML and CSS, including how components, data structures and state actually behave.\n\n**Where my focus sits:** In my role, though, my focus is product strategy and UX architecture - the technical depth is there to bridge the gap with engineering.\n\n**Why it matters for handoff:** I design within realistic constraints from day one, so handoffs are seamless and developers never have to say \'this can\'t be built.\'',
+    keys:['code','coding','programming','develop','html','css','angular','typescript','technical','handoff','specs','hand off','gitlab'],
+    text:'**The technical side:** I write frontend code and understand the architecture inside out - Angular, TypeScript, HTML and CSS, including how components, data structures and state actually behave. I also build components and feature prototypes in Claude Code, and work in GitLab.\n\n**Where my focus sits:** In my role, though, my focus is product strategy and UX architecture - the technical depth is there to bridge the gap with engineering.\n\n**Why it matters for handoff:** I design within realistic constraints from day one, so handoffs are seamless and developers never have to say \'this can\'t be built.\'',
     tags:[]
   },
   {
     chip:null,
     keys:['proud','proudest','favorite project','best project','highlight','best work'],
-    text:'The decision-support timeline for Partner\'s operations. We transformed fragmented operational data into clear, actionable decision units - and on top of it I designed an AI decision-support concept with confidence scores and human-in-the-loop control, aiming for an estimated ~50% faster task assignment. The part I\'m proudest of: treating operator trust as a design requirement, not a hope.',
-    tags:['Estimated ~50% faster task assignment']
+    text:'The decision-support timeline for Partner\'s operations. We transformed fragmented operational data into clear, actionable decision units - and on top of it I designed an AI decision-support concept with confidence scores and human-in-the-loop control. The part I\'m proudest of: treating operator trust as a design requirement, not a hope.',
+    tags:['Agentic layer - concept, clearly labeled']
   },
   {
     chip:null,
-    keys:['intuition','gut','instinct','data or','decision','decisions','decide'],
+    keys:['intuition','gut','instinct','data or','intuition or data','or data','decision','decisions','decide'],
     text:'Intuition generates the hypothesis; data validates it. After 13+ years in product design my intuition is grounded in deep pattern recognition - it lets me map solutions quickly. But data keeps us honest: high-scale A/B testing taught me to test assumptions early, and when data isn\'t available yet, I run rapid usability pilots to learn and adapt fast.',
     tags:[]
   },
   {
     chip:null,
-    keys:['executives','stakeholders','presentation','buy-in','sell design','present design'],
+    keys:['executives','stakeholders','presentation','buy-in','get buy-in','buy-in for','sell design','present design'],
     text:'I frame design as business strategy, not visual critique. With executives and cross-functional teams I lead with the core problem, the trade-offs I evaluated, and the rationale behind the chosen architecture. Grounding every decision in operational goals, system constraints and clear metrics makes alignment happen naturally - stakeholders become partners, not approvers.',
     tags:[]
   },
@@ -313,7 +473,7 @@ const KB = [
   {
     chip:null,
     keys:['experience','years','how long','since when','background','career','\u05e0\u05d9\u05e1\u05d9\u05d5\u05df','\u05e9\u05e0\u05d5\u05ea','\u05e8\u05e7\u05e2'],
-    text:'I bring 13+ years of experience in product design, design systems and complex product architecture, across high-velocity scale-ups and enterprise environments.\n\n**Where I add the most value:** My strength is transforming deep operational and technical complexity - dense data, multi-role permissions, heavy workflows - into intuitive, high-impact systems.\n\n**That work has consistently driven measurable outcomes:** faster task completion, scalable design systems that accelerate delivery, fewer operator errors.\n\n**Now:** Today I apply it to AI-driven interfaces - decision-support tools that reduce friction and move core business metrics.',
+    text:'I bring 13+ years of experience in product design, design systems and complex product architecture, across high-velocity scale-ups and enterprise environments.\n\n**Where I add the most value:** My strength is transforming deep operational and technical complexity - dense data, multi-role permissions, heavy workflows - into intuitive, high-impact systems.\n\n**That work has consistently driven measurable outcomes:** faster task completion, scalable design systems that accelerate delivery, fewer operator errors.\n\n**And the craft:** I\'m as strong in UI as in UX - the details are where a product earns trust.\n\n**Now:** Today I apply it to AI-driven interfaces - decision-support tools that reduce friction and move core business metrics.',
     tags:['Designing since 2013']
   },
   {
@@ -325,9 +485,9 @@ const KB = [
 ,
   {
     chip:null,
-    keys:['measured','measure the','how did you get','that number','fifty percent','50%','50 percent'],
-    text:'By establishing a clear baseline with Product before any structural change - task completion time, error rates, drop-offs. The ~50% figure is an internal estimate built on that baseline plus structured operator and team feedback - and I present it as exactly that, an estimate. It also taught me my rule for every project since: define the measurement framework before launch, so the next number is measured, not estimated.',
-    tags:['Estimated - and labeled that way on purpose']
+    keys:['measured','measure the','how did you get','that number','fifty percent','50%','50 percent','the 50','how do you measure numbers','8 to 4','4 minutes','8 minutes'],
+    text:'Together with the ops team. On Fiber Dispatch we watched how dispatchers actually work and compared how long an assignment took before and after the change - from ~8 minutes with tables to ~4 with the live map, about 50% faster. It\'s an estimate made with ops, and I present it that way. For the agentic layer the measuring stick is defined before it\'s built, so its number will be measured, not estimated.',
+    tags:['Estimated with ops - labeled that way on purpose']
   },
   {
     chip:null,
@@ -369,14 +529,14 @@ const KB = [
   },
   {
     chip:null,
-    keys:['niloosoft','white label','white-label','recruitment','saas','first job'],
-    text:'At Niloosoft I designed enterprise recruitment SaaS dealing with heavy data and complex candidate workflows. My core focus was two architectural challenges: a powerful filtering system and an efficient results matrix that let recruiters process large volumes fast. I also designed white-label career portals that embedded Niloosoft\'s recruitment engine directly into client websites - one product, many brands.',
+    keys:['niloosoft','hunter','hrms','white label','white-label','recruitment','saas','first job'],
+    text:'Niloosoft is where I started, as the first and only designer. I built the product and the brand from zero - Hunter HRMS, a multilingual enterprise HR platform. High-volume hiring end to end: a filtering engine, a results matrix, permissions and roles - one product serving recruiters, hiring managers, employees and candidates. I also designed white-label career websites for client companies and a mobile video interview app.',
     tags:['2013-2018 \u00b7 Enterprise SaaS']
   },
   {
     chip:null,
-    keys:['motion','animation','micro-interactions','microinteractions','transitions','animate'],
-    text:'Coming from a background in animation, I treat motion as direct feedback, not decorative flair. A system needs to feel alive and responsive - every micro-interaction confirms an action, guides attention, and clarifies outcomes. Done right, subtle motion makes complex systems intuitive without ever getting in the way. This site is my current sample: the entrance choreography, the floating cases, the typing rhythm in this chat.',
+    keys:['motion','animation','micro-interactions','microinteractions','transitions','animate','motion design','interaction design','interactions','motion in ui','ui motion','interaction details','visual feedback','interaction feedback','do you animate'],
+    text:'I design the small moments of an interface: a button that responds, a smooth transition, a clear confirmation. Each one has a purpose. It gives feedback, guides the eye, and makes the product feel alive. I come from a background in animation, so for me motion is feedback, never decoration. This site is a live sample: the entrance choreography, the floating cases, the typing rhythm in this chat.',
     tags:['This site is the sample']
   }
 ,
@@ -385,6 +545,20 @@ const KB = [
     keys:['freelance','part time','part-time','consulting','contract','fractional','engagement model','full time','full-time'],
     text:'I\u2019m primarily motivated by the product, the challenge and the impact - so I\u2019m open to different collaboration models for the right project: a full-time Senior or Lead role, fractional design leadership, or specialized consulting. If the product and the vision align, I\u2019m flexible about the configuration.',
     tags:[]
+  }
+,
+  {
+    chip:null,
+    keys:['leave','leaving','left','quit','resign','resigned','departure','leave partner','leaving partner','left partner','why did you leave','why are you leaving','\u05e2\u05d6\u05d1\u05ea','\u05e2\u05d5\u05d6\u05d1\u05ea'],
+    text:'My role at Partner changed substantially, and it felt like the right point to close a full cycle: the design system is adopted, Partner Electric is live, the AI systems are working. Now I\'m looking for a place where AI is the product itself - that\'s where the experience I\'ve built is worth the most, and where I want to keep growing.',
+    tags:[]
+  }
+,
+  {
+    chip:null,
+    keys:['critera','\u05e7\u05e8\u05d9\u05d9\u05d8\u05e8\u05d4','real estate','real-estate','estate','lending','loan','loans','underwriting','mortgage','proptech','due diligence','property','marketplace','credit','project finance','finance','borrower','lender','lenders','\u05e0\u05d3\u05dc\u05df','\u05d4\u05dc\u05d5\u05d5\u05d0\u05d4'],
+    text:'My latest client work is Critera - an AI-assisted marketplace for corporate credit and project finance. One borrower request meets a panel of institutional lenders competing for it - all working from a unified underwriting file built by an AI engine. I designed both sides: the borrower submits the full deal in one place, lenders get a structured decision view - risk signals, automated due diligence, the journey tracked on a timeline. The system suggests, the human decides.',
+    tags:['Real client work','Human-in-the-loop']
   }
 ];
 const FALLBACKS = [
@@ -400,12 +574,23 @@ const thread=document.getElementById('thread'),chipsEl=document.getElementById('
 let busy=false;
 function renderChip(k){
   const b=document.createElement('button');
-  b.className='chip';b.textContent=k.chip;
+  b.className='chip';
+  /* desktop reads the full, human question; phones get the short label so
+     more of them fit the row (css swaps the two spans at 900px) */
+  if(k.chipShort){
+    const l=document.createElement('span');l.className='lbl-long';l.textContent=k.chip;
+    const s=document.createElement('span');s.className='lbl-short';s.textContent=k.chipShort;
+    b.append(l,s);
+  } else b.textContent=k.chip;
   b.onclick=()=>ask(k.chip,k);
   return b;
 }
 let chipIdx=0;
-KB.filter(k=>!k.hidden && k.chip).forEach((k,i)=>{
+/* the visible row, in this order - short labels so they fit; anything not
+   listed (the auto-opened agents question) keeps its place at the end */
+const CHIP_ORDER=['Are you more UI or UX?','A conflict you solved?','What shipped at Partner?','What do people say about you?','Have you built a design system?','Have you led a team?'];
+const chipRank=k=>{const i=CHIP_ORDER.indexOf(k.chip);return i<0?99:i;};
+KB.filter(k=>!k.hidden && k.chip).sort((a,b)=>chipRank(a)-chipRank(b)).forEach((k,i)=>{
   const b=renderChip(k);
   if(i>=4) b.classList.add('vis-5plus');   // mobile shows only the first four
   b.classList.add('chip-in');
@@ -753,7 +938,11 @@ const SURPRISES=[
   'I map system objects before drawing a single screen. OOUX is my architectural secret weapon.',
   'This site runs on a real design system - Figma variables, semantic tokens, two color modes. Ask me why that matters.',
   'Every answer in this chat was written by me in advance. You\'re reading preparation, not AI.',
-  'I\'ve designed for recruitment, telecom, fintech and AI. Domains change; navigating complexity stays the same.'
+  'I\'ve designed for recruitment, telecom, fintech and AI. Domains change; navigating complexity stays the same.',
+  'I redesigned Partner\'s bundled cellular order flow - average handling time dropped from 9 minutes to 1.5.',
+  'The CRM I led design for serves a subscriber base covering roughly a third of Israel.',
+  'I\'m the one who notices the 2px misalignment. Then I fix it.',
+  'My newest client work: a credit marketplace where one borrower request meets competing institutional lenders - underwriting structured by AI.'
 ];
 let surpriseBag=[];
 function nextSurprise(){
@@ -828,6 +1017,8 @@ const shareMenu=document.getElementById('shareMenu');
 const downloadBtn=document.getElementById('downloadBtn');
 let closeShareMenu=()=>{}; // real implementation wired up further below, once the menu exists
 const dragHandle=document.getElementById('dragHandle');
+const sideHandle=document.getElementById('sideHandle');
+const chatEl=document.querySelector('.chat');
 chipsToggle.innerHTML='<svg viewBox="0 0 24 24"><line x1="5" y1="12" x2="19" y2="12"/><line class="vbar" x1="12" y1="5" x2="12" y2="19"/></svg>';
 chipsToggle.setAttribute('aria-expanded','true');
 chipsToggle.addEventListener('click',()=>{
@@ -841,6 +1032,7 @@ function updateChatButtons(){
   shareBtn.hidden=!has;
   downloadBtn.hidden=!has;
   dragHandle.style.display=has?'flex':'none';
+  sideHandle.hidden=!has;
   if(!has) closeShareMenu();
 }
 new MutationObserver(updateChatButtons).observe(thread,{childList:true});
@@ -852,6 +1044,8 @@ chatReset.addEventListener('click',()=>{
     thread.innerHTML='';
     thread.classList.remove('clearing');
     thread.style.height='';thread.style.maxHeight='';
+    chatEl.classList.remove('is-sized');
+    setChatExtend(0);
     busy=false;
     surpriseBag=[];
     chipsEl.classList.remove('chips-collapsed');
@@ -949,21 +1143,58 @@ downloadBtn.addEventListener('click',()=>{
   window.print();
 });
 
-let dragY=0,dragH=0,dragging=false;
-function dragStart(y){dragging=true;dragY=y;dragH=thread.getBoundingClientRect().height;document.body.style.userSelect='none';}
-function dragMove(y){
-  if(!dragging)return;
-  const h=Math.max(140, Math.min(window.innerHeight*0.75, dragH+(y-dragY)));
-  thread.style.maxHeight=h+'px';thread.style.height=h+'px';
-  updateThreadFades();
+// --- resize: the divider grip sets the conversation's height, the side grip
+// moves the panel's LEFT edge (title included): out over the photo column up
+// to the hero's padding - the same 50px air it keeps on its right - or in,
+// down to a 400px panel ---
+const chatCol=chatEl.closest('.v1-right');
+const CHAT_MIN_W=400;
+let drag=null;      // {axis:'y'|'x', start, size} while a grip is held
+let chatExtend=0;   // px the column has moved left (negative = narrower)
+function setChatExtend(px){
+  const hero=chatCol.closest('.hero');
+  const edge=hero.getBoundingClientRect().left+parseFloat(getComputedStyle(hero).paddingLeft);
+  const r=chatCol.getBoundingClientRect();
+  const naturalLeft=r.left+chatExtend, naturalW=r.width-chatExtend;
+  const max=Math.max(0, naturalLeft-edge), min=Math.min(0, CHAT_MIN_W-naturalW);
+  chatExtend=Math.round(Math.max(min, Math.min(max, px)));
+  chatCol.style.setProperty('--chat-extend', chatExtend+'px');
+  chatCol.classList.toggle('is-wide', chatExtend>0);
 }
-function dragEnd(){dragging=false;document.body.style.userSelect='';}
-dragHandle.addEventListener('mousedown',e=>{e.preventDefault();dragStart(e.clientY)});
-window.addEventListener('mousemove',e=>dragMove(e.clientY));
+function dragStart(axis,pos){
+  drag={axis, start:pos, size:axis==='y'?thread.getBoundingClientRect().height:chatExtend};
+  chatCol.classList.add('is-dragging');
+  document.body.style.userSelect='none';
+  document.body.style.cursor=axis==='y'?'ns-resize':'ew-resize';
+}
+function dragMove(x,y){
+  if(!drag)return;
+  if(drag.axis==='y'){
+    const h=Math.max(140, Math.min(window.innerHeight*0.75, drag.size+(y-drag.start)));
+    chatEl.classList.add('is-sized');
+    thread.style.maxHeight=h+'px';thread.style.height=h+'px';
+    updateThreadFades();
+  } else {
+    setChatExtend(drag.size+(drag.start-x));   // left widens, right narrows
+  }
+}
+function dragEnd(){
+  if(!drag)return;
+  drag=null;
+  chatCol.classList.remove('is-dragging');
+  document.body.style.userSelect='';document.body.style.cursor='';
+}
+dragHandle.addEventListener('mousedown',e=>{e.preventDefault();dragStart('y',e.clientY)});
+sideHandle.addEventListener('mousedown',e=>{e.preventDefault();dragStart('x',e.clientX)});
+window.addEventListener('mousemove',e=>dragMove(e.clientX,e.clientY));
 window.addEventListener('mouseup',dragEnd);
-dragHandle.addEventListener('touchstart',e=>{dragStart(e.touches[0].clientY)},{passive:true});
-window.addEventListener('touchmove',e=>{if(dragging)dragMove(e.touches[0].clientY)},{passive:true});
+dragHandle.addEventListener('touchstart',e=>{dragStart('y',e.touches[0].clientY)},{passive:true});
+sideHandle.addEventListener('touchstart',e=>{dragStart('x',e.touches[0].clientX)},{passive:true});
+window.addEventListener('touchmove',e=>{if(drag)dragMove(e.touches[0].clientX,e.touches[0].clientY)},{passive:true});
 window.addEventListener('touchend',dragEnd);
+sideHandle.addEventListener('dblclick',()=>setChatExtend(0));
+// a narrower window changes both limits - re-clamp (0 in the one-column layout)
+window.addEventListener('resize',()=>{if(chatExtend)setChatExtend(window.innerWidth>960?chatExtend:0)});
 
 // fade the clipped edges of the conversation (top/bottom) based on scroll position
 function updateThreadFades(){

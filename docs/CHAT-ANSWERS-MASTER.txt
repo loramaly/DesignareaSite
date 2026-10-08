@@ -2,17 +2,21 @@
 PART 1 - MISSING - ONLY LARISA CAN FILL THESE [RED]
 In priority order; everything else in this doc is done and live.
 ============================================================
-[RED] 1. Why you're leaving Partner - [PICK A or write your own]. Blocks chat + interviews.
-[RED] 2. A failure story - what happened -> what you understood -> what changed.
-[RED] 3. PM conflict story (STAR) - one real case.
-[RED] 4. Real quotes from colleagues/managers - verbatim, with name + role.
+[DONE] 1. Why you left Partner - answered (substantial role change). Live in chat + below.
+[DONE] 2. Failure story - the unified cellular + fixed-line order (live in chat.js, keys: failure / failed / a project that never launched).
+[DONE] 3. Conflict story - B2B inside the CRM (Partner). Live in chat as #75 + follow-ups #76-#79.
+[DONE] 4. Real quotes - LinkedIn recommendations in #02 (Ronen Chen, Stas Fainberg, Michael Chachashvili).
 [RED] 5. Personal closing line for "tell me about yourself" - why design, one sentence.
-[RED] 6. Personal surprises for the dice - 2-3 human ones.
-[RED] 7. The 2018-2019 gap (Niloosoft ended 2018, ElephantStock started 2019) - one honest sentence.
+[DONE] 6. Personal dice surprise - competitive Latin dance (live in chat.js SURPRISES) + the 2px misalignment line.
+[DONE] 7. The 2018-2019 gap - maternity leave. Live in chat as #84.
 [RED] 8. Availability / notice period - relocation stance.
 [RED] 9. All [CONFIRM] items: Figma start year, team makeup, reporting line, mobile-native
      phrasing, accessibility claim, proudest project, Larisa/Lora stance.
 [RED] 10. Voice pass: read 10 answers ALOUD; flag anything you would never say word-for-word.
+[DONE] 11. Lending case - Critera (קרייטרה מרקט): name approved for public use (2026-08-28).
+     No metrics exist - stays qualitative. [INTERNAL: goes live 09/2026, company only started
+     marketing - never say either publicly. Until launch the ceiling is "real client work",
+     NOT "in production". After launch: upgrade framing in chat + resume + fit reports.]
 
 ============================================================
 PART 2 - INTERVIEW ANSWERS (grouped; same answer serves several questions)
@@ -22,9 +26,9 @@ PART 2 - INTERVIEW ANSWERS (grouped; same answer serves several questions)
 Core: "I've been designing digital products since 2013. I started at Niloosoft, on
 enterprise SaaS - that's where I learned complex workflows in depth. In 2019 I moved
 into a leadership role at ElephantStock, a US e-commerce company: I built the design
-team from scratch while the company grew from 30 to 200 employees. Since 2022 I've
-been at Partner - CRM, ERP and financial systems, and in recent years mostly
-AI-driven experiences."
+team from scratch while the company grew from 30 to 200 employees. From 2022 to
+mid-2026 I was at Partner - CRM, ERP and financial systems, and in the last years
+mostly AI-driven experiences."
 Figma add-on: "Figma has been my daily working environment for many years, including
 the advanced layer - variables, modes and component architecture. I built my own
 site's design system entirely on them." [CONFIRM: state a starting year?]
@@ -74,17 +78,17 @@ PMs: "A partnership with two lenses on the same goal: the product manager holds 
 why and the what, I hold how it will work for people. When we disagree - and we do,
 and that's healthy - we go to the evidence: existing data, a small test, a
 prototype. And we align with whatever wins, even when it isn't my direction."
-Conflict story: [RED] [FILL - one real case in STAR]
+Conflict story: [DONE] see PART 3 #75 (B2B inside the CRM).
 
---- WHY ARE YOU LEAVING PARTNER --- [PICK]
-A. "I closed a full cycle there: the design system is adopted, Partner Electric is
-live, and the AI systems are working. Now I'm looking for a place where AI is the
-product itself - that's where the experience I've built is worth the most, and
-where I want to keep growing."
-B. [RED] [FILL - your reason, your words]
+--- WHY DID YOU LEAVE PARTNER --- [FINAL]
+"My role at Partner changed substantially, and it felt like the right point to
+close a full cycle: the design system is adopted, Partner Electric is live, the
+AI systems are working. Now I'm looking for a place where AI is the product
+itself - that's where the experience I've built is worth the most, and where I
+want to keep growing."
 
 --- TELL ME ABOUT YOURSELF ---
-"I'm a product designer who specializes in complex systems. Over twelve years -
+"I'm a product designer who specializes in complex systems. Over thirteen years -
 enterprise SaaS, hypergrowth e-commerce, telecom, and today AI. What connects it
 all for me: people aren't afraid of complex products, they're afraid of unclear
 ones. Today I work on the most interesting version of that problem - how to get
@@ -110,10 +114,10 @@ expandable layer - fix it the same way: "PART 3 #04 MORE: [text]".
     [+ Tell me more]: "Day to day it looks like this: I take a high-level brief, define success metrics with Product, evaluate scope with management and set the timeline - operating with high autonomy and regular check-ins. I partner with PMs, system architects and tech leads to analyze requirements and constraints; depending on the feature I present to focused teams or run workshops with up to 30 cross-department stakeholders. I interview users and observe real workflows, then move from low-fidelity sketches to high-fidelity through our design system. I hand off full specs, run UX/UI QA during the build, and before rollout we pilot with select teams in a dedicated war room - frontend, backend and product together - until production is smooth."
 
 #04 Q: What shipped at Partner?
-    A: "Cross-Functional Design Lead: Sole design lead on every new project across the full IT organization - designing the products for Communications, ERP, DevOps, Engineering, Fintech and CRM. Between 2022 and 2026, I built a company-wide design system adopted across products, shipped the Partner Electric platform in a record 2 months, and designed AI decision-support workflows to significantly cut task handling times for field and control-room teams - aiming for an estimated ~50% faster task assignment."
-    [+ Tell me more]: "The four pillars in more detail. Enterprise Operations & AI Dispatching: complex incident-management and field-dispatch workflows I designed, with an AI decision-support concept layer integrating real-time inputs (traffic, weather, technician availability) and Human-in-the-Loop UX. Partner Electric: end-to-end design for Partner's entry into the electricity market - concept to live production in 2 months, with full regulatory and billing compliance. Unified Design System: tokens and component libraries adopted across internal and customer-facing products, dramatically accelerating design-to-dev handoffs. Operational Portals: dense administrative tools for call centers and operations, turned from legacy screens into modern, task-focused workflows."
+    A: "Cross-Functional Design Lead: Sole design lead on every new project across the full IT organization - designing the products for Communications, ERP, DevOps, Engineering, Fintech and CRM. Between 2022 and 2026, I built a company-wide design system adopted across products, shipped the Partner Electric platform in a record 2 months, and shipped AI Call Summary - an AI feature reps and managers use daily. For field teams I redesigned fiber technician dispatch into a live map - assignment from ~8 to ~4 minutes, in daily use - and designed and demoed an agentic layer on top as a concept. On the sales side, I redesigned the bundled cellular order flow - average handling time went from 9 minutes to 1.5."
+    [+ Tell me more]: "The main pillars in more detail. Fiber Dispatch & AI Decision Support: technician dispatch redesigned from tables to a live map with prioritization - the assignment loop dropped from ~8 to ~4 minutes, estimated with ops, and it's in daily use. On top of it, an agentic decision-support layer designed and demoed as a concept, integrating real-time inputs (traffic, weather, technician availability) with Human-in-the-Loop UX. Core CRM & Sales Platform: Partner's operational backbone with role- and department-based views - serving a subscriber base that covers roughly a third of Israel. Includes the bundled cellular order redesign: 9 minutes down to 1.5 per order. B2B Provisioning & Billing: complex telecom projects - nested orders, engineering, automation - dense specs turned into simple quotes. Throughput up ~30%; billing leakage closed from ~10% to zero. Partner Electric: end-to-end design for Partner's entry into the electricity market - concept to live production in 2 months, with full regulatory and billing compliance. Unified Design System: tokens and component libraries adopted across internal and customer-facing products, dramatically accelerating design-to-dev handoffs. Operational Portals: dense administrative tools for call centers and operations, turned from legacy screens into modern, task-focused workflows."
 
-#05 Q: Have you led teams?
+#05 Q: Have you led a team?
     A: "Yes. At ElephantStock I was Head of UX/UI & Creative - I built and led the design team from scratch while the company grew from 30 to 200+ employees, contributing to 3x revenue growth and our Top 10 selection for Google's E-commerce Growth Lab. At the Lead level, I drive impact less through direct management and more through systemic UX standards, design systems, and close partnership with dev and product leads."
     [+ Tell me more]: "What building that team actually involved: recruiting, structuring and mentoring designers and a video creator, plus managing external freelancers to scale when needed; setting high standards for UI/UX quality, design-system adoption and design-to-dev handoff; working directly with executive leadership, PMs and engineering leads to tie design to business KPIs; and building workflows that let the team scale smoothly alongside 30-to-200+ growth."
 
@@ -121,11 +125,11 @@ expandable layer - fix it the same way: "PART 3 #04 MORE: [text]".
     A: "Yes. At Partner I built and scaled a unified design system adopted across CRM, ERP and Fintech products, which significantly streamlined design-to-dev handoffs. I structure systems with Atomic Design principles and Figma variables - raw primitives mapped to semantic tokens, then production-ready components. This exact architecture powers both Partner's ecosystem and this portfolio site."
 
 #07 Q: How do you measure success?
-    A: "By concrete impact on business goals and user efficiency. In B2C and e-commerce, success is conversion rates, A/B testing and revenue growth. In enterprise SaaS it's operational: cutting task assignment times (aiming for an estimated ~50% faster dispatching at Partner), reducing manual errors, and streamlining complex daily workflows for operations teams."
+    A: "By concrete impact on business goals and user efficiency. In B2C and e-commerce, success is conversion rates, A/B testing and revenue growth. In enterprise SaaS it's operational: cutting handling time (9 minutes down to 1.5 per cellular order at Partner; technician assignment from ~8 to ~4 minutes), closing billing leakage, reducing manual errors, and streamlining complex daily workflows for operations teams."
     [+ Tell me more]: "The metric sets I track, by world. Enterprise operations: task-efficiency (reduction in handling time and friction), error reduction and trust (how often recommendations are processed without manual overrides), and system adoption across call centers and field teams. E-commerce: conversion and revenue validated through strict A/B testing across a 200K+ SKU catalog, and funnel optimization - drop-off points, engagement, checkout completion."
 
 #08 Q: How do you use AI day to day?
-    A: "I use AI as a core operational layer in my daily workflow. Research, strategy and logic: Claude, ChatGPT and Gemini to analyze dense requirements, map edge cases, synthesize research and stress-test information architecture before touching pixels. Rapid prototyping: Claude Code and Lovable to build functional interactive prototypes early. Visual exploration and motion: Midjourney, Runway and Kling for conceptual assets, alongside Lottie for lightweight UI micro-animations. AI drastically accelerates my discovery and execution - but every architectural, UX and strategic decision remains human-led."
+    A: "I use AI as a core operational layer in my daily workflow. Research, strategy and logic: Claude, ChatGPT and Copilot to analyze dense requirements, map edge cases, synthesize research and stress-test information architecture before touching pixels. Rapid prototyping: Claude Code, Claude Design, Framer and Lovable to build functional, interactive prototypes early. Visual exploration and motion: Midjourney, Runway and Kling for conceptual assets, alongside Lottie for lightweight UI micro-animations. AI drastically accelerates my discovery and execution - but every architectural, UX and strategic decision remains human-led."
 
 #09 Q: What are you looking for?
     A: "I'm looking for my next challenge as a Senior or Lead Product Designer - a role where I can build complex, meaningful products I believe in. I want a collaborative, strong team that values product vision, holds onto its why, and ships with impact - while keeping a healthy work-life balance. I thrive on deep systems and AI-driven platforms, with leading Israeli companies or global teams. What's the product you're hiring for?"
@@ -137,7 +141,7 @@ expandable layer - fix it the same way: "PART 3 #04 MORE: [text]".
     A: "I completely understand the skepticism - there's a lot of hype around AI design that is often just surface-level decoration. Here's how I maintain transparency: live production products are explicitly marked as shipped, while speculative work is clearly labeled as a concept; operational estimates are stated as estimates, not absolute facts; and every process, OOUX architecture and AI-assisted workflow I present is grounded in real execution. If you'd like to dive into any case, metric or prototype - I'm happy to walk you through the exact process."
 
 #12 Q: [typed only - caught by: why hire, why you, better than, special, stand out, why should]
-    A: "That's the right question to ask - you're evaluating strong talent. What I bring is a specific, battle-tested combination: 13+ years in complex systems - enterprise SaaS, OOUX, CRM, ERP and dense data-heavy architectures; a rich background in branding, graphic design and marketing strategy, which lets me align product experience and brand identity into one high-end narrative; proven team leadership - building, mentoring and scaling design teams through hyper-growth; and practical AI execution - integrating AI as a functional, trustworthy layer in real products rather than decorative hype. If you need a lead who solves deep systems while elevating the brand - let's talk."
+    A: "That's the right question to ask - you're evaluating strong talent. What I bring is a specific, battle-tested combination: 13+ years in complex systems - enterprise SaaS, OOUX, CRM, ERP and dense data-heavy architectures; a rich background in branding, graphic design and marketing strategy, which lets me align product experience and brand identity into one high-end narrative; real UI craft - I care how a product looks and feels, not only how it works; proven team leadership - building, mentoring and scaling a design team through hyper-growth; and practical AI execution - integrating AI as a functional, trustworthy layer in real products rather than decorative hype. If you need a lead who solves deep systems while elevating the brand - let's talk."
 
 #13 Q: [typed only - caught by: generic, boring, not impressed, seen this, nothing special, unimpressive]
     A: "Fair - and honestly, useful feedback. Portfolios naturally flatten real-world complexity: the tight constraints, system trade-offs, edge cases and high-stakes decisions behind every screen. Pick any project here and ask me the hardest technical or UX question you have about it - that's where the true depth lives. And if something specific felt generic, I'd genuinely love to hear it: larisamalyd@gmail.com."
@@ -173,8 +177,8 @@ expandable layer - fix it the same way: "PART 3 #04 MORE: [text]".
 #24 Q: [typed only - caught by: sudo]
     A: "Permission granted. ✔ Deploying: larisamalyd@gmail.com"
 
-#25 Q: [typed only - caught by: ui, visual design, interface design, visual, craft, pixel]
-    A: "UI and craft are where strategy, typography and visual precision meet. A strong foundation in branding and visual craftsmanship means every component is polished and intentional. And in complex enterprise products, true craft creates clarity and calm - the interface should lower the user's pulse, not raise it."
+#25 Q: [typed only - caught by: ui, ui craft, visual craft, ui craftsmanship, visual design, attention to detail, typography, composition, hierarchy, layout, spacing, color, visual rhythm, iconography, polished, high-fidelity, perceived quality, pixel perfect, look and feel, ui designer, senior ui designer, ui focus, craft, pixel...]
+    A: "UI craft is what I do best. I design interfaces with intention. Every spacing, weight and color is a decision. The small details are where a product starts to feel premium - and that's where I invest my time."
 
 #26 Q: [typed only - caught by: b2b, enterprise, business to business, internal tools, operational]
     A: "Most of my career is rooted in complex B2B and enterprise SaaS - recruitment platforms at Niloosoft, and deep operational, dispatch, CRM and ERP systems at Partner. In B2B, UX is directly tied to business value: professionals rely on these platforms for hours every day, so reducing friction and flattening learning curves drives adoption, cuts training and support costs, and reduces churn. Designing for B2B means turning systemic complexity into a scalable, revenue-driving asset."
@@ -183,25 +187,25 @@ expandable layer - fix it the same way: "PART 3 #04 MORE: [text]".
     A: "My deepest B2C experience was at ElephantStock - a US e-commerce platform with over 200,000 products. Consumer design is a completely different discipline: you have seconds to capture attention, emotion drives decisions, and conversion is the scoreboard. We scaled through continuous A/B testing and performance analytics - which taught me to respect data the way B2B taught me to respect complex workflows."
 
 #28 Q: [typed only - caught by: mobile, tablet, responsive, phone, app, ios]
-    A: "Mobile has always been part of my process, tailored to the environment. At ElephantStock: strict mobile-first for high-volume B2C users, where conversion, speed and touch UX were top priorities. At Niloosoft: a dedicated mobile video-interviewing app, letting candidates complete live or recorded interviews from their phones. At Partner: complex enterprise tools - retail sales streams, store-agent workflows - adapted for mobile and tablets, so field representatives execute operations on the go without losing system capability."
+    A: "Mobile has always been part of my process, tailored to the environment. At ElephantStock: strict mobile-first for high-volume B2C users, where conversion, speed and touch UX were top priorities. At Niloosoft: a dedicated mobile video-interviewing app, letting candidates complete live or recorded interviews from their phones. At Partner: the Core CRM adapted for tablet and mobile, plus a standalone tablet rapid-sales system - so field and store reps work on the go without losing system capability."
 
-#29 Q: [typed only - caught by: dashboard, dashboards, data visualization, charts, monitoring, kpi screen]
-    A: "Dashboards are my home turf - operational systems live and die by them. My approach shifts dashboards from passive visualization to decision-making engines: complex data packaged into clear decision units that answer three questions instantly - is everything okay, what needs attention now, and what action do I take. In my fiber-network operations project we turned real-time telemetry into actionable decisions - aiming for an estimated ~50% faster technician assignment, with far less friction under pressure."
+#29 Q: [typed only - caught by: dashboard, dashboards, charts, charts & dashboards, monitoring, kpi screen]
+    A: "Dashboards are my home turf - operational systems live and die by them. My approach shifts dashboards from passive visualization to decision-making engines: complex data packaged into clear decision units that answer three questions instantly - is everything okay, what needs attention now, and what action do I take. In my fiber-network operations project I redesigned technician dispatch from tables to a live map with prioritization - the assignment loop went from ~8 to ~4 minutes, and it's in daily use."
 
 #30 Q: [typed only - caught by: ecommerce, e-commerce, conversion, shop, store, checkout]
     A: "Three years at ElephantStock at scale - a 200K+ product catalog with high-volume, mobile-first traffic where conversion was the daily metric. We worked strictly evidence-first with A/B testing and funnel analytics. One key win: redesigning the checkout flow from 5 complex steps down to 3, which significantly reduced cart abandonment and lifted conversion. E-commerce taught me that design opinions are cheap; tested ones are not."
 
-#31 Q: [typed only - caught by: fintech, finance, banking, payments, financial]
-    A: "I design for complex Fintech systems where high-stakes financial decisions happen daily - from AI-driven loan underwriting and risk prediction to cross-organizational loan syndications. In these environments, clarity is money: I streamline dense application forms, map multi-stakeholder approval flows, and use AI to parse incoming data into actionable decision scores. When a mistake costs real money, smart UX patterns, clear verification and transparent AI reasoning are what create trust."
+#31 Q: [typed only - caught by: fintech, finance, banking, payments, financial, billing, invoice, invoicing, pricing]
+    A: "At Partner I worked on B2B provisioning and billing - nested enterprise orders turned into simple quotes, throughput up ~30%, billing leakage from ~10% to zero. I also designed Partner Electric, live in 2 months with full regulatory and billing compliance. My latest fintech work goes into high-stakes lending - AI-driven loan underwriting, risk prediction and cross-organizational loan syndications. In these environments, clarity is money: I streamline dense application forms, map multi-stakeholder approval flows, and use AI to parse incoming data into actionable decision scores. When a mistake costs real money, smart UX patterns, clear verification and transparent AI reasoning are what create trust."
 
 #32 Q: [typed only - caught by: accessibility, a11y, wcag, contrast, inclusive]
-    A: "Accessibility is an integral part of my process, not an afterthought. My foundation comes from ElephantStock, where we trained with a US accessibility expert to bring everything up to standard for the American market. Since then I build with it from day one: clear contrast, robust typographic hierarchy, keyboard navigation, screen-reader-friendly structures. Designing accessibly simply means designing better products for everyone."
+    A: "Accessibility is part of my process on every project, including when nobody asks for it. My foundation comes from ElephantStock, where we trained with a US accessibility expert to bring the product up to standard for the American market. Since then I bring each design as close to the standard as possible: readable contrast, clear focus states, comfortable text sizes and touch targets, keyboard navigation, and meaning that is carried by more than color."
 
 #33 Q: [typed only - caught by: empty state, empty states, onboarding, first use, blank]
     A: "Empty states are often treated as an afterthought - but in complex SaaS and AI products they are the most critical onboarding moment. A blank screen creates hesitation. I design empty states as active guides: actionable entry points, clear next steps, or suggested AI prompts that build immediate trust and momentum. The first interaction sets the tone for the whole product."
 
 #34 Q: [typed only - caught by: education, study, studies, studied, degree, diploma]
-    A: "My background combines design, code and sales psychology. Formal education: a Diploma in Graphic Design & Visual Communication from Western Galilee College. Additional studies: UX/UI and UX strategy, front-end development with Angular, video creation, web production and motion animation. Google's E-commerce Growth Lab - selected Top 10 cohort. And a unique specialty: certified Expert Marketing & Sales Coach - a deep program in sales psychology and marketing strategy. I treat education as ongoing; that mix is what fuels my product strategy today."
+    A: "My background combines design, code and sales psychology. Formal education: a Diploma in Graphic Design & Visual Communication from Western Galilee College. Additional studies: UX/UI and UX strategy, front-end development with Angular, video creation, web production, motion animation and AI Security. Google's E-commerce Growth Lab - selected Top 10 cohort. And a unique specialty: certified Expert Marketing & Sales Coach - a deep program in sales psychology and marketing strategy. I treat education as ongoing; that mix is what fuels my product strategy today."
 
 #35 Q: [typed only - caught by: a/b, ab test, ab tests, ab testing, a/b testing, a/b tests]
     A: "Plenty - at ElephantStock A/B testing was our daily language: layouts, flows and content tested on real traffic, and the results decided. It taught me healthy humility; the version I loved didn’t always win."
@@ -219,10 +223,10 @@ expandable layer - fix it the same way: "PART 3 #04 MORE: [text]".
     A: "I stay ahead by combining hands-on building with deep industry study. AI tooling evolves monthly, so I experiment by shipping real projects - this site is the current example. In parallel I follow research and documentation from AI leaders like Anthropic, engage with the design-systems community, and study how serious enterprise platforms handle trust, explainability and AI interaction patterns. Learning, for me, is a daily discipline."
 
 #40 Q: [typed only - caught by: code, coding, programming, develop, html, css]
-    A: "I write frontend code and understand the architecture inside out - Angular, TypeScript, HTML and CSS, including how components, data structures and state actually behave. In my role, though, my focus is product strategy and UX architecture - the technical depth is there to bridge the gap with engineering. I design within realistic constraints from day one, so handoffs are seamless and developers never have to say 'this can't be built.'"
+    A: "I write frontend code and understand the architecture inside out - Angular, TypeScript, HTML and CSS, including how components, data structures and state actually behave. I also build components and feature prototypes in Claude Code, and work in GitLab. In my role, though, my focus is product strategy and UX architecture - the technical depth is there to bridge the gap with engineering. I design within realistic constraints from day one, so handoffs are seamless and developers never have to say 'this can't be built.'"
 
 #41 Q: [typed only - caught by: proud, proudest, favorite project, best project, highlight, best work]
-    A: "The decision-support timeline for Partner's operations. We transformed fragmented operational data into clear, actionable decision units - and on top of it I designed an AI decision-support concept with confidence scores and human-in-the-loop control, aiming for an estimated ~50% faster task assignment. The part I'm proudest of: treating operator trust as a design requirement, not a hope."
+    A: "The decision-support timeline for Partner's operations. We transformed fragmented operational data into clear, actionable decision units - and on top of it I designed an AI decision-support concept with confidence scores and human-in-the-loop control. The part I'm proudest of: treating operator trust as a design requirement, not a hope."
 
 #42 Q: [typed only - caught by: intuition, gut, instinct, data or, decision, decisions]
     A: "Intuition generates the hypothesis; data validates it. After 13+ years in product design my intuition is grounded in deep pattern recognition - it lets me map solutions quickly. But data keeps us honest: high-scale A/B testing taught me to test assumptions early, and when data isn't available yet, I run rapid usability pilots to learn and adapt fast."
@@ -243,13 +247,13 @@ expandable layer - fix it the same way: "PART 3 #04 MORE: [text]".
     A: "English - fluent. Hebrew and Russian - native. Here I answer in English for now - but write me in any of the three: larisamalyd@gmail.com"
 
 #48 Q: [typed only - caught by: experience, years, how long, since when, background, career]
-    A: "I bring 13+ years of experience in product design, design systems and complex product architecture, across high-velocity scale-ups and enterprise environments. My strength is transforming deep operational and technical complexity - dense data, multi-role permissions, heavy workflows - into intuitive, high-impact systems. That work has consistently driven measurable outcomes: faster task completion, scalable design systems that accelerate delivery, fewer operator errors. Today I apply it to AI-driven interfaces - decision-support tools that reduce friction and move core business metrics."
+    A: "I bring 13+ years of experience in product design, design systems and complex product architecture, across high-velocity scale-ups and enterprise environments. My strength is transforming deep operational and technical complexity - dense data, multi-role permissions, heavy workflows - into intuitive, high-impact systems. That work has consistently driven measurable outcomes: faster task completion, scalable design systems that accelerate delivery, fewer operator errors. And the craft: I'm as strong in UI as in UX - the details are where a product earns trust. Today I apply it to AI-driven interfaces - decision-support tools that reduce friction and move core business metrics."
 
 #49 Q: [typed only - caught by: pm, product manager, product managers, work with product, disagree]
     A: "I view the PM relationship as a strategic partnership: the PM drives business strategy and priorities, I make sure the solution is architecturally sound, scalable and intuitive. Disagreements usually come from competing priorities - speed to market versus product complexity. I don't treat it as a battle of opinions; I map the trade-offs clearly: impact on user workflows, technical risk, future scalability. The goal is a pragmatic solution or a phased rollout that meets the deadline without compromising the system's long-term integrity."
 
 #50 Q: [typed only - caught by: measured, measure the, how did you get, that number, fifty percent, 50%]
-    A: "By establishing a clear baseline with Product before any structural change - task completion time, error rates, drop-offs. The ~50% figure is an internal estimate built on that baseline plus structured operator and team feedback - and I present it as exactly that, an estimate. It also taught me my rule for every project since: define the measurement framework before launch, so the next number is measured, not estimated."
+    A: "Together with the ops team. On Fiber Dispatch we watched how dispatchers actually work and compared how long an assignment took before and after the change - from ~8 minutes with tables to ~4 with the live map, about 50% faster. It's an estimate made with ops, and I present it that way. For the agentic layer the measuring stick is defined before it's built, so its number will be measured, not estimated."
 
 #51 Q: [typed only - caught by: why, tell me more, more detail, more details, elaborate, go deeper]
     A: "Absolutely. I can take you through the specific architecture decisions, how we handled edge cases, or what almost went wrong and how we pivoted. Which angle would be most helpful for you right now?"
@@ -270,13 +274,101 @@ expandable layer - fix it the same way: "PART 3 #04 MORE: [text]".
     A: "Object-Oriented UX is my primary tool for taming complexity. Before drawing any screens, I map the system's core objects: what they are, what data they contain, how they relate. It ensures the system mirrors how users actually think - not how the database tables happen to be structured. Every complex architecture I design starts right there."
 
 #57 Q: [typed only - caught by: niloosoft, white label, white-label, recruitment, saas, first job]
-    A: "At Niloosoft I designed enterprise recruitment SaaS dealing with heavy data and complex candidate workflows. My core focus was two architectural challenges: a powerful filtering system and an efficient results matrix that let recruiters process large volumes fast. I also designed white-label career portals that embedded Niloosoft's recruitment engine directly into client websites - one product, many brands."
+    A: "Niloosoft is where I started, as the first and only designer. I built the product and the brand from zero - Hunter HRMS, a multilingual enterprise HR platform. High-volume hiring end to end: a filtering engine, a results matrix, permissions and roles - one product serving recruiters, hiring managers, employees and candidates. I also designed white-label career websites for client companies and a mobile video interview app."
 
-#58 Q: [typed only - caught by: motion, animation, micro-interactions, microinteractions, transitions, animate]
-    A: "Coming from a background in animation, I treat motion as direct feedback, not decorative flair. A system needs to feel alive and responsive - every micro-interaction confirms an action, guides attention, and clarifies outcomes. Done right, subtle motion makes complex systems intuitive without ever getting in the way. This site is my current sample: the entrance choreography, the floating cases, the typing rhythm in this chat."
+#58 Q: [typed only - caught by: motion, motion design, interaction design, animation, micro-interactions, microinteractions, transitions, animate]
+    A: "I design the small moments of an interface: a button that responds, a smooth transition, a clear confirmation. Each one has a purpose. It gives feedback, guides the eye, and makes the product feel alive. I come from a background in animation, so for me motion is feedback, never decoration. This site is a live sample: the entrance choreography, the floating cases, the typing rhythm in this chat."
 
 #59 Q: [typed only - caught by: freelance, part time, part-time, consulting, contract, fractional]
     A: "I’m primarily motivated by the product, the challenge and the impact - so I’m open to different collaboration models for the right project: a full-time Senior or Lead role, fractional design leadership, or specialized consulting. If the product and the vision align, I’m flexible about the configuration."
+
+#60 Q: [typed only - caught by: leave, leaving, left, quit, resign, departure, leave/left/leaving partner, why did you leave, azavt]
+    A: "My role at Partner changed substantially, and it felt like the right point to close a full cycle: the design system is adopted, Partner Electric is live, the AI systems are working. Now I'm looking for a place where AI is the product itself - that's where the experience I've built is worth the most, and where I want to keep growing."
+
+#61 Q: [typed only - caught by: critera, קרייטרה, real estate, real-estate, estate, lending, loan, loans, underwriting, mortgage, proptech, due diligence, property, marketplace, credit, project finance, finance, borrower, lender(s), nadlan, halvaa. NOTE: 'fintech' removed from #04 keys so fintech questions reach #31.]
+    A: "My latest client work is Critera - an AI-assisted marketplace for corporate credit and project finance. One borrower request meets a panel of institutional lenders competing for it - all working from a unified underwriting file built by an AI engine. I designed both sides: the borrower submits the full deal in one place, lenders get a structured decision view - risk signals, automated due diligence, the journey tracked on a timeline. The system suggests, the human decides."
+    [INTERNAL: name approved for public use; qualitative only - no metrics.]
+
+#62 Q: [typed only - caught by: data visualization, data viz, viz, visualization, infographic(s), animated infographics, animated charts]
+    A: "I turn complex data into visuals people read at a glance. I design custom infographics with their own visual idea, static and animated. Motion guides the eye and shows how the numbers connect. Every label, scale and color is a decision."
+
+#63 Q: [typed only - caught by: fiber, dispatch, dispatcher, technician(s), syncops, field dispatch, field service, live map] -> link: SyncOps case
+    A: "Fiber Dispatch was one of my Partner projects. Dispatchers were assigning technicians from tables. I redesigned it into a live map with prioritization - the assignment loop dropped from ~8 to ~4 minutes, estimated with ops, and it's in daily use. Then I designed and demoed an agentic layer on top, as a concept: the agent proposes, the admin decides. It's designed to halve that time again - a target, not a result yet."
+
+#64 Q: [typed only - caught by: design qa, ui qa, ux qa, qa, quality assurance, design review, after release]
+    A: "I stay with my design through development. I review the real build in the browser, compare it with the design down to spacing, type and states, and close the gaps together with the developers. After release I keep improving it in rounds, based on feedback and findings from real use."
+
+#65 Q: [typed only - caught by: detailed states, states, component states, hover, focus state, pressed, loading/error/success/disabled state]
+    A: "I design every state of a component, so the interface is clear at each moment. Hover, focus and pressed show what is interactive and that the click registered. Loading keeps the layout stable and shows progress. Error says what happened and how to fix it. Success confirms the action. Disabled stays readable and explains why. Empty guides the next step."
+
+#66 Q: [typed only - caught by: visual direction, direction, art direction, creative direction, branding, brand, brand identity, visual identity, visual language, imagery]
+    A: "I set the visual direction of a product: color, typography, imagery, and the idea that ties them together. As Head of UX/UI & Creative at ElephantStock I led branding and creative strategy and guided the visual and UX direction across product, front-end and art teams, so the brand felt like one experience everywhere. My background in graphic design and advertising is the base for this."
+
+#67 Q: What's your AI work? (chip; live in chat.js, now synced here)
+    NOTE 2026-10-09: dispatch line split honestly - live map in daily use; the multi-agent route layer is a concept. Gemini replaced with ChatGPT.
+
+#68 Q: [typed only - caught by: ui or ux, ux vs ui, ui/ux balance, more ui, more ux, both ux and ui, ux designer, main strength, strongest skill, strength, stronger, generalist, specialist, end-to-end, visual or product]
+    A: "UI or UX? Both, fifty-fifty, and that is my strength. UX is how I think. UI is my big love. I do them together, so the product works well and looks great."
+    [+ Tell me more]: "UX is where I start: the user, the flow and the logic of the system. I bring order to complex products with many roles, rules and data, so people reach their goal fast and with confidence. UI is where I bring the craft. Every spacing, weight and color is a decision, and each product gets its own visual idea. The small details make it feel premium. If I have to choose one, UI craft is where I stand out. And my UI is strong because the UX under it is solid."
+
+#69 Q: [follow-up - caught by: choose one, had to choose, pick one, if you had to, only one]
+    A: "UI craft is where I stand out. And my UI is strong because the UX under it is solid."
+
+#70 Q: [follow-up - caught by: good ux, ux mean, what is ux, great ux, ux to you]
+    A: "The user reaches the goal fast, with confidence, in a complex system too."
+
+#71 Q: [follow-up - caught by: craft mean, ui craft mean, what is ui craft, craft to you]
+    A: "Every spacing, weight and color is a decision. The small details make a product feel premium."
+
+#72 Q: [follow-up - caught by: start with, do you start, where do you start, ux first, ui first, which first, begin with]
+    A: "Always UX: the problem, the flow, the structure. Then UI gives it clarity and character."
+
+#73 Q: [typed only - caught by: strengths, best at, superpower, what makes you different, biggest strength] -> link: See my work (#works)
+    A: "I make complex products clear and beautiful. I think in UX and I craft in UI, so one person takes a product from logic to the last pixel. I work fast, I stay calm under pressure, and I follow my design all the way into the build."
+    NOTE: "why you" stays on #12 (why hire); "main strength" stays on #68 (UI or UX).
+
+#74 Q: [typed only - caught by: weakness(es), areas to improve, improve in yourself, what is hard for you, biggest weakness]
+    A: "I take a lot of responsibility for the result. In every role I held, a lot rested on me, so I got used to carrying everything myself and checking that it all went well. Today I work differently: I bring people in early, agree on clear checkpoints, and trust the team between them. The result is better and faster."
+
+#75 Q: [typed only - caught by: conflict, disagreed, disagreement, push back, say no, convince, changed someone's mind, without authority, difficult stakeholder, conflicting needs, in trouble, refused, accept your design, technical constraints, simplified, complex process]
+    SOURCE: Larisa's story doc "Stakeholder disagreement: B2B inside the CRM" (Oct 2026). Rules: "estimated" always with 30%; never "internal" about Partner work.
+    A: "At Partner, the B2B sales managers refused to work inside our shared CRM. It was built around consumer sales, they wanted a separate system, and they had rejected every solution before I joined. I disagreed: orders, catalog and pricing had to live in one place. So I sat with each team, asked what they wanted, and designed a B2B flow inside the existing CRM. I showed it as a prototype they could click through, and the argument ended. It shipped and is in use today."
+    [+ Tell me more]: "Their work is complex: one deal is a project with many orders, products, engineering involvement and branch addresses. The consumer flow demanded all of it up front - every form and compliance step - before a quote could go out. The new flow lets a rep quote quickly, keeps the order flexible, moves forms and compliance to the stage where they're needed, and gives engineering a structured place in the project. The result: throughput up an estimated 30%, and billing leakage down from about 10% to zero once the manual steps were automated. They were right about the problem, not about the solution. Listening first, then a prototype people can try, resolves more than any debate."
+
+#76 Q: [follow-up - earlier solutions, were you part, before you joined]
+    A: "No. I joined the project later, after those had been rejected."
+
+#77 Q: [follow-up - separate system, own system, why couldn't they]
+    A: "Orders, catalog and pricing had to live in one place. Splitting them into a second system would have broken that."
+
+#78 Q: [follow-up - how was the 30, 30 percent, throughput]
+    A: "It's an estimate, and I always present it that way. The leakage number, about 10% to zero, came from automating the manual steps."
+
+#79 Q: [follow-up - compliance steps, compliance removed]
+    A: "No. They moved to the stage where they're actually needed - nothing was dropped."
+
+#80 Q: [typed only - caught by: partner electric, electricity, under pressure, tight deadline(s), 2 months, outsource]
+    A: "Partner Electric was Partner's entry into the electricity market. The plan was to outsource it - everyone assumed it was too complex for our CRM and would take half a year and a big budget. We took it on instead. Research showed we could run it through the existing CRM and adapt what was needed, even though selling electricity works nothing like selling telecom. It went live in 2 months, with full regulatory and billing compliance."
+
+#81 Q: [typed only - caught by: international teams, us teams, global teams, worked remotely, time zones, abroad]
+    A: "Yes. At ElephantStock I worked from Israel with US teams - the company and the market were American. Working across time zones taught me to write clearly, decide fast in the hours we shared, and leave nothing open overnight."
+
+#82 Q: [typed only - caught by: video, ai video, capcut, kling, runway, google flow, social media, ads, advertising, reels]
+    A: "Yes - I create video for marketing, social and ads, from concept to the final cut. I work with AI video tools like Kling, Runway and Google Flow, and edit in CapCut. At ElephantStock I led creative across campaigns, email and video, so I know video has to work for the brand, not just look good."
+
+#83 Q: [typed only - caught by: adapt, adaptable, adaptability, adapt to change, new domain, learn fast]
+    A: "Very. I've moved between recruitment SaaS, US e-commerce, telecom, fintech and AI - and between being a team of one and leading a team. Each time the domain changed, the way I work stayed: learn the field fast, find the people who know it, and start delivering early."
+
+#84 Q: [typed only - caught by: gap, career gap, gap in your resume, why the gap, 2018, 2019, maternity, career break, time off]
+    A: "Between mid-2018 and mid-2019 I was on maternity leave. I came back straight into building a design team from scratch at ElephantStock."
+
+#85 Q: [typed only - caught by: elephantstock, elephant stock, head of ux, head of creative, home decor, wall art] - SOURCE: site resume, ElephantStock block
+    A: "At ElephantStock - a US direct-to-consumer brand for art and home décor - I was Head of UX/UI & Creative from 2019 to 2022. I built, hired and mentored the design team from scratch, and led UX, product, branding and creative strategy - campaigns, email and video. I cut the mobile-first checkout from 5 steps to 3 across a 200K+ SKU catalog, lifting conversion through A/B testing, polls and funnel analytics. I contributed to 3x revenue growth as the company scaled from 30 to 200+ employees, worked from Israel with US teams, and we were selected Top 10 in Google's E-commerce Growth Lab."
+
+#86 Q: [typed only - caught by: call summary, summary, summarization, shipped ai, ai in production, ai feature, shipped, is any of your ai work live] - SOURCE: site resume line + Larisa's description (agent listens to the call, summary, read short / full / listen)
+    A: "AI Call Summary is an AI feature I designed at Partner, and reps and managers use it daily. An AI agent listens to the call with the customer and condenses the recording into a summary. The user picks the depth - a short part, the full summary, or the call itself - and every summary links back to the source, so nobody trusts it blind."
+
+CHIPS (2026-10-09): desktop row = Are you more UI or UX? / A conflict you solved? / What shipped at Partner? / What do people say about you? / Have you built a design system? / Have you led a team?  -  phones show short labels (More UI or UX? / Your work at Partner? / What do people say? / Design systems?).
 
 ============================================================
 PART 4 - SURPRISE DICE (12 facts, no-repeat rotation)
@@ -292,6 +384,10 @@ PART 4 - SURPRISE DICE (12 facts, no-repeat rotation)
 9. "My design rule for AI: the system suggests, the human decides. Non-negotiable."
 10. "I name the objects in a system before I draw a single screen. OOUX - try asking me about it."
 12. "Since 2013 I’ve designed for recruitment, art, telecom and finance. Complexity is the common language."
+13. "I redesigned Partner's bundled cellular order flow - average handling time dropped from 9 minutes to 1.5."
+14. "The CRM I led design for serves a subscriber base covering roughly a third of Israel."
+16. "I'm the one who notices the 2px misalignment. Then I fix it."
+15. "My newest client work: a credit marketplace where one borrower request meets competing institutional lenders - underwriting structured by AI."
 
 [RED] [FILL - personal surprises: 1. ____  2. ____  3. ____ ]
 

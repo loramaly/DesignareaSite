@@ -74,6 +74,30 @@
 }
 :root[data-theme="light"] .chat:hover .portrait{filter:brightness(1.04)}
 
+/* ----- robot reveal on light -----
+   The robot image itself is deliberately NOT swapped: it is the same android
+   in both themes. Only the two things that were tuned for a dark page change.
+
+   1) the scan overlay blended with `screen`, which on a near-white page just
+      washes the reveal out. `multiply` puts the scanlines back as faint violet
+      darkening, which is what `screen` was doing on the dark page.
+   2) the HUD strokes were mixed for a violet-black background. On a lavender
+      page they need the deeper end of the light palette to hold their edge. */
+:root[data-theme="light"] .robot-scan{
+  background:
+    repeating-linear-gradient(180deg,
+      rgba(108,63,232,.055) 0 1px, transparent 1px 5px),
+    linear-gradient(180deg,
+      transparent 0%, rgba(108,63,232,.09) 46%,
+      rgba(14,158,120,.06) 54%, transparent 100%);
+  mix-blend-mode:multiply;
+}
+/* no shadow or glow on the lens in either theme - see the note in styles.css */
+:root[data-theme="light"] .lens-fine{stroke:rgba(90,49,207,.34)}
+:root[data-theme="light"] .lens-sweep{stroke:rgba(14,158,120,.6)}
+:root[data-theme="light"] .lens-ring{stroke:rgba(108,63,232,.34)}
+:root[data-theme="light"] .lens-dash{stroke:rgba(108,63,232,.6)}
+
 /* panels and cards need a real edge once the page is light */
 :root[data-theme="light"] .chat{
   box-shadow:0 18px 44px rgba(53,38,104,.10), 0 2px 8px rgba(53,38,104,.06);

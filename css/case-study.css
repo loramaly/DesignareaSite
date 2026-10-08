@@ -969,17 +969,20 @@ html{scroll-behavior:smooth}
    left-weighted proportions instead of stretching across the full measure */
 .sy-trust-foot{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,430px);
   gap:clamp(24px,3.6vw,68px);align-items:center;max-width:1070px;margin-top:64px}
-.sy-trust-foot .sy-banner{margin-top:0}
+/* on the slide this is a big gradient card, not a pill - large white headline,
+   40px corners, stretched to the height of the proof column */
+.sy-trust-foot .sy-banner{margin-top:0;border-radius:40px;align-self:stretch;
+  display:flex;align-items:center;padding:clamp(28px,3vw,46px) clamp(28px,3.2vw,50px);
+  font-size:clamp(24px,2.2vw,32px);line-height:1.35;font-weight:700}
 .sy-tint .sy-trust-foot .sy-banner{width:auto}
 .sy-proof{display:flex;flex-direction:column;gap:18px}
-/* the padding and gap are trimmed to what the pill needs: at 26/14 the line
-   fell 6px short of fitting and broke in two, which the slide never does */
-.sy-proof-toast{display:flex;align-items:center;gap:12px;background:#fff;
-  border-radius:999px;padding:16px 22px;font-size:16px;line-height:22px;color:var(--ink)}
+/* the slide shows the toast as a soft green confirmation card, bold ink text */
+.sy-proof-toast{display:flex;align-items:center;gap:12px;background:#e2f3e8;
+  border-radius:20px;padding:18px 24px;font-size:16px;line-height:22px;font-weight:700;color:var(--ink)}
 .sy-proof-check{width:20px;height:20px;flex:none;fill:none;stroke:#2fae7d;
   stroke-width:2.4;stroke-linecap:round;stroke-linejoin:round}
 .sy-proof-toast span:not(.sy-proof-undo){flex:1;min-width:0}
-.sy-proof-undo{flex:none;font-weight:700;color:var(--brand-cta)}
+.sy-proof-undo{flex:none;font-weight:700;color:var(--ink);text-decoration:underline;text-underline-offset:3px}
 .sy-proof-log{background:#fff;border-radius:20px;padding:22px 26px}
 .sy-proof-log h5{font-size:18px;line-height:24px;font-weight:700;color:var(--ink);margin-bottom:12px}
 .cs .sy-proof-log ul{list-style:none;padding:0;display:flex;flex-direction:column;gap:8px}
@@ -1238,22 +1241,22 @@ html{scroll-behavior:smooth}
   gap:18px;align-items:stretch;margin-top:56px}
 .sy-market-col{display:flex;flex-direction:column;gap:14px}
 .sy-market-row{background:#fff;border-radius:30px;padding:26px 32px;flex:1;
-  display:grid;grid-template-columns:24px 132px minmax(0,1fr);gap:16px;align-items:start}
-.sy-market-row img{width:24px;height:24px}
+  display:grid;grid-template-columns:132px minmax(0,1fr);gap:16px;align-items:start}
 .sy-market-row strong{font-size:18px;line-height:24px;font-weight:700;color:var(--brand)}
 .sy-market-row p{font-size:16px;line-height:22px;color:var(--body)}
 .sy-market-zero{background:#fff;border-radius:30px;padding:34px 30px 34px 38px;
   display:flex;flex-direction:column;justify-content:center;gap:14px}
 .sy-market-zero .n{font-size:72px;line-height:1;font-weight:600;
   color:var(--brand);letter-spacing:-.02em}
+.sy-market-zero .n .of{font-size:.5em;letter-spacing:0}
 .sy-market-zero p{font-size:16px;line-height:22px;color:var(--body)}
 
 /* ============ 14 · WHEN THE AGENT ISN'T SURE ============
    The five callouts sit in a loose arc in the deck; --off carries each row's
    horizontal offset so the arc survives, and collapses to 0 on narrow screens. */
-.sy-unsure{display:grid;grid-template-columns:minmax(0,340px) minmax(0,1fr);
+.sy-unsure{display:grid;grid-template-columns:minmax(0,1.25fr) minmax(0,1fr);
   gap:clamp(24px,4vw,64px);align-items:center;margin-top:56px}
-.sy-unsure-shot{width:100%;max-width:340px;height:auto;display:block;border-radius:18px}
+.sy-unsure-shot{width:100%;max-width:760px;height:auto;display:block;border-radius:18px;align-self:center}
 .sy-unsure-rows{display:flex;flex-direction:column;gap:18px}
 .sy-unsure-row{display:flex;align-items:center;width:79%}
 .sy-unsure-row:nth-child(1){margin-left:0}
@@ -1272,8 +1275,7 @@ html{scroll-behavior:smooth}
 /* the row keeps its 132px label column while the section is still two-up, which
    squeezes the copy to ~180px between 900 and 1250 - drop the copy to its own row */
 @media (max-width:1250px){
-  .sy-market-row{grid-template-columns:24px minmax(0,1fr);row-gap:8px}
-  .sy-market-row p{grid-column:1 / -1}
+  .sy-market-row{grid-template-columns:minmax(0,1fr);row-gap:8px}
 }
 @media (max-width:900px){
   .sy-market{grid-template-columns:1fr}
@@ -1296,3 +1298,27 @@ html{scrollbar-color:#d8e0ee transparent}
 @media (hover:hover) and (pointer:fine){
   ::-webkit-scrollbar-thumb:hover{background:#c6d2e4}
 }
+
+.sy-log-note{font-size:.78rem;color:#8b93a5;margin:10px 2px 0;line-height:1.5}
+
+/* prediction - three columns like the deck, images from the live demo */
+.sy-predict3{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:clamp(24px,3vw,40px);margin-top:56px}
+.sy-predict3 .hd{display:flex;align-items:center;gap:10px;margin-bottom:12px}
+.sy-predict3 .hd img{width:24px;height:24px}
+.sy-predict3 .hd strong{font-size:18px;line-height:24px;font-weight:700;color:var(--brand)}
+.sy-predict3 p{font-size:16px;line-height:22px;color:var(--body);margin-bottom:16px}
+.sy-predict3 img.cs-zoomable{width:100%;border-radius:12px;display:block}
+.sy-predict3 .duo{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+.sy-predict-band{display:flex;align-items:center;gap:28px;background:#fff;border-radius:16px;padding:24px 34px;margin-top:32px}
+.sy-predict-band .n{font-size:84px;line-height:88px;font-weight:700;color:var(--brand);letter-spacing:-.02em}
+.sy-predict-band .n span{font-size:42px}
+.sy-predict-band p{font-size:16px;line-height:22px;color:var(--body);max-width:380px}
+@media (max-width:900px){
+  .sy-predict3{grid-template-columns:1fr;gap:28px}
+  .sy-predict-band{flex-direction:column;align-items:flex-start;gap:8px;padding:22px 24px}
+}
+
+/* market + measurement source links - inherit colour, quiet underline */
+.sy-market a,.sy-sources a{color:inherit;text-decoration:underline;text-underline-offset:2px}
+.sy-market a:hover,.sy-sources a:hover{color:var(--brand)}
+.sy-market-zero .n{letter-spacing:-.01em}

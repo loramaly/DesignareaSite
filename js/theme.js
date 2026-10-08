@@ -19,10 +19,23 @@
     });
   }
 
+  /* a theme switch replays the hero entrance (portrait rising, text, chips)
+     exactly like a fresh load - same reanim-lock trick index.html uses when
+     landing back on home. On pages without that hero it does nothing. */
+  function replayHero() {
+    const body = document.body;
+    body.classList.add('reanim-lock');
+    void body.offsetWidth;
+    body.classList.remove('reanim-lock');
+  }
+
   const current = () => root.getAttribute('data-theme') === 'light' ? 'light' : 'dark';
 
   document.querySelectorAll('.theme-toggle').forEach(btn => {
-    btn.addEventListener('click', () => apply(current() === 'light' ? 'dark' : 'light', true));
+    btn.addEventListener('click', () => {
+      apply(current() === 'light' ? 'dark' : 'light', true);
+      replayHero();
+    });
   });
 
   apply(current(), false);

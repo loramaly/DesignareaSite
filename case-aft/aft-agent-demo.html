@@ -3,8 +3,8 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>AFT - Magic Pro Live Demo · Lora Maly</title>
-<meta name="description" content="Interactive concept demo of Magic Pro, the human-in-the-loop agent for the AFT syndicated-loan timeline. Fictional data. Designed & coded by Lora Maly.">
+<title>AFT - Magic Pro Live Demo · Larisa Maly</title>
+<meta name="description" content="Interactive concept demo of Magic Pro, the human-in-the-loop agent for the AFT syndicated-loan timeline. Fictional data. Designed & coded by Larisa Maly.">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=DM+Sans:opsz,wght@9..40,400;9..40,500;9..40,600;9..40,700&display=swap" rel="stylesheet">
@@ -251,6 +251,7 @@ svg{display:block}
 .newphase:hover{background:#f7f2ff}
 .tree-head .th-ics{display:flex;gap:12px;color:var(--ink-2);align-items:center}
 .tree-head .th-chev,.tree-head .th-x{display:none}   /* phone only - see the responsive block */
+.to-top{display:none}                                /* phone only - see the responsive block */
 /* the two knobs on the Table Fields icon slide along their tracks - a nudge on
    hover, the full travel once the panel is open, each one a beat after the other */
 #treeSettings circle{transform-box:fill-box;transform-origin:center;
@@ -632,6 +633,11 @@ body.dragging-x, body.dragging-x *{user-select:none}
 }
 .todayline::after{content:"";position:absolute;top:-1px;left:-3px;width:8px;height:8px;border-radius:50%;background:var(--purple-2)}
 .g-connect{position:absolute;inset:0;pointer-events:none;z-index:1}
+/* the "where is this?" answer: one ring around the bar we just travelled to */
+@keyframes revealRing{0%{box-shadow:0 0 0 0 rgba(130,55,247,.55)}
+  60%{box-shadow:0 0 0 7px rgba(130,55,247,0)}100%{box-shadow:0 0 0 0 rgba(130,55,247,0)}}
+.g-row.reveal-flash .bar,.g-row.reveal-flash .milestone{
+  animation:revealRing 1.3s ease-out 1;border-radius:6px}
 .g-connect path{stroke:#d0d6dd;stroke-width:1.5;fill:none}
 
 /* ================= Magic Pro drawer ================= */
@@ -1033,6 +1039,10 @@ body.dragging-x, body.dragging-x *{user-select:none}
 .mnav-scrim{display:none;position:fixed;left:0;right:0;top:50px;bottom:0;z-index:55;
   background:rgba(31,41,55,.34);opacity:0;pointer-events:none;transition:opacity .3s ease}
 .mnav-scrim.on{opacity:1;pointer-events:auto}
+/* same dim behind the agent, one layer under it - tapping it closes the agent */
+.drawer-scrim{display:none;position:fixed;left:0;right:0;top:50px;bottom:0;z-index:59;
+  background:rgba(31,41,55,.34);opacity:0;pointer-events:none;transition:opacity .3s ease}
+.drawer-scrim.on{opacity:1;pointer-events:auto}
 .mnav .ic{color:rgba(255,255,255,.9)}
 .mn-badge{margin-left:auto;background:var(--red);color:#fff;font-size:10.5px;font-weight:700;
   min-width:17px;height:17px;border-radius:999px;display:grid;place-items:center;padding:0 4px}
@@ -1172,44 +1182,91 @@ body.dragging-x, body.dragging-x *{user-select:none}
         handle that opens it again, so nothing ever covers the map.
         Between 700 and 900 it still fits side by side, so it stays there. ---- */
 @media (max-width:700px){
-  /* the two panes now share the height, so the column has to stop at the
-     viewport instead of growing with its content (flex items default to
-     min-height:auto, which is what let it run past the fold) */
-  .main{min-height:0}
-  .work{min-height:0}
-  .board{flex-direction:column;min-height:0}
+  /* ==========================================================================
+     A phone is not an app shell, it is a page.
+     Everything above used to be a fixed frame with the board scrolling inside
+     it, which is why the purple bar, the deal title, the tabs and the toolbar
+     all stayed put while only the middle moved. Here the whole column is
+     ordinary flow: one document, one scroll, top to bottom. The only thing that
+     pins itself is the Tasks card - see .board > .tree below.
+     ========================================================================== */
+  html,body{height:auto;min-height:100%}
+  /* No overflow-x:hidden here. Setting it on BOTH html and body turns the page
+     into a clipping container and kills position:sticky - measured: the Tasks
+     card scrolled straight off instead of pinning. The panels that used to park
+     off the right edge are taken out of the layout instead (.parked below), so
+     there is nothing to clip in the first place. */
+  body{display:block}
+  .mnav.parked,.dealbar-acts.parked{display:none!important}
+  /* The agent drawer waits off the right edge too. The board used to clip it,
+     but the board has to stay overflow:visible now or the sticky Tasks card
+     cannot pin - so the drawer clips itself instead: fixed to the viewport and
+     out of the layout until it is asked for. */
+  /* z-index 60 puts the agent above the deal-bar ⋯ (57). At 30 the ⋯ landed on
+     top of the drawer and, worse, exactly over the drawer's own X - so pressing
+     close hit the dots instead and the agent could not be dismissed at all. */
+  .drawer{position:fixed;top:50px;bottom:0;right:0;width:min(350px,88vw);z-index:60}
+  .drawer:not(.open){visibility:hidden;transform:translateX(100%)}
+  .drawer-scrim{display:block}
+  .main{display:block;min-width:0;min-height:0}
+  .work{display:block;min-height:0;padding:0}
+  .board{display:block;overflow:visible;min-height:0;border-radius:0}
   /* a card of its own, 16px of air on every side, with the header acting as the
      tab you press - so it reads as a panel that opens rather than a loose list.
      The split is a flex ratio, not a percentage height: a percentage resolves
      against the board only while its height is definite, and when it wasn't the
      card silently collapsed to the height of its own tab. Ratios always resolve. */
+  /* The one thing that pins. The whole white card sticks - frame, header and
+     list together, edge to edge - so once you have scrolled down to it, it
+     stays with you over the map. Whatever state you left it in is the state it
+     keeps: open stays open, folded stays folded. */
   .board > .tree{
-    position:relative;left:auto;right:auto;top:auto;bottom:auto;
-    width:auto!important;flex:9 1 54px!important;min-height:0;
-    margin:16px;z-index:6;
-    border:1px solid var(--line);border-radius:12px;
-    box-shadow:0 10px 22px -16px rgba(31,41,55,.45);
+    position:sticky;top:0;left:auto;right:auto;bottom:auto;
+    width:auto!important;flex:none!important;min-height:0;
+    margin:0;z-index:20;
+    border:none;border-bottom:1px solid var(--line);border-radius:0;
+    box-shadow:0 12px 24px -18px rgba(31,41,55,.55);
   }
   /* The flex change itself is instant on purpose: transitioning flex-grow (or
      flex-basis) here leaves a running transition frozen at its start value and
      the card never opens. The rows fade in instead, which reads just as soft. */
   /* folded - only the tab survives (52px tab + the card's own hairlines) */
-  .board.tree-min > .tree{display:flex!important;flex-grow:0!important}
+  .board.tree-min > .tree{display:flex!important;height:52px}
+  .board > .tree{height:46vh}          /* open: a fixed slice, its list scrolls inside */
   .board.tree-min > .tree .tree-rows{opacity:0;pointer-events:none}
-  .tree-rows{transition:opacity .18s ease;padding-bottom:40px;min-height:0}   /* folds to nothing under the tab */
+  .tree-rows{transition:opacity .18s ease;padding-bottom:24px;min-height:0}   /* folds to nothing under the tab */
   /* a full-width rule between the two halves - it draws the line under the task
      card so the list reads as its own band and the map starts below it */
-  .gantt{flex:11 1 0;min-height:0;border-top:1px solid var(--line)}
-  .g-rows{padding-bottom:40px}
+  /* the timeline still slides sideways, but it no longer scrolls vertically
+     inside itself - it grows to its full height and the page carries it */
+  .gantt{flex:none;height:auto;min-height:0;overflow-x:auto;overflow-y:hidden;
+    border-top:1px solid var(--line)}
+  .g-inner{min-height:0}
+  .g-rows{padding-bottom:24px}
+  /* nothing else pins itself: the month and week rows travel with the page */
+  .g-months,.g-weeks{position:static}
+  .to-top{
+    display:grid;place-items:center;position:fixed;right:14px;bottom:64px;z-index:54;
+    width:42px;height:42px;border-radius:50%;
+    background:#fff;border:1px solid var(--line);color:var(--ink-2);
+    box-shadow:0 6px 18px -6px rgba(31,41,55,.45);
+    opacity:0;pointer-events:none;transform:translateY(8px);
+    transition:opacity .22s ease, transform .22s cubic-bezier(.2,.8,.3,1);
+  }
+  .to-top.show{opacity:1;pointer-events:auto;transform:none}
+  .to-top svg{width:19px;height:19px}
   /* the panel has a fixed slot, so the floating "Tasks" button is redundant */
   .tree-expand{display:none!important}
   .tree-resizer{display:none!important}
   /* the tab itself: chevron first, then the word, hard left. Folded it rounds
      off on all four corners; open, it hands over to the list underneath. */
+  /* square: the card spans edge to edge now, so rounded corners only put two
+     stray notches against the sides of the screen. No rule under the title
+     either - the change of background already separates it from the list. */
   .tree-head{padding:0 10px 0 12px;flex:0 0 52px;height:52px;background:#f7f8fa;
-    border-radius:11px 11px 0 0;border-bottom:1px solid var(--line);
-    transition:border-radius .2s ease,border-color .2s ease}
-  .board.tree-min .tree-head{border-radius:11px;border-bottom-color:transparent}
+    border-radius:0;border-bottom:none}
+  /* nor under the month and week headings - the grid lines carry that job */
+  .g-months,.g-weeks{border-bottom:none}
   .tree-head .newphase{display:none}   /* reachable from inside the panel */
   .tree-head .th-ics{flex:1;gap:6px;justify-content:space-between}
   .tree-head .th-panel,.tree-head .th-x{display:none}
@@ -1337,9 +1394,10 @@ body.dragging-x, body.dragging-x *{user-select:none}
     <button class="r-ham" id="railHam" aria-label="Menu"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" style="width:21px;height:21px"><line class="l1" x1="4" y1="7" x2="20" y2="7"/><line class="l2" x1="4" y1="12" x2="20" y2="12"/><line class="l3" x1="4" y1="17" x2="20" y2="17"/></svg></button>
   </nav>
   <div class="mnav-scrim" id="mnavScrim" aria-hidden="true"></div>
+  <div class="drawer-scrim" id="drawerScrim" aria-hidden="true"></div>
   <div class="mnav-scrim" id="dealScrim" aria-hidden="true"></div>
   <div class="mnav-scrim" id="tfScrim" aria-hidden="true"></div>
-  <nav class="mnav" id="mnav" aria-label="Menu">
+  <nav class="mnav parked" id="mnav" aria-label="Menu">
     <button><svg class="ic" viewBox="0 0 24 24"><rect x="3" y="3" width="7" height="9" rx="1"/><rect x="14" y="3" width="7" height="5" rx="1"/><rect x="14" y="12" width="7" height="9" rx="1"/><rect x="3" y="16" width="7" height="5" rx="1"/></svg>Dashboard</button>
     <button><svg class="ic" viewBox="0 0 24 24"><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M22 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>Team</button>
     <button><svg class="ic" viewBox="0 0 24 24"><polyline points="22 12 16 12 14 15 10 15 8 12 2 12"/><path d="M5.45 5.11 2 12v6a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2v-6l-3.45-6.89A2 2 0 0 0 16.76 4H7.24a2 2 0 0 0-1.79 1.11z"/></svg>Inbox<span class="mn-badge">3</span></button>
@@ -1356,7 +1414,7 @@ body.dragging-x, body.dragging-x *{user-select:none}
       <button class="a-ic" aria-label="Files"><svg class="ic" viewBox="0 0 24 24"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg></button>
       <button class="a-ic" aria-label="Reminders"><svg class="ic" viewBox="0 0 24 24"><circle cx="12" cy="13" r="8"/><path d="M12 9v4l2 2"/><path d="M5 3 2 6"/><path d="m22 6-3-3"/></svg></button>
       <button class="a-ic" aria-label="Walkthrough"><svg class="ic" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><polygon points="10 8 16 12 10 16 10 8"/></svg></button>
-      <div class="avatar photo"><img src="data:image/jpeg;base64,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" alt="Lora Maly"></div>
+      <div class="avatar photo"><img src="data:image/jpeg;base64,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" alt="Larisa Maly"></div>
     </div>
 
     <!-- ===== deal bar ===== -->
@@ -1364,7 +1422,7 @@ body.dragging-x, body.dragging-x *{user-select:none}
       <h1>Amazon Global Syndicated Loan<span class="dot"></span></h1>
       <div class="spacer"></div>
       <!-- on a phone these fold behind the ⋮ below (see .dealbar-acts) -->
-      <div class="dealbar-acts" id="dealActs">
+      <div class="dealbar-acts parked" id="dealActs">
       <button class="bar-act"><span class="badge">1</span><svg class="ic sm" viewBox="0 0 20 20" style="fill:none;stroke-width:1.4"><path d="M15 17.5C16.3807 17.5 17.5 16.3807 17.5 15C17.5 13.6193 16.3807 12.5 15 12.5C13.6193 12.5 12.5 13.6193 12.5 15C12.5 16.3807 13.6193 17.5 15 17.5Z"/><path d="M5 7.5C6.38071 7.5 7.5 6.38071 7.5 5C7.5 3.61929 6.38071 2.5 5 2.5C3.61929 2.5 2.5 3.61929 2.5 5C2.5 6.38071 3.61929 7.5 5 7.5Z"/><path d="M5 17.5V7.5C5 9.48912 5.79018 11.3968 7.1967 12.8033C8.60322 14.2098 10.5109 15 12.5 15"/></svg><span class="bal">Countertrade</span></button>
       <button class="bar-act"><svg class="ic sm" viewBox="0 0 24 24"><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><line x1="19" y1="8" x2="19" y2="14"/><line x1="22" y1="11" x2="16" y2="11"/></svg><span class="bal">Invite</span></button>
       <button class="bar-act"><svg class="ic sm" viewBox="0 0 24 24"><rect x="3" y="3" width="7" height="7" rx="1"/><rect x="14" y="3" width="7" height="7" rx="1"/><rect x="3" y="14" width="7" height="7" rx="1"/><line x1="17.5" y1="14" x2="17.5" y2="21"/><line x1="14" y1="17.5" x2="21" y2="17.5"/></svg><span class="bal">Add Board</span></button>
@@ -1433,6 +1491,12 @@ body.dragging-x, body.dragging-x *{user-select:none}
             <div class="g-rows" id="gRows"></div>
           </div>
         </div>
+
+        <!-- phone only: with the timeline headers no longer pinned, this is the
+             way back up to them once you have scrolled past -->
+        <button class="to-top" id="toTop" aria-label="Back to top">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><line x1="12" y1="19" x2="12" y2="6"/><polyline points="6 12 12 6 18 12"/></svg>
+        </button>
 
         <button id="treeExpand" class="tree-expand" hidden title="Show panel">
           <svg class="ic sm" viewBox="0 0 24 24"><rect x="3" y="3" width="18" height="18" rx="2"/><line x1="9" y1="3" x2="9" y2="21"/></svg>
@@ -1506,10 +1570,10 @@ body.dragging-x, body.dragging-x *{user-select:none}
       <button id="mUnc" data-mode="uncertain" title="Conflicting data - the agent steps back">Uncertain</button>
     </div>
     <div class="ctl-sp"></div>
-    <span class="ctl-credit">Concept demo · fictional data · scripted agent simulation · designed &amp; built by Lora Maly</span>
-    <a class="disc-back" id="backPortfolio" href="https://designarea.co.il">
+    <span class="ctl-credit">Concept demo · fictional data · scripted agent simulation · designed &amp; built by Larisa Maly</span>
+    <a class="disc-back" id="backPortfolio" href="aft-timeline.html">
       <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><line x1="19" y1="12" x2="5" y2="12"/><polyline points="12 19 5 12 12 5"/></svg>
-      To portfolio
+      To the full case study
     </a>
     <button class="reset" id="resetBtn" title="Reset the demo" aria-label="Reset the demo">
       <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="1 4 1 10 7 10"/><path d="M3.51 15a9 9 0 1 0 2.13-9.36L1 10"/></svg>
@@ -3041,8 +3105,12 @@ document.getElementById('mpPresence').onclick = ()=>toggleAgent();
     acts.style.top=Math.round(r.top)+'px';
     acts.style.paddingTop=Math.round(r.height+6)+'px';
   };
-  const setOpen=o=>{ if(o) anchor();
-    acts.classList.toggle('open',o); more.classList.toggle('on',o);
+  const setOpen=o=>{
+    if(o){ acts.classList.remove('parked'); anchor(); void acts.offsetWidth;
+           setTimeout(()=>acts.classList.add('open'), 10); }
+    else { acts.classList.remove('open');
+           setTimeout(()=>{ if(!acts.classList.contains('open')) acts.classList.add('parked'); }, 400); }
+    more.classList.toggle('on',o);
     scrim.classList.toggle('on',o);
     more.setAttribute('aria-expanded', o?'true':'false'); };
   window.addEventListener('resize', ()=>{ if(acts.classList.contains('open')) anchor(); });
@@ -3153,8 +3221,15 @@ document.getElementById('autoFit').onclick = ()=>{
   window.addEventListener('resize', placeThumb);
   const mnav=document.getElementById('mnav'), ham=document.getElementById('railHam'),
         scrim=document.getElementById('mnavScrim');
-  /* the burger is also the close button - it folds into the X and stays on top */
-  const setNav=o=>{ mnav.classList.toggle('open',o); ham.classList.toggle('on',o);
+  /* the burger is also the close button - it folds into the X and stays on top.
+     park/unpark keeps the closed drawer out of the layout so it cannot widen
+     the page (which would have forced overflow-x:hidden and killed sticky) */
+  const setNav=o=>{
+    if(o){ mnav.classList.remove('parked'); void mnav.offsetWidth;
+           setTimeout(()=>mnav.classList.add('open'), 10); }
+    else { mnav.classList.remove('open');
+           setTimeout(()=>{ if(!mnav.classList.contains('open')) mnav.classList.add('parked'); }, 400); }
+    ham.classList.toggle('on',o);
     scrim.classList.toggle('on',o); ham.setAttribute('aria-expanded', o?'true':'false'); };
   ham.onclick=e=>{ e.stopPropagation(); setNav(!mnav.classList.contains('open')); };
   document.addEventListener('click', e=>{
@@ -3188,10 +3263,6 @@ document.getElementById('autoFit').onclick = ()=>{
   document.getElementById('cpClose').onclick = e=>{ e.stopPropagation(); pop.classList.remove('open'); info.classList.remove('on'); };
   document.addEventListener('click', e=>{
     if(pop.classList.contains('open') && !e.target.closest('#ctlPop')){ pop.classList.remove('open'); info.classList.remove('on'); }
-  });
-  /* back to portfolio: return to the page you came from, or the site itself */
-  document.getElementById('backPortfolio').addEventListener('click', e=>{
-    if(document.referrer && history.length>1){ e.preventDefault(); history.back(); }
   });
   /* ESC closes whatever floats on top */
   document.addEventListener('keydown', e=>{
@@ -3647,8 +3718,38 @@ document.getElementById('treeRows').addEventListener('click', e=>{
   /* from the tree every item opens the same peek - the repair modal
      belongs only to the agent's uncertain story */
   if(id==='agentrow'){ openAgent(); return; }
+  /* On a phone the two halves of a row mean two different things: the icon
+     asks "what is this?" and opens the peek, the name asks "where is this?"
+     and walks the timeline to it. On a wide screen both sides still open the
+     peek, because the timeline is already beside you there. */
+  if(matchMedia('(max-width:700px)').matches && hit.classList.contains('name')){
+    revealOnTimeline(id); return;
+  }
   openDetail(id);
 });
+
+/* find the row's bar on the timeline, bring it to the middle of the map and
+   flash it once, so the answer to "where is this?" is the map itself */
+function revealOnTimeline(id){
+  const gs=document.getElementById('ganttScroll');
+  const row=document.querySelector('#gRows .g-row[data-grow="'+id+'"]');
+  if(!gs||!row) return;
+  const bar=row.querySelector('.bar')||row.querySelector('.milestone')||row;
+  const r=bar.getBoundingClientRect(), g=gs.getBoundingClientRect();
+  gs.scrollTo({left:Math.max(0, gs.scrollLeft + (r.left+r.width/2)-(g.left+g.width/2)), behavior:'smooth'});
+  if(matchMedia('(max-width:700px)').matches){
+    /* the page scrolls on a phone, and the Tasks card is pinned to the top -
+       land the row clear of it rather than underneath it */
+    const card=document.querySelector('.board > .tree');
+    const clear=(card?card.getBoundingClientRect().height:0)+24;
+    const y=(window.pageYOffset||0)+row.getBoundingClientRect().top-clear;
+    window.scrollTo({top:Math.max(0,y), behavior:'smooth'});
+  }
+  clearTimeout(revealOnTimeline._t);
+  document.querySelectorAll('.g-row.reveal-flash').forEach(el=>el.classList.remove('reveal-flash'));
+  row.classList.add('reveal-flash');
+  revealOnTimeline._t=setTimeout(()=>row.classList.remove('reveal-flash'), 1400);
+}
 
 /* ---------- left panel: drag-resize + minimize ---------- */
 (function wireTreePanel(){
@@ -3741,6 +3842,70 @@ document.getElementById('treeRows').addEventListener('click', e=>{
   sc.addEventListener('pointerup', end);
   sc.addEventListener('pointercancel', end);
   window.__panEnd=end;
+})();
+
+/* ---------- phone: ways out of the agent drawer ----------
+   On the desktop the agent is a docked panel beside the board, so the X is the
+   only way out and that is fine. On a phone it covers the screen, and a panel
+   that covers the screen needs the two exits people reach for: a tap on the
+   dimmed board behind it, and Escape. Both go through the existing close
+   button so the dismissal still logs and toasts exactly as it always did. */
+(function wireDrawerDismiss(){
+  const dr=document.getElementById('drawer'), scrim=document.getElementById('drawerScrim');
+  const closeBtn=document.getElementById('mpClose');
+  if(!dr||!closeBtn) return;
+  const MOB=()=>matchMedia('(max-width:700px)').matches;
+  const shut=()=>{ if(dr.classList.contains('open')) closeBtn.click(); };
+  const outside=e=>{ if(MOB() && !e.target.closest('#drawer')) shut(); };
+  let armed=false;
+  const syncArm=()=>{
+    const open=dr.classList.contains('open');
+    if(scrim) scrim.classList.toggle('on', open && MOB());
+    if(open && !armed){
+      armed=true;
+      /* next tick, so the very click that opened it does not close it again */
+      setTimeout(()=>document.addEventListener('click', outside), 0);
+    }else if(!open && armed){
+      armed=false; document.removeEventListener('click', outside);
+    }
+  };
+  new MutationObserver(syncArm).observe(dr,{attributes:true,attributeFilter:['class']});
+  document.addEventListener('keydown', e=>{ if(e.key==='Escape') shut(); });
+  syncArm();
+})();
+
+/* ---------- phone: back to the top of the timeline ----------
+   Nothing is pinned any more, so the month and week rows scroll off with the
+   rest. This is how you get back to them without dragging all the way up. */
+(function wireToTop(){
+  const btn=document.getElementById('toTop');
+  if(!btn) return;
+  /* match the stylesheet, not window.innerWidth - they disagree whenever the
+     viewport is scaled, and then the button never appears */
+  const MOB=()=>matchMedia('(max-width:700px)').matches;
+  const y=()=>window.pageYOffset||document.documentElement.scrollTop||0;
+  const sync=()=>btn.classList.toggle('show', MOB() && y()>200);
+  /* Watch the top bar leave the screen rather than counting scroll events: an
+     observer fires from layout itself, so the button still appears in contexts
+     where scroll events are throttled or never dispatched at all. */
+  const rail=document.querySelector('.rail');
+  if(window.IntersectionObserver && rail){
+    new IntersectionObserver(es=>{
+      btn.classList.toggle('show', MOB() && !es[0].isIntersecting);
+    }, {threshold:0}).observe(rail);
+  }
+  window.addEventListener('scroll', sync, {passive:true});
+  window.addEventListener('resize', sync);
+  /* last resort: some embedded viewers dispatch neither scroll events nor
+     intersection changes. A cheap tick means the button is never simply absent. */
+  setInterval(()=>{ if(MOB()) sync(); }, 400);
+  btn.addEventListener('click', e=>{
+    e.stopPropagation();
+    window.scrollTo({top:0, behavior:'smooth'});
+    /* if the smooth scroll is throttled, still land at the top */
+    setTimeout(()=>{ if(y()>0) window.scrollTo(0,0); sync(); }, 420);
+  });
+  sync();
 })();
 
 /* ---------- pinch to zoom the timeline (touch only) ----------
