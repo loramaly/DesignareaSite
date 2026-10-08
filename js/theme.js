@@ -3,7 +3,7 @@
    snippet in each page's <head>, so the first paint is already correct and the
    page never flashes the wrong theme. This file only wires the button. */
 (function () {
-  const KEY = 'lm-theme-v2';
+  const KEY = 'lm-theme-v3';
   const root = document.documentElement;
 
   function apply(theme, remember) {

@@ -15,7 +15,7 @@
 <link rel="apple-touch-icon" sizes="180x180" href="assets/icons/apple-touch-icon.png">
 <script>/* dark is the default - only the visitor's own choice switches it, and the
    attribute is set before first paint so the page never flashes the wrong theme */
-(function(){try{var t=localStorage.getItem('lm-theme-v2');
+(function(){try{var t=localStorage.getItem('lm-theme-v3');
 document.documentElement.setAttribute('data-theme',t==='light'?'light':'dark');}
 catch(e){document.documentElement.setAttribute('data-theme','dark');}})();</script>
 </head>
@@ -24,13 +24,13 @@ catch(e){document.documentElement.setAttribute('data-theme','dark');}})();</scri
 <div class="page">
 
 <header class="sitebar">
-  <a class="logo" href="index.html">
+  <a class="logo" href="/">
       <img class="logo-mark" src="assets/images/logoColorful.png" alt="" width="31" height="31">
       <span class="logo-name">Larisa Maly</span>
     </a>
   <nav class="main-nav" id="mainNav" aria-label="Main">
-    <a href="index.html#recommendations"><svg viewBox="0 0 24 24"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg><span>Recommendations</span></a>
-    <a href="index.html#works"><svg viewBox="0 0 24 24"><rect x="2" y="7" width="20" height="14" rx="2"/><path d="M16 21V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16"/></svg><span>Portfolio</span></a>
+    <a href="/#recommendations"><svg viewBox="0 0 24 24"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg><span>Recommendations</span></a>
+    <a href="/#works"><svg viewBox="0 0 24 24"><rect x="2" y="7" width="20" height="14" rx="2"/><path d="M16 21V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16"/></svg><span>Portfolio</span></a>
     <a class="active" href="resume.html"><svg viewBox="0 0 24 24"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/></svg><span>Resume</span></a>
   </nav>
     <button class="theme-toggle" type="button" aria-pressed="false" aria-label="Switch to light theme" title="Switch to light theme">
