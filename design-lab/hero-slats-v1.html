@@ -11,7 +11,7 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700&family=Luxurious+Script&family=JetBrains+Mono:wght@400;500;600;700&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="css/styles.css?v=20260923b">
+<link rel="stylesheet" href="css/styles.css?v=20261009h">
 <link rel="stylesheet" href="css/light.css?v=20260814x">
 <link rel="icon" type="image/png" sizes="32x32" href="assets/icons/favicon-32x32.png">
 <link rel="icon" type="image/png" sizes="16x16" href="assets/icons/favicon-16x16.png">
@@ -57,6 +57,14 @@ addEventListener('pageshow', () => {
 :root[data-theme="light"] .tune{color:#241C3D}
 :root[data-theme="light"] .tune>button,:root[data-theme="light"] .tune .pane{background:rgba(255,255,255,.92);border-color:#C8B2F6}
 </style>
+<script>
+/* the agent label is JetBrains Mono 700. Painted before that file arrives it
+   shows in the system mono and then visibly jumps to the real face, so it
+   stays hidden until the font is in (or 1.5s pass, whichever is first) */
+(function(){var r=document.documentElement,done=function(){r.classList.add('mono-ready')};
+if(!document.fonts||!document.fonts.load){done();return}
+document.fonts.load('700 12px "JetBrains Mono"').then(done,done);setTimeout(done,1500)})();
+</script>
 </head>
 <body class="alt-split">
 <div class="bg-fx"><canvas class="slats-fx" aria-hidden="true"></canvas></div>

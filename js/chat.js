@@ -4,6 +4,7 @@ const AVATAR='assets/images/avatar.webp';
 const KB = [
   {
     chip:"What's your AI work?",
+    chipShort:'Your AI work?',
     hidden:true,
     keys:['ai','artificial','ml','machine','decision support'],
     text:'My AI work focuses on decision support and Human-in-the-Loop architectures in complex enterprise environments. At Partner, I designed AI Call Summary - an agent that condenses customer calls into summaries reps and managers use daily, always linked back to the source. I also redesigned technician field dispatch from tables to a live map with prioritization - assignment went from ~8 to ~4 minutes, and it\'s in daily use. On top of it I designed an agentic layer as a concept, where multi-agent workflows evaluate real-time variables - traffic patterns, weather constraints, technician schedules, admin priorities - to generate route recommendations. My focus was the UX logic: managing latency, building user trust, handling edge cases, and keeping the dispatcher in control. Beyond product features, I use AI daily in my design process - Claude and ChatGPT for research and synthetic user testing, Midjourney and Runway for quick conceptual assets, and rapid prototyping tools. I\'m always transparent about what is live in production versus conceptual exploration.',
@@ -33,6 +34,7 @@ const KB = [
   },
   {
     chip:'What is your methodology?',
+    chipShort:'Your method?',
     hidden:true,
     keys:['methodology','process','method','approach','production-ready','production ready','dev-ready','how do you work','workflow','design process','research','ux','user experience','ux design','\u05de\u05ea\u05d5\u05d3\u05d5\u05dc\u05d5\u05d2\u05d9\u05d4','\u05ea\u05d4\u05dc\u05d9\u05da','\u05e2\u05d9\u05e6\u05d5\u05d1'],
     text:'My methodology is built for complex, data-heavy systems where clarity and precision are non-negotiable. \n\n**Domain & Data Alignment:** I start by mapping the business logic, backend constraints and data flows with tech leads and product managers, so feasibility is checked early.\n\n**OOUX & Information Architecture:** I use Object-Oriented UX to structure complex entities and workflows into clear, scalable mental models.\n\n**Validation & Iteration:** I test assumptions with real user feedback, analytics and AI-assisted research before finalizing pixels.\n\n**Systemic & Dev-Ready Design:** production-ready interfaces on advanced Figma architecture - tokens, variables, clear state management - for a seamless handoff.',
@@ -49,6 +51,7 @@ const KB = [
   },
   {
     chip:'Have you led a team?',
+    chipShort:'Led a team?',
     keys:['lead','team','manage','management','mentor','head','hire','grew','leadership','\u05e6\u05d5\u05d5\u05ea','\u05e0\u05d9\u05d4\u05d5\u05dc'],
     text:'Yes.\n\n**Building at ElephantStock:** At ElephantStock I was Head of UX/UI & Creative - I built and led the design team from scratch while the company grew from 30 to 200+ employees, contributing to 3x revenue growth and our Top 10 selection for Google\'s E-commerce Growth Lab.\n\n**Right now:** At the Lead level, I drive impact less through direct management and more through systemic UX standards, design systems, and close partnership with dev and product leads.',
     more:'What building that team actually involved:\n\n**Hiring & Mentoring:** recruiting, structuring and mentoring designers and a video creator, plus managing external freelancers to scale when needed.\n\n**Standards:** setting a high bar for UI/UX quality, design-system adoption and design-to-dev handoff.\n\n**Business Alignment:** working directly with executive leadership, PMs and engineering leads to tie design to business KPIs.\n\n**Scaling:** building workflows that let the team scale smoothly alongside 30-to-200+ growth.',
@@ -63,6 +66,7 @@ const KB = [
   },
   {
     chip:'How do you measure success?',
+    chipShort:'Measuring success?',
     hidden:true,
     keys:['measure','success','metrics','kpi','impact','results','data','analytics','numbers'],
     text:'By concrete impact on business goals and user efficiency. In B2C and e-commerce, success is conversion rates, A/B testing and revenue growth. In enterprise SaaS it\'s operational: cutting handling time (9 minutes down to 1.5 per cellular order at Partner; technician assignment from ~8 to ~4 minutes), closing billing leakage, reducing manual errors, and streamlining complex daily workflows for operations teams.',
@@ -70,22 +74,19 @@ const KB = [
     tags:['A/B tested conversion lifts','Order time: 9 min to 1.5']
   },
   {
-    chip:'How do you use AI day to day?',
-    hidden:true,
+    chip:null,   // was 'How do you use AI day to day?' - off the question row, still answered when typed
     keys:['use ai','daily','tools','tool','figma','stack','software','photoshop','illustrator','chatgpt','claude','midjourney','workflow ai','prototype','prototypes','high-fidelity prototypes','high fidelity prototypes','framer','copilot','claude design','lovable','\u05e4\u05d9\u05d2\u05de\u05d4','\u05db\u05dc\u05d9\u05dd'],
     text:'I use AI as a core operational layer in my daily workflow.\n\n**Research, strategy and logic:** Claude, ChatGPT and Copilot to analyze dense requirements, map edge cases, synthesize research and stress-test information architecture before touching pixels.\n\n**Rapid prototyping:** Claude Code, Claude Design, Framer and Lovable to build functional, interactive prototypes early.\n\n**Visual exploration and motion:** Midjourney, Runway and Kling for conceptual assets, alongside Lottie for lightweight UI micro-animations.\n\nAI drastically accelerates my discovery and execution - but every architectural, UX and strategic decision remains human-led.',
     tags:['This site is the demo']
   },
   {
-    chip:'What are you looking for?',
-    hidden:true,
+    chip:null,   // was 'What are you looking for?' - off the question row, still answered when typed
     keys:['looking for','next role','company','what role','job','position','seeking','\u05de\u05d7\u05e4\u05e9\u05ea','\u05de\u05e9\u05e8\u05d4'],
     text:'**The role:** I\'m looking for my next challenge as a Senior or Lead Product Designer - a role where I can build complex, meaningful products I believe in.\n\n**The team:** I want a collaborative, strong team that values product vision, holds onto its why, and ships with impact - while keeping a healthy work-life balance.\n\n**The domain:** I thrive on deep systems and AI-driven platforms, with leading Israeli companies or global teams.\n\nWhat\'s the product you\'re hiring for?',
     tags:['Senior / Lead \u00b7 AI focus']
   },
   {
-    chip:'How can I reach you?',
-    hidden:true,
+    chip:null,   // was 'How can I reach you?' - off the question row, still answered when typed
     keys:['contact','email','hire','available','start','remote','salary','location','reach','\u05e7\u05e9\u05e8','\u05d8\u05dc\u05e4\u05d5\u05df','\u05de\u05d9\u05d9\u05dc','\u05e9\u05db\u05e8'],
     text:'The fastest way to reach me is email at larisamalyd@gmail.com, or phone / WhatsApp at +972-50-6763066. I\'m based in Israel and typically respond very quickly.',
     tags:['larisamalyd@gmail.com']
@@ -737,7 +738,7 @@ function ask(label,entry){
               setTimeout(()=>{
                 mb.firstChild.textContent='Tell me less';
                 mb.disabled=false;
-                if(hm){ hm.hidden=false; followTyping(mb); transitioning=false; return; }
+                if(hm){ slideMore(hm,true,()=>{ followTyping(mb); transitioning=false; }); return; }
                 hm=document.createElement('div');hm.className='more-content';
                 hm.innerHTML='<span class="typing"><i></i><i></i><i></i></span>';
                 lastBubble.insertBefore(hm,mb);followTyping(hm);
@@ -752,9 +753,9 @@ function ask(label,entry){
               mb.classList.remove('open');
               mb.setAttribute('aria-expanded','false');
               mb.firstChild.textContent='Tell me more';
-              if(hm) hm.hidden=true;
               mb.disabled=false;
-              transitioning=false;
+              if(hm) slideMore(hm,false,()=>{ transitioning=false; });
+              else transitioning=false;
             }
           };
           lastBubble.appendChild(mb);
@@ -811,6 +812,22 @@ function ask(label,entry){
     });
   },think);
 }
+/* "Tell me more" after its first typed reveal: the extra text folds open and
+   shut instead of jumping - height, a soft fade and a small drift, so the tags
+   and thumbs below glide with it */
+function slideMore(el, open, done){
+  const quick=matchMedia('(prefers-reduced-motion: reduce)').matches;
+  el.hidden=false;
+  const h=el.scrollHeight, mt=getComputedStyle(el).marginTop;
+  const shut={height:'0px',marginTop:'0px',opacity:0,transform:'translateY(-6px)'};
+  const full={height:h+'px',marginTop:mt,opacity:1,transform:'none'};
+  el.style.overflow='hidden';
+  const anim=el.animate(open?[shut,full]:[full,shut],{
+    duration:quick?120:(open?420:320),
+    easing:open?'cubic-bezier(.23,1,.32,1)':'cubic-bezier(.4,0,.6,1)'
+  });
+  anim.onfinish=()=>{ el.style.overflow=''; if(!open) el.hidden=true; if(done) done(); };
+}
 function addFeedback(holder, questionLabel){
   const row=document.createElement('div');row.className='feedback';
   const upSvg='<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M14 9V5a3 3 0 0 0-3-3l-4 9v11h11.28a2 2 0 0 0 2-1.7l1.38-9a2 2 0 0 0-2-2.3zM7 22H4a2 2 0 0 1-2-2v-7a2 2 0 0 1 2-2h3"/></svg>';
@@ -819,21 +836,34 @@ function addFeedback(holder, questionLabel){
   const down=document.createElement('button');down.className='fb';down.innerHTML=downSvg;down.setAttribute('aria-label','Not helpful');
   row.appendChild(up);row.appendChild(down);
   holder.appendChild(row);
+  /* a vote can change: tap the other thumb to switch, tap the same one again
+     to take the vote back. Only one note shows at a time. */
+  let note=null, noteTimer=0;
+  function clearNote(){ clearTimeout(noteTimer); if(note){ note.remove(); note=null; } }
   function react(chosen, other, positive){
-    chosen.classList.add('active');other.classList.add('dimmed');
-    chosen.onclick=null;other.onclick=null;
-    const note=document.createElement('span');note.className='fb-note';
+    clearNote();
+    if (chosen.classList.contains('active')) {   // same thumb again: undo
+      chosen.classList.remove('active'); other.classList.remove('dimmed');
+      chosen.setAttribute('aria-pressed','false');
+      return;
+    }
+    chosen.classList.add('active'); chosen.classList.remove('dimmed');
+    other.classList.remove('active'); other.classList.add('dimmed');
+    chosen.setAttribute('aria-pressed','true'); other.setAttribute('aria-pressed','false');
+    note=document.createElement('span');note.className='fb-note';
     note.innerHTML = positive
       ? 'Noted, thanks!'
       : 'Fair - the unscripted me does better: <a href="mailto:larisamalyd@gmail.com">larisamalyd@gmail.com</a>';
     row.appendChild(note);scrollDown();
     if (positive) {
-      setTimeout(()=>{ note.classList.add('fade'); setTimeout(()=>note.remove(), 700); }, 30000);
+      const n=note;
+      noteTimer=setTimeout(()=>{ n.classList.add('fade'); setTimeout(()=>{ n.remove(); if(note===n) note=null; }, 700); }, 30000);
     }
     /* Feedback hook: currently stays in the visitor's browser only.
        To receive it, POST to a form endpoint (e.g. Formspree) here: */
     // fetch('[FEEDBACK-ENDPOINT]',{method:'POST',body:JSON.stringify({q:questionLabel,helpful:positive})});
   }
+  up.setAttribute('aria-pressed','false'); down.setAttribute('aria-pressed','false');
   up.onclick=()=>react(up,down,true);
   down.onclick=()=>react(down,up,false);
 }

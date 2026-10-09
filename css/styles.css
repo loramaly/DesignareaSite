@@ -218,7 +218,7 @@ body.menu-open header{z-index:100}
 .msg-p+.msg-p{margin-top:10px}
 .msg-link{display:inline-block;margin-top:8px;color:var(--text-dim);font-size:14px;text-decoration:none;border-bottom:1px solid var(--text-dim)}
 .msg-link:hover{color:var(--text)}
-.tag{font-size:12.5px;color:#7BE0B0;border-radius:6px;padding:4px 8px;background:rgba(123,224,176,.07);
+.tag{font-size:12.5px;color:#CDB9FF;border-radius:6px;padding:4px 8px;background:rgba(195,167,255,.10);   /* light violet on a see-through violet - part of the palette, not a second accent */
   display:inline-flex;align-items:center;gap:5px;margin-top:6px;margin-bottom:6px}
 .tag svg{width:12px;height:12px;flex:none;fill:none;stroke:currentColor;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round}
 .typing{display:inline-flex;gap:5px;padding:4px 0}
@@ -232,7 +232,8 @@ body.menu-open header{z-index:100}
 .fb:hover{color:var(--text)}
 .fb.active{color:var(--input-line)}
 .fb.active svg{fill:currentColor}
-.fb.dimmed{opacity:.35;pointer-events:none}
+.fb.dimmed{opacity:.35}                       /* still clickable - a vote can be switched */
+.fb.dimmed:hover{opacity:.8}
 .fb-note{font-size:12.5px;color:var(--text-dim);animation:rise .25s ease both;transition:opacity .6s}
 .fb-note.fade{opacity:0}
 .fb-note a{color:var(--text)}
@@ -619,7 +620,11 @@ body.reanim-lock .dice-in{
   margin-left:-210px;position:relative;z-index:2}  /* rides 210px into the image's empty margin */
 .case-card.rev{flex-direction:row-reverse}
 .case-card.rev .case-body{margin-left:0;margin-right:-120px}
-@media (min-width:1200px){
+/* 1380, not 1200: between those widths the side-by-side row does not fit -
+   the CTA column was pushed up to 120px past the card edge - so the card
+   stacks (button underneath) until 1379. Keep in step with the <=1379 block
+   below and the light-theme fold in light.css. */
+@media (min-width:1380px){
   .case-body{justify-content:flex-start;padding-top:100px}  /* fixed gap from frame top to the tag row, large screens only */
   .case-media img{margin-left:-70px}   /* deliberately breaks the frame on the left */
 }
@@ -789,7 +794,7 @@ body.reanim-lock .dice-in{
   .case-demo-link .live-dot::after{animation:none}
 }
 
-@media (max-width:1199px){
+@media (max-width:1379px){
   /* The breakout is a percentage of the card, so it grows with the viewport and
      a fixed gap only holds at one width. Both numbers track it instead:
      media column = 52% of the card, image rises 26% of that column. */
@@ -1247,6 +1252,68 @@ body.has-modal{overflow:hidden}
 /* --- chat panel frame: 24px side padding, thin border --- */
 .alt-split .chat{--chatpad:24px;border:1px solid var(--chip-line);padding:0 var(--chatpad) 24px}
 @media (max-width:900px){.alt-split .chat{--chatpad:20px}}
+/* --- chat glass: glassmorphism on the chat panel. More see-through fill with
+   a backdrop blur (the hero band shows through), a diagonal glass sheen from
+   the top-left, and a lit edge that fades from that corner. The sheen sits
+   under the content (z-index:-1 inside the panel's own stacking context).
+   One block to delete if it goes. --- */
+.alt-split .chat{
+  background:linear-gradient(180deg,rgba(87,56,182,.62),rgba(56,35,118,.74));
+  -webkit-backdrop-filter:blur(16px) saturate(150%);
+          backdrop-filter:blur(16px) saturate(150%);
+  box-shadow:0 24px 60px rgba(0,0,0,.35),
+             inset 0 1px 0 rgba(255,255,255,.22);
+}
+.alt-split .chat::before,
+.alt-split .chat::after{content:"";position:absolute;inset:0;border-radius:inherit;pointer-events:none;z-index:-1}
+/* the sheen: a soft light across the glass, fuller on the left and fading to
+   a trace on the right - no diagonal streak, no bright spot */
+.alt-split .chat::before{
+  background:
+    linear-gradient(180deg,rgba(255,255,255,.08),rgba(255,255,255,0) 38%),
+    linear-gradient(90deg,rgba(255,255,255,.09),rgba(255,255,255,.04) 55%,rgba(255,255,255,.015));
+}
+/* the lit edge: bright at the top-left corner, fading along the frame */
+.alt-split .chat::after{
+  inset:-1px;padding:1px;
+  background:linear-gradient(150deg,rgba(255,255,255,.55),rgba(255,255,255,.08) 35%,rgba(255,255,255,0) 60%,rgba(200,170,255,.25));
+  -webkit-mask:linear-gradient(#000 0 0) content-box,linear-gradient(#000 0 0);
+  -webkit-mask-composite:xor;
+          mask:linear-gradient(#000 0 0) content-box exclude,linear-gradient(#000 0 0);
+}
+:root[data-theme="light"] .alt-split .chat{
+  background:linear-gradient(180deg,rgba(255,255,255,.58),rgba(246,244,252,.70));
+  box-shadow:0 18px 44px rgba(53,38,104,.10), 0 2px 8px rgba(53,38,104,.06),
+             inset 0 1px 0 rgba(255,255,255,.95);
+}
+:root[data-theme="light"] .alt-split .chat::before{
+  background:
+    linear-gradient(180deg,rgba(255,255,255,.5),rgba(255,255,255,0) 38%),
+    linear-gradient(90deg,rgba(255,255,255,.55),rgba(255,255,255,.22) 55%,rgba(255,255,255,.08));
+}
+:root[data-theme="light"] .alt-split .chat::after{
+  background:linear-gradient(150deg,rgba(255,255,255,1),rgba(255,255,255,.2) 35%,rgba(255,255,255,0) 60%,rgba(155,123,240,.35));
+}
+/* the question bubble: a small convex glass pill - lighter on top, a lit top
+   rim, a soft inner shade at the bottom and a gentle drop, so it sits a touch
+   raised off the panel */
+.alt-split .msg.user{
+  background:linear-gradient(180deg,rgba(255,255,255,.16),rgba(255,255,255,.08) 60%,rgba(255,255,255,.05));
+  -webkit-backdrop-filter:blur(10px) saturate(140%);
+          backdrop-filter:blur(10px) saturate(140%);
+  border-color:rgba(214,195,255,.36);
+  /* dark reads the dome stronger than light does, so it is eased here */
+  box-shadow:inset 0 1px 0 rgba(255,255,255,.24),
+             inset 0 -5px 9px rgba(40,20,100,.10),
+             0 5px 12px rgba(20,8,60,.16);
+}
+:root[data-theme="light"] .alt-split .msg.user{
+  /* lighter inside, with a gentler lilac falloff */
+  background:linear-gradient(180deg,rgba(255,255,255,.97),rgba(247,245,253,.93) 60%,rgba(241,237,252,.93));
+  box-shadow:inset 0 1px 0 #fff,
+             inset 0 -5px 9px rgba(108,63,232,.035),
+             0 6px 14px rgba(53,38,104,.10);
+}
 /* the thread's scrollbar offset must match the narrower padding or it overflows;
    600px before scrolling kicks in - more room for answers */
 .alt-split .thread{margin-right:-20px;padding-right:20px;max-height:600px}
@@ -1330,6 +1397,7 @@ body.has-modal{overflow:hidden}
 }
 /* the "N+" chip carries no caret icon */
 .alt-split .chip.more::after{content:none}
+.chip.more[hidden]{display:none!important}   /* the counter hides when nothing is tucked away */
 /* a little more air above the opening question */
 .alt-split .thread .msg.user:first-child{margin-top:10px}
 /* smaller answers + a tighter "Tell me more" chip */
@@ -1613,10 +1681,9 @@ body.flow-qs .chips-row > .chip.more{animation:chipFade .35s ease-out .45s both!
 .alt-split .dice{opacity:0;animation:none!important}
 body.flow-qs .dice{opacity:1;animation:diceRoll .65s ease-out .7s both!important}
 
-/* the agent label reads in full white with the site's soft shadow language */
+/* the agent label reads in full white - no text shadow, in either theme */
 .alt-split .agent-status{
   color:var(--text);
-  text-shadow:0 2px 10px rgba(0,0,0,.35);
 }
 /* footer copyright line: smaller on small screens so it stays ONE line */
 @media (max-width:900px){
@@ -1624,10 +1691,9 @@ body.flow-qs .dice{opacity:1;animation:diceRoll .65s ease-out .7s both!important
 }
 
 /* light theme: the agent strip sits on a clean WHITE background (the dark
-   theme keeps its translucent black); the heavy text shadow softens so it
-   does not read as dirt on white */
+   theme keeps its translucent black) */
 [data-theme="light"] .alt-split .agent-head{background:#fff}
-[data-theme="light"] .alt-split .agent-status{text-shadow:0 1px 3px rgba(0,0,0,.12)}
+
 
 /* every question participates in the fill-the-row logic - the old mobile
    vis-5plus hiding would silently break the N+ count */

@@ -9,7 +9,7 @@
   function apply(theme, remember) {
     root.setAttribute('data-theme', theme);
     // only an explicit click is remembered - otherwise dark stays the default
-    if (remember) { try { localStorage.setItem(KEY, theme); } catch (e) {} }
+    if (remember) { try { sessionStorage.setItem(KEY, theme); } catch (e) {} }
     document.querySelectorAll('.theme-toggle').forEach(btn => {
       const light = theme === 'light';
       btn.setAttribute('aria-pressed', String(light));

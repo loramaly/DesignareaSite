@@ -16,7 +16,7 @@
 <link rel="apple-touch-icon" sizes="180x180" href="../assets/icons/apple-touch-icon.png">
 <script>/* dark is the default - only the visitor's own choice switches it, and the
    attribute is set before first paint so the page never flashes the wrong theme */
-(function(){try{var t=localStorage.getItem('lm-theme-v3');
+(function(){try{var t=sessionStorage.getItem('lm-theme-v3');
 document.documentElement.setAttribute('data-theme',t==='light'?'light':'dark');}
 catch(e){document.documentElement.setAttribute('data-theme','dark');}})();</script>
 

@@ -209,7 +209,7 @@
 
 /* near-white text and icons that would vanish */
 :root[data-theme="light"] .thread-actions .cbtn svg{stroke:#6C5F9A}
-:root[data-theme="light"] .tag{color:#0A7256;background:rgba(14,158,120,.09)}
+:root[data-theme="light"] .tag{color:#6E6A80;background:rgba(36,28,61,.05)}   /* quiet grey on light - violet pulled the eye here */
 :root[data-theme="light"] .inputrow input::placeholder,
 :root[data-theme="light"] .inputrow.nudge input::placeholder{color:#8A83A3}
 :root[data-theme="light"] .inputrow.nudge{background:rgba(108,63,232,.07)}
@@ -263,7 +263,7 @@
 
 /* surprise-me dice: purple ring and glyph, purple wash on hover */
 :root[data-theme="light"] .dice{
-  color:var(--btn);border-color:var(--chip-line);
+  color:var(--btn);border-color:var(--line-vivid);
 }
 :root[data-theme="light"] .dice:hover{
   color:var(--btn-see);border-color:var(--btn);background:rgba(108,63,232,.08);
@@ -274,7 +274,7 @@
 :root[data-theme="light"] .chip:hover{
   color:var(--btn-see);border-color:var(--btn);background:rgba(108,63,232,.07);
 }
-:root[data-theme="light"] .chip.more{color:#8A83A3;background:transparent;border-style:dashed}
+:root[data-theme="light"] .chip.more{color:#7E7A8C;background:rgba(36,28,61,.035);border-style:dashed;border-color:#CFCCD8}   /* the "N+" counter: light grey - the questions carry the colour, the counter stays quiet */
 :root[data-theme="light"] .chip.more:hover{color:var(--btn)}
 
 /* the input row and its icons */
@@ -307,10 +307,12 @@
 :root[data-theme="light"] .fb.active{color:var(--btn)}
 :root[data-theme="light"] .fb-note{color:#6E6786}
 :root[data-theme="light"] .fb-note a{color:var(--btn)}
+/* "Tell me more" on light: dark grey like the answer text, not violet - it is
+   a quiet continuation, not a call to action */
 :root[data-theme="light"] .more-chip{
-  color:var(--btn);border-color:var(--line-vivid);background:#fff;
+  color:#3A3550;border-color:#CFCBDA;background:#fff;
 }
-:root[data-theme="light"] .more-chip:hover{background:rgba(108,63,232,.08);border-color:var(--btn)}
+:root[data-theme="light"] .more-chip:hover{background:rgba(36,28,61,.05);border-color:#A9A4B8}
 
 /* the dice sparkle particles were white and near-white */
 :root[data-theme="light"] .dice-spark{color:var(--btn)}
@@ -373,7 +375,7 @@
    It is not drawn as a line but as a fold: 2px of light with a soft shade cast
    back onto the story side, so the panel reads as part of the same card turned
    slightly toward you. */
-@media (min-width:1200px){
+@media (min-width:1380px){   /* matches the case-card stacking point in styles.css */
   :root[data-theme="light"] .case-card.tint-blue .case-cta,:root[data-theme="light"] .case-card.tint-violet .case-cta{
     border-left-color:transparent;position:relative}
   :root[data-theme="light"] .case-card.tint-blue .case-cta::before,:root[data-theme="light"] .case-card.tint-violet .case-cta::before{
@@ -491,3 +493,10 @@
 :root[data-theme="light"] .cs-modal-ghost:hover{border-color:rgba(36,28,61,.45);color:#241C3D}
 :root[data-theme="light"] .cs-modal-close{color:#7A7387}
 :root[data-theme="light"] .cs-modal-close:hover{background:rgba(36,28,61,.07);color:#241C3D}
+
+/* chat structure on light: the grips and the dividers are light grey, so the
+   violet stays on what you read and press, not on the scaffolding */
+:root[data-theme="light"] .drag-handle{border-top-color:#E1DEE7}
+:root[data-theme="light"] .drag-handle span,
+:root[data-theme="light"] .alt-split .side-handle span{background:#CBC7D4}
+:root[data-theme="light"] .alt-split .agent-head{border-bottom-color:#E1DEE7}

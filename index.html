@@ -8,14 +8,14 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700&family=Luxurious+Script&family=JetBrains+Mono:wght@400;500;600;700&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="css/styles.css?v=20261009e">
-<link rel="stylesheet" href="css/light.css?v=20260814x">
+<link rel="stylesheet" href="css/styles.css?v=20261009v">
+<link rel="stylesheet" href="css/light.css?v=20261009t">
 <link rel="icon" type="image/png" sizes="32x32" href="assets/icons/favicon-32x32.png">
 <link rel="icon" type="image/png" sizes="16x16" href="assets/icons/favicon-16x16.png">
 <link rel="apple-touch-icon" sizes="180x180" href="assets/icons/apple-touch-icon.png">
 <script>/* dark is the default - only the visitor's own choice switches it, and the
    attribute is set before first paint so the page never flashes the wrong theme */
-(function(){try{var t=localStorage.getItem('lm-theme-v3');
+(function(){try{var t=sessionStorage.getItem('lm-theme-v3');
 document.documentElement.setAttribute('data-theme',t==='light'?'light':'dark');}
 catch(e){document.documentElement.setAttribute('data-theme','dark');}})();</script>
 
@@ -406,7 +406,7 @@ addEventListener('pageshow', () => {
 </div>
 
 <script src="js/back-to-top.js?v=20260807"></script>
-<script src="js/chat.js?v=20261009y"></script>
+<script src="js/chat.js?v=20261009w"></script>
 <script>
 /* Hero 2.0: the chat starts open on one Q&A pulled from the scripted KB in
    js/chat.js. The opener shows the intro + first principle; the other three
@@ -435,8 +435,10 @@ addEventListener('pageshow', () => {
     let tucked = 0;
     const relabel = () => {
       if (moreBtn.getAttribute('aria-expanded') === 'true') return;   /* shows "less" */
-      const want = (KB.filter(k => k.hidden).length + tucked) + '+';
+      const n = KB.filter(k => k.hidden).length + tucked;
+      const want = n + '+';
       if (moreBtn.textContent !== want) moreBtn.textContent = want;
+      moreBtn.hidden = n === 0;   /* nothing tucked away - no "0+" */
     };
     /* the row fills itself: questions reveal as far as the width allows and
        the last one may sit half-visible, fading out (the CSS mask). N+ counts
