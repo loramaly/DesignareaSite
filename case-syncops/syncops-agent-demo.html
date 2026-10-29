@@ -1,8 +1,36 @@
 <!DOCTYPE html>
 <html lang="en" dir="ltr">
 <head>
+<script src="../js/analytics.js?v=1"></script>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
+<!-- ?shot=jobs / ?shot=map: the demo as a picture, for the live cards and the case hero (js/live-syncops.js frames
+     it) - no demo bar, no tour, no toasts, no clicks, never scrolls the page around it. jobs: the Jobs board right
+     under the KPIs, the map pushed below the frame. map: the pins drop and the route draws itself again on a loop.
+     Without ?shot nothing changes. -->
+<script>window.__SHOT = (location.search.match(/[?&]shot=(\w+)/) || [])[1] || '';
+if (window.__SHOT) {
+  document.documentElement.classList.add('shot');
+  Element.prototype.scrollIntoView = function () {};
+  HTMLElement.prototype.focus = function () {};
+}
+if (window.__SHOT && window.__SHOT !== 'jobs') document.documentElement.classList.add('shot-set');
+if (window.__SHOT === 'jobs') addEventListener('load', function () {
+  // the grid lays itself out in several passes after load - set the order through the grid itself, after each
+  function order() {
+    var g = window._grid, it = document.querySelectorAll('#dashgrid > .grid-stack-item');
+    if (!g || it.length !== 3) return;
+    try { g.batchUpdate(); g.update(it[2], { y: 0, h: 11 }); g.update(it[0], { y: 11 }); g.update(it[1], { y: 11 }); }
+    finally { try { g.batchUpdate(false); } catch (e) {} }
+  }
+  [0, 400, 1200, 2700].forEach(function (t) { setTimeout(order, t); });
+  setTimeout(function () { document.documentElement.classList.add('shot-set'); }, 2900);
+});</script>
+<style>html.shot #demoCtl,html.shot #dockTab,html.shot #tour,html.shot #toast{display:none!important}
+html.shot,html.shot body{overflow:hidden!important;pointer-events:none!important}
+/* jobs: the board is hidden until the grid has settled in its new order, so the picture never shows the shuffle */
+html.shot #dashgrid{transition:opacity .5s ease}
+html.shot:not(.shot-set) #dashgrid{opacity:0}</style>
 <title>SyncOps · v232</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -1095,6 +1123,11 @@ img.ic:not(.ic-w):not(.ic-raw):not([src*="fire"]):not([src*="critical"]):not([sr
    appears rather than staying hidden. */
 (function(){
  var el=document.getElementById('dashgrid');if(!el)return;
+ if (window.__SHOT === 'jobs') {   /* ?shot=jobs: the Jobs board first, under the KPIs; the map and the technicians below the frame */
+  var gsi = el.querySelectorAll(':scope > .grid-stack-item');
+  if (gsi.length === 3) { gsi[2].setAttribute('gs-y', '0'); gsi[2].setAttribute('gs-h', '11');
+    gsi[0].setAttribute('gs-y', '11'); gsi[1].setAttribute('gs-y', '11'); }
+ }
  var out=[];
  el.querySelectorAll(':scope > .grid-stack-item').forEach(function(it,i){
   out.push({i:i,x:+(it.getAttribute('gs-x')||0),y:+(it.getAttribute('gs-y')||0),
@@ -1789,6 +1822,7 @@ function drawRoute(from,to){var k=from.join()+'|'+to.join();if(RC[k])return;RC[k
    geo.coordinates.unshift(from);geo.coordinates.push(to);
    var id='route'+RIDS.length;RIDS.push(id);
    var full=geo.coordinates.slice();
+   (window._rtFull=window._rtFull||{})[id]=full;   /* ?shot=map replays it */
    var animate=!!window._routeAnim;
    map.addSource(id,{type:'geojson',data:{type:'Feature',geometry:animate?{type:'LineString',coordinates:[full[0],full[0]]}:geo}});
    map.addLayer({id:id+'-glow',type:'line',source:id,layout:{'line-cap':'round','line-join':'round'},paint:{'line-color':'#5bc9e8','line-width':5,'line-opacity':.1,'line-blur':2}});
@@ -1808,6 +1842,45 @@ function drawRoute(from,to){var k=from.join()+'|'+to.join();if(RC[k])return;RC[k
 /* routes present at load appear instantly, routes a decision creates draw themselves */
 window._routeAnim=false;
 setTimeout(function(){window._routeAnim=true;},2500);
+/* ?shot=map: the map as a living picture - every 9s the pins drop in again and each route draws itself again */
+if (window.__SHOT === 'map') map.on('load', function () {
+  /* framed in the picture, the pins sat low and half below the frame: the map comes up 156px and in 10%, and the
+     pins themselves grow 10% (the demo sizes them by zoom through --mks; this sets it after its own pass) */
+  /* after the demo's own fit on load (about 1.3s): zoom in 10%, then measure where the pins are and bring their
+     middle to the middle of what the picture shows (the map down to y 769 at 1440 wide), on the same side */
+  setTimeout(function () {
+    try {
+      map.jumpTo({ zoom: map.getZoom() + Math.log2(1.1) });
+      var mr = document.getElementById('map').getBoundingClientRect(), ys = [];
+      document.querySelectorAll('.mapboxgl-marker').forEach(function (m) {
+        var r = m.getBoundingClientRect();
+        if (r.width && r.left > mr.left && r.right < mr.right && r.top > mr.top && r.bottom < mr.bottom) ys.push(r.bottom);
+      });
+      if (ys.length) {
+        var cy = ys.reduce(function (a, b) { return a + b; }, 0) / ys.length, want = mr.top + (769 - mr.top) / 2;
+        map.panBy([0, cy - want], { animate: false });
+      }
+      var mks = parseFloat(getComputedStyle(map.getContainer()).getPropertyValue('--mks')) || 1;
+      map.getContainer().style.setProperty('--mks', (mks * 1.1).toFixed(3));
+    } catch (e) {}
+  }, 1900);
+  function replay() {
+    try { window._dropIn && window._dropIn(); } catch (e) {}
+    Object.keys(window._rtFull || {}).forEach(function (id) {
+      var src = map.getSource(id), full = window._rtFull[id], dur = 1900, t0 = null;
+      if (!src || !full) return;
+      setTimeout(function () {
+        var step = function (ts) { if (t0 === null) t0 = ts;
+          var e = Math.min(1, (ts - t0) / dur), ease = e < .5 ? 2 * e * e : 1 - Math.pow(-2 * e + 2, 2) / 2;
+          var n = Math.max(2, Math.round(full.length * ease));
+          try { src.setData({ type: 'Feature', geometry: { type: 'LineString', coordinates: full.slice(0, n) } }); } catch (err) {}
+          if (e < 1) requestAnimationFrame(step); };
+        requestAnimationFrame(step);
+      }, 900);
+    });
+  }
+  setTimeout(function () { replay(); setInterval(replay, 9000); }, 2300);
+});
 map.on('load',function(){INCIDENTS.forEach(function(x){if(x.routeFrom)drawRoute(x.routeFrom,x.coord);});setTimeout(function(){window._dropIn&&window._dropIn();},260);});
 </script>
 <script>

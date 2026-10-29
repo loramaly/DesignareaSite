@@ -1,0 +1,384 @@
+<!doctype html>
+<html lang="he">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Critera isometry</title>
+<!-- Critera: desktop + mobile, frame "slab" (violet edge), isometric view. Embedded in ../critera.html as the cover. Keep it flat beside its mp4/jpg files. -->
+<style>
+
+/* Layout: one dark gallery wall in the case-cover palette; four equal stages, each a 1140:975 slot like the cover placeholder */
+:root{
+  color-scheme:normal; /* must match the embedding page or the iframe paints an opaque backdrop */
+  --bg:#0c0a18; --panel:#151127; --line:#2c2548; --fg:#efecfa; --mute:#a69fc4;
+  --accent:#7a56ea; --accent-soft:#b9a6ff;
+  --stage-a:#0e0c1e; --stage-b:#2b1d55;
+  --ui:"Golos Text",system-ui,-apple-system,"Segoe UI",sans-serif;
+  --he:"Heebo","Arial Hebrew",Arial,sans-serif;
+}
+body{background:var(--bg);color:var(--fg);font-family:var(--ui);font-size:15px;line-height:1.5}
+.wrap{max-width:1180px;margin:0 auto;padding-inline:20px;padding-block:36px 56px;display:flex;flex-direction:column;gap:28px}
+header{display:flex;flex-wrap:wrap;gap:18px 32px;align-items:flex-end;justify-content:space-between}
+h1{font-size:clamp(24px,3.4vw,34px);font-weight:700;line-height:1.15;margin:0 0 8px;text-wrap:balance}
+header p{margin:0;color:var(--mute);max-width:58ch}
+.seg{display:inline-flex;background:var(--panel);border:1px solid var(--line);border-radius:999px;padding:4px;gap:4px}
+.seg button{font:500 14px var(--ui);color:var(--mute);background:none;border:0;border-radius:999px;padding:8px 16px;cursor:pointer}
+.seg button[aria-pressed="true"]{background:var(--accent);color:#fff}
+.seg button:focus-visible{outline:2px solid var(--accent-soft);outline-offset:2px}
+.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,440px),1fr));gap:24px}
+figure{margin:0;display:flex;flex-direction:column;gap:12px;min-width:0}
+.stage{position:relative;aspect-ratio:1140/975;max-width:100%;border-radius:22px;overflow:hidden;
+  background:linear-gradient(135deg,var(--stage-a),var(--stage-b))}
+figcaption{display:flex;gap:14px;align-items:baseline}
+figcaption b{font-size:22px;font-weight:700;color:var(--accent-soft);min-width:1.1em}
+figcaption strong{font-weight:700}
+figcaption span{color:var(--mute);display:block;font-size:14px}
+.note{color:var(--mute);font-size:13px;border-top:1px solid var(--line);padding-top:16px;margin:0}
+
+/* ---------- 3D scene ---------- */
+.scene{position:absolute;left:50%;top:50%;width:588px;height:420px;margin:-210px 0 0 -294px;transform-origin:50% 50%;
+  transform:scale(calc(var(--s,1)*1.13)) rotateX(-10deg) rotateY(24deg);--ex:-.45;--ey:-.19;transition:transform .7s cubic-bezier(.2,.7,.2,1)}
+.soft .scene{transform:scale(calc(var(--s,1)*1.13)) perspective(1700px) rotateX(-6deg) rotateY(26deg);--ex:-.49;--ey:-.12}
+.mid .scene{transform:scale(calc(var(--s,1)*1.13)) perspective(3200px) rotateX(-8deg) rotateY(30deg);--ex:-.58;--ey:-.17}
+@media (prefers-reduced-motion:reduce){.scene{transition:none}}
+.dev{position:absolute;box-sizing:content-box}
+.dev.d{left:0;top:0}
+.dev.p{left:440px;top:158px}
+.psh{position:absolute;left:432px;top:170px;width:128px;height:240px;border-radius:26px;background:rgba(22,12,62,.36);filter:blur(13px)}
+.v2 .psh,.v3 .psh{left:426px}
+.scr{position:relative;overflow:hidden;background:#fff}
+.d .scr{width:480px;height:300px;--vh:300px}
+.p .scr{width:128px;height:238px;--vh:238px}
+.bar,.isl{display:none}
+
+/* A — glass */
+.v1 .dev{padding:9px;background:linear-gradient(150deg,rgba(255,255,255,.15),rgba(255,255,255,.04) 55%,rgba(255,255,255,.08));border:1px solid rgba(255,255,255,.34);border-radius:18px}
+.v1 .dev.p{border-radius:16px;padding:6px}
+.v1 .scr{border-radius:10px}.v1 .p .scr{border-radius:10px}
+/* A — blueprint depth + buttons */
+.kb,.cam{display:none}
+.v1 .p .kb,.v7 .p .kb{display:block;position:absolute;width:2.5px;border-radius:2px;background:rgba(255,255,255,.4)}
+.k1{right:-2.5px;top:60px;height:18px}.k2{right:-2.5px;top:84px;height:18px}.k3{left:-2.5px;top:72px;height:30px}
+/* A: body wall, one continuous stroke: corner tie, left side, top side, corner tie */
+.wall{position:absolute;left:-1px;top:-1px;overflow:visible;pointer-events:none}
+.wall path,.wall line{fill:none;stroke:#fff;stroke-width:1.2;stroke-linecap:butt;stroke-linejoin:round}
+/* weightless drift: sideways, vertical, tilt and depth each run on their own clock */
+.dev.d{animation:dY 9s ease-in-out infinite alternate,dX 12s ease-in-out -2s infinite alternate,dR 14s ease-in-out -5s infinite alternate,dS 10s ease-in-out -3s infinite alternate;--ay:6px;--ax:4px;--ar:.5deg;--as:1.012}
+.dev.p{animation:dY 7s ease-in-out -2.5s infinite alternate,dX 9.5s ease-in-out -4s infinite alternate,dR 11s ease-in-out -1s infinite alternate,dS 8s ease-in-out infinite alternate;--ay:-9px;--ax:-4px;--ar:-1deg;--as:1.028}
+.psh{animation:dY 7s ease-in-out -2.5s infinite alternate,dX 9.5s ease-in-out -4s infinite alternate;--ay:-4px;--ax:-2px}
+@keyframes dY{from{translate:0 calc(var(--ay)*-1)}to{translate:0 var(--ay)}}
+@keyframes dX{from{transform:translateX(calc(var(--ax)*-1))}to{transform:translateX(var(--ax))}}
+@keyframes dR{from{rotate:calc(var(--ar)*-1)}to{rotate:var(--ar)}}
+@keyframes dS{from{scale:1}to{scale:var(--as)}}
+@media (prefers-reduced-motion:reduce){.dev.d,.dev.p,.psh{animation:none}}
+/* A+ — wide clear glass */
+.v5 .dev{padding:15px;background:linear-gradient(145deg,rgba(255,255,255,.13),rgba(255,255,255,.015) 45%,rgba(255,255,255,.07));border:1px solid rgba(255,255,255,.26);border-radius:24px}
+.v5 .dev.p{padding:10px;border-radius:30px}
+.v5 .scr{border-radius:10px}.v5 .p .scr{border-radius:21px}
+/* B+ — glass browser */
+.v6 .dev{background:linear-gradient(160deg,rgba(255,255,255,.16),rgba(255,255,255,.05));border:1px solid rgba(255,255,255,.3);border-radius:14px;padding:0 5px 5px}
+.v6 .bar{display:flex;align-items:center;gap:5px;height:20px;padding:0 5px}
+.v6 .bar i{width:5px;height:5px;border-radius:50%;background:rgba(255,255,255,.6)}
+.v6 .bar em{flex:1;height:8px;margin:0 50px 0 40px;border-radius:4px;background:rgba(255,255,255,.14)}
+.v6 .scr{border-radius:5px 5px 10px 10px}
+.v6 .dev.p{padding:6px;border-radius:25px}.v6 .p .scr{border-radius:19px}
+/* D — contour only */
+.v7 .dev{padding:10px;border:1px solid rgba(255,255,255,.5);border-radius:20px;outline:1px solid rgba(255,255,255,.13);outline-offset:9px}
+.v7 .dev.p{padding:8px;border-radius:28px;outline-offset:7px}
+.v7 .scr{border-radius:10px}.v7 .p .scr{border-radius:20px}
+/* B — light browser */
+.v2 .dev{background:#f3f0fb;border-radius:13px;padding:0 4px 4px}
+.v2 .bar{display:flex;align-items:center;gap:5px;height:22px;padding:0 6px}
+.v2 .bar i{width:6px;height:6px;border-radius:50%;background:#cfc6ee}
+.v2 .bar em{flex:1;height:10px;margin:0 40px 0 30px;border-radius:5px;background:#e3def4}
+.v2 .scr{border-radius:4px 4px 10px 10px}
+.v2 .dev.p{padding:5px;border-radius:24px}.v2 .p .scr{border-radius:19px}
+.v2 .p .isl,.v4 .p .isl{display:block;position:absolute;z-index:2;top:6px;left:50%;width:34px;height:9px;margin-left:-17px;border-radius:6px;background:#17132a}
+/* C — borderless slab */
+.v3 .scr{border-radius:13px}.v3 .p .scr{border-radius:20px}
+.v3 .dev{border-radius:13px}.v3 .dev.p{border-radius:20px}
+/* D — soft titanium */
+.v4 .dev{padding:7px;border-radius:17px;background:linear-gradient(140deg,#ebe7f6,#aaa2c6 55%,#d6d0e8)}
+.v4 .dev.p{padding:6px;border-radius:27px}
+.v4 .scr{border-radius:11px;outline:1px solid #1b1630}.v4 .p .scr{border-radius:21px}
+
+/* ---------- real site capture (first six screens of critera.ai) ---------- */
+/* frame A follows the video's own proportions */
+.scene{width:682px;margin-left:-341px}
+.d .scr{width:574px}
+.dev.p{left:534px}
+.psh{left:526px}
+.v2 .psh,.v3 .psh{left:520px}
+.scr video{border-radius:inherit;display:block;background:#140f2e;width:100%;height:100%;object-fit:cover}
+/* ---------- placeholder site (unused) ---------- */
+.pg{font-family:var(--he);direction:rtl;color:#1c1638;background:#fff;animation:scroll 14s ease-in-out infinite;will-change:transform}
+.p .pg{animation-delay:.9s}
+@keyframes scroll{0%,8%{transform:translateY(0)}46%,56%{transform:translateY(calc(-100% + var(--vh)))}94%,100%{transform:translateY(0)}}
+@media (prefers-reduced-motion:reduce){.pg{animation:none}}
+.pg section{padding:22px 26px}
+.pg.m section{padding:16px 12px}
+.nav{display:flex;align-items:center;gap:12px;padding:10px 26px;border-bottom:1px solid #eeeaf8}
+.m .nav{padding:20px 12px 8px}
+.logo{font:800 11px var(--he);color:#5b3bd6;margin-inline-end:auto}
+.nav u{width:26px;height:4px;border-radius:2px;background:#d9d3ee}
+.m .nav u{display:none}
+.btn{display:inline-block;height:14px;width:50px;border-radius:7px;background:#6b47e0}
+.btn.o{background:none;border:1px solid #6b47e0}
+.hero{display:flex;gap:20px;align-items:center;background:linear-gradient(160deg,#f6f2ff,#fff)}
+.m .hero{flex-direction:column;align-items:stretch}
+.hero>div{flex:1;min-width:0}
+.hero h2{font:300 21px/1.15 var(--he);margin:0 0 8px}
+.hero h2 b{font-weight:800;display:block}
+.m .hero h2{font-size:16px}
+.ln{height:4px;border-radius:2px;background:#ddd7ef;margin:5px 0}
+.ln.s{width:62%}
+.cta{display:flex;gap:6px;margin-top:10px}
+.vis{height:110px;border-radius:12px;background:linear-gradient(135deg,#7a56ea,#2b1d55);position:relative}
+.vis:after{content:"";position:absolute;inset:18px 22px;border-radius:8px;background:rgba(255,255,255,.16)}
+.m .vis{height:84px;flex:none}
+.cards{display:grid;grid-template-columns:repeat(3,1fr);gap:10px}
+.m .cards{grid-template-columns:1fr}
+.card{border:1px solid #e8e3f6;border-radius:10px;padding:12px}
+.card s{display:block;width:18px;height:18px;border-radius:6px;background:#e9e2ff;margin-bottom:8px}
+.band{background:#241848;display:flex;justify-content:space-around;gap:8px}
+.band div{font:800 17px var(--he);color:#fff;text-align:center}
+.m .band div{font-size:13px}
+.band div small{display:block;width:34px;height:3px;border-radius:2px;background:#6d5aa8;margin:5px auto 0}
+.rows>div{display:flex;align-items:center;gap:10px;border-bottom:1px solid #eeeaf8;padding:9px 0}
+.rows .ln{flex:1}.rows i{width:8px;height:8px;border-radius:50%;border:1.5px solid #6b47e0}
+.foot{background:#120e24;height:46px}
+
+
+/* ---------- the homepage card (?card): the phone lower and further in, and a few of the site's pieces floating round the
+   devices on a thin line, like the floating bits round the other cards' screenshots. The case cover never gets these. ---------- */
+.in-card .dev.p{left:383px;top:230px}
+.in-card .v3 .psh{left:369px;top:242px}
+.in-card .v3 .p .scr,.in-card .v3 .dev.p{border-radius:10px}  /* the phone's corners half as round as the cover's 20px */
+.in-card .scene{left:55%}  /* the devices a little to the right in the card */
+.deco .line .track.dash{stroke-dasharray:5 8}
+.in-card .dk.bar.sm{width:calc(24px * var(--s,1));height:calc(50px * var(--s,1))}
+.in-card .dk.ai.sm{width:calc(36px * var(--s,1));height:calc(36px * var(--s,1));border-radius:calc(11px * var(--s,1))}
+/* the icons round about: white line icons, no tile */
+.dk.tile.bare{background:none;box-shadow:none;width:calc(var(--z,34) * 1px * var(--s,1));height:calc(var(--z,34) * 1px * var(--s,1))}
+.dk.tile.bare svg{width:100%}
+.dk.tile.bare svg *{stroke:#9670f0}  /* the engine tile's violet, not white: they should not pull the eye */
+.dk.tile.bare{animation:none}.dk.tile.bare svg>*{animation:none;stroke-dashoffset:0}  /* the small icons stand still */
+.deco{position:absolute;inset:0;pointer-events:none;font-family:var(--he);direction:rtl}
+.deco svg.line{position:absolute;inset:0;width:100%;height:100%;overflow:visible}
+.deco .line path{fill:none;stroke:rgba(185,166,255,.55);stroke-width:1.4;stroke-linecap:round}
+.deco .line path.dash{stroke-dasharray:3 6}
+.deco .line circle{fill:#b9a6ff}
+.dk{position:absolute;transform:translate(-50%,-50%);animation:bob 6s ease-in-out infinite alternate}
+@keyframes bob{from{translate:0 calc(-6px * var(--s,1))}to{translate:0 calc(6px * var(--s,1))}}
+@media (prefers-reduced-motion:reduce){.dk{animation:none}}
+.dk.bar{width:calc(33px * var(--s,1));height:calc(69px * var(--s,1));border-radius:999px;display:grid;place-items:center;
+  background:linear-gradient(to top,var(--a),var(--b));box-shadow:0 0 0 calc(3px * var(--s,1)) rgba(255,255,255,.9),0 calc(15px * var(--s,1)) calc(33px * var(--s,1)) rgba(20,8,60,.45)}
+.dk.bar svg{width:58%;height:auto}
+.dk.chip{display:flex;align-items:center;gap:calc(10.5px * var(--s,1));white-space:nowrap;background:#fff;color:#241d4f;
+  border:1px solid #e5e1f6;border-radius:calc(15px * var(--s,1));padding:calc(9px * var(--s,1)) calc(15px * var(--s,1));
+  font-size:calc(18px * var(--s,1));font-weight:600;box-shadow:0 calc(15px * var(--s,1)) calc(36px * var(--s,1)) rgba(20,8,60,.4)}
+.dk.chip small{font-weight:400;color:#5a5478}
+.dk.chip i{flex:none;width:calc(24px * var(--s,1));height:calc(24px * var(--s,1));border-radius:calc(7.5px * var(--s,1));background:#3dbb82;display:grid;place-items:center}
+.dk.chip i svg{width:70%}
+.dk.chip.pink{background:linear-gradient(95deg,#ff00c8,#ff965d);color:#fff;border:0;border-radius:999px}
+.dk.ai{width:calc(51px * var(--s,1));height:calc(51px * var(--s,1));border-radius:calc(15px * var(--s,1));display:grid;place-items:center;
+  background:linear-gradient(135deg,#7a5cf5,#b043d9);box-shadow:0 0 0 calc(9px * var(--s,1)) rgba(111,94,234,.18),0 calc(12px * var(--s,1)) calc(27px * var(--s,1)) rgba(111,94,234,.45)}
+.dk.ai svg{width:52%;animation:spinup 4.2s cubic-bezier(.15,.75,.25,1) infinite}
+@keyframes spinup{0%{rotate:0deg}55%,100%{rotate:720deg}}  /* like the engine on the site: it starts up, spins twice and stops, then again */
+.dk.spark{color:#b9a6ff;font-size:calc(21px * var(--s,1));line-height:1}
+.in-card.big .deco .line .track{stroke-width:1.74}  /* the wide screen shows the card 15% larger: the dashed orbit stays as thin as before */
+/* the card's arrival (see 'lit' in the script): orbit drawn, pieces in one by one, gathering speed toward the end */
+.trk-mask{fill:none;stroke:#fff;stroke-width:40;stroke-dasharray:1;stroke-dashoffset:1}
+.in-card.lit .trk-mask{stroke-dashoffset:0;transition:stroke-dashoffset 1.2s cubic-bezier(.5,0,.85,.4) .1s}
+.in-card .dk{opacity:0;translate:0 calc(14px * var(--s,1))}
+.in-card.lit .dk{opacity:1;translate:0 0;transition:opacity .5s cubic-bezier(.5,0,.85,.4) var(--in,0s),translate .5s cubic-bezier(.5,0,.85,.4) var(--in,0s)}
+.in-card .dk.bar{translate:none}  /* the bars appear where they stand on the orbit */
+@media (prefers-reduced-motion:reduce){.in-card .dk{opacity:1;translate:none}.trk-mask{stroke-dashoffset:0}}
+.cover .deco .line .track{stroke-width:2.2}  /* the case cover shows it 10% smaller: the orbit keeps its weight */
+/* ?flip: the page turns this frame round (scaleX(-1)) for a left-to-right layout - the orbit on the other side, the
+   phone on the other side - so the screens and the icons are turned back here, and read the right way */
+.flip .scr{scale:-1 1}
+/* the pieces are turned back inside their own transform, after the centring: as a separate scale it ran after the
+   translate(-50%,-50%) and pushed each piece a whole width sideways - the bars rode beside the orbit, not on it */
+.flip .dk{transform:translate(-50%,-50%) scaleX(-1)}
+/* the handshake 30px further out, clear of the bars riding the orbit's end (her call, 2026-10-28); the syndication icon
+   and the eye went further in instead (ways 83/27, eye 78/16) - pushed out, the syndication icon sat on the orbit itself */
+.dk.nudge{margin-left:30px}
+/* the stacked homepage card (not the cover, not the wide card): there the seal is pulled in to the card's right frame and
+   sat on the syndication icon - that one goes up, over the seal, and the eye goes up beside the bar (her marks, 2026-10-29) */
+.in-card:not(.cover):not(.big) .dk.tile.bare[style*="left:97.5%"]{top:23%!important}
+.in-card:not(.cover):not(.big) .dk.l150{top:6%!important;left:86%!important}
+/* everything floating round the devices drifts a little, each on its own slow clock, so nothing hangs dead still
+   (her call, 2026-10-29): the line icons sway and rise a few px, the engine tile floats and its glow breathes */
+@keyframes drift{0%{translate:0 0;rotate:0deg}50%{translate:calc(3px * var(--s,1)) calc(-7px * var(--s,1));rotate:4deg}100%{translate:0 0;rotate:0deg}}
+@keyframes floatAi{0%,100%{translate:0 0}50%{translate:0 calc(-9px * var(--s,1))}}
+@keyframes breathe{0%,100%{box-shadow:0 0 0 calc(9px * var(--s,1)) rgba(111,94,234,.18),0 calc(12px * var(--s,1)) calc(27px * var(--s,1)) rgba(111,94,234,.45)}
+  50%{box-shadow:0 0 0 calc(14px * var(--s,1)) rgba(111,94,234,.08),0 calc(18px * var(--s,1)) calc(34px * var(--s,1)) rgba(111,94,234,.55)}}
+.deco .dk.tile.bare{animation:drift 7s ease-in-out infinite}
+.deco .dk.tile.bare:nth-of-type(2n){animation-duration:8.5s;animation-delay:-3s;animation-direction:reverse}
+.deco .dk.tile.bare:nth-of-type(3n){animation-duration:9.5s;animation-delay:-5s}
+.deco .dk.ai{animation:floatAi 6s ease-in-out infinite,breathe 6s ease-in-out infinite}
+@media (prefers-reduced-motion:reduce){.deco .dk.tile.bare,.deco .dk.ai{animation:none}}
+.deco.back{z-index:0}.scene{z-index:1}.deco.front{z-index:2}
+/* small white tiles with the site's purple icons (the partners' and the strengths' icons), drawing themselves in */
+.dk.tile{width:calc(45px * var(--s,1));height:calc(45px * var(--s,1));border-radius:calc(13.5px * var(--s,1));display:grid;place-items:center;background:#fff;
+  box-shadow:0 0 0 calc(7.5px * var(--s,1)) rgba(185,166,255,.14),0 calc(12px * var(--s,1)) calc(27px * var(--s,1)) rgba(20,8,60,.45)}
+.dk.tile svg{width:56%;height:auto}
+.dk.tile svg>*{stroke-dasharray:1;stroke-dashoffset:1;animation:draw 9s ease-in-out infinite}
+@keyframes draw{0%{stroke-dashoffset:1}18%,92%{stroke-dashoffset:0}100%{stroke-dashoffset:1}}
+@media (prefers-reduced-motion:reduce){.dk.tile svg>*{animation:none;stroke-dashoffset:0}}
+.dk.step{display:flex;align-items:center;gap:calc(10.5px * var(--s,1));white-space:nowrap;color:#fff;font-size:calc(18px * var(--s,1));font-weight:600}
+.dk.step b{width:calc(36px * var(--s,1));height:calc(36px * var(--s,1));border-radius:50%;display:grid;place-items:center;background:#8c7eee;font-size:calc(16.5px * var(--s,1));box-shadow:0 0 0 calc(6px * var(--s,1)) rgba(140,126,238,.25)}
+.dk.step small{font-weight:500;color:#cfc6ff;background:rgba(140,126,238,.22);border-radius:999px;padding:calc(3px * var(--s,1)) calc(12px * var(--s,1))}
+.dk.pill{background:#6f5eea;color:#fff;border-radius:999px;font:600 calc(18px * var(--s,1)) var(--ui);padding:calc(6px * var(--s,1)) calc(18px * var(--s,1));box-shadow:0 calc(12px * var(--s,1)) calc(27px * var(--s,1)) rgba(20,8,60,.45)}
+/* the lines: the orbit's track; the About road, drawn and with a light running along it */
+.deco .line .track{fill:none;stroke:rgba(165,150,250,.7);stroke-width:2}
+.deco .line .road{fill:none;stroke:rgba(185,166,255,.75);stroke-width:2.2;stroke-linecap:round;stroke-dasharray:1;stroke-dashoffset:1;animation:roadIn 2.2s ease-out .4s forwards}
+@keyframes roadIn{to{stroke-dashoffset:0}}
+.deco .line .run{fill:none;stroke:#fff;stroke-width:3.2;stroke-linecap:round;stroke-dasharray:.06 .94;stroke-dashoffset:1;animation:run 3.2s linear 2.4s infinite;opacity:0}
+@keyframes run{0%{stroke-dashoffset:1;opacity:1}100%{stroke-dashoffset:0;opacity:1}}
+@media (prefers-reduced-motion:reduce){.deco .line .road{animation:none;stroke-dashoffset:0}.deco .line .run{display:none}}
+
+html,body{margin:0;background:transparent}
+.wrap{max-width:none;padding:0;gap:0}
+.grid{display:block}
+.stage{background:none;border-radius:0;width:100%}
+</style>
+</head>
+<body>
+<div class="wrap"><div class="grid" id="grid"></div></div>
+<script>
+
+const V=[
+ {k:'v3',l:'В',n:'Плита без рамки',d:'Рамки нет, только скруглённый экран с фиолетовой толщиной. Самая графичная.',e:'#4a2fb0',dd:14,dp:16}
+];
+function page(m){return `<div class="pg real ${m?'m':''}"></div>`}
+// ?en: the English site on both screens
+const EN=new URLSearchParams(location.search).has('en');
+function vid(src){if(EN)src=src.replace('.mp4','-en.mp4');return `<video src=${JSON.stringify(src)} poster=${JSON.stringify(src.replace('.mp4','.jpg'))} autoplay muted loop playsinline preload="auto"></video>`}
+function wall(W,H,r,dx,dy,tr,dyb){const f=n=>n.toFixed(2),n=(x,y)=>{const L=Math.hypot(x,y);return[x/L,y/L]};
+ const dx2=dx*tr,dy2=dy*tr,[ux,uy]=n(dx,dyb),[vx,vy]=n(dx2,dy2);      // top band narrows toward the far right end; bottom end has its own drop
+ const F1=[r-r*uy,H-r+r*ux],F2=[W-r+r*vy,r-r*vx];
+ const tie=(x,y,a,b)=>`<line x1="${f(x-a)}" y1="${f(y-b)}" x2="${f(x-a*.1)}" y2="${f(y-b*.1)}"/>`;
+ return `<svg class="wall" width="${W}" height="${H}" viewBox="0 0 ${W} ${H}"><g opacity=".34">
+<path d="M${f(F1[0])} ${f(F1[1])} L${f(F1[0]-dx)} ${f(F1[1]-dyb)} A${r} ${r} 0 0 1 ${-dx} ${H-r-dyb} L${-dx} ${r-dy} A${r} ${r} 0 0 1 ${r-dx} ${-dy} L${f(W-r-dx2)} ${f(-dy2)} A${r} ${r} 0 0 1 ${f(F2[0]-dx2)} ${f(F2[1]-dy2)} L${f(F2[0])} ${f(F2[1])}"/>
+<g opacity=".45">${tie(0,H-r,dx,dyb)}${tie(0,r,dx,dy)}${tie(r,0,dx,dy)}${tie(W-r,0,dx2,dy2)}</g></g></svg>`}
+function edge(n,c,lift,x){let a=[];for(let i=1;i<=n;i++)a.push(`calc(var(--ex)*${i}px) calc(var(--ey)*${i}px) 0 ${c}`);
+ a.push(`${lift*.3}px ${lift*.9}px ${lift*1.4}px rgba(8,4,30,.36)`);if(x)a.push(x);return a.join(',')}
+const grid=document.getElementById('grid');
+grid.innerHTML=V.map(v=>`<figure><div class="stage ${v.k}"><div class="scene">
+<div class="dev d" data-sh="${edge(v.dd,v.e,46,v.x)}">${v.k==='v1'?wall(594,320,18,10,9,.82,9):''}<div class="bar"><i></i><i></i><i></i><em></em></div><div class="scr">${vid('critera-desktop.mp4')}</div></div>
+<div class="psh"></div>
+<div class="dev p" data-sh="${edge(v.dp,v.e,60,v.x)}">${v.k==='v1'?wall(142,252,16,7,5,.85,1.5):''}<i class="kb k1"></i><i class="kb k2"></i><i class="kb k3"></i><div class="scr"><i class="isl"></i>${vid('critera-mobile.mp4')}</div></div>
+</div></div></figure>`).join('');
+grid.querySelectorAll('[data-sh]').forEach(d=>d.style.boxShadow=d.dataset.sh);
+const ro=new ResizeObserver(es=>es.forEach(e=>e.target.style.setProperty('--s',e.contentRect.width/900)));
+// set the scale right away too, so the scene never starts at full size and shrinks in
+document.querySelectorAll('.stage').forEach(s=>{s.style.setProperty('--s',s.clientWidth/900);ro.observe(s)});
+
+
+// the homepage card: ?card in the address; &deco=a|b|c picks the pieces round the devices (a by default)
+const Q=new URLSearchParams(location.search);
+if(Q.has('flip'))document.documentElement.classList.add('flip');
+if(Q.has('card')){
+ document.body.classList.add('in-card'); // not 'card': the placeholder styles above own .card
+ const V=Q.get('deco')||'a';
+ // the page marks the frame --big on a wide screen; read it now and whenever the frame changes size
+ try{if(frameElement&&frameElement.classList.contains('cr-cover-anim'))document.body.classList.add('cover')}catch(e){}
+ const big=()=>{if(Q.has('wide')){document.body.classList.add('big');return} // ?wide: the wide layout on its own (for the still)
+  try{document.body.classList.toggle('big',getComputedStyle(frameElement).getPropertyValue('--big').trim()==='1')}catch(e){}};
+ big();const was=document.body.classList.contains('big');addEventListener('resize',()=>{big();if(document.body.classList.contains('big')!==was)location.reload()});
+
+ const W='<svg viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">';
+ const P='<svg viewBox="0 0 24 24" fill="none" stroke="#6F5EEA" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">';
+ const pl=(svg,p)=>svg+p.replace(/<(path|rect|circle|line)/g,'<$1 pathLength="1"')+'</svg>';
+ const A={ // the four arenas' icons (white, on the logo bars)
+  coins:'<g transform="rotate(40 12 12)"><path d="M11 15h2a2 2 0 1 0 0-4h-3c-.6 0-1.1.2-1.4.6L3 17"/><path d="m7 21 1.6-1.4c.3-.4.8-.6 1.4-.6h4c1.1 0 2.1-.4 2.8-1.2l4.6-4.4a2 2 0 0 0-2.75-2.91l-4.2 3.9"/><path d="m2 16 6 6"/><circle cx="16" cy="9" r="2.9"/><circle cx="6" cy="5" r="3"/></g>',
+  case:'<path d="M16 6V4a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v2"/><path d="M22 13a18.15 18.15 0 0 1-20 0"/><rect width="20" height="14" x="2" y="6" rx="2"/>',
+  ways:'<path d="m10.586 5.414-5.172 5.172"/><path d="m18.586 13.414-5.172 5.172"/><path d="M6 12h12"/><circle cx="12" cy="20" r="2"/><circle cx="12" cy="4" r="2"/><circle cx="20" cy="12" r="2"/><circle cx="4" cy="12" r="2"/>',
+  hand:'<path d="m11 17 2 2a1 1 0 1 0 3-3"/><path d="m14 14 2.5 2.5a1 1 0 1 0 3-3l-3.88-3.88a3 3 0 0 0-4.24 0l-.88.88a1 1 0 1 1-3-3l2.81-2.81a5.79 5.79 0 0 1 7.06-.87l.47.28a2 2 0 0 0 1.42.25L21 4"/><path d="m21 3 1 11h-2"/><path d="M3 3 2 14l6.5 6.5a1 1 0 1 0 3-3"/><path d="M3 4h8"/>'};
+ const T={ // the partners' and the strengths' icons (purple, on white tiles)
+  folders:'<path d="M20 5a2 2 0 0 1 2 2v7a2 2 0 0 1-2 2H9a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h2.5a1.5 1.5 0 0 1 1.2.6l.6.8a1.5 1.5 0 0 0 1.2.6z"/><path d="M3 8.268a2 2 0 0 0-1 1.738V19a2 2 0 0 0 2 2h11a2 2 0 0 0 1.732-1"/>',
+  users:'<path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/><path d="M16 3.128a4 4 0 0 1 0 7.744"/><path d="M22 21v-2a4 4 0 0 0-3-3.87"/><circle cx="9" cy="7" r="4"/>',
+  scale:'<path d="M12 3v18"/><path d="m19 8 3 8a5 5 0 0 1-6 0zV7"/><path d="M3 7h1a17 17 0 0 0 8-2 17 17 0 0 0 8 2h1"/><path d="m5 8 3 8a5 5 0 0 1-6 0zV7"/><path d="M7 21h10"/>',
+  calc:'<rect width="16" height="20" x="4" y="2" rx="2"/><line x1="8" x2="16" y1="6" y2="6"/><line x1="16" x2="16" y1="14" y2="18"/><path d="M8 10h.01"/><path d="M12 10h.01"/><path d="M16 10h.01"/><path d="M8 14h.01"/><path d="M12 14h.01"/><path d="M8 18h.01"/><path d="M12 18h.01"/>',
+  clip:'<rect width="8" height="4" x="8" y="2" rx="1" ry="1"/><path d="M16 4h2a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2h2"/><path d="M12 11h4"/><path d="M12 16h4"/><path d="M8 11h.01"/><path d="M8 16h.01"/>',
+  eye:'<path d="M10.733 5.076a10.744 10.744 0 0 1 11.205 6.575 1 1 0 0 1 0 .696 10.747 10.747 0 0 1-1.444 2.49"/><path d="M14.084 14.158a3 3 0 0 1-4.242-4.242"/><path d="M17.479 17.499a10.75 10.75 0 0 1-15.417-5.151 1 1 0 0 1 0-.696 10.75 10.75 0 0 1 4.446-5.143"/><path d="m2 2 20 20"/>',
+  shield:'<path d="M20 13c0 5-3.5 7.5-7.66 8.95a1 1 0 0 1-.67-.01C7.5 20.5 4 18 4 13V6a1 1 0 0 1 1-1c2 0 4.5-1.2 6.24-2.72a1.17 1.17 0 0 1 1.52 0C14.51 3.81 17 5 19 5a1 1 0 0 1 1 1z"/><path d="m9 12 2 2 4-4"/>'};
+ const tick='<svg viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12l4.5 4.5L19 7"/></svg>';
+ const star='<svg viewBox="-20 -20 40 40"><path d="M0 -20C2.2 -7.5 7.5 -2.2 20 0C7.5 2.2 2.2 7.5 0 20C-2.2 7.5 -7.5 2.2 -20 0C-7.5 -2.2 -2.2 -7.5 0 -20Z" fill="#fff"/></svg>';
+ const at=(x,y,d)=>`left:${x}%;top:${y}%;animation-delay:-${d}s`;
+ const bar=(a,b,icon,x,y,d,id='')=>`<span class="dk bar"${id?` data-ride="${id}"`:''} style="--a:${a};--b:${b};${at(x,y,d)}">${W}${A[icon]}</svg></span>`;
+ const tile=(icon,x,y,d)=>`<span class="dk tile" style="${at(x,y,d)}">${pl(P,T[icon])}</span>`;
+ const ai=(x,y,d)=>`<span class="dk ai" style="${at(x,y,d)}">${star}</span>`;
+ const lender=(t,sub,x,y,d)=>`<span class="dk chip" style="${at(x,y,d)}"><i>${tick}</i>${t} <small>· ${sub}</small></span>`;
+ const svgL=inner=>{const t=inner.match(/<path class="track[^>]*>/);
+  // a solid twin of the orbit, as a mask: drawing the twin draws the dashed orbit (the mask lives in the orbit's own,
+  // already turned coordinates, so the twin carries no transform of its own)
+  const mask=t?`<defs><mask id="trkMask" maskUnits="userSpaceOnUse" x="-1200" y="-1000" width="2400" height="2000">${t[0].replace(/class="[^"]*"/,'class="trk-mask"').replace('id="trk"','pathLength="1"').replace(/ transform="[^"]*"/,'')}</mask></defs>`:'';
+  return `<svg class="line" viewBox="0 0 1140 975" preserveAspectRatio="none">${mask}${t?inner.replace('<path class="track','<path mask="url(#trkMask)" class="track'):inner}</svg>`};
+ // the site's orbit track: a rounded slab, corners nearly its whole short side, tilted - the site tilts it 7deg (OrbitArenas.tsx); on the card 12deg, its right end higher
+ const slab=(cx,cy,rx,ry)=>{const r=ry*.97;return `<path class="track" id="trk" transform="translate(${cx} ${cy}) rotate(-12)" d="M ${-rx+r} ${-ry} H ${rx-r} A ${r} ${r} 0 0 1 ${rx} ${-ry+r} V ${ry-r} A ${r} ${r} 0 0 1 ${rx-r} ${ry} H ${-rx+r} A ${r} ${r} 0 0 1 ${-rx} ${ry-r} V ${-ry+r} A ${r} ${r} 0 0 1 ${-rx+r} ${-ry} Z"/>`};
+ let back='',front='';
+ if(V==='a'){ // A - the orbit: a dashed track behind the devices with the four arena bars riding it, a small engine tile above,
+             //     the partners' icons in white round the right-hand side (nothing in the left corner, nothing on the screens)
+  back=svgL(slab(740,250,370,165).replace('class="track"','class="track dash"'))
+   +['#7446DD|#A69BF0|coins|0','#AA3ACE|#DF81FE|case|.25','#FF00C8|#FF965D|ways|.5','#FFA411|#FFDA76|hand|.75']
+     .map(x=>{const [a,b,ic,o]=x.split('|');return bar(a,b,ic,0,0,0,o).replace('class="dk bar"','class="dk bar sm"')}).join('');
+  // round the right-hand side, none on the left or on the screens: thin white icons, each its own size (px at full scale);
+  // the eye sits inside the orbit, fainter
+  const RO='<path d="M3.85 8.62a4 4 0 0 1 4.78-4.77 4 4 0 0 1 6.74 0 4 4 0 0 1 4.78 4.78 4 4 0 0 1 0 6.74 4 4 0 0 1-4.77 4.78 4 4 0 0 1-6.75 0 4 4 0 0 1-4.78-4.77 4 4 0 0 1 0-6.76Z"/><path d="M6.58 20.88 3.7 28.3l3.8-1.6 3.1 3.2L12 21.9"/><path d="m17.42 20.88 2.88 7.42-3.8-1.6-3.1 3.2L12 21.9"/>';
+  const ico=(p,x,y,z,d,o=1,vb='0 0 24 24')=>`<span class="dk tile bare" style="${at(x,y,d)};--z:${z}">${pl(`<svg style="opacity:${o}" viewBox="${vb}" fill="none" stroke="#fff" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round">`,p)}</span>`;
+  // the money top right, the syndication between it and the handshake, the professionals' seal, the engine under it and
+  // to the left, the handshake lower down; the eye inside the orbit. These stand still - only the bars and the engine move.
+  front=ai(24,14,0).replace('class="dk ai"','class="dk ai sm r20"')
+   +ico(A.ways,97.5,36,26,0).replace('class="dk tile bare"','class="dk tile bare r100"')+ico(RO,92,44,44,0,1,'-3 0.5 30 30').replace('class="dk tile bare"','class="dk tile bare r100" data-edge="14"')
+   +ico(A.hand,98.6,31,30,0).replace('class="dk tile bare"','class="dk tile bare r12 nudge" data-edge="0"')+ico(T.eye,88.5,19,22,0).replace('class="dk tile bare"','class="dk tile bare l150"');
+ } else if(V==='b'){ // B - the About road: drawn in, branching to the lenders, with a light running down it
+  const roads=['M 560 80 C 600 80, 640 88, 700 88 S 760 88, 798 88','M 560 80 C 600 80, 640 130, 700 170 S 780 195, 821 195','M 560 80 C 600 80, 630 180, 680 250 S 760 302, 832 302'];
+  back=svgL(roads.map(d=>`<path class="road" pathLength="1" d="${d}"/><path class="run" pathLength="1" d="${d}"/>`).join(''));
+  front=ai(49,8.2,0)+lender('בנק מסחרי','ליווי בנייה',82,9,0)+lender('קרן חוב','מזנין',84,20,2)+lender('Family Office','הון',85,31,4)
+   +tile('folders',6,26,1)+tile('users',4,60,3)+tile('clip',30,6,2.5)+tile('eye',62,80,4);
+ } else { // C - only pieces, no lines: a step of the timeline, the rating, an offer, two arena bars, the engine's tile and icons
+  front=ai(46,9,0)+`<span class="dk step" style="${at(76,10,1)}"><b>01</b>הרשמה <small>דקה</small></span>`
+   +`<span class="dk pill" style="${at(90,31,2)}">A−</span>`+lender('הצעה חדשה','בנק מסחרי',80,47,3)
+   +bar('#AA3ACE','#DF81FE','case',64,9,1)+bar('#FFA411','#FFDA76','hand',91,18,2.5)
+   +tile('scale',5,30,1.5)+tile('calc',22,8,3.5)+tile('shield',9,70,4)+tile('eye',58,80,.5);
+ }
+ document.querySelectorAll('.stage').forEach(st=>{
+  if(back){const b=document.createElement('div');b.className='deco back';b.setAttribute('aria-hidden','true');b.innerHTML=back;st.insertBefore(b,st.firstChild)}
+  const f=document.createElement('div');f.className='deco front';f.setAttribute('aria-hidden','true');f.innerHTML=front;st.appendChild(f);
+
+  // stacked cards (not the wide screen): the seal and the handshake sit just inside the card's right-hand frame,
+  // 12px from it (data-edge: how much further in), wherever that frame falls in this frame
+  const edge=()=>{const fe=frameElement,card=fe&&fe.closest('.case-card');
+   f.querySelectorAll('[data-edge]').forEach(e=>{e.style.left=e.dataset.x||e.style.left;e.dataset.x=e.dataset.x||e.style.left;
+    if(!card||document.body.classList.contains('big'))return;
+    const fr=fe.getBoundingClientRect(),cr=card.getBoundingClientRect(),w=e.offsetWidth;
+    // never past this frame's own right edge either, or the frame cuts it off
+    e.style.left=Math.min(cr.right-12-(+e.dataset.edge)-w/2-fr.left,fr.width-w/2-4-(+e.dataset.edge))+'px'})};
+  edge();addEventListener('resize',edge);
+  // A: the bars travel round the track, as the arenas do round the logo (one turn in 75s)
+  const trk=st.querySelector('#trk'),riders=[...st.querySelectorAll('[data-ride]')];
+  const reduce=matchMedia('(prefers-reduced-motion: reduce)').matches;
+  // the arrival, each time the card comes on screen: the orbit draws itself, the pieces come in one after another,
+  // then the bars set off round it (their clock starts once the orbit is drawn)
+  let t0=performance.now(),started=false;
+  if(!reduce){const pieces=[...st.querySelectorAll('.dk')];
+   pieces.forEach((e,i)=>e.style.setProperty('--in',(.5+i*.12).toFixed(2)+'s'));
+   // the mask softens the dashes a little, so it is only on while the orbit draws itself
+   const tk=st.querySelector('#trk');let unmask=0;
+   const lit=on=>{document.body.classList.toggle('lit',on);clearTimeout(unmask);
+    if(tk){if(on)unmask=setTimeout(()=>tk.removeAttribute('mask'),1450);else tk.setAttribute('mask','url(#trkMask)')}
+    // the bars' clock starts once, on the first arrival; later visits never reset it (a reset froze them at the start)
+    if(on&&!started)started=true};  // the bars' clock runs from the page's start - waiting for the card made them stand still a few seconds on the case pages
+   if('IntersectionObserver' in window)new IntersectionObserver(es=>lit(es[0].isIntersecting),{threshold:.2}).observe(document.body);else lit(true)}
+  else document.body.classList.add('lit');
+  if(trk&&riders.length){const L=trk.getTotalLength(),m=trk.getCTM&&trk.transform.baseVal.consolidate().matrix,sv=trk.ownerSVGElement;
+   const go=now=>{const u=reduce?0:Math.max(0,(now-t0)/75000);riders.forEach(r=>{const k=((+r.dataset.ride+u)%1+1)%1;const p=trk.getPointAtLength(k*L).matrixTransform(m);r.style.left=(p.x/11.4)+'%';r.style.top=(p.y/9.75)+'%'});if(!reduce)requestAnimationFrame(go)};
+   requestAnimationFrame(go)}
+ });
+}
+</script>
+</body>
+</html>

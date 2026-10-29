@@ -1,0 +1,566 @@
+<!DOCTYPE html>
+<html lang="he" dir="rtl">
+<head>
+<script src="../js/analytics.js?v=1"></script>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Critera - מרקטפלייס לאשראי עסקי</title>
+<meta name="robots" content="noindex, nofollow">
+<meta name="description" content="Senior AI Product Designer specializing in UX Strategy, UI Craft & Agentic AI Experiences.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=DM+Sans:wght@400;500;600;700;800&family=Noto+Sans+Hebrew:wght@300;400;500;600;700;800&family=Manrope:wght@800&family=Nunito:wght@400;600;700&family=Luxurious+Script&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../css/styles.css?v=20261028ring">
+<link rel="stylesheet" href="../css/live-syncops.css?v=20261018e">
+<link rel="stylesheet" href="../css/live-aft.css?v=20261028a">
+<link rel="stylesheet" href="../css/light.css?v=20261028ring">
+<link rel="icon" type="image/png" sizes="32x32" href="../assets/icons/favicon-32x32.png">
+<link rel="icon" type="image/png" sizes="16x16" href="../assets/icons/favicon-16x16.png">
+<link rel="apple-touch-icon" sizes="180x180" href="../assets/icons/apple-touch-icon.png">
+<script>/* dark is the default - only the visitor's own choice switches it, and the
+   attribute is set before first paint so the page never flashes the wrong theme */
+(function(){try{var t=sessionStorage.getItem('lm-theme-v3');
+document.documentElement.setAttribute('data-theme',t==='light'?'light':'dark');}
+catch(e){document.documentElement.setAttribute('data-theme','dark');}})();</script>
+
+<link rel="stylesheet" href="../css/case-study.css?v=20261029p">
+<script>
+/* returning to home from anywhere on the site: replay the normal hero entrance
+   (portrait/text/chips/dice) like a fresh load, instead of showing a stale/settled page */
+addEventListener('pageshow', () => {
+  let fromSite = false;
+  try { fromSite = document.referrer && new URL(document.referrer).origin === location.origin; } catch(e) {}
+  if (!fromSite) return;
+  document.body.classList.add('reanim-lock');
+  void document.body.offsetWidth;
+  document.body.classList.remove('reanim-lock');
+});
+</script>
+</head>
+<body>
+<div class="bg-fx"><canvas class="slats-fx" data-preset="tech" aria-hidden="true"></canvas></div>
+<div class="page">
+
+  <header dir="ltr">
+    <a class="logo" href="/">
+      <img class="logo-mark" src="../assets/images/logoColorful.png" alt="" width="31" height="31">
+      <span class="logo-name">Larisa Maly</span>
+    </a>
+    <nav class="main-nav" id="mainNav" aria-label="Main">
+      <a href="/#recommendations"><svg viewBox="0 0 24 24"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg><span>Recommendations</span></a>
+      <a href="/#works"><svg viewBox="0 0 24 24"><rect x="2" y="7" width="20" height="14" rx="2"/><path d="M16 21V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16"/></svg><span>Portfolio</span></a>
+      <a href="../resume.html"><svg viewBox="0 0 24 24"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/></svg><span>Resume</span></a>
+    </nav>
+    <button class="theme-toggle" type="button" aria-pressed="false" aria-label="Switch to light theme" title="Switch to light theme">
+      <svg class="ic-moon" viewBox="0 0 24 24" aria-hidden="true"><path d="M21 12.8A9 9 0 1 1 11.2 3a7 7 0 0 0 9.8 9.8z"/></svg>
+      <svg class="ic-sun" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="4.2"/><path d="M12 2.2v2.4M12 19.4v2.4M4.5 4.5l1.7 1.7M17.8 17.8l1.7 1.7M2.2 12h2.4M19.4 12h2.4M4.5 19.5l1.7-1.7M17.8 6.2l1.7-1.7"/></svg>
+    </button>
+    <button class="hamburger" id="hamburger" aria-label="Menu" aria-expanded="false" aria-controls="mainNav">
+      <span></span><span></span><span></span>
+    </button>
+  </header>
+  <div class="nav-overlay" id="navOverlay"></div>
+
+
+  <div class="case-shell">
+    <div class="case-head-sentinel" id="caseHeadSentinel"></div>
+    <nav class="case-head cr-head" id="caseNav" aria-label="Case study sections">
+      <div class="case-nav-items">
+        <a class="case-nav-item" href="#about">
+          <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><line x1="12" y1="16" x2="12" y2="12"/><line x1="12" y1="8" x2="12.01" y2="8"/></svg>
+          הפתיחה
+        </a>
+        <a class="case-nav-item" href="#project">
+          <svg viewBox="0 0 24 24"><path d="M9 11l3 3L22 4"/><path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11"/></svg>
+          הפרויקט
+        </a>
+        <a class="case-nav-item" href="#audiences">
+          <svg viewBox="0 0 24 24"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
+          הקהלים
+        </a>
+        <a class="case-nav-item" href="#numbers">
+          <svg viewBox="0 0 24 24"><line x1="18" y1="20" x2="18" y2="10"/><line x1="12" y1="20" x2="12" y2="4"/><line x1="6" y1="20" x2="6" y2="14"/></svg>
+          המספרים
+        </a>
+        <a class="case-nav-item" href="#brand">
+          <svg viewBox="0 0 24 24"><path d="M12 2l2.2 6.8L21 11l-6.8 2.2L12 20l-2.2-6.8L3 11l6.8-2.2L12 2z"/></svg>
+          המותג
+        </a>
+        <a class="case-nav-item" href="#structure">
+          <svg viewBox="0 0 24 24"><rect x="3" y="3" width="18" height="18" rx="2"/><line x1="3" y1="9" x2="21" y2="9"/><line x1="9" y1="21" x2="9" y2="9"/></svg>
+          האתר
+        </a>
+        <a class="case-nav-item" href="#build">
+          <svg viewBox="0 0 24 24"><polyline points="16 18 22 12 16 6"/><polyline points="8 6 2 12 8 18"/></svg>
+          המימוש
+        </a>
+        <a class="case-nav-item demo" href="critera-demo/index.html" target="_blank" rel="noopener">
+          <span class="live-dot" aria-hidden="true"></span>
+          דמו חי
+        </a>
+      </div>
+    </nav>
+    <div class="case-breadcrumb" dir="ltr">
+      <a href="/">Home</a>
+      <svg class="bc-sep" viewBox="0 0 24 24" aria-hidden="true"><polyline points="9 18 15 12 9 6"/></svg>
+      <a href="/#works">Portfolio</a>
+      <svg class="bc-sep" viewBox="0 0 24 24" aria-hidden="true"><polyline points="9 18 15 12 9 6"/></svg>
+      <span class="current">Critera</span>
+    </div>
+
+    <!-- Text and colours from Figma "Critera-Case" (2gLNtwSH93DrGv3pGNvxML), one section per slide.
+         Layout, type scale and spacing are the shared case template; only the theme colours are Critera's. -->
+    <div class="cs theme-critera">
+
+<!-- 01 · Opening -->
+<div class="cs-hero-bleed">
+<section class="cs-hero cr-cover" id="about">
+    <div class="cr-topbar" dir="ltr"><a class="cr-lang" data-v="he" href="critera-en.html" aria-label="Read in English"><span class="cr-lang-knob" aria-hidden="true"></span><span class="cr-lang-t" lang="en"><svg class="cr-lang-ic cr-lang-flag" viewBox="0 0 28 20" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><path d="M5.5 1.2l1.4 2.85 3.15.46-2.28 2.22.54 3.13L5.5 8.38 2.69 9.86l.54-3.13L.95 4.51l3.15-.46z" fill="currentColor" stroke="none"/><path d="M14 3h11.6M14 9h11.6M2 15h23.6"/></svg>ENG</span><span class="cr-lang-t on" lang="en"><svg class="cr-lang-ic" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"><path d="M12 2.5l8.2 14.2H3.8z"/><path d="M12 21.5L3.8 7.3h16.4z"/></svg>HEB</span></a></div>
+  <div class="wrap cs-hero-wrap">
+    <div class="cs-hero-text">
+      <div class="cs-tags cs-reveal">
+        <span class="cs-tag">אסטרטגיית UX</span>
+        <span class="cs-tag">עיצוב אתר</span>
+        <span class="cs-tag" dir="ltr">Front&#8209;end</span>
+        <span class="cs-tag">אנימציה</span>
+        <span class="cs-tag">מיתוג</span>
+        <span class="cs-tag">סרטוני פרסום</span>
+      </div>
+      <h1 class="cs-reveal"><span class="light">האשראי העסקי</span><br>מתחבר ל&#8209;AI</h1>
+      <p class="lead cs-reveal">מרקטפלייס שמפגיש חברות ויזמים עם גופי מימון, ומרכז את הדרך מבקשה להצעות במקום אחד.</p>
+      <p class="lead cr-lead-2 cs-reveal">מהזהות החזותית ועד האתר החי וסרטוני הפרסום:<br>מיתוג, עיצוב, אנימציה ופיתוח.</p>
+      <a class="cs-demo-btn cs-reveal" href="critera-demo/index.html" target="_blank" rel="noopener"><span class="live-dot" aria-hidden="true"></span>לצפייה בדמו<span class="sr-only"> (נפתח בלשונית חדשה)</span></a>
+    </div>
+    <div class="cs-hero-media" aria-hidden="true">
+      <iframe class="cr-cover-anim" src="assets/critera-isometry.html?card&amp;deco=a&amp;v=20261029o" title="Critera desktop and mobile" loading="eager" tabindex="-1" onload="var f=this;setTimeout(function(){f.classList.add('is-live')},1500)"></iframe>
+    </div>
+  </div>
+</section>
+</div>
+
+<!-- 02 · The project -->
+<section class="cs-section" id="project">
+  <!-- the five bars of the Critera mark, drawn in code (the logo's own gradients); they rise in when the section comes on screen -->
+  <svg class="cr-rainbow" viewBox="0 0 638 637" aria-hidden="true" focusable="false"><defs><linearGradient id="crb-g0" x1="0" y1="1" x2="0" y2="0"><stop offset="0" stop-color="#7446DD"/><stop offset="1" stop-color="#A69BF0"/></linearGradient><linearGradient id="crb-g1" x1="0" y1="1" x2="0" y2="0"><stop offset="0" stop-color="#AA3ACE"/><stop offset="1" stop-color="#DF81FE"/></linearGradient><linearGradient id="crb-g2" x1="0" y1="1" x2="0" y2="0"><stop offset="0" stop-color="#FF00C8"/><stop offset="1" stop-color="#FF965D"/></linearGradient><linearGradient id="crb-g3" x1="0" y1="1" x2="0" y2="0"><stop offset="0" stop-color="#FF9D00"/><stop offset="1" stop-color="#FFDA76"/></linearGradient><linearGradient id="crb-g4" x1="0" y1="1" x2="0" y2="0"><stop offset="0" stop-color="#FFEB13"/><stop offset="1" stop-color="#FEF9B2"/></linearGradient></defs><g class="crb-shadows"><rect class="crb-sh" x="0.00" y="462" width="128" height="318" rx="63.5" fill="#6F5EEA" fill-opacity="0.2"/><rect class="crb-sh" x="127.50" y="382" width="128" height="318" rx="63.5" fill="#D554FF" fill-opacity="0.2"/><rect class="crb-sh" x="255.00" y="287" width="128" height="318" rx="63.5" fill="#FF4A39" fill-opacity="0.2"/><rect class="crb-sh" x="382.50" y="191" width="128" height="318" rx="63.5" fill="#FED13C" fill-opacity="0.3"/><rect class="crb-sh" x="510.00" y="96" width="128" height="318" rx="63.5" fill="#FCF266" fill-opacity="0.5"/></g><g class="crb-bars"><rect class="crb-bar" x="0.00" y="367" width="128" height="318" rx="63.5" fill="url(#crb-g0)"/><rect class="crb-bar" x="127.50" y="287" width="128" height="318" rx="63.5" fill="url(#crb-g1)"/><rect class="crb-bar" x="255.00" y="192" width="128" height="318" rx="63.5" fill="url(#crb-g2)"/><rect class="crb-bar" x="382.50" y="96" width="128" height="318" rx="63.5" fill="url(#crb-g3)"/><rect class="crb-bar" x="510.00" y="1" width="128" height="318" rx="63.5" fill="url(#crb-g4)"/></g></svg>
+  <div class="wrap">
+    <div class="cs-kicker"><span class="bar"></span><span>הפרויקט</span></div>
+    <h2 class="cs-h2 grad-text cs-reveal"><span class="light">מהרעיון הפיננסי</span><br>לחוויה דיגיטלית</h2>
+    <div class="cs-about-grid cr-stack cs-reveal-group">
+      <div class="cs-about-col">
+        <h5>על קרייטרה</h5>
+        <p>קרייטרה היא מרקטפלייס לאשראי עסקי ולמימון פרויקטים. היא מחברת בין מגייסי אשראי,<br>גופי מימון ושותפים מקצועיים, ומאפשרת להם להתקדם לעסקה משותפת.</p>
+      </div>
+      <div class="cs-about-col">
+        <h5>התפקיד שלי</h5>
+        <p>הצטרפתי כשהרעיון העסקי כבר היה מגובש.</p>
+        <p class="cr-led">הובלתי</p>
+        <ul class="cr-dots">
+          <li>מחקר החזותי והשיווקי</li>
+          <li>מיצוב ומסרים</li>
+          <li>מיתוג, זהות ועיצוב האתר</li>
+          <li>עיצוב בניית אנימציות בקוד</li>
+          <li>פיתוח <span dir="ltr">Front&#8209;end</span></li>
+          <li>בלוג ותוכן</li>
+          <li>סרטוני פרסום</li>
+          <li>יעוץ מרקטינג וקידום אורגני</li>
+        </ul>
+      </div>
+      <div class="cs-about-col">
+        <h5>משך הפרויקט</h5>
+        <p>חודשיים</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- 03 · Audiences -->
+<section class="cs-section" id="audiences">
+  <div class="wrap">
+    <div class="cs-kicker"><span class="bar"></span><span>הקהלים</span></div>
+    <h2 class="cs-h2 grad-text cs-reveal"><span class="light">שלושה קהלים,</span><br>שלוש נקודות מבט</h2>
+    <p class="cs-lead cs-reveal">האתגר היה להראות לכל אחד מה הוא מקבל, ואיך הפעילות של כולם מתחברת.</p>
+    <figure class="cr-board cr-shot">
+      <div class="cr-doors" aria-label="שלוש השאלות שמיד אחרי ה-Hero, אחת לכל קהל">
+        <span class="cr-door-glow" aria-hidden="true"></span>
+        <div class="cr-door" tabindex="0">
+          <p class="cr-door-who">חברות ויזמים</p>
+          <h3>מגייסים אשראי<br>לחברה או לפרויקט?</h3>
+          <p>לאחר הגשת הבקשה, מנוע AI מכין את תיק האשראי ומתאים את הבקשה לגופי המימון הרלוונטיים. ההצעות מגיעות למקום אחד, ואפשר להשוות ולבחור את המימון המתאים לכם.</p>
+        </div>
+        <div class="cr-door" tabindex="0">
+          <p class="cr-door-who">גופי מימון</p>
+          <h3>מחפשים עסקאות<br>למימון?</h3>
+          <p>המערכת מתאימה לכם עסקאות לפי תחומי המימון והקריטריונים שלכם. כל עסקה מגיעה לאחר חיתום, עם תיק אשראי מוכן לוועדה. ללא עלות.</p>
+        </div>
+        <div class="cr-door" tabindex="0">
+          <p class="cr-door-who">ברוקרים ויועצים</p>
+          <h3>מנהלים לקוחות<br>שמגייסים מימון?</h3>
+          <p>מצגת אשראי בדקות וגישה לגופי מימון מקצועיים, כשהלקוחות נשארים רשומים על שמכם.</p>
+        </div>
+      </div>
+      <figcaption>3 דלתות מיד אחרי הפתיחה: שאלה, תשובה קצרה וקישור להרשמה</figcaption>
+    </figure>
+  </div>
+</section>
+
+<!-- 04 · The decision -->
+<section class="cs-section" id="decision">
+  <div class="wrap">
+    <div class="cs-kicker"><span class="bar"></span><span>ההחלטה המרכזית</span></div>
+    <h2 class="cs-h2 grad-text cs-reveal"><span class="light">עמוד משותף,</span><br>עם סדר עדיפויות ברור</h2>
+    <div class="cs-reveal">
+      <p class="cs-lead">בתחילת הדרך בחנו פנייה לקהל אחד. במהלך הדיונים והסקיצות התברר שפנייה כזו משאירה את הערך לשאר המשתתפים ברקע. הצעתי דף בית שמציג את המרקטפלייס לכולם, ובהמשך דפי נחיתה ייעודיים לכל קהל בקמפיינים.</p>
+      <h3 class="cs-h3 cr-subtitle">כדי לתת ביטוי גם לקהל המרכזי וגם לשותפים לעסקה, הגדרתי חלוקת דגש בתוכן:</h3>
+    </div>
+    <div class="cr-num-list cr-num-light">
+      <div class="cr-num">
+        <div class="cr-num-fig"><span class="digits" dir="ltr"><span class="n" data-to="60">60</span><span class="sfx">%</span></span></div>
+        <p>חברות ויזמים שמגייסים אשראי</p>
+      </div>
+      <div class="cr-num">
+        <div class="cr-num-fig"><span class="digits" dir="ltr"><span class="n" data-to="25">25</span><span class="sfx">%</span></span></div>
+        <p>גופי מימון</p>
+      </div>
+      <div class="cr-num">
+        <div class="cr-num-fig"><span class="digits" dir="ltr"><span class="n" data-to="15">15</span><span class="sfx">%</span></span></div>
+        <p>ברוקרים ושותפים מקצועיים</p>
+      </div>
+    </div>
+    <div class="cs-reveal">
+      <p class="cs-lead">מגייסי האשראי קיבלו את הבמה המרכזית. גופי המימון קיבלו הסבר על איכות המידע וההתאמה לעסקאות, והשותפים קיבלו מקום לצד הפנייה האישית אליהם.</p>
+      <p class="cs-lead">גם השפה נבחרה בהתאם: מקצועית ופשוטה, בעיקר בניסוח ניטרלי, שמכבד את האינטרסים של כל צד.</p>
+    </div>
+  </div>
+</section>
+
+<!-- 05 · Numbers - the live site's figures, as they work there: the row nearest the middle of the
+     screen lights up and counts; the slab carries the site's two glows and a few twinkling stars -->
+<section class="cs-section cr-numbers" id="numbers">
+  <div class="cr-sky" aria-hidden="true"><span class="cr-orb cr-orb-1"></span><span class="cr-orb cr-orb-2"></span><span class="cr-stars"></span></div>
+  <div class="wrap">
+    <div class="cs-kicker on-purple"><span class="bar"></span><span>המספרים</span></div>
+    <h2 class="cs-h2 cs-reveal"><span class="light">לתת לערך ביטוי</span><br>במספרים</h2>
+    <p class="cs-lead cr-on-dark cs-reveal">מתוך לימוד התחום והשיחות עם הצוות עלה הצורך להציג את היתרונות במונחים שמעסיקים את הקהל: זמן, עלות והתקדמות לעסקה. שילבתי באתר מספרים בולטים, כך שאפשר לקלוט את הערך גם בסריקה קצרה.</p>
+    <div class="cr-num-list">
+      <div class="cr-num">
+        <div class="cr-num-fig"><span class="digits" dir="ltr"><span class="sfx sfx-pre">+</span><span class="n" data-to="70">70</span><span class="sfx">%</span></span></div>
+        <p>חיסכון בזמן התהליך</p>
+      </div>
+      <div class="cr-num">
+        <div class="cr-num-fig"><span class="digits" dir="ltr"><span class="sfx sfx-pre">+</span><span class="n" data-to="30">30</span><span class="sfx">%</span></span></div>
+        <p>חיסכון לגופי מימון בעלויות חיתום, סינון ושיווק</p>
+      </div>
+      <div class="cr-num">
+        <div class="cr-num-fig"><span class="digits" dir="ltr"><span class="n" data-to="24">24</span></span><span class="unit">שעות</span></div>
+        <p>להכנת בקשת אשראי ומצגת מקצועית</p>
+      </div>
+      <div class="cr-num">
+        <div class="cr-num-fig"><span class="digits" dir="ltr">2<span class="range">-</span><span class="n" data-to="6">6</span></span><span class="unit">שבועות</span></div>
+        <p>מהגשת הבקשה לסגירת העסקה, בהתאם להיקפה ולמורכבותה</p>
+      </div>
+    </div>
+    <p class="cr-num-note">הנתונים הם הערכות החברה המבוססות, לפי הצהרתה, על בדיקות ומבחנים ומתעדכנות לאורך הדרך.</p>
+  </div>
+</section>
+
+<section class="cs-section" id="brand">
+  <div class="wrap">
+    <div class="cs-kicker"><span class="bar"></span><span>השם והלוגו</span></div>
+    <h2 class="cs-h2 grad-text cs-reveal"><span class="light">סימן</span><br>של צמיחה</h2>
+    <div class="cs-reveal">
+      <p class="cs-lead">השם Critera נולד מרעיון הקריטריונים לבחירה. הסיומת AI מציינת את המנוע הטכנולוגי שבבסיס הפלטפורמה.</p>
+      <p class="cs-lead">עיצבתי לוגו מחמישה פסים צבעוניים העולים בהדרגה, כמו גרף של צמיחה. הצבעים מבטאים את מגוון המשתתפים והאפשרויות במרקטפלייס. חמישה פסים אפשרו לי לבטא ריבוי ולשמור על צורה פשוטה ומזוהה; הקצוות המעוגלים מוסיפים רכות ונגישות.</p>
+    </div>
+    <div class="cr-board cr-logos cs-reveal">
+      <div class="cr-logo-tile dark"><iframe class="cr-logo-anim" src="critera-demo/index.html#/embed/logo-white" title="הלוגו של קרייטרה על רקע כהה, באנימציה" loading="lazy" tabindex="-1"></iframe></div>
+      <div class="cr-logo-tile light"><iframe class="cr-logo-anim" src="critera-demo/index.html#/embed/logo-purple" title="הלוגו של קרייטרה על רקע בהיר, באנימציה" loading="lazy" tabindex="-1"></iframe></div>
+    </div>
+  </div>
+</section>
+
+<section class="cs-section" id="visual">
+  <div class="wrap">
+    <div class="cs-kicker"><span class="bar"></span><span>השפה החזותית</span></div>
+    <h2 class="cs-h2 grad-text cs-reveal"><span class="light">פיננסים</span><br>באופי טכנולוגי</h2>
+    <div class="cs-reveal">
+      <p class="cs-lead">רציתי שהאתר יעורר סקרנות וישדר את המקצועיות של החברה כבר במפגש הראשון. חיברתי בין האיפוק של עולם הפיננסים לצבעוניות שמבטאת את מגוון האפשרויות במרקטפלייס.</p>
+      <p class="cs-lead">הסגול הכהה יוצר תחושת עומק ומבליט את צבעי המותג. משטחים שקופים למחצה וגרדיאנטים מוסיפים אור ושכבות, ונותנים לרעיון השקיפות ביטוי חזותי. טיפוגרפיה ברורה משלימה את השפה ושומרת על קריאות.</p>
+    </div>
+    <div class="cr-board cr-pair cr-pair-visual cs-reveal">
+      <figure class="cr-shot"><div class="cr-crop" data-x="59" data-y="245" data-w="682" data-h="614"><iframe src="critera-demo/index.html#/embed/hero" title="ה-Hero של קרייטרה: בקשת המימון וההצעות" loading="lazy" tabindex="-1" aria-hidden="true"></iframe></div><figcaption>בקשה אחת פוגשת הצעות מכמה גופים, על משטח זכוכית</figcaption></figure>
+      <figure class="cr-shot"><div class="cr-crop" data-x="602" data-y="0" data-w="875" data-h="649"><iframe src="critera-demo/index.html#/embed/hero-copy" title="הכותרת והכפתורים של ה-Hero" loading="lazy" tabindex="-1" aria-hidden="true"></iframe></div><figcaption>טיפוגרפיה ברורה והכפתור בגרדיאנט על הסגול הכהה</figcaption></figure>
+    </div>
+  </div>
+</section>
+
+<section class="cs-section" id="composition">
+  <div class="wrap">
+    <div class="cs-kicker"><span class="bar"></span><span>הקומפוזיציה</span></div>
+    <h2 class="cs-h2 grad-text cs-reveal"><span class="light">זהות שמלווה</span><br>את הגלילה</h2>
+    <div class="cs-reveal">
+      <p class="cs-lead">המשטחים האלכסוניים והפינות המעוגלות הם חלק מהזהות של קרייטרה. שילבתי אותם בקומפוזיציות משתנות כדי ליצור מראה מזוהה וקצב שמזמין להמשיך לגלול.</p>
+      <p class="cs-lead">המעבר בין אזורים כהים ובהירים מגוון את החוויה ומאפשר רגעים שקטים יותר לקריאה. כך נשמר האיזון בין הנוכחות החזותית לבין התוכן.</p>
+    </div>
+  </div>
+</section>
+
+<section class="cs-section" id="structure">
+  <div class="wrap">
+    <div class="cs-kicker"><span class="bar"></span><span>מבנה העמוד</span></div>
+    <h2 class="cs-h2 grad-text cs-reveal"><span class="light">להכיר בהדרגה,</span><br>להצטרף כשמתאים</h2>
+    <div class="cs-reveal">
+      <p class="cs-lead">בחרתי לרכז את ההיכרות עם קרייטרה בדף בית רציף. מיד אחרי הפתיחה, כל קהל פוגש שאלה משלו, תשובה קצרה וקישור להרשמה המתאימה.</p>
+      <p class="cs-lead">משם העמוד מתקדם לאפשרויות הפעילות, ליתרונות ולתהליך. האודות והבלוג מאפשרים להעמיק בנפרד, והקריאה לפעולה נשארת זמינה לאורך הגלילה. המטרה: לעורר עניין ולהוביל להרשמה או לשיחה עם הצוות.</p>
+    </div>
+  </div>
+</section>
+
+<section class="cs-section" id="motion">
+  <div class="wrap">
+    <div class="cs-kicker"><span class="bar"></span><span>האנימציות</span></div>
+    <h2 class="cs-h2 grad-text cs-reveal"><span class="light">לראות איך</span><br>החיבור קורה</h2>
+    <div class="cs-reveal">
+      <p class="cs-lead">ב&#8209;Hero, בקשת מימון אחת פוגשת הצעות מכמה גופים. האנימציה הופכת את הרעיון של המרקטפלייס לתרחיש שאפשר להבין במבט.</p>
+      <p class="cs-lead">בהמשך, ארבע זירות הפעילות נעות סביב קרייטרה: אשראי, מסחר בתיקי אשראי, סינדיקציה, והון ושותפויות. המבנה מציג את היקף האפשרויות, וכל זירה מובילה ישירות להרשמה הרלוונטית.</p>
+    </div>
+    <div class="cr-board cr-motion cs-reveal">
+      <div class="cr-motion-row">
+        <figure class="cr-shot cr-m-arenas">
+          <div class="cr-crop live wide" data-x="90" data-y="30" data-w="1270" data-h="780" data-fw="1440" data-fh="915"><iframe src="critera-demo/index.html#/embed/arenas" title="ארבע הזירות סביב קרייטרה, אפשר להצביע על זירה" loading="lazy"></iframe></div>
+          <!-- phones: the site's own orbit turns into a list there, so the case draws a small one of its own - the track, the logo and the four arenas' icons, no words -->
+          <div class="cr-orbit narrow" aria-hidden="true"><svg class="cr-orbit-track"><path/></svg><img class="cr-orbit-logo" src="critera-demo/logo-critera.svg" alt=""><span class="cr-orbit-bar" style="--a:#7446DD;--b:#A69BF0"><svg viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><g transform="rotate(40 12 12)"><path d="M11 15h2a2 2 0 1 0 0-4h-3c-.6 0-1.1.2-1.4.6L3 17"/><path d="m7 21 1.6-1.4c.3-.4.8-.6 1.4-.6h4c1.1 0 2.1-.4 2.8-1.2l4.6-4.4a2 2 0 0 0-2.750-2.91l-4.2 3.9"/><path d="m2 16 6 6"/><circle cx="16" cy="9" r="2.9"/><circle cx="6" cy="5" r="3"/></g></svg></span><span class="cr-orbit-bar" style="--a:#AA3ACE;--b:#DF81FE"><svg viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M12 12h.01"/><path d="M16 6V4a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v2"/><path d="M22 13a18.15 18.15 0 0 1-20 0"/><rect width="20" height="14" x="2" y="6" rx="2"/></svg></span><span class="cr-orbit-bar" style="--a:#FF00C8;--b:#FF965D"><svg viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="m10.586 5.414-5.172 5.172"/><path d="m18.586 13.414-5.172 5.172"/><path d="M6 12h12"/><circle cx="12" cy="20" r="2"/><circle cx="12" cy="4" r="2"/><circle cx="20" cy="12" r="2"/><circle cx="4" cy="12" r="2"/></svg></span><span class="cr-orbit-bar" style="--a:#FFA411;--b:#FFDA76"><svg viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="m11 17 2 2a1 1 0 1 0 3-3"/><path d="m14 14 2.5 2.5a1 1 0 1 0 3-3l-3.880-3.880a3 3 0 0 0-4.240 0l-.880.880a1 1 0 1 1-3-3l2.810-2.810a5.790 5.790 0 0 1 7.060-.870l.470.280a2 2 0 0 0 1.420.250L21 4"/><path d="m21 3 1 11h-2"/><path d="M3 3 2 14l6.5 6.5a1 1 0 1 0 3-3"/><path d="M3 4h8"/></svg></span></div>
+          <figcaption>ארבע הזירות סביב קרייטרה<span class="cr-cap-hover">. מעבר עם העכבר עוצר את התנועה</span></figcaption>
+        </figure>
+        <figure class="cr-shot cr-m-partners">
+          <div class="cr-crop live" data-x="250" data-y="240" data-w="400" data-h="360"><iframe src="critera-demo/index.html#/embed/partners" title="תוכנית השותפים: ברוקרים, יועצים ונותני שירות סביב העסקה" loading="lazy"></iframe></div>
+          <figcaption>תוכנית השותפים: חמישה תפקידים סביב העסקה</figcaption>
+        </figure>
+      </div>
+      <figure class="cr-shot cr-m-road">
+        <div class="cr-crop cr-about-crop" data-scroll="1320" data-x="110" data-y="0" data-w="540" data-h="800"><iframe src="critera-demo/index.html#/about" title="עמוד האודות: הקו יורד אל בקשת האשראי ומתפצל לחמשת גופי המימון" loading="lazy" tabindex="-1" aria-hidden="true"></iframe></div>
+        <figcaption>עמוד האודות: בקשה אחת, תיק אחד, חמישה סוגי גופי מימון</figcaption>
+      </figure>
+    </div>
+  </div>
+</section>
+
+<section class="cs-section" id="engine">
+  <div class="wrap">
+    <div class="cs-kicker"><span class="bar"></span><span>מנוע החיתום</span></div>
+    <h2 class="cs-h2 grad-text cs-reveal"><span class="light">להסביר את הטכנולוגיה</span><br>שמאחורי העסקה</h2>
+    <div class="cs-reveal">
+      <p class="cs-lead">משוב מאנשי מקצוע חידד שהמנוע צריך לקבל מקום בולט יותר באתר. בעקבותיו יצרתי אזור ייעודי עם הסבר ואנימציה.</p>
+      <p class="cs-lead">ההמחשה עוקבת אחר הנתונים: מהמסמכים והמאגרים, דרך הניתוח, ועד לתיק האשראי ולהתאמה לגופי מימון. היא מציגה תהליך מורכב ברצף חזותי, ומבהירה היכן פועלת הטכנולוגיה והיכן מתקבלת החלטה אנושית.</p>
+    </div>
+    <figure class="cr-board cr-shot">
+      <div class="cr-crop cr-engine wide" data-x="0" data-y="0" data-w="1490" data-h="490" data-fw="1490" data-fh="490"><iframe src="critera-demo/engine/critera-engine-section.html" title="אנימציית מנוע החיתום: מקורות המידע, המנוע ותיק האשראי" loading="lazy"></iframe></div>
+      <iframe class="cr-engine mid" src="critera-demo/engine/critera-engine-section-tablet.html" title="אנימציית מנוע החיתום, גרסת טאבלט" loading="lazy" scrolling="no"></iframe>
+      <iframe class="cr-engine narrow" src="critera-demo/engine/critera-engine-section-mobile.html" title="אנימציית מנוע החיתום, גרסת מובייל" loading="lazy"></iframe>
+      <figcaption>מקורות המידע, המנוע ותיק האשראי</figcaption>
+    </figure>
+  </div>
+</section>
+
+<section class="cs-section" id="trust">
+  <div class="wrap">
+    <div class="cs-kicker"><span class="bar"></span><span>תהליך ואמון</span></div>
+    <h2 class="cs-h2 grad-text cs-reveal"><span class="light">לדעת מה קורה,</span><br>ומי נמצא בצד השני</h2>
+    <div class="cs-reveal">
+      <p class="cs-lead">ציר הזמן מפרט שישה שלבים, מההרשמה ועד לסגירה, ומציג את משכי הזמן הצפויים. לצדו, היתרונות מבהירים מה קרייטרה מציעה: אנונימיות, הכנת תיק אשראי וגישה לגופי מימון מקצועיים.</p>
+      <p class="cs-lead">לברוקרים וליועצי המימון ניתן הסבר על סביבת העבודה הדיסקרטית ועל הגשת בקשות באנונימיות. תמונות הצוות, הניסיון המקצועי ופרטי הקשר הגלויים מזמינים לפנות ולשאול.</p>
+      <p class="cs-lead">אזור השאלות והתשובות כולל חיפוש וסינון לפי נושא. הבלוג, שאת תוכנו פיתחתי, מרחיב את המענה ותומך בחשיפה האורגנית.</p>
+    </div>
+    <figure class="cr-board cr-shot">
+      <iframe class="cr-live" src="critera-demo/index.html#/embed/timeline" title="ציר הזמן של התהליך: שישה שלבים, אפשר ללחוץ על כל שלב" loading="lazy"></iframe>
+      <figcaption>ציר הזמן: שישה שלבים, מההרשמה ועד הסגירה. לחיצה על שלב פותחת אותו</figcaption>
+    </figure>
+  </div>
+</section>
+
+<section class="cs-section" id="mobile">
+  <div class="wrap">
+    <div class="cs-kicker"><span class="bar"></span><span>מובייל</span></div>
+    <h2 class="cs-h2 grad-text cs-reveal"><span class="light">החוויה ממשיכה</span><br>למסך הקטן</h2>
+    <div class="cs-reveal">
+      <p class="cs-lead">התאמתי את הפריסה, האנימציות וציר הזמן למובייל, תוך שמירה על ההיררכיה ועל הגישה להרשמה. הזהות נשארת עקבית, והקומפוזיציה מתאימה את עצמה לגודל המסך.</p>
+    </div>
+    <figure class="cr-board cr-shot">
+      <div class="cr-deck" tabindex="0" aria-label="חמישה מסכי מובייל, נפרשים במעבר העכבר או בנגיעה">
+        <img class="cr-deck-card cs-zoomable" src="assets/site/mobile-1-hero.jpg" alt="הפתיחה במובייל" loading="lazy">
+        <img class="cr-deck-card cs-zoomable" src="assets/site/mobile-2-arenas.jpg" alt="הזירות במובייל" loading="lazy">
+        <img class="cr-deck-card cs-zoomable" src="assets/site/mobile-3-engine.jpg" alt="הטכנולוגיה במובייל" loading="lazy">
+        <img class="cr-deck-card cs-zoomable" src="assets/site/mobile-4-timeline.jpg" alt="ציר הזמן במובייל" loading="lazy">
+        <img class="cr-deck-card cs-zoomable" src="assets/site/mobile-5-menu.jpg" alt="התפריט הפתוח במובייל" loading="lazy">
+      </div>
+    </figure>
+  </div>
+</section>
+
+<section class="cs-section" id="system">
+  <div class="wrap">
+    <div class="cs-kicker"><span class="bar"></span><span>מערכת העיצוב</span></div>
+    <h2 class="cs-h2 grad-text cs-reveal"><span class="light">בסיס</span><br>להמשך הדרך</h2>
+    <div class="cs-reveal">
+      <p class="cs-lead">ריכזתי את הצבעים, הטיפוגרפיה והרכיבים במערכת עיצוב ב&#8209;Figma. המערכת מתעדת את השפה ומגדירה בסיס עקבי להמשך הפיתוח.</p>
+    </div>
+  <figure class="cr-board cr-shot cr-slide-in">
+      <img class="cs-zoomable" src="assets/images/book.png" alt="עמודים ממערכת העיצוב של קרייטרה ב-Figma: Atomic Design, טוקנים, וריאנטים, משתנים, צבעים, טיפוגרפיה וקומפוננטות" loading="lazy">
+      <figcaption>מערכת עיצוב ב&#8209;Figma: Atomic Design, טוקנים, וריאנטים, משתנים, צבעים, טיפוגרפיה וקומפוננטות</figcaption>
+    </figure>
+  </div>
+</section>
+
+<section class="cs-section" id="ads">
+  <div class="wrap">
+    <div class="cs-kicker"><span class="bar"></span><span>סרטוני הפרסום</span></div>
+    <h2 class="cs-h2 grad-text cs-reveal"><span class="light">אותה זהות,</span><br>סיפור לכל קהל</h2>
+    <div class="cs-reveal">
+      <p class="cs-lead">יצרתי סרטוני פרסום. הדוגמאות מציגות הזדמנות עסקית בעקבות זכייה במכרז, מעולמות הבנייה והתעשייה.</p>
+      <p class="cs-lead">הסיפורים ממחישים את פער המימון ומציגים את הדרך להצעות דרך קרייטרה. הדמויות והסביבה מותאמות לקהל, והצבעים, הצורות והטיפוגרפיה בתנועה ממשיכים את זהות המותג.</p>
+    </div>
+  <div class="cr-videos cs-reveal-group">
+      <figure class="cr-video">
+        <video src="assets/video/ad02-tender-v8-vo-web.mp4" poster="assets/video/ad02-tender-v8-vo.jpg" controls playsinline preload="metadata"></video>
+        <figcaption>מימון לפרויקט בנייה · עד 30 שניות</figcaption>
+      </figure>
+      <figure class="cr-video">
+        <video src="assets/video/ad01-borrower-v22-vo-web.mp4" poster="assets/video/ad01-borrower-v22-vo.jpg" controls playsinline preload="metadata"></video>
+        <figcaption>מימון לפרויקט בנייה · עד 30 שניות</figcaption>
+      </figure>
+      <figure class="cr-video">
+        <video src="assets/video/ad03-industry-v3-vo-web.mp4" poster="assets/video/ad03-industry-v3-vo.jpg" controls playsinline preload="metadata"></video>
+        <figcaption>מימון לחברות · עד 30 שניות</figcaption>
+      </figure>
+      <figure class="cr-video">
+        <video src="assets/video/ad04-time-v3-vo-web.mp4" poster="assets/video/ad04-time-v3-vo.jpg" controls playsinline preload="metadata"></video>
+        <figcaption>מימון לחברות · עד 30 שניות</figcaption>
+      </figure>
+    </div>
+    <!-- the brand film: wide, under the four ads - for the look and the story, not a sales ad; it loads only when played -->
+    <figure class="cr-video cr-film cs-reveal">
+      <video src="assets/video/critera-film-he-web.mp4" poster="assets/video/critera-film-he.jpg" controls playsinline preload="none" controlslist="nofullscreen nodownload" disablepictureinpicture></video>
+      <figcaption>סרטון תדמית · 1:21 · יזם מחפש מימון לפרויקט, ומקבל ארבע הצעות במקום אחד</figcaption>
+    </figure>
+  </div>
+</section>
+
+<!-- 16 · Implementation - closes the case, with the demo -->
+<section class="cs-section" id="build">
+  <div class="wrap">
+    <div class="cr-build">
+      <div class="cr-build-text">
+    <div class="cs-kicker"><span class="bar"></span><span>המימוש</span></div>
+    <h2 class="cs-h2 grad-text cs-reveal"><span class="light">מהעיצוב</span><br>לאתר חי</h2>
+    <div class="cs-reveal">
+      <p class="cs-lead">את ה&#8209;<span dir="ltr">Front&#8209;end</span> בניתי בעזרת Claude Code, על בסיס העיצוב והאנימציות שתכננתי. עבדתי עם הצוות במאגר קוד משותף, בדקתי את האתר ואת תהליכי ההרשמה והכניסה, והעליתי אותו לאוויר.</p>
+      <p class="cs-lead">העבודה הישירה בקוד אפשרה לי לבחון ולדייק את הקומפוזיציה והתנועה בתוך האתר עצמו.</p>
+    </div>
+    <a class="cs-demo-btn cs-close-demo cs-reveal" href="critera-demo/index.html" target="_blank" rel="noopener"><span class="live-dot" aria-hidden="true"></span>לצפייה בדמו<span class="sr-only"> (נפתח בלשונית חדשה)</span></a>
+      </div>
+      <figure class="cr-shot cr-build-shot cs-reveal">
+        <img class="cs-zoomable" src="assets/site/code.jpg" alt="האתר של קרייטרה בדפדפן, עם כלי המפתחים פתוחים לצדו" loading="lazy">
+        <figcaption>העבודה בקוד: האתר החי וכלי המפתחים</figcaption>
+      </figure>
+    </div>
+    <!-- phones: the same button, last on the page, under the picture (the one above is hidden there) -->
+    <a class="cs-demo-btn cs-close-demo cr-close-demo-end" href="critera-demo/index.html" target="_blank" rel="noopener"><span class="live-dot" aria-hidden="true"></span>לצפייה בדמו<span class="sr-only"> (נפתח בלשונית חדשה)</span></a>
+  </div>
+</section>
+    </div><!-- /.cs -->
+  </div><!-- /.case-shell -->
+
+  <section class="next-case" id="next-case" dir="ltr">
+    <div class="next-case-head">
+      <h2>Next Cases</h2>
+    </div>
+    <div class="cards">
+      <div class="case-card has-demo tint-blue">
+        <a class="case-card-link" href="../case-syncops/syncops.html" aria-label="Open the SyncOps case study"></a>
+        <div class="case-media">
+          <div class="case-live cl-syncops cl-code" data-play="syncops" style="aspect-ratio:1256/944" role="img" aria-label="SyncOps - incident board and live map"></div>
+        </div>
+        <div class="case-body">
+          <div class="case-tags">
+            <span class="case-tag">Agentic AI</span>
+            <span class="case-tag">Enterprise B2B</span>
+            <span class="case-tag">UX Research &amp; Design</span>
+          </div>
+          <h3>From monitoring to deciding -<br><strong>The agent proposes. The admin decides.</strong></h3>
+          <p>Agentic dispatch for fiber network operations.</p>
+          <div class="case-stats">
+            <div class="stat-pill"><svg viewBox="0 0 24 24"><path d="M12 19V5M5 12l7-7 7 7"/></svg><span>Estimated <strong>~50%</strong> faster task assignment</span></div>
+          </div>
+          <a class="case-demo-link" href="../case-syncops/syncops-agent-demo.html" target="_blank" rel="noopener">
+            <span class="live-dot" aria-hidden="true"></span>Try the live demo<svg class="arrow" viewBox="0 0 24 24" aria-hidden="true"><path d="M7 17L17 7M9 7h8v8"/></svg><span class="sr-only"> (opens in a new tab)</span>
+          </a>
+        </div>
+        <div class="case-cta"><span class="case-explore">EXPLORE <svg viewBox="0 0 24 24"><path d="M5 12h14M13 6l6 6-6 6"/></svg></span></div>
+      </div>
+
+      <div class="case-card has-demo tint-violet">
+        <a class="case-card-link" href="../case-aft/aft-timeline.html" aria-label="Open the AFT Timeline case study"></a>
+        <div class="case-media">
+          <div class="case-live cl-aft cl-code" data-play="aft" style="aspect-ratio:1256/840" role="img" aria-label="Amazon Global Syndicated Loan - AI decision-support timeline"></div>
+        </div>
+        <div class="case-body">
+          <div class="case-tags">
+            <span class="case-tag">Agentic AI</span>
+            <span class="case-tag">Enterprise B2B</span>
+            <span class="case-tag">UX Research &amp; Design</span>
+          </div>
+          <h3>Deals don&rsquo;t fail. <strong>Visibility does!</strong></h3>
+          <p>An AI-driven decision-support timeline for syndicated-loan fintech.</p>
+          <div class="case-stats">
+            <div class="stat-pill"><svg viewBox="0 0 24 24"><path d="M12 19V5M5 12l7-7 7 7"/></svg><span>Up to <strong>50%</strong> fewer approval-related delays</span></div>
+            <div class="stat-pill"><svg viewBox="0 0 24 24"><path d="M12 5v14M19 12l-7 7-7-7"/></svg><span><strong>~35%</strong> less coordination time</span></div>
+          </div>
+          <a class="case-demo-link" href="../case-aft/aft-agent-demo.html" target="_blank" rel="noopener">
+            <span class="live-dot" aria-hidden="true"></span>Try the live demo<svg class="arrow" viewBox="0 0 24 24" aria-hidden="true"><path d="M7 17L17 7M9 7h8v8"/></svg><span class="sr-only"> (opens in a new tab)</span>
+          </a>
+        </div>
+        <div class="case-cta"><span class="case-explore">EXPLORE <svg viewBox="0 0 24 24"><path d="M5 12h14M13 6l6 6-6 6"/></svg></span></div>
+      </div>
+
+    </div>
+  </section>
+
+  <footer dir="ltr">
+    <span>&copy; 2026 Larisa Maly. All rights reserved.</span>
+    <div class="social">
+      <a href="https://wa.me/972506763066" aria-label="WhatsApp"><svg viewBox="0 0 24 24"><path d="M3 21l1.65 -3.8a9 9 0 1 1 3.4 2.9l-5.05 .9"/><path d="M9 10a.5 .5 0 0 0 1 0v-1a.5 .5 0 0 0 -1 0v1a5 5 0 0 0 5 5h1a.5 .5 0 0 0 0 -1h-1a.5 .5 0 0 0 0 1"/></svg></a>
+      <a href="https://www.linkedin.com/in/darbiz/" aria-label="LinkedIn"><svg viewBox="0 0 24 24"><path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4V8h4v2"/><rect x="2" y="9" width="4" height="12"/><circle cx="4" cy="4" r="2"/></svg></a>
+    </div>
+  </footer>
+
+</div>
+
+<button id="backToTop" class="back-to-top" aria-label="Back to top">
+  <svg viewBox="0 0 24 24"><path d="M12 19V5M5 12l7-7 7 7"/></svg>
+</button>
+
+<div class="cs-lightbox" id="csLightbox" aria-hidden="true">
+  <button class="cs-lightbox-close" id="csLightboxClose" aria-label="Close">
+    <svg viewBox="0 0 24 24"><path d="M6 6l12 12M18 6L6 18"/></svg>
+  </button>
+  <img id="csLightboxImg" src="" alt="">
+</div>
+
+<script src="../js/back-to-top.js?v=20260807"></script>
+<script src="../js/case-study.js?v=20260807"></script>
+<script src="../js/vendor/lenis.min.js?v=1.3.25"></script>
+<script src="../js/case-curve.js?v=20261018n"></script>
+<script src="../js/theme.js?v=20261009"></script>
+<script src="../js/nav-back.js?v=20260812"></script>
+<script src="critera-case.js?v=20261029e"></script>
+<script src="../js/live-aft.js?v=20261018g"></script>
+<script src="../js/live-syncops.js?v=20261018d"></script>
+<script src="../js/case-live.js?v=20261018g"></script>
+<script src="../js/hero-slats.js?v=20261009"></script>
+<script>/* cr-lang-go: the language toggle slides its knob over before it opens the other language */
+document.querySelectorAll('.cr-lang').forEach(function(a){a.addEventListener('click',function(e){
+  if(e.metaKey||e.ctrlKey||e.shiftKey||matchMedia('(prefers-reduced-motion: reduce)').matches)return;
+  e.preventDefault();a.dataset.v=a.dataset.v==='en'?'he':'en';
+  a.querySelectorAll('.cr-lang-t').forEach(function(t,i){t.classList.toggle('on',(i===0)===(a.dataset.v==='en'))});
+  setTimeout(function(){location.href=a.href},560)})});</script>
+</body>
+</html>

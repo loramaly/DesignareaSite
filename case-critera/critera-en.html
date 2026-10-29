@@ -1,0 +1,583 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+<head>
+<script src="../js/analytics.js?v=1"></script>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Critera - Business Lending Meets AI</title>
+<meta name="robots" content="noindex, nofollow">
+<meta name="description" content="Senior AI Product Designer specializing in UX Strategy, UI Craft & Agentic AI Experiences.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=DM+Sans:wght@400;500;600;700;800&family=Noto+Sans+Hebrew:wght@300;400;500;600;700;800&family=Manrope:wght@800&family=Nunito:wght@400;600;700&family=Luxurious+Script&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../css/styles.css?v=20261028ring">
+<link rel="stylesheet" href="../css/live-syncops.css?v=20261018e">
+<link rel="stylesheet" href="../css/live-aft.css?v=20261028a">
+<link rel="stylesheet" href="../css/light.css?v=20261028ring">
+<link rel="icon" type="image/png" sizes="32x32" href="../assets/icons/favicon-32x32.png">
+<link rel="icon" type="image/png" sizes="16x16" href="../assets/icons/favicon-16x16.png">
+<link rel="apple-touch-icon" sizes="180x180" href="../assets/icons/apple-touch-icon.png">
+<script>/* dark is the default - only the visitor's own choice switches it, and the
+   attribute is set before first paint so the page never flashes the wrong theme */
+(function(){try{var t=sessionStorage.getItem('lm-theme-v3');
+document.documentElement.setAttribute('data-theme',t==='light'?'light':'dark');}
+catch(e){document.documentElement.setAttribute('data-theme','dark');}})();</script>
+
+<link rel="stylesheet" href="../css/case-study.css?v=20261029p">
+<script>
+/* returning to home from anywhere on the site: replay the normal hero entrance
+   (portrait/text/chips/dice) like a fresh load, instead of showing a stale/settled page */
+addEventListener('pageshow', () => {
+  let fromSite = false;
+  try { fromSite = document.referrer && new URL(document.referrer).origin === location.origin; } catch(e) {}
+  if (!fromSite) return;
+  document.body.classList.add('reanim-lock');
+  void document.body.offsetWidth;
+  document.body.classList.remove('reanim-lock');
+});
+</script>
+</head>
+<body>
+<div class="bg-fx"><canvas class="slats-fx" data-preset="tech" aria-hidden="true"></canvas></div>
+<div class="page">
+
+  <header dir="ltr">
+    <a class="logo" href="/">
+      <img class="logo-mark" src="../assets/images/logoColorful.png" alt="" width="31" height="31">
+      <span class="logo-name">Larisa Maly</span>
+    </a>
+    <nav class="main-nav" id="mainNav" aria-label="Main">
+      <a href="/#recommendations"><svg viewBox="0 0 24 24"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg><span>Recommendations</span></a>
+      <a href="/#works"><svg viewBox="0 0 24 24"><rect x="2" y="7" width="20" height="14" rx="2"/><path d="M16 21V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16"/></svg><span>Portfolio</span></a>
+      <a href="../resume.html"><svg viewBox="0 0 24 24"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/></svg><span>Resume</span></a>
+    </nav>
+    <button class="theme-toggle" type="button" aria-pressed="false" aria-label="Switch to light theme" title="Switch to light theme">
+      <svg class="ic-moon" viewBox="0 0 24 24" aria-hidden="true"><path d="M21 12.8A9 9 0 1 1 11.2 3a7 7 0 0 0 9.8 9.8z"/></svg>
+      <svg class="ic-sun" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="4.2"/><path d="M12 2.2v2.4M12 19.4v2.4M4.5 4.5l1.7 1.7M17.8 17.8l1.7 1.7M2.2 12h2.4M19.4 12h2.4M4.5 19.5l1.7-1.7M17.8 6.2l1.7-1.7"/></svg>
+    </button>
+    <button class="hamburger" id="hamburger" aria-label="Menu" aria-expanded="false" aria-controls="mainNav">
+      <span></span><span></span><span></span>
+    </button>
+  </header>
+  <div class="nav-overlay" id="navOverlay"></div>
+
+
+  <div class="case-shell">
+    <div class="case-head-sentinel" id="caseHeadSentinel"></div>
+    <nav class="case-head cr-head" id="caseNav" aria-label="Case study sections">
+      <div class="case-nav-items">
+        <a class="case-nav-item" href="#about">
+          <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><line x1="12" y1="16" x2="12" y2="12"/><line x1="12" y1="8" x2="12.01" y2="8"/></svg>
+          Opening
+        </a>
+        <a class="case-nav-item" href="#project">
+          <svg viewBox="0 0 24 24"><path d="M9 11l3 3L22 4"/><path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11"/></svg>
+          Project
+        </a>
+        <a class="case-nav-item" href="#audiences">
+          <svg viewBox="0 0 24 24"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
+          Audiences
+        </a>
+        <a class="case-nav-item" href="#numbers">
+          <svg viewBox="0 0 24 24"><line x1="18" y1="20" x2="18" y2="10"/><line x1="12" y1="20" x2="12" y2="4"/><line x1="6" y1="20" x2="6" y2="14"/></svg>
+          Numbers
+        </a>
+        <a class="case-nav-item" href="#brand">
+          <svg viewBox="0 0 24 24"><path d="M12 2l2.2 6.8L21 11l-6.8 2.2L12 20l-2.2-6.8L3 11l6.8-2.2L12 2z"/></svg>
+          Brand
+        </a>
+        <a class="case-nav-item" href="#structure">
+          <svg viewBox="0 0 24 24"><rect x="3" y="3" width="18" height="18" rx="2"/><line x1="3" y1="9" x2="21" y2="9"/><line x1="9" y1="21" x2="9" y2="9"/></svg>
+          Website
+        </a>
+        <a class="case-nav-item" href="#build">
+          <svg viewBox="0 0 24 24"><polyline points="16 18 22 12 16 6"/><polyline points="8 6 2 12 8 18"/></svg>
+          Build
+        </a>
+        <a class="case-nav-item demo" href="critera-demo-en/index.html" target="_blank" rel="noopener">
+          <span class="live-dot" aria-hidden="true"></span>
+          Live demo
+        </a>
+      </div>
+    </nav>
+    <div class="case-breadcrumb" dir="ltr">
+      <a href="/">Home</a>
+      <svg class="bc-sep" viewBox="0 0 24 24" aria-hidden="true"><polyline points="9 18 15 12 9 6"/></svg>
+      <a href="/#works">Portfolio</a>
+      <svg class="bc-sep" viewBox="0 0 24 24" aria-hidden="true"><polyline points="9 18 15 12 9 6"/></svg>
+      <span class="current">Critera</span>
+    </div>
+
+    <!-- Text and colours from Figma "Critera-Case" (2gLNtwSH93DrGv3pGNvxML), one section per slide.
+         Layout, type scale and spacing are the shared case template; only the theme colours are Critera's. -->
+    <div class="cs theme-critera">
+
+<!-- 01 · Opening -->
+<div class="cs-hero-bleed">
+<section class="cs-hero cr-cover" id="about">
+    <div class="cr-topbar" dir="ltr"><a class="cr-lang" data-v="en" href="critera.html" aria-label="לקריאה בעברית"><span class="cr-lang-knob" aria-hidden="true"></span><span class="cr-lang-t on" lang="en"><svg class="cr-lang-ic cr-lang-flag" viewBox="0 0 28 20" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><path d="M5.5 1.2l1.4 2.85 3.15.46-2.28 2.22.54 3.13L5.5 8.38 2.69 9.86l.54-3.13L.95 4.51l3.15-.46z" fill="currentColor" stroke="none"/><path d="M14 3h11.6M14 9h11.6M2 15h23.6"/></svg>ENG</span><span class="cr-lang-t" lang="en"><svg class="cr-lang-ic" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"><path d="M12 2.5l8.2 14.2H3.8z"/><path d="M12 21.5L3.8 7.3h16.4z"/></svg>HEB</span></a></div>
+  <div class="wrap cs-hero-wrap">
+    <div class="cs-hero-text">
+      <div class="cs-tags cs-reveal">
+        <span class="cs-tag">UX Strategy</span>
+        <span class="cs-tag">Web Design</span>
+        <span class="cs-tag" dir="ltr">Front&#8209;end</span>
+        <span class="cs-tag">Animation</span>
+        <span class="cs-tag">Branding</span>
+        <span class="cs-tag">Video Ads</span>
+      </div>
+      <h1 class="cs-reveal"><span class="light">Business Lending</span><br>Meets AI</h1>
+      <p class="lead cs-reveal">A marketplace connecting businesses and developers with lenders, bringing financing requests and offers together in one place.</p>
+      <p class="lead cr-lead-2 cs-reveal">From brand identity to a live website and advertising videos:<br>branding, design, animation, and development.</p>
+      <a class="cs-demo-btn cs-reveal" href="critera-demo-en/index.html" target="_blank" rel="noopener"><span class="live-dot" aria-hidden="true"></span>View Live Demo<span class="sr-only"> (opens in a new tab)</span></a>
+    </div>
+    <div class="cs-hero-media" aria-hidden="true">
+      <iframe class="cr-cover-anim is-flipped" src="assets/critera-isometry.html?flip&amp;en&amp;card&amp;deco=a&amp;v=20261029o" title="Critera desktop and mobile" loading="eager" tabindex="-1" onload="var f=this;setTimeout(function(){f.classList.add('is-live')},1500)"></iframe>
+    </div>
+  </div>
+</section>
+</div>
+
+<!-- 02 · The project -->
+<section class="cs-section" id="project">
+  <!-- the five bars of the Critera mark, drawn in code (the logo's own gradients); they rise in when the section comes on screen -->
+  <svg class="cr-rainbow" viewBox="0 0 638 637" aria-hidden="true" focusable="false"><defs><linearGradient id="crb-g0" x1="0" y1="1" x2="0" y2="0"><stop offset="0" stop-color="#7446DD"/><stop offset="1" stop-color="#A69BF0"/></linearGradient><linearGradient id="crb-g1" x1="0" y1="1" x2="0" y2="0"><stop offset="0" stop-color="#AA3ACE"/><stop offset="1" stop-color="#DF81FE"/></linearGradient><linearGradient id="crb-g2" x1="0" y1="1" x2="0" y2="0"><stop offset="0" stop-color="#FF00C8"/><stop offset="1" stop-color="#FF965D"/></linearGradient><linearGradient id="crb-g3" x1="0" y1="1" x2="0" y2="0"><stop offset="0" stop-color="#FF9D00"/><stop offset="1" stop-color="#FFDA76"/></linearGradient><linearGradient id="crb-g4" x1="0" y1="1" x2="0" y2="0"><stop offset="0" stop-color="#FFEB13"/><stop offset="1" stop-color="#FEF9B2"/></linearGradient></defs><g class="crb-shadows"><rect class="crb-sh" x="0.00" y="462" width="128" height="318" rx="63.5" fill="#6F5EEA" fill-opacity="0.2"/><rect class="crb-sh" x="127.50" y="382" width="128" height="318" rx="63.5" fill="#D554FF" fill-opacity="0.2"/><rect class="crb-sh" x="255.00" y="287" width="128" height="318" rx="63.5" fill="#FF4A39" fill-opacity="0.2"/><rect class="crb-sh" x="382.50" y="191" width="128" height="318" rx="63.5" fill="#FED13C" fill-opacity="0.3"/><rect class="crb-sh" x="510.00" y="96" width="128" height="318" rx="63.5" fill="#FCF266" fill-opacity="0.5"/></g><g class="crb-bars"><rect class="crb-bar" x="0.00" y="367" width="128" height="318" rx="63.5" fill="url(#crb-g0)"/><rect class="crb-bar" x="127.50" y="287" width="128" height="318" rx="63.5" fill="url(#crb-g1)"/><rect class="crb-bar" x="255.00" y="192" width="128" height="318" rx="63.5" fill="url(#crb-g2)"/><rect class="crb-bar" x="382.50" y="96" width="128" height="318" rx="63.5" fill="url(#crb-g3)"/><rect class="crb-bar" x="510.00" y="1" width="128" height="318" rx="63.5" fill="url(#crb-g4)"/></g></svg>
+  <div class="wrap">
+    <div class="cs-kicker"><span class="bar"></span><span>The project</span></div>
+    <h2 class="cs-h2 grad-text cs-reveal"><span class="light">From a Financial Concept</span><br>to a Digital Experience</h2>
+    <div class="cs-about-grid cr-stack cs-reveal-group">
+      <div class="cs-about-col">
+        <h5>About Critera</h5>
+        <p>Critera is a marketplace for business lending and project financing. It connects businesses seeking funding with lenders and professional partners, helping them move deals forward.</p>
+      </div>
+      <div class="cs-about-col">
+        <h5>My Role</h5>
+        <p>I joined the project after the business concept had already been defined.</p>
+        <p class="cr-led">I led:</p>
+        <ul class="cr-dots">
+          <li>Visual and market research</li>
+          <li>Positioning and messaging</li>
+          <li>Branding, visual identity, and website design</li>
+          <li>Animation design and development in code</li>
+          <li><span dir="ltr">Front&#8209;end</span> development</li>
+          <li>Blog and content creation</li>
+          <li>Advertising video production</li>
+          <li>Marketing and SEO consulting</li>
+        </ul>
+      </div>
+      <div class="cs-about-col">
+        <h5>Project Duration</h5>
+        <p>2 months</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- 03 · Audiences -->
+<section class="cs-section" id="audiences">
+  <div class="wrap">
+    <div class="cs-kicker"><span class="bar"></span><span>Audiences</span></div>
+    <h2 class="cs-h2 grad-text cs-reveal"><span class="light">Three Audiences.</span><br>Three Perspectives.</h2>
+    <p class="cs-lead cs-reveal">The challenge was to show each audience what Critera offers them and how they all connect.</p>
+    <figure class="cr-board cr-shot">
+      <div class="cr-doors" aria-label="The three questions right after the Hero, one for each audience">
+        <span class="cr-door-glow" aria-hidden="true"></span>
+        <div class="cr-door" tabindex="0">
+          <p class="cr-door-who">Companies &amp; Developers</p>
+          <h3>Looking for Financing<br>for Your Business or Project?</h3>
+          <p>Once you submit a request, AI prepares your credit package and matches it with relevant lenders. Compare the offers in one place and choose the financing that works for you.</p>
+        </div>
+        <div class="cr-door" tabindex="0">
+          <p class="cr-door-who">Lenders</p>
+          <h3>Looking for Deals<br>to Finance?</h3>
+          <p>Find deals matched to your lending criteria. Each comes with completed underwriting and a credit package ready for committee review. Free of charge.</p>
+        </div>
+        <div class="cr-door" tabindex="0">
+          <p class="cr-door-who">Brokers &amp; Advisors</p>
+          <h3>Managing Clients<br>Seeking Financing?</h3>
+          <p>Prepare a credit presentation in minutes and connect with professional lenders, while keeping your clients registered under your name.</p>
+        </div>
+      </div>
+      <figcaption>Three entry points directly below the hero: a question, a short answer, and a registration link for each audience</figcaption>
+    </figure>
+  </div>
+</section>
+
+<!-- 04 · The decision -->
+<section class="cs-section" id="decision">
+  <div class="wrap">
+    <div class="cs-kicker"><span class="bar"></span><span>The key decision</span></div>
+    <h2 class="cs-h2 grad-text cs-reveal"><span class="light">One Homepage.</span><br>Clear Priorities.</h2>
+    <div class="cs-reveal">
+      <p class="cs-lead">At first, we explored focusing on a single audience. But as we discussed and sketched different approaches, it became clear that this would push the value for other participants into the background.</p>
+      <p class="cs-lead">I proposed a shared homepage introducing the marketplace to everyone, supported by dedicated landing pages for each audience in future campaigns.</p>
+      <h3 class="cs-h3 cr-subtitle">To balance the needs of the primary audience with those of other participants, I defined the content priorities:</h3>
+    </div>
+    <div class="cr-num-list cr-num-light">
+      <div class="cr-num">
+        <div class="cr-num-fig"><span class="digits" dir="ltr"><span class="n" data-to="60">60</span><span class="sfx">%</span></span></div>
+        <p>Companies and developers seeking financing</p>
+      </div>
+      <div class="cr-num">
+        <div class="cr-num-fig"><span class="digits" dir="ltr"><span class="n" data-to="25">25</span><span class="sfx">%</span></span></div>
+        <p>Lenders</p>
+      </div>
+      <div class="cr-num">
+        <div class="cr-num-fig"><span class="digits" dir="ltr"><span class="n" data-to="15">15</span><span class="sfx">%</span></span></div>
+        <p>Brokers and professional partners</p>
+      </div>
+    </div>
+    <div class="cs-reveal">
+      <p class="cs-lead">Businesses seeking financing received the most attention. Lenders were given information about deal quality and matching, while professional partners had a dedicated place and a direct invitation to join.</p>
+      <p class="cs-lead">The language followed the same approach: clear, professional, and mostly neutral, respecting the interests of every audience.</p>
+    </div>
+  </div>
+</section>
+
+<!-- 05 · Numbers - the live site's figures, as they work there: the row nearest the middle of the
+     screen lights up and counts; the slab carries the site's two glows and a few twinkling stars -->
+<section class="cs-section cr-numbers" id="numbers">
+  <div class="cr-sky" aria-hidden="true"><span class="cr-orb cr-orb-1"></span><span class="cr-orb cr-orb-2"></span><span class="cr-stars"></span></div>
+  <div class="wrap">
+    <div class="cs-kicker on-purple"><span class="bar"></span><span>The numbers</span></div>
+    <h2 class="cs-h2 cs-reveal"><span class="light">Making the Value</span><br>Measurable</h2>
+    <p class="cs-lead cr-on-dark cs-reveal">Research into the industry and discussions with the team highlighted the need to communicate benefits in terms that matter to users: time, cost, and progress toward closing a deal. I brought key figures into the design so visitors could understand the value at a glance.</p>
+    <div class="cr-num-list">
+      <div class="cr-num">
+        <div class="cr-num-fig"><span class="digits" dir="ltr"><span class="sfx sfx-pre">+</span><span class="n" data-to="70">70</span><span class="sfx">%</span></span></div>
+        <p>Time saved throughout the process</p>
+      </div>
+      <div class="cr-num">
+        <div class="cr-num-fig"><span class="digits" dir="ltr"><span class="sfx sfx-pre">+</span><span class="n" data-to="30">30</span><span class="sfx">%</span></span></div>
+        <p>Savings for lenders on underwriting, screening, and marketing costs</p>
+      </div>
+      <div class="cr-num">
+        <div class="cr-num-fig"><span class="digits" dir="ltr"><span class="n" data-to="24">24</span></span><span class="unit">hours</span></div>
+        <p>To prepare a financing request and professional presentation</p>
+      </div>
+      <div class="cr-num">
+        <div class="cr-num-fig"><span class="digits" dir="ltr">2<span class="range">-</span><span class="n" data-to="6">6</span></span><span class="unit">weeks</span></div>
+        <p>From submitting a request to closing, depending on deal size and complexity</p>
+      </div>
+    </div>
+    <p class="cr-num-note">These figures are company estimates, reportedly based on internal testing, and may be updated over time.</p>
+  </div>
+</section>
+
+<section class="cs-section" id="brand">
+  <div class="wrap">
+    <div class="cs-kicker"><span class="bar"></span><span>Name and logo</span></div>
+    <h2 class="cs-h2 grad-text cs-reveal"><span class="light">A Symbol</span><br>of Growth</h2>
+    <div class="cs-reveal">
+      <p class="cs-lead">The name Critera was inspired by the idea of criteria-based selection, with AI representing the technology behind the platform.</p>
+      <p class="cs-lead">I designed a logo featuring five colorful bars rising like a growth chart.</p>
+      <p class="cs-lead">The colors reflect the variety of participants and opportunities in the marketplace. Five bars allowed me to suggest diversity while keeping the symbol simple and recognizable. Rounded edges make it feel more approachable.</p>
+    </div>
+    <div class="cr-board cr-logos cs-reveal">
+      <div class="cr-logo-tile dark"><iframe class="cr-logo-anim" src="critera-demo-en/index.html#/embed/logo-white" title="The Critera logo on a dark background, animated" loading="lazy" tabindex="-1"></iframe></div>
+      <div class="cr-logo-tile light"><iframe class="cr-logo-anim" src="critera-demo-en/index.html#/embed/logo-purple" title="The Critera logo on a light background, animated" loading="lazy" tabindex="-1"></iframe></div>
+    </div>
+  </div>
+</section>
+
+<section class="cs-section" id="visual">
+  <div class="wrap">
+    <div class="cs-kicker"><span class="bar"></span><span>Visual language</span></div>
+    <h2 class="cs-h2 grad-text cs-reveal"><span class="light">Finance with a</span><br>Tech-Driven Personality</h2>
+    <div class="cs-reveal">
+      <p class="cs-lead">I wanted the website to spark curiosity and communicate the company's professionalism from the first interaction.</p>
+      <p class="cs-lead">I combined the restraint of the financial world with a colorful palette reflecting the range of opportunities in the marketplace.</p>
+      <p class="cs-lead">Deep purple adds depth and brings out the brand colors. Translucent surfaces and gradients introduce light and layers, giving the idea of transparency a visual expression. Clear typography completes the design and keeps the content readable.</p>
+    </div>
+    <div class="cr-board cr-pair cr-pair-visual cs-reveal">
+      <figure class="cr-shot"><div class="cr-crop" data-x="699" data-y="190" data-w="682" data-h="614"><iframe src="critera-demo-en/index.html#/embed/hero" title="The Critera Hero: the financing request and the offers" loading="lazy" tabindex="-1" aria-hidden="true"></iframe></div><figcaption>One financing request meets offers from multiple lenders on a glass-like surface</figcaption></figure>
+      <figure class="cr-shot"><div class="cr-crop" data-x="0" data-y="0" data-w="1130" data-h="838"><iframe src="critera-demo-en/index.html#/embed/hero-copy" title="The Hero headline and buttons" loading="lazy" tabindex="-1" aria-hidden="true"></iframe></div><figcaption>Clear typography and a gradient button stand out against the deep purple background</figcaption></figure>
+    </div>
+  </div>
+</section>
+
+<section class="cs-section" id="composition">
+  <div class="wrap">
+    <div class="cs-kicker"><span class="bar"></span><span>Composition</span></div>
+    <h2 class="cs-h2 grad-text cs-reveal"><span class="light">A Visual Identity</span><br>That Flows</h2>
+    <div class="cs-reveal">
+      <p class="cs-lead">Diagonal surfaces and rounded corners became part of Critera's visual identity.</p>
+      <p class="cs-lead">I used them in different compositions to create a recognizable look and a rhythm that encourages scrolling.</p>
+      <p class="cs-lead">Alternating dark and light sections adds variety and creates quieter moments for reading. This keeps the visual design and content in balance.</p>
+    </div>
+  </div>
+</section>
+
+<section class="cs-section" id="structure">
+  <div class="wrap">
+    <div class="cs-kicker"><span class="bar"></span><span>Page structure</span></div>
+    <h2 class="cs-h2 grad-text cs-reveal"><span class="light">Discover First.</span><br>Join When Ready.</h2>
+    <div class="cs-reveal">
+      <p class="cs-lead">I chose a single, continuous homepage to introduce visitors to Critera.</p>
+      <p class="cs-lead">Right after the hero, each audience sees a relevant question, a short answer, and a link to the appropriate registration flow.</p>
+      <p class="cs-lead">The page then introduces the marketplaces, benefits, and process. The About and Blog pages offer more detail, while calls to action remain accessible throughout the page.</p>
+      <p class="cs-lead">The goal was to build interest and guide visitors toward registration or a conversation with the team.</p>
+    </div>
+  </div>
+</section>
+
+<section class="cs-section" id="motion">
+  <div class="wrap">
+    <div class="cs-kicker"><span class="bar"></span><span>Animation</span></div>
+    <h2 class="cs-h2 grad-text cs-reveal"><span class="light">Showing How</span><br>the Connections Work</h2>
+    <div class="cs-reveal">
+      <p class="cs-lead">In the hero animation, a single financing request receives offers from multiple lenders.</p>
+      <p class="cs-lead">The animation turns the marketplace concept into a simple scenario that's easy to understand at a glance.</p>
+      <p class="cs-lead">Further down, four marketplaces move around Critera: Business Lending, Loan Portfolio Trading, Syndication, and Equity &amp; Partnerships.</p>
+      <p class="cs-lead">The animation shows the range of opportunities, with each marketplace linking directly to the relevant registration flow.</p>
+      <p class="cs-lead">Other animations extend the same idea across the site.</p>
+    </div>
+    <div class="cr-board cr-motion cs-reveal">
+      <div class="cr-motion-row">
+        <figure class="cr-shot cr-m-arenas">
+          <div class="cr-crop live wide" data-x="70" data-y="30" data-w="1270" data-h="780" data-fw="1440" data-fh="915"><iframe src="critera-demo-en/index.html#/embed/arenas" title="The four arenas around Critera, hover an arena to point at it" loading="lazy"></iframe></div>
+          <!-- phones: the site's own orbit turns into a list there, so the case draws a small one of its own - the track, the logo and the four arenas' icons, no words -->
+          <div class="cr-orbit narrow" aria-hidden="true"><svg class="cr-orbit-track"><path/></svg><img class="cr-orbit-logo" src="critera-demo-en/logo-critera.svg" alt=""><span class="cr-orbit-bar" style="--a:#7446DD;--b:#A69BF0"><svg viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><g transform="rotate(40 12 12)"><path d="M11 15h2a2 2 0 1 0 0-4h-3c-.6 0-1.1.2-1.4.6L3 17"/><path d="m7 21 1.6-1.4c.3-.4.8-.6 1.4-.6h4c1.1 0 2.1-.4 2.8-1.2l4.6-4.4a2 2 0 0 0-2.750-2.91l-4.2 3.9"/><path d="m2 16 6 6"/><circle cx="16" cy="9" r="2.9"/><circle cx="6" cy="5" r="3"/></g></svg></span><span class="cr-orbit-bar" style="--a:#AA3ACE;--b:#DF81FE"><svg viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M12 12h.01"/><path d="M16 6V4a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v2"/><path d="M22 13a18.15 18.15 0 0 1-20 0"/><rect width="20" height="14" x="2" y="6" rx="2"/></svg></span><span class="cr-orbit-bar" style="--a:#FF00C8;--b:#FF965D"><svg viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="m10.586 5.414-5.172 5.172"/><path d="m18.586 13.414-5.172 5.172"/><path d="M6 12h12"/><circle cx="12" cy="20" r="2"/><circle cx="12" cy="4" r="2"/><circle cx="20" cy="12" r="2"/><circle cx="4" cy="12" r="2"/></svg></span><span class="cr-orbit-bar" style="--a:#FFA411;--b:#FFDA76"><svg viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="m11 17 2 2a1 1 0 1 0 3-3"/><path d="m14 14 2.5 2.5a1 1 0 1 0 3-3l-3.880-3.880a3 3 0 0 0-4.240 0l-.880.880a1 1 0 1 1-3-3l2.810-2.810a5.790 5.790 0 0 1 7.060-.870l.470.280a2 2 0 0 0 1.420.250L21 4"/><path d="m21 3 1 11h-2"/><path d="M3 3 2 14l6.5 6.5a1 1 0 1 0 3-3"/><path d="M3 4h8"/></svg></span></div>
+          <figcaption><span>Four marketplaces orbit Critera<span class="cr-cap-hover">, pausing on hover</span></span></figcaption>
+        </figure>
+        <figure class="cr-shot cr-m-partners">
+          <div class="cr-crop live" data-x="757" data-y="240" data-w="470" data-h="360"><iframe src="critera-demo-en/index.html#/embed/partners" title="The partner program: brokers, advisors and service providers around the deal" loading="lazy"></iframe></div>
+          <figcaption>Five professional roles appear around a deal in the Partner Program section</figcaption>
+        </figure>
+      </div>
+      <figure class="cr-shot cr-m-road">
+        <div class="cr-crop cr-about-crop" data-scroll="1480" data-x="790" data-y="0" data-w="620" data-h="960" data-fh="1000"><iframe src="critera-demo-en/index.html#/about" title="The About page: the line runs down to the credit request and branches to the five lender types" loading="lazy" tabindex="-1" aria-hidden="true"></iframe></div>
+        <figcaption>The About page connects one request and one credit package to five types of lenders</figcaption>
+      </figure>
+    </div>
+  </div>
+</section>
+
+<section class="cs-section" id="engine">
+  <div class="wrap">
+    <div class="cs-kicker"><span class="bar"></span><span>The underwriting engine</span></div>
+    <h2 class="cs-h2 grad-text cs-reveal"><span class="light">Explaining the Technology</span><br>Behind the Deal</h2>
+    <div class="cs-reveal">
+      <p class="cs-lead">Feedback from finance professionals made it clear that the AI engine needed more visibility on the website.</p>
+      <p class="cs-lead">In response, I designed a dedicated section with an explanation and animation.</p>
+      <p class="cs-lead">It follows the flow of information from documents and data sources through analysis, credit package preparation, and lender matching.</p>
+      <p class="cs-lead">The animation turns a complex process into a clear visual sequence, showing where technology does the work and where people make decisions.</p>
+    </div>
+    <figure class="cr-board cr-shot">
+      <div class="cr-crop cr-engine wide" data-x="0" data-y="0" data-w="1490" data-h="490" data-fw="1490" data-fh="490"><iframe src="critera-demo-en/engine/critera-engine-section.html" title="Underwriting engine animation: the data sources, the engine and the credit file" loading="lazy"></iframe></div>
+      <iframe class="cr-engine mid" src="critera-demo-en/engine/critera-engine-section-tablet.html" title="Underwriting engine animation, tablet version" loading="lazy" scrolling="no"></iframe>
+      <iframe class="cr-engine narrow" src="critera-demo-en/engine/critera-engine-section-mobile.html" title="Underwriting engine animation, mobile version" loading="lazy"></iframe>
+      <figcaption>The data sources, the engine and the credit package</figcaption>
+    </figure>
+  </div>
+</section>
+
+<section class="cs-section" id="trust">
+  <div class="wrap">
+    <div class="cs-kicker"><span class="bar"></span><span>Process and trust</span></div>
+    <h2 class="cs-h2 grad-text cs-reveal"><span class="light">Knowing What Happens Next</span><br>and Who You're Dealing With</h2>
+    <div class="cs-reveal">
+      <p class="cs-lead">A timeline explains the six steps from registration to closing, including estimated timeframes. Visitors can click each step to see more details.</p>
+      <p class="cs-lead">The benefits section highlights what Critera offers: anonymity, credit package preparation, and access to professional lenders.</p>
+      <p class="cs-lead">For brokers and financial advisors, I explained how they could manage clients discreetly and submit requests anonymously.</p>
+      <p class="cs-lead">Team photos, professional backgrounds, and visible contact details make it easier for visitors to reach out and ask questions.</p>
+      <p class="cs-lead">The FAQ includes search and topic filters. The blog, for which I developed the content, provides more detailed answers and supports organic visibility.</p>
+    </div>
+    <figure class="cr-board cr-shot">
+      <iframe class="cr-live" src="critera-demo-en/index.html#/embed/timeline" title="The process timeline: six stages, each one can be clicked" loading="lazy"></iframe>
+      <figcaption>The timeline: six steps from registration to closing. Click a step to see more</figcaption>
+    </figure>
+  </div>
+</section>
+
+<section class="cs-section" id="mobile">
+  <div class="wrap">
+    <div class="cs-kicker"><span class="bar"></span><span>Mobile</span></div>
+    <h2 class="cs-h2 grad-text cs-reveal"><span class="light">The Experience</span><br>Goes Mobile</h2>
+    <div class="cs-reveal">
+      <p class="cs-lead">I adapted the layouts, animations, and timeline for mobile, preserving the visual hierarchy and easy access to registration.</p>
+      <p class="cs-lead">The brand identity stays consistent, while each composition adjusts to the screen size.</p>
+    </div>
+    <figure class="cr-board cr-shot">
+      <div class="cr-deck" tabindex="0" aria-label="Five mobile screens that fan out on hover or tap">
+        <img class="cr-deck-card cs-zoomable" src="assets/site/mobile-1-hero-en.jpg" alt="The opening on mobile" loading="lazy">
+        <img class="cr-deck-card cs-zoomable" src="assets/site/mobile-2-arenas-en.jpg" alt="The arenas on mobile" loading="lazy">
+        <img class="cr-deck-card cs-zoomable" src="assets/site/mobile-3-engine-en.jpg" alt="The technology on mobile" loading="lazy">
+        <img class="cr-deck-card cs-zoomable" src="assets/site/mobile-4-timeline-en.jpg" alt="The timeline on mobile" loading="lazy">
+        <img class="cr-deck-card cs-zoomable" src="assets/site/mobile-5-menu-en.jpg" alt="The open menu on mobile" loading="lazy">
+      </div>
+    </figure>
+  </div>
+</section>
+
+<section class="cs-section" id="system">
+  <div class="wrap">
+    <div class="cs-kicker"><span class="bar"></span><span>Design system</span></div>
+    <h2 class="cs-h2 grad-text cs-reveal"><span class="light">A Foundation</span><br>for What Comes Next</h2>
+    <div class="cs-reveal">
+      <p class="cs-lead">I organized the colors, typography, and components into a Figma design system. It documents the visual language and provides a consistent foundation for future development.</p>
+    </div>
+  <figure class="cr-board cr-shot cr-slide-in">
+      <img class="cs-zoomable" src="assets/images/book.png" alt="Pages from the Critera design system in Figma: Atomic Design, tokens, variants, variables, colors, typography and components" loading="lazy">
+      <figcaption>Figma Design System: Atomic Design, Tokens, Variants, Variables, Colors, Typography and Components</figcaption>
+    </figure>
+  </div>
+</section>
+
+<section class="cs-section" id="ads">
+  <div class="wrap">
+    <div class="cs-kicker"><span class="bar"></span><span>Video ads</span></div>
+    <h2 class="cs-h2 grad-text cs-reveal"><span class="light">One Brand.</span><br>A Story for Every Audience.</h2>
+    <div class="cs-reveal">
+      <p class="cs-lead">I created advertising videos built around business opportunities following a successful tender, with examples from construction and industry.</p>
+      <p class="cs-lead">The stories illustrate the financing gap and show how businesses can find potential lenders through Critera.</p>
+      <p class="cs-lead">The characters and settings reflect each target audience, while animated colors, shapes, and typography carry the brand identity across the videos.</p>
+    </div>
+  <div class="cr-videos cs-reveal-group">
+      <figure class="cr-video">
+        <video src="assets/video/ad02-tender-en-web.mp4" poster="assets/video/ad02-tender-en.jpg" controls playsinline preload="metadata"></video>
+        <figcaption>Financing for a construction project · up to 30 sec</figcaption>
+      </figure>
+      <figure class="cr-video">
+        <video src="assets/video/ad01-borrower-en-web.mp4" poster="assets/video/ad01-borrower-en.jpg" controls playsinline preload="metadata"></video>
+        <figcaption>Financing for a construction project · up to 30 sec</figcaption>
+      </figure>
+      <figure class="cr-video">
+        <video src="assets/video/ad03-industry-en-web.mp4" poster="assets/video/ad03-industry-en.jpg?v=2" controls playsinline preload="metadata"></video>
+        <figcaption>Financing for companies · up to 30 sec</figcaption>
+      </figure>
+      <figure class="cr-video">
+        <video src="assets/video/ad04-time-en-web.mp4" poster="assets/video/ad04-time-en.jpg" controls playsinline preload="metadata"></video>
+        <figcaption>Financing for companies · up to 30 sec</figcaption>
+      </figure>
+    </div>
+    <!-- the brand film: wide, under the four ads - for the look and the story, not a sales ad; it loads only when played.
+         The Hebrew cut for now, until the English one is done -->
+    <figure class="cr-video cr-film cs-reveal">
+      <video src="assets/video/critera-film-he-web.mp4" poster="assets/video/critera-film-he.jpg" controls playsinline preload="none" controlslist="nofullscreen nodownload" disablepictureinpicture></video>
+      <figcaption>Brand video · 1:21 · A developer looks for project financing and gets four offers in one place</figcaption>
+    </figure>
+  </div>
+</section>
+
+<!-- 16 · Implementation - closes the case, with the demo -->
+<section class="cs-section" id="build">
+  <div class="wrap">
+    <div class="cr-build">
+      <div class="cr-build-text">
+    <div class="cs-kicker"><span class="bar"></span><span>The build</span></div>
+    <h2 class="cs-h2 grad-text cs-reveal"><span class="light">From Design</span><br>to a Live Website</h2>
+    <div class="cs-reveal">
+      <p class="cs-lead">I built the front end with Claude Code, based on the designs and animations I had created.</p>
+      <p class="cs-lead">I worked with the team in a shared code repository, tested the website and its registration and login flows, and launched the site.</p>
+      <p class="cs-lead">Working directly in code also allowed me to test and refine the layouts and animations within the actual website.</p>
+    </div>
+    <a class="cs-demo-btn cs-close-demo cs-reveal" href="critera-demo-en/index.html" target="_blank" rel="noopener"><span class="live-dot" aria-hidden="true"></span>View Live Demo<span class="sr-only"> (opens in a new tab)</span></a>
+      </div>
+      <figure class="cr-shot cr-build-shot cs-reveal">
+        <img class="cs-zoomable" src="assets/site/code.jpg" alt="The Critera site in a browser, with developer tools open beside it" loading="lazy">
+        <figcaption>Working in code: the live site and developer tools</figcaption>
+      </figure>
+    </div>
+    <!-- phones: the same button, last on the page, under the picture (the one above is hidden there) -->
+    <a class="cs-demo-btn cs-close-demo cr-close-demo-end" href="critera-demo-en/index.html" target="_blank" rel="noopener"><span class="live-dot" aria-hidden="true"></span>View Live Demo<span class="sr-only"> (opens in a new tab)</span></a>
+  </div>
+</section>
+    </div><!-- /.cs -->
+  </div><!-- /.case-shell -->
+
+  <section class="next-case" id="next-case" dir="ltr">
+    <div class="next-case-head">
+      <h2>Next Cases</h2>
+    </div>
+    <div class="cards">
+      <div class="case-card has-demo tint-blue">
+        <a class="case-card-link" href="../case-syncops/syncops.html" aria-label="Open the SyncOps case study"></a>
+        <div class="case-media">
+          <div class="case-live cl-syncops cl-code" data-play="syncops" style="aspect-ratio:1256/944" role="img" aria-label="SyncOps - incident board and live map"></div>
+        </div>
+        <div class="case-body">
+          <div class="case-tags">
+            <span class="case-tag">Agentic AI</span>
+            <span class="case-tag">Enterprise B2B</span>
+            <span class="case-tag">UX Research &amp; Design</span>
+          </div>
+          <h3>From monitoring to deciding -<br><strong>The agent proposes. The admin decides.</strong></h3>
+          <p>Agentic dispatch for fiber network operations.</p>
+          <div class="case-stats">
+            <div class="stat-pill"><svg viewBox="0 0 24 24"><path d="M12 19V5M5 12l7-7 7 7"/></svg><span>Estimated <strong>~50%</strong> faster task assignment</span></div>
+          </div>
+          <a class="case-demo-link" href="../case-syncops/syncops-agent-demo.html" target="_blank" rel="noopener">
+            <span class="live-dot" aria-hidden="true"></span>Try the live demo<svg class="arrow" viewBox="0 0 24 24" aria-hidden="true"><path d="M7 17L17 7M9 7h8v8"/></svg><span class="sr-only"> (opens in a new tab)</span>
+          </a>
+        </div>
+        <div class="case-cta"><span class="case-explore">EXPLORE <svg viewBox="0 0 24 24"><path d="M5 12h14M13 6l6 6-6 6"/></svg></span></div>
+      </div>
+
+      <div class="case-card has-demo tint-violet">
+        <a class="case-card-link" href="../case-aft/aft-timeline.html" aria-label="Open the AFT Timeline case study"></a>
+        <div class="case-media">
+          <div class="case-live cl-aft cl-code" data-play="aft" style="aspect-ratio:1256/840" role="img" aria-label="Amazon Global Syndicated Loan - AI decision-support timeline"></div>
+        </div>
+        <div class="case-body">
+          <div class="case-tags">
+            <span class="case-tag">Agentic AI</span>
+            <span class="case-tag">Enterprise B2B</span>
+            <span class="case-tag">UX Research &amp; Design</span>
+          </div>
+          <h3>Deals don&rsquo;t fail. <strong>Visibility does!</strong></h3>
+          <p>An AI-driven decision-support timeline for syndicated-loan fintech.</p>
+          <div class="case-stats">
+            <div class="stat-pill"><svg viewBox="0 0 24 24"><path d="M12 19V5M5 12l7-7 7 7"/></svg><span>Up to <strong>50%</strong> fewer approval-related delays</span></div>
+            <div class="stat-pill"><svg viewBox="0 0 24 24"><path d="M12 5v14M19 12l-7 7-7-7"/></svg><span><strong>~35%</strong> less coordination time</span></div>
+          </div>
+          <a class="case-demo-link" href="../case-aft/aft-agent-demo.html" target="_blank" rel="noopener">
+            <span class="live-dot" aria-hidden="true"></span>Try the live demo<svg class="arrow" viewBox="0 0 24 24" aria-hidden="true"><path d="M7 17L17 7M9 7h8v8"/></svg><span class="sr-only"> (opens in a new tab)</span>
+          </a>
+        </div>
+        <div class="case-cta"><span class="case-explore">EXPLORE <svg viewBox="0 0 24 24"><path d="M5 12h14M13 6l6 6-6 6"/></svg></span></div>
+      </div>
+
+    </div>
+  </section>
+
+  <footer dir="ltr">
+    <span>&copy; 2026 Larisa Maly. All rights reserved.</span>
+    <div class="social">
+      <a href="https://wa.me/972506763066" aria-label="WhatsApp"><svg viewBox="0 0 24 24"><path d="M3 21l1.65 -3.8a9 9 0 1 1 3.4 2.9l-5.05 .9"/><path d="M9 10a.5 .5 0 0 0 1 0v-1a.5 .5 0 0 0 -1 0v1a5 5 0 0 0 5 5h1a.5 .5 0 0 0 0 -1h-1a.5 .5 0 0 0 0 1"/></svg></a>
+      <a href="https://www.linkedin.com/in/darbiz/" aria-label="LinkedIn"><svg viewBox="0 0 24 24"><path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4V8h4v2"/><rect x="2" y="9" width="4" height="12"/><circle cx="4" cy="4" r="2"/></svg></a>
+    </div>
+  </footer>
+
+</div>
+
+<button id="backToTop" class="back-to-top" aria-label="Back to top">
+  <svg viewBox="0 0 24 24"><path d="M12 19V5M5 12l7-7 7 7"/></svg>
+</button>
+
+<div class="cs-lightbox" id="csLightbox" aria-hidden="true">
+  <button class="cs-lightbox-close" id="csLightboxClose" aria-label="Close">
+    <svg viewBox="0 0 24 24"><path d="M6 6l12 12M18 6L6 18"/></svg>
+  </button>
+  <img id="csLightboxImg" src="" alt="">
+</div>
+
+<script src="../js/back-to-top.js?v=20260807"></script>
+<script src="../js/case-study.js?v=20260807"></script>
+<script src="../js/vendor/lenis.min.js?v=1.3.25"></script>
+<script src="../js/case-curve.js?v=20261018n"></script>
+<script src="../js/theme.js?v=20261009"></script>
+<script src="../js/nav-back.js?v=20260812"></script>
+<script src="critera-case.js?v=20261029e"></script>
+<script src="../js/live-aft.js?v=20261018g"></script>
+<script src="../js/live-syncops.js?v=20261018d"></script>
+<script src="../js/case-live.js?v=20261018g"></script>
+<script src="../js/hero-slats.js?v=20261009"></script>
+<script>/* cr-lang-go: the language toggle slides its knob over before it opens the other language */
+document.querySelectorAll('.cr-lang').forEach(function(a){a.addEventListener('click',function(e){
+  if(e.metaKey||e.ctrlKey||e.shiftKey||matchMedia('(prefers-reduced-motion: reduce)').matches)return;
+  e.preventDefault();a.dataset.v=a.dataset.v==='en'?'he':'en';
+  a.querySelectorAll('.cr-lang-t').forEach(function(t,i){t.classList.toggle('on',(i===0)===(a.dataset.v==='en'))});
+  setTimeout(function(){location.href=a.href},560)})});</script>
+</body>
+</html>

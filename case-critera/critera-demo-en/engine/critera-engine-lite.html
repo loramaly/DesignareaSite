@@ -1,0 +1,269 @@
+<!doctype html>
+<html lang="en" dir="rtl" data-theme="light">
+<head>
+<meta charset="utf-8">
+<!-- Embedded in the site via iframe: keep it out of search results on its own (indexifembedded lets Google count it as part of the page that embeds it). -->
+<meta name="robots" content="noindex">
+<meta name="googlebot" content="noindex, indexifembedded">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Critera - EngineLite</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Rubik:wght@400;500;600;700&display=swap">
+<style>
+/*
+  Critera · EngineLite — גרסה מוקלת ונפרדת של אנימציית "מנוע ה-AI" (critera-engine-section.html, שנשארת כמו שהיא).
+  לפי critera_animation_brief.md (18.10.2026), ושינויי לריסה: Credit request ← Deal details ← AI engine ← Credit file ← התאמה לגופי מימון, בFull anonymity.
+  כ־11 שניות, פעם אחת כשנכנסת למסך, ונשארת על המצב הסופי. reduced motion: המצב הסופי מיד.
+  דסקטופ: תרשים אופקי 1240×290. מתחת ל־768px: פריסה אנכית משלה.
+*/
+:root{
+  --purple:#6F5EEA; --purple-soft:#8C7EEE; --tint:#F1EEFD;
+  --ink:#241D4F; --ink-2:#5A5478; --surface:#FFFFFF; --border:#E5E1F6;
+  --glow:rgba(111,94,234,.28); --ok:#3DBB82;
+}
+@media (prefers-color-scheme: dark){
+  :root:not([data-theme="light"]){
+    color-scheme:dark; --ink:#F3F1FF; --ink-2:#B9B3DA; --surface:#1E1840; --border:#332B63; --tint:#2A2257; --glow:rgba(140,126,238,.35);
+  }
+}
+:root[data-theme="dark"]{
+  color-scheme:dark; --ink:#F3F1FF; --ink-2:#B9B3DA; --surface:#1E1840; --border:#332B63; --tint:#2A2257; --glow:rgba(140,126,238,.35);
+}
+*{box-sizing:border-box}
+html,body{margin:0;padding:0;background:transparent}
+#engine-lite{font-family:Rubik,"Segoe UI",Arial,sans-serif;color:var(--ink)}
+#engine-lite svg{display:block;width:100%;height:auto;direction:ltr;overflow:visible}
+#engine-lite svg text{font-family:Rubik,sans-serif;fill:var(--ink)}
+.desk{max-width:1240px;margin:0 auto}
+.mob{display:none;max-width:420px;margin:0 auto}
+@media (max-width:767px){ .desk{display:none} .mob{display:block} }
+
+/* ── shared pieces ── */
+.card{fill:var(--surface);stroke:var(--border);stroke-width:1.5}
+.ico{fill:none;stroke:var(--purple);stroke-width:1.75;stroke-linecap:round;stroke-linejoin:round;transition:stroke .5s}
+.line{fill:none;stroke:var(--purple-soft);stroke-width:1.75;stroke-linecap:round;stroke-dasharray:1;stroke-dashoffset:1;opacity:0}
+.flow{fill:none;stroke:var(--purple);stroke-width:9;stroke-linecap:round;stroke-dasharray:0 2;stroke-dashoffset:0;opacity:0} /* a zero dash with round caps: one dot */
+
+/* everything starts hidden; .on is the finished picture, reached by transitions with their own delays (ms in --d) */
+.req,.src,.fin,.file,.node,.nlabel,.ai{opacity:0}
+.req{transform:translateY(-10px)}
+.chk{opacity:0;transform:scale(.5);transform-origin:center;transform-box:fill-box}
+.src{transform:translate(var(--sx,24px),var(--sy,0))}
+.file{transform:scale(.92);transform-origin:center;transform-box:fill-box}
+.node{transform:scale(.6);transform-origin:center;transform-box:fill-box}
+.ai{transform:scale(.85);transform-origin:center;transform-box:fill-box}
+.ready{opacity:0;transform:scale(.96);transform-origin:center;transform-box:fill-box}
+.ready .tick{stroke-dasharray:1;stroke-dashoffset:1}
+
+.on .req{opacity:1;transform:none;transition:opacity .5s ease,transform .7s cubic-bezier(.2,.8,.2,1)}
+.on .src{opacity:1;transform:none;transition:opacity .6s ease var(--d),transform .8s cubic-bezier(.2,.8,.2,1) var(--d)}
+.on .line{stroke-dashoffset:0;opacity:1;transition:stroke-dashoffset var(--len,.9s) cubic-bezier(.45,0,.25,1) var(--d),opacity .01s linear var(--d)}
+.on .ai{opacity:1;transform:none;transition:opacity .6s ease .3s,transform .8s cubic-bezier(.2,.8,.2,1) .3s}
+.on .file{opacity:1;transform:none;transition:opacity .6s ease 4.4s,transform .8s cubic-bezier(.2,.8,.2,1) 4.4s}
+.on .file .frame{filter:drop-shadow(0 8px 22px var(--glow))}
+.progress .track{fill:var(--tint)}
+.progress .bar{fill:url(#gTile);transform:scaleX(0);transform-origin:right center;transform-box:fill-box} /* fills right to left, as Hebrew reads */
+.on .progress .bar{transform:none;transition:transform 1.1s cubic-bezier(.45,0,.25,1) 4.8s}
+.on .ready{opacity:1;transform:none;transition:opacity .35s ease 5.9s,transform .45s cubic-bezier(.2,.9,.3,1.3) 5.9s}
+.on .ready .tick{stroke-dashoffset:0;transition:stroke-dashoffset .4s ease 6.15s}
+.on .node{opacity:1;transform:none;transition:opacity .4s ease 6.2s,transform .5s cubic-bezier(.2,.8,.2,1) 6.2s}
+.on .nlabel{opacity:1;transition:opacity .5s ease 6.35s}
+/* the funders come in quietly at 6.2s; each lights and gets its tick (it sees the request) when its line reaches it */
+.on .fin{opacity:1;transition:opacity .6s ease 6.2s}
+.on .fin .chk{opacity:1;transform:none;transition:opacity .3s ease var(--d),transform .45s cubic-bezier(.2,.9,.3,1.3) var(--d)}
+.on .fin .card{stroke:var(--purple-soft);filter:drop-shadow(0 0 10px var(--glow));transition:stroke .5s ease var(--d),filter .5s ease var(--d)}
+
+/* the motion that comes and goes: only while playing, never in the still (reduced-motion) picture */
+.on:not(.still) .flow{animation:flow .9s cubic-bezier(.45,0,.25,1) var(--d) var(--n,1) both}
+@keyframes flow{0%{stroke-dashoffset:0;opacity:0}10%{opacity:1}88%{opacity:1}100%{stroke-dashoffset:-1;opacity:0}}
+.ai .tile{fill:url(#gTile);filter:drop-shadow(0 6px 14px rgba(111,94,234,.35))}
+.ai .halo{fill:var(--purple);opacity:.1}
+.ai .pulse{fill:none;stroke:var(--purple-soft);stroke-width:2;opacity:0;transform-origin:center;transform-box:fill-box}
+.ai .spark{transform-origin:center;transform-box:fill-box}
+.on:not(.still) .ai .tile{animation:glow 2.6s ease-in-out 1.7s both}
+@keyframes glow{0%,100%{filter:drop-shadow(0 6px 14px rgba(111,94,234,.35))}40%,70%{filter:drop-shadow(0 0 22px rgba(140,126,238,.9))}}
+.on:not(.still) .ai .spark{animation:spin 2.4s cubic-bezier(.5,0,.2,1) 1.9s both}
+@keyframes spin{to{transform:rotate(720deg)}}
+.on:not(.still) .ai .pulse{animation:pulse 1.1s ease-out 2.1s 2 both}
+@keyframes pulse{0%{opacity:.5;transform:scale(1)}100%{opacity:0;transform:scale(1.45)}}
+
+.still *{transition:none!important;animation:none!important}
+.label{font-size:17px}
+.ttl{font-weight:700}
+.sub{font-weight:500}
+</style>
+<style>#critera-engine{direction:ltr}#critera-engine #svg{scale:-1 1}#svg text{transform-box:fill-box;transform-origin:center;scale:-1 1}#svg .chk{scale:-1 1}#svg .tick,#svg .done-lbl path{transform-box:fill-box;transform-origin:center;scale:-1 1}#svg text[font-size="17"]{font-size:15.5px}</style>
+</head>
+<body>
+<div id="engine-lite">
+
+  <!-- shared drawings -->
+  <svg width="0" height="0" style="position:absolute" aria-hidden="true">
+    <defs>
+      <linearGradient id="gTile" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#7A5CF5"/><stop offset="1" stop-color="#B043D9"/></linearGradient>
+      <!-- lucide: file-text (the credit request), eye-off -->
+      <symbol id="iReq" viewBox="0 0 24 24"><path d="M15 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V7Z"/><path d="M14 2v4a2 2 0 0 0 2 2h4"/><path d="M10 9H8"/><path d="M16 13H8"/><path d="M16 17H8"/></symbol>
+      <symbol id="iEye" viewBox="0 0 24 24"><path d="M10.733 5.076a10.744 10.744 0 0 1 11.205 6.575 1 1 0 0 1 0 .696 10.747 10.747 0 0 1-1.444 2.49"/><path d="M14.084 14.158a3 3 0 0 1-4.242-4.242"/><path d="M17.479 17.499a10.75 10.75 0 0 1-15.417-5.151 1 1 0 0 1 0-.696 10.75 10.75 0 0 1 4.446-5.143"/><path d="m2 2 20 20"/></symbol>
+    </defs>
+  </svg>
+
+  <!-- ===== desktop: right to left — deal details → AI engine → credit file → funders ===== -->
+  <div class="desk">
+    <svg viewBox="-112 -58 1464 363" role="img" aria-label="The credit request is broken down into data, documents and deal details, runs through an AI engine, becomes a credit file and is shown in full anonymity to banks, credit funds and professional investors" style="--sx:0;--sy:-18px">
+      <!-- lines -->
+      <path class="line" pathLength="1" style="--d:0.35s;--len:.4s" d="M 1262 12 L 1262 76 Q 1262 90 1248 90 L 1220 90"/>
+      <path class="line" pathLength="1" style="--d:0.5s;--len:.5s" d="M 1262 12 L 1262 156 Q 1262 170 1248 170 L 1220 170"/>
+      <path class="line" pathLength="1" style="--d:0.65s;--len:.6s" d="M 1262 12 L 1262 236 Q 1262 250 1248 250 L 1220 250"/>
+      <path class="line" pathLength="1" style="--d:1.1s" d="M 1010 90 C 950 90, 950 164, 890 164"/>
+      <path class="line" pathLength="1" style="--d:1.25s" d="M 1010 170 C 950 170, 950 170, 890 170"/>
+      <path class="line" pathLength="1" style="--d:1.4s" d="M 1010 250 C 950 250, 950 176, 890 176"/>
+      <path class="line" pathLength="1" style="--d:4s;--len:.6s" d="M 794 170 L 690 170"/>
+      <path class="line" pathLength="1" style="--d:6s;--len:.3s" d="M 470 170 L 427 170"/>
+      <path class="line" pathLength="1" style="--d:6.4s" d="M 373 170 L 330 170 C 280 170, 280 90, 230 90"/>
+      <path class="line" pathLength="1" style="--d:6.8s" d="M 373 170 L 230 170"/>
+      <path class="line" pathLength="1" style="--d:7.2s" d="M 373 170 L 330 170 C 280 170, 280 250, 230 250"/>
+      <!-- data travelling along them as dots, as on the home engine -->
+      <path class="flow" pathLength="1" style="--d:0.55s" d="M 1262 12 L 1262 76 Q 1262 90 1248 90 L 1220 90"/>
+      <path class="flow" pathLength="1" style="--d:0.7s" d="M 1262 12 L 1262 156 Q 1262 170 1248 170 L 1220 170"/>
+      <path class="flow" pathLength="1" style="--d:0.85s" d="M 1262 12 L 1262 236 Q 1262 250 1248 250 L 1220 250"/>
+      <path class="flow" pathLength="1" style="--d:1.5s" d="M 1010 90 C 950 90, 950 164, 890 164"/>
+      <path class="flow" pathLength="1" style="--d:1.9s" d="M 1010 90 C 950 90, 950 164, 890 164"/>
+      <path class="flow" pathLength="1" style="--d:2.3s" d="M 1010 90 C 950 90, 950 164, 890 164"/>
+      <path class="flow" pathLength="1" style="--d:2.7s" d="M 1010 90 C 950 90, 950 164, 890 164"/>
+      <path class="flow" pathLength="1" style="--d:1.65s" d="M 1010 170 C 950 170, 950 170, 890 170"/>
+      <path class="flow" pathLength="1" style="--d:2.05s" d="M 1010 170 C 950 170, 950 170, 890 170"/>
+      <path class="flow" pathLength="1" style="--d:2.45s" d="M 1010 170 C 950 170, 950 170, 890 170"/>
+      <path class="flow" pathLength="1" style="--d:2.85s" d="M 1010 170 C 950 170, 950 170, 890 170"/>
+      <path class="flow" pathLength="1" style="--d:1.8s" d="M 1010 250 C 950 250, 950 176, 890 176"/>
+      <path class="flow" pathLength="1" style="--d:2.2s" d="M 1010 250 C 950 250, 950 176, 890 176"/>
+      <path class="flow" pathLength="1" style="--d:2.6s" d="M 1010 250 C 950 250, 950 176, 890 176"/>
+      <path class="flow" pathLength="1" style="--d:3s" d="M 1010 250 C 950 250, 950 176, 890 176"/>
+      <path class="flow" pathLength="1" style="--d:4.1s" d="M 794 170 L 690 170"/>
+      <path class="flow" pathLength="1" style="--d:6.1s" d="M 470 170 L 427 170"/>
+      <path class="flow" pathLength="1" style="--d:6.5s" d="M 373 170 L 330 170 C 280 170, 280 90, 230 90"/>
+      <path class="flow" pathLength="1" style="--d:6.9s" d="M 373 170 L 230 170"/>
+      <path class="flow" pathLength="1" style="--d:7.3s" d="M 373 170 L 330 170 C 280 170, 280 250, 230 250"/>
+
+      <!-- stage 1: the credit request, opening into its three parts -->
+      <g class="req"><g transform="translate(1166,-44)"><rect class="card" width="192" height="56" rx="14" style="stroke:var(--purple-soft)"/><use href="#iReq" class="ico" x="152" y="17" width="22" height="22"/><text class="label" x="142" y="34" text-anchor="end" font-weight="600">Credit request</text></g></g>
+      <g class="src" style="--d:0.6s"><g transform="translate(1010,62)"><rect class="card" width="210" height="56" rx="14"/><text class="label" x="190" y="34" text-anchor="end">Financial data</text></g></g>
+      <g class="src" style="--d:0.8s"><g transform="translate(1010,142)"><rect class="card" width="210" height="56" rx="14"/><text class="label" x="190" y="34" text-anchor="end">Project documents</text></g></g>
+      <g class="src" style="--d:1s"><g transform="translate(1010,222)"><rect class="card" width="210" height="56" rx="14"/><text class="label" x="190" y="34" text-anchor="end">Deal details</text></g></g>
+
+      <!-- stage 2: the AI engine -->
+      <g class="ai">
+        <rect class="halo" x="782" y="114" width="112" height="112" rx="32"/>
+        <rect class="pulse" x="794" y="126" width="88" height="88" rx="24"/>
+        <rect class="tile" x="794" y="126" width="88" height="88" rx="24"/>
+        <g transform="translate(838 170) scale(1.1)"><path class="spark" d="M 0 -20 C 2.2 -7.5, 7.5 -2.2, 20 0 C 7.5 2.2, 2.2 7.5, 0 20 C -2.2 7.5, -7.5 2.2, -20 0 C -7.5 -2.2, -2.2 -7.5, 0 -20 Z" fill="#fff"/></g>
+        <text x="838" y="262" text-anchor="middle" font-size="19" class="sub" style="direction:rtl;unicode-bidi:isolate">AI engine</text>
+      </g>
+
+      <!-- the credit file: its name, and "ready" across its whole width -->
+      <g class="file">
+        <rect class="card frame" x="470" y="95" width="220" height="150" rx="22" style="stroke:var(--purple-soft);stroke-width:2"/>
+        <text x="580" y="156" text-anchor="middle" font-size="27" class="ttl">Credit file</text>
+        <clipPath id="pbD"><rect x="488" y="182" width="184" height="40" rx="20"/></clipPath>
+        <g class="progress" clip-path="url(#pbD)"><rect x="488" y="182" width="184" height="40" class="track"/><rect class="bar" x="488" y="182" width="184" height="40"/></g>
+        <g class="ready">
+          <rect x="488" y="182" width="184" height="40" rx="20" fill="var(--ok)"/>
+          <path class="tick" pathLength="1" d="M 596.5 202 l 5 5 l 10 -10" fill="none" stroke="#fff" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"/>
+          <text x="588.5" y="208" text-anchor="end" font-size="18" font-weight="600" style="fill:#fff">Ready</text>
+        </g>
+      </g>
+
+      <!-- shown anonymously: halfway between the file and the split; both labels sit the same distance under their shapes -->
+      <g class="node"><circle cx="400" cy="170" r="27" fill="var(--surface)" stroke="var(--purple)" stroke-width="2.5"/><use href="#iEye" class="ico" x="383.8" y="153.8" width="32.4" height="32.4" style="stroke-width:1.85"/></g>
+      <text class="nlabel sub" text-anchor="middle" font-size="19" style="direction:rtl;unicode-bidi:isolate"><tspan x="400" y="234">Full</tspan><tspan x="400" y="255">anonymity</tspan></text>
+
+      <!-- stage 3: funders, each ticked as the request reaches it -->
+      <g class="fin" style="--d:7.9s"><g transform="translate(20,62)"><rect class="card" width="210" height="56" rx="14"/><text class="label" x="190" y="34" text-anchor="end">Banks</text><g class="chk"><circle cx="30" cy="28" r="11" fill="var(--ok)"/><path d="M 25.5 28 l 3.2 3.2 l 6 -6.2" fill="none" stroke="#fff" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></g></g></g>
+      <g class="fin" style="--d:8.3s"><g transform="translate(20,142)"><rect class="card" width="210" height="56" rx="14"/><text class="label" x="190" y="34" text-anchor="end">Credit funds</text><g class="chk"><circle cx="30" cy="28" r="11" fill="var(--ok)"/><path d="M 25.5 28 l 3.2 3.2 l 6 -6.2" fill="none" stroke="#fff" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></g></g></g>
+      <g class="fin" style="--d:8.7s"><g transform="translate(20,222)"><rect class="card" width="210" height="56" rx="14"/><text class="label" x="190" y="34" text-anchor="end">Professional investors</text><g class="chk"><circle cx="30" cy="28" r="11" fill="var(--ok)"/><path d="M 25.5 28 l 3.2 3.2 l 6 -6.2" fill="none" stroke="#fff" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></g></g></g>
+    </svg>
+  </div>
+
+  <!-- ===== mobile: top to bottom ===== -->
+  <div class="mob">
+    <svg viewBox="0 0 360 738" role="img" aria-label="The credit request is broken down into data, documents and deal details, runs through an AI engine, becomes a credit file and is shown in full anonymity to banks, credit funds and professional investors" style="--sx:0;--sy:-16px">
+      <path class="line" pathLength="1" style="--d:0.35s;--len:.5s" d="M 180 52 C 180 90, 302 74, 302 112"/>
+      <path class="line" pathLength="1" style="--d:0.5s;--len:.5s" d="M 180 52 L 180 112"/>
+      <path class="line" pathLength="1" style="--d:0.65s;--len:.5s" d="M 180 52 C 180 90, 58 74, 58 112"/>
+      <path class="flow" pathLength="1" style="--d:0.6s" d="M 180 52 C 180 90, 302 74, 302 112"/>
+      <path class="flow" pathLength="1" style="--d:0.75s" d="M 180 52 L 180 112"/>
+      <path class="flow" pathLength="1" style="--d:0.9s" d="M 180 52 C 180 90, 58 74, 58 112"/>
+      <g class="req"><g transform="translate(90,8)"><rect class="card" width="180" height="44" rx="14" style="stroke:var(--purple-soft)"/><use href="#iReq" class="ico" x="138" y="12" width="20" height="20"/><text x="128" y="28" text-anchor="end" font-size="16" font-weight="600">Credit request</text></g></g>
+      <g transform="translate(0,104)">
+      <path class="line" pathLength="1" style="--d:1.1s" d="M 302 76 C 302 122, 186 104, 186 150"/>
+      <path class="line" pathLength="1" style="--d:1.25s" d="M 180 76 L 180 150"/>
+      <path class="line" pathLength="1" style="--d:1.4s" d="M 58 76 C 58 122, 174 104, 174 150"/>
+      <path class="line" pathLength="1" style="--d:4s;--len:.5s" d="M 180 222 L 180 270"/>
+      <path class="line" pathLength="1" style="--d:6s;--len:.4s" d="M 180 346 L 180 404"/>
+      <path class="line" pathLength="1" style="--d:6.4s" d="M 180 454 C 180 500, 302 484, 302 530"/>
+      <path class="line" pathLength="1" style="--d:6.8s" d="M 180 454 L 180 530"/>
+      <path class="line" pathLength="1" style="--d:7.2s" d="M 180 454 C 180 500, 58 484, 58 530"/>
+      <path class="flow" pathLength="1" style="--d:1.5s" d="M 302 76 C 302 122, 186 104, 186 150"/>
+      <path class="flow" pathLength="1" style="--d:1.9s" d="M 302 76 C 302 122, 186 104, 186 150"/>
+      <path class="flow" pathLength="1" style="--d:2.3s" d="M 302 76 C 302 122, 186 104, 186 150"/>
+      <path class="flow" pathLength="1" style="--d:2.7s" d="M 302 76 C 302 122, 186 104, 186 150"/>
+      <path class="flow" pathLength="1" style="--d:1.65s" d="M 180 76 L 180 150"/>
+      <path class="flow" pathLength="1" style="--d:2.05s" d="M 180 76 L 180 150"/>
+      <path class="flow" pathLength="1" style="--d:2.45s" d="M 180 76 L 180 150"/>
+      <path class="flow" pathLength="1" style="--d:2.85s" d="M 180 76 L 180 150"/>
+      <path class="flow" pathLength="1" style="--d:1.8s" d="M 58 76 C 58 122, 174 104, 174 150"/>
+      <path class="flow" pathLength="1" style="--d:2.2s" d="M 58 76 C 58 122, 174 104, 174 150"/>
+      <path class="flow" pathLength="1" style="--d:2.6s" d="M 58 76 C 58 122, 174 104, 174 150"/>
+      <path class="flow" pathLength="1" style="--d:3s" d="M 58 76 C 58 122, 174 104, 174 150"/>
+      <path class="flow" pathLength="1" style="--d:4.1s" d="M 180 222 L 180 270"/>
+      <path class="flow" pathLength="1" style="--d:6.1s" d="M 180 346 L 180 404"/>
+      <path class="flow" pathLength="1" style="--d:6.5s" d="M 180 454 C 180 500, 302 484, 302 530"/>
+      <path class="flow" pathLength="1" style="--d:6.9s" d="M 180 454 L 180 530"/>
+      <path class="flow" pathLength="1" style="--d:7.3s" d="M 180 454 C 180 500, 58 484, 58 530"/>
+
+      <g class="src" style="--d:0.6s"><g transform="translate(248,8)"><rect class="card" width="108" height="68" rx="14"/><text x="54" y="29" text-anchor="middle" font-size="15">Financial</text><text x="54" y="48" text-anchor="middle" font-size="15">data</text></g></g>
+      <g class="src" style="--d:0.8s"><g transform="translate(126,8)"><rect class="card" width="108" height="68" rx="14"/><text x="54" y="29" text-anchor="middle" font-size="15">Project</text><text x="54" y="48" text-anchor="middle" font-size="15">documents</text></g></g>
+      <g class="src" style="--d:1s"><g transform="translate(4,8)"><rect class="card" width="108" height="68" rx="14"/><text x="54" y="29" text-anchor="middle" font-size="15">Deal</text><text x="54" y="48" text-anchor="middle" font-size="15">details</text></g></g>
+
+      <g class="ai">
+        <rect class="halo" x="137" y="143" width="86" height="86" rx="26"/>
+        <rect class="pulse" x="144" y="150" width="72" height="72" rx="20"/>
+        <rect class="tile" x="144" y="150" width="72" height="72" rx="20"/>
+        <g transform="translate(180 186) scale(.9)"><path class="spark" d="M 0 -20 C 2.2 -7.5, 7.5 -2.2, 20 0 C 7.5 2.2, 2.2 7.5, 0 20 C -2.2 7.5, -7.5 2.2, -20 0 C -7.5 -2.2, -2.2 -7.5, 0 -20 Z" fill="#fff"/></g>
+        <text x="244" y="192" text-anchor="end" font-size="17" class="sub" style="direction:rtl;unicode-bidi:isolate">AI engine</text>
+      </g>
+
+      <!-- the credit file in one row: its name on the right, a short "ready" on the left -->
+      <g class="file">
+        <rect class="card frame" x="30" y="270" width="300" height="76" rx="20" style="stroke:var(--purple-soft);stroke-width:2"/>
+        <text x="308" y="316" text-anchor="end" font-size="24" class="ttl">Credit file</text>
+        <clipPath id="pbM"><rect x="50" y="290" width="104" height="36" rx="18"/></clipPath>
+        <g class="progress" clip-path="url(#pbM)"><rect x="50" y="290" width="104" height="36" class="track"/><rect class="bar" x="50" y="290" width="104" height="36"/></g>
+        <g class="ready">
+          <rect x="50" y="290" width="104" height="36" rx="18" fill="var(--ok)"/>
+          <path class="tick" pathLength="1" d="M 117.5 308 l 4.5 4.5 l 9 -9" fill="none" stroke="#fff" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"/>
+          <text x="110" y="314" text-anchor="end" font-size="17" font-weight="600" style="fill:#fff">Ready</text>
+        </g>
+      </g>
+
+      <g class="node"><circle cx="180" cy="429" r="25.2" fill="var(--surface)" stroke="var(--purple)" stroke-width="2.5"/><use href="#iEye" class="ico" x="165.6" y="414.6" width="28.8" height="28.8" style="stroke-width:2.08"/></g>
+      <text class="nlabel sub" text-anchor="start" font-size="17" style="direction:rtl;unicode-bidi:isolate"><tspan x="284" y="425">Full</tspan><tspan x="284" y="444">anonymity</tspan></text>
+
+      <!-- each funder: its name, then its tick centred underneath as a third row -->
+      <g class="fin" style="--d:7.9s"><g transform="translate(248,530)"><rect class="card" width="108" height="96" rx="14"/><text x="54" y="38" text-anchor="middle" font-size="15">Banks</text><g class="chk"><circle cx="54" cy="73" r="10" fill="var(--ok)"/><path d="M 49.9091 73 l 2.90909 2.90909 l 5.45455 -5.63636" fill="none" stroke="#fff" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></g></g></g>
+      <g class="fin" style="--d:8.3s"><g transform="translate(126,530)"><rect class="card" width="108" height="96" rx="14"/><text x="54" y="28" text-anchor="middle" font-size="15">Credit</text><text x="54" y="47" text-anchor="middle" font-size="15">funds</text><g class="chk"><circle cx="54" cy="73" r="10" fill="var(--ok)"/><path d="M 49.9091 73 l 2.90909 2.90909 l 5.45455 -5.63636" fill="none" stroke="#fff" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></g></g></g>
+      <g class="fin" style="--d:8.7s"><g transform="translate(4,530)"><rect class="card" width="108" height="96" rx="14"/><text x="54" y="28" text-anchor="middle" font-size="15">Professional</text><text x="54" y="47" text-anchor="middle" font-size="15">investors</text><g class="chk"><circle cx="54" cy="73" r="10" fill="var(--ok)"/><path d="M 49.9091 73 l 2.90909 2.90909 l 5.45455 -5.63636" fill="none" stroke="#fff" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></g></g></g>
+      </g>
+    </svg>
+  </div>
+</div>
+<script>
+(function(){
+  // plays once, the first time a third of it is on screen, and stays on the finished picture; reduced motion shows that picture at once
+  const root = document.getElementById('engine-lite');
+  const start = (still) => { if (still) root.classList.add('still'); root.classList.add('on'); };
+  if (matchMedia('(prefers-reduced-motion: reduce)').matches || !('IntersectionObserver' in window)) return start(true);
+  const io = new IntersectionObserver((es) => { if (es[0].isIntersecting) { io.disconnect(); start(false); } }, { threshold: .35 });
+  io.observe(root);
+})();
+</script>
+</body>
+</html>

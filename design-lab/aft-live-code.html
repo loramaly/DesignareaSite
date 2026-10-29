@@ -1,0 +1,53 @@
+<!doctype html>
+<html lang="he" dir="rtl" data-theme="dark">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="robots" content="noindex, nofollow">
+<title>AFT live in code</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700;800&display=swap">
+<link rel="stylesheet" href="../css/styles.css?v=20261028ring">
+<link rel="stylesheet" href="../css/live-aft.css?v=13">
+<style>
+  body{padding:40px 24px 120px;font-family:system-ui,sans-serif;color:#fff}
+  h2{font-size:22px;margin:48px 0 6px}
+  p.note{color:#cfc6ff;margin:0 0 20px;font-size:15px;max-width:760px}
+  .pair{display:grid;grid-template-columns:minmax(0,680px);gap:40px;align-items:start;direction:ltr}
+  .pair figure{margin:0}
+  .pair figcaption{font-size:14px;color:#cfc6ff;margin-bottom:10px;direction:rtl;text-align:right}
+  .big{max-width:1400px;direction:ltr}
+  .replay{margin-top:12px;font:600 14px system-ui;padding:8px 16px;border-radius:999px;border:1px solid #b9a6ff;background:none;color:#fff;cursor:pointer}
+  @media (max-width:900px){.pair{grid-template-columns:1fr}}
+</style>
+</head>
+<body>
+<h2>AFT - האנימציה בקוד</h2>
+<p class="note">החלון הוא הדמו עצמו (במצב תמונה), והחלקים המרחפים בנויים מאותם כללי CSS ואייקונים של הדמו. אותה כוריאוגרפיה, אותו מנוע אנימציה.</p>
+<div class="pair">
+  <figure><figcaption>בגודל של הכרטיס</figcaption>
+    <div class="case-live cl-aft cl-code" data-play="aft" style="aspect-ratio:1256/840" role="img" aria-label="Amazon Global Syndicated Loan - AI decision-support timeline"></div>
+  </figure>
+</div>
+<button class="replay" type="button">להפעיל שוב</button>
+
+<h2>בתוך הקייס - עם Magic Pro</h2>
+<p class="note">אותה תמונה, ומימין הכרטיס של Magic Pro מהדמו. הוא נפתח, וכל שלושת החלקים מרחפים כל אחד בקצב משלו.</p>
+<div class="big">
+  <div class="case-live cl-aft cl-code" data-play="aft-code-hero" data-variant="hero" style="aspect-ratio:1256/1060" role="img" aria-label="Amazon Global Syndicated Loan - the timeline and the Magic Pro suggestion"></div>
+</div>
+
+<h2>החדש בגדול - לבדוק חדות</h2>
+<div class="big">
+  <div class="case-live cl-aft cl-code" data-play="aft" style="aspect-ratio:1256/840" role="img" aria-label="Amazon Global Syndicated Loan - AI decision-support timeline"></div>
+</div>
+
+<script src="../js/live-aft.js?v=13"></script>
+<script src="../js/case-live.js?v=20261018f"></script>
+<script>
+  document.querySelector('.replay').addEventListener('click', function () {
+    document.querySelectorAll('.case-live').forEach(function (p) { window.caseLivePlay && window.caseLivePlay(p); });
+  });
+</script>
+</body>
+</html>

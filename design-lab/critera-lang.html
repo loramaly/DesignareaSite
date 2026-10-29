@@ -1,0 +1,226 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="robots" content="noindex, nofollow">
+<title>Critera language switch - three designs</title>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+Hebrew:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  :root{--ink:#150f33;--violet:#7446dd;--lilac:#a69bf0;--grad:linear-gradient(95deg,#ff00c8,#ff965d)}
+  *{box-sizing:border-box;margin:0}
+  body{background:#1b1240;color:#fff;font-family:'Noto Sans Hebrew',system-ui,sans-serif;padding:40px 24px 80px}
+  h1{font-size:18px;font-weight:600;margin:0 auto 6px;max-width:1140px}
+  .note{color:#b9b0e6;font-size:14px;max-width:1140px;margin:0 auto 32px}
+  .opt{max-width:1140px;margin:0 auto 40px}
+  .opt > .lbl{font-size:14px;color:#cfc6ff;margin-bottom:10px}
+  .opt > .lbl b{color:#fff;font-size:16px;margin-right:8px}
+  /* the cover, as on the case */
+  .cover{border-radius:14px;overflow:hidden;background:
+    radial-gradient(900px 620px at 8% 0%,rgba(92,70,210,.42),transparent 70%),
+    radial-gradient(700px 520px at 100% 100%,rgba(116,70,221,.22),transparent 70%),
+    linear-gradient(180deg,#1a1440 0%,#150f33 100%)}
+  .cover .body{padding:36px 44px 48px}
+  .chips{display:flex;gap:14px;flex-wrap:wrap;margin-bottom:28px}
+  .chip{border:1px solid rgba(255,255,255,.5);border-radius:999px;padding:6px 22px;font-size:14px;font-weight:500}
+  .title{font-size:52px;line-height:1.05;background:var(--grad);-webkit-background-clip:text;background-clip:text;color:transparent}
+  .title .l{font-weight:300}.title .b{font-weight:700}
+  .bar{display:flex;align-items:center;justify-content:space-between;padding:14px 44px;border-bottom:1px solid rgba(255,255,255,.08)}
+  .crumb{font-size:13px;color:rgba(255,255,255,.55);letter-spacing:.04em}
+  .crumb b{color:#fff;font-weight:600}
+  button{font:inherit;color:inherit;background:none;border:0;cursor:pointer}
+  button:active{transform:scale(.97)}
+
+  /* A - glass segmented control with a sliding thumb */
+  .seg{position:relative;display:inline-grid;grid-template-columns:1fr 1fr;padding:4px;border-radius:999px;
+    background:rgba(255,255,255,.07);border:1px solid rgba(255,255,255,.16);backdrop-filter:blur(12px);
+    box-shadow:inset 0 1px 0 rgba(255,255,255,.08)}
+  .seg .thumb{position:absolute;top:4px;bottom:4px;left:4px;width:calc(50% - 4px);border-radius:999px;
+    background:linear-gradient(180deg,#fff,#ece8ff);box-shadow:0 4px 14px rgba(20,8,60,.45);
+    transition:transform .45s cubic-bezier(.32,.72,0,1)}
+  .seg[data-v="he"] .thumb{transform:translateX(100%)}
+  .seg button{position:relative;z-index:1;display:flex;align-items:center;justify-content:center;gap:7px;
+    padding:8px 16px;min-width:96px;border-radius:999px;font-size:13px;font-weight:600;color:rgba(255,255,255,.7);transition:color .3s}
+  .seg button.on{color:#1a1530}
+  .seg svg{width:15px;height:15px}
+
+  /* B - "Read in" with tabs and a gradient underline that glides */
+  .tabs{display:flex;align-items:center;gap:18px;font-size:13px}
+  .tabs .hint{display:flex;align-items:center;gap:8px;color:rgba(255,255,255,.5);letter-spacing:.06em;text-transform:uppercase;font-size:11px}
+  .tabs .hint svg{width:14px;height:14px;opacity:.7}
+  .tabs .set{position:relative;display:flex;gap:20px}
+  .tabs button{padding:6px 0;font-weight:600;color:rgba(255,255,255,.55);transition:color .25s}
+  .tabs button.on{color:#fff}
+  .tabs button:hover{color:#fff}
+  .tabs .line{position:absolute;bottom:-2px;height:2px;border-radius:2px;background:var(--grad);transition:left .4s cubic-bezier(.32,.72,0,1),width .4s cubic-bezier(.32,.72,0,1)}
+
+  /* C - a real switch: the knob carries the logo's gradient */
+  .sw{display:flex;align-items:center;gap:12px;font-size:13px;font-weight:600}
+  .sw .side{color:rgba(255,255,255,.5);transition:color .25s}
+  .sw .side.on{color:#fff}
+  .sw .track{position:relative;width:52px;height:28px;border-radius:999px;background:rgba(255,255,255,.1);
+    border:1px solid rgba(255,255,255,.2)}
+  .sw .knob{position:absolute;top:3px;left:3px;width:20px;height:20px;border-radius:50%;
+    background:linear-gradient(135deg,#a69bf0,#7446dd);box-shadow:0 0 0 4px rgba(140,126,238,.18),0 4px 10px rgba(20,8,60,.5);
+    transition:transform .4s cubic-bezier(.34,1.3,.64,1)}
+  .sw[data-v="he"] .knob{transform:translateX(24px);background:linear-gradient(135deg,#ff00c8,#ff965d);box-shadow:0 0 0 4px rgba(255,80,180,.18),0 4px 10px rgba(20,8,60,.5)}
+  .sw .flag{display:grid;place-items:center;width:26px;height:26px;border-radius:50%;border:1px solid rgba(255,255,255,.18);font-size:10px;letter-spacing:.04em}
+
+  /* D - the languages written inside the toggle; a gradient knob slides over the active one */
+  .tg{position:relative;display:grid;grid-template-columns:1fr 1fr;align-items:center;width:132px;height:38px;padding:3px;border-radius:999px;
+    background:rgba(255,255,255,.08);border:1px solid rgba(255,255,255,.2);box-shadow:inset 0 1px 3px rgba(0,0,0,.35)}
+  .tg .knob{position:absolute;top:3px;left:3px;width:calc(50% - 3px);height:30px;border-radius:999px;
+    background:linear-gradient(135deg,#a69bf0,#7446dd);box-shadow:0 4px 12px rgba(116,70,221,.55);transition:transform .45s cubic-bezier(.34,1.25,.64,1),background .45s}
+  .tg[data-v="he"] .knob{transform:translateX(100%);background:linear-gradient(135deg,#ff00c8,#ff965d);box-shadow:0 4px 12px rgba(255,60,170,.5)}
+  .tg span.t{position:relative;z-index:1;text-align:center;font-size:13px;font-weight:700;letter-spacing:.04em;color:rgba(255,255,255,.55);transition:color .3s}
+  .tg span.t.on{color:#fff}
+  /* E - an iOS-style switch: the language is written on the knob, the other one waits in the track */
+  .ios{position:relative;width:92px;height:40px;border-radius:999px;background:rgba(255,255,255,.1);border:1px solid rgba(255,255,255,.22)}
+  .ios .ghost{position:absolute;top:50%;translate:0 -50%;font-size:12px;font-weight:700;color:rgba(255,255,255,.45);transition:opacity .3s}
+  .ios .ghost.en{left:14px}.ios .ghost.he{right:15px}
+  .ios[data-v="en"] .ghost.en,.ios[data-v="he"] .ghost.he{opacity:0}
+  .ios .knob{position:absolute;top:3px;left:3px;width:32px;height:32px;border-radius:50%;display:grid;place-items:center;
+    background:#fff;color:#1a1530;font-size:12px;font-weight:800;box-shadow:0 3px 10px rgba(20,8,60,.5);
+    transition:transform .45s cubic-bezier(.34,1.3,.64,1)}
+  .ios[data-v="he"] .knob{transform:translateX(52px)}
+
+  /* D2/D3 - D with icons: each half carries a small mark next to its letters */
+  .tg.wide{width:176px;height:40px}
+  .tg.wide .knob{height:32px}
+  .tg span.t{display:inline-flex;align-items:center;justify-content:center;gap:6px}
+  .tg .ic{width:15px;height:15px;flex:none}
+  .tg .gl{display:inline-grid;place-items:center;width:18px;height:18px;border-radius:50%;border:1.4px solid currentColor;font-size:9.5px;font-weight:800;line-height:1}
+  .tg .fl{width:16px;height:16px;border-radius:50%;flex:none;overflow:hidden;box-shadow:0 0 0 1.2px rgba(255,255,255,.55)}
+</style>
+</head>
+<body>
+<h1>Language switch on the Critera cover</h1>
+<p class="note">Each one sits in the slim bar at the top of the cover, at the right end, away from the chips. They all work - click them.</p>
+
+<div class="opt">
+  <div class="lbl"><b>A</b>Glass pill with a sliding white thumb and a globe icon</div>
+  <div class="cover">
+    <div class="bar"><span class="crumb">Case study · <b>Critera</b></span>
+      <div class="seg" data-v="en">
+        <span class="thumb" aria-hidden="true"></span>
+        <button class="on" data-l="en"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="12" cy="12" r="10"/><path d="M2 12h20M12 2a15 15 0 0 1 0 20M12 2a15 15 0 0 0 0 20"/></svg>English</button>
+        <button data-l="he">עברית</button>
+      </div>
+    </div>
+    <div class="body"><div class="chips"><span class="chip">UX Strategy</span><span class="chip">Web Design</span><span class="chip">Front-end</span><span class="chip">Animation</span></div>
+      <div class="title"><span class="l">Business Credit</span><br><span class="b">Meets AI</span></div></div>
+  </div>
+</div>
+
+<div class="opt">
+  <div class="lbl"><b>B</b>"Read in" with two tabs and the brand's pink-orange line gliding under the active one</div>
+  <div class="cover">
+    <div class="bar"><span class="crumb">Case study · <b>Critera</b></span>
+      <div class="tabs">
+        <span class="hint"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M5 8l6 6M4 14l6-6 2-3M2 5h12M7 2h1M22 22l-5-10-5 10M14 18h6"/></svg>Read in</span>
+        <div class="set"><button class="on" data-l="en">English</button><button data-l="he">עברית</button><span class="line"></span></div>
+      </div>
+    </div>
+    <div class="body"><div class="chips"><span class="chip">UX Strategy</span><span class="chip">Web Design</span><span class="chip">Front-end</span><span class="chip">Animation</span></div>
+      <div class="title"><span class="l">Business Credit</span><br><span class="b">Meets AI</span></div></div>
+  </div>
+</div>
+
+<div class="opt">
+  <div class="lbl"><b>C</b>A real switch: EN on one side, HE on the other; the knob is lilac in English and turns pink-orange in Hebrew</div>
+  <div class="cover">
+    <div class="bar"><span class="crumb">Case study · <b>Critera</b></span>
+      <div class="sw" data-v="en">
+        <span class="side on">EN</span>
+        <button class="track" aria-label="Switch language"><span class="knob"></span></button>
+        <span class="side">עב</span>
+      </div>
+    </div>
+    <div class="body"><div class="chips"><span class="chip">UX Strategy</span><span class="chip">Web Design</span><span class="chip">Front-end</span><span class="chip">Animation</span></div>
+      <div class="title"><span class="l">Business Credit</span><br><span class="b">Meets AI</span></div></div>
+  </div>
+</div>
+
+
+<div class="opt">
+  <div class="lbl"><b>D</b>Both languages inside the toggle: the gradient knob slides under the active one (lilac in English, pink-orange in Hebrew)</div>
+  <div class="cover">
+    <div class="bar"><span class="crumb">Case study · <b>Critera</b></span>
+      <button class="tg" data-v="en" aria-label="Switch language"><span class="knob" aria-hidden="true"></span><span class="t on">EN</span><span class="t">עב</span></button>
+    </div>
+    <div class="body"><div class="chips"><span class="chip">UX Strategy</span><span class="chip">Web Design</span><span class="chip">Front-end</span><span class="chip">Animation</span></div>
+      <div class="title"><span class="l">Business Credit</span><br><span class="b">Meets AI</span></div></div>
+  </div>
+</div>
+
+<div class="opt">
+  <div class="lbl"><b>D4</b>ENG / HEB, one-colour line icons: a small US flag (a star and stripes) for English, the Star of David for Hebrew</div>
+  <div class="cover">
+    <div class="bar"><span class="crumb">Case study · <b>Critera</b></span>
+      <button class="tg wide" data-v="en" aria-label="Switch language" style="width:188px"><span class="knob" aria-hidden="true"></span><span class="t on"><svg class="ic" style="width:20px;height:14px" viewBox="0 0 28 20" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><path d="M5.5 1.2l1.4 2.85 3.15.46-2.28 2.22.54 3.13L5.5 8.38 2.69 9.86l.54-3.13L.95 4.51l3.15-.46z" fill="currentColor" stroke="none"/><path d="M14 3h11.6M14 9h11.6M2 15h23.6"/></svg>ENG</span><span class="t"><svg class="ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"><path d="M12 2.5l8.2 14.2H3.8z"/><path d="M12 21.5L3.8 7.3h16.4z"/></svg>HEB</span></button>
+    </div>
+    <div class="body"><div class="chips"><span class="chip">UX Strategy</span><span class="chip">Web Design</span><span class="chip">Front-end</span><span class="chip">Animation</span></div>
+      <div class="title"><span class="l">Business Credit</span><br><span class="b">Meets AI</span></div></div>
+  </div>
+</div>
+
+<div class="opt">
+  <div class="lbl"><b>D1</b>D with a letter mark in each half: "A" for English, "א" for Hebrew</div>
+  <div class="cover">
+    <div class="bar"><span class="crumb">Case study · <b>Critera</b></span>
+      <button class="tg wide" data-v="en" aria-label="Switch language"><span class="knob" aria-hidden="true"></span><span class="t on"><span class="gl">A</span>EN</span><span class="t"><span class="gl">א</span>עב</span></button>
+    </div>
+    <div class="body"><div class="chips"><span class="chip">UX Strategy</span><span class="chip">Web Design</span><span class="chip">Front-end</span><span class="chip">Animation</span></div>
+      <div class="title"><span class="l">Business Credit</span><br><span class="b">Meets AI</span></div></div>
+  </div>
+</div>
+<div class="opt">
+  <div class="lbl"><b>D2</b>D with small round flags</div>
+  <div class="cover">
+    <div class="bar"><span class="crumb">Case study · <b>Critera</b></span>
+      <button class="tg wide" data-v="en" aria-label="Switch language"><span class="knob" aria-hidden="true"></span><span class="t on"><span><svg class="fl" viewBox="0 0 16 16"><rect width="16" height="16" fill="#fff"/><g fill="#d62839"><rect y="0" width="16" height="1.8"/><rect y="3.6" width="16" height="1.8"/><rect y="7.2" width="16" height="1.8"/><rect y="10.8" width="16" height="1.8"/><rect y="14.4" width="16" height="1.6"/></g><rect width="8" height="8.6" fill="#1e3a8a"/></svg></span>EN</span><span class="t"><span><svg class="fl" viewBox="0 0 16 16"><rect width="16" height="16" fill="#fff"/><rect y="2.6" width="16" height="2" fill="#1d4ed8"/><rect y="11.4" width="16" height="2" fill="#1d4ed8"/><path d="M8 5.4l2.3 4H5.7zM8 10.6l-2.3-4h4.6z" fill="none" stroke="#1d4ed8" stroke-width=".8"/></svg></span>עב</span></button>
+    </div>
+    <div class="body"><div class="chips"><span class="chip">UX Strategy</span><span class="chip">Web Design</span><span class="chip">Front-end</span><span class="chip">Animation</span></div>
+      <div class="title"><span class="l">Business Credit</span><br><span class="b">Meets AI</span></div></div>
+  </div>
+</div>
+<div class="opt">
+  <div class="lbl"><b>D3</b>D with a globe on English and the letter mark on Hebrew</div>
+  <div class="cover">
+    <div class="bar"><span class="crumb">Case study · <b>Critera</b></span>
+      <button class="tg wide" data-v="en" aria-label="Switch language"><span class="knob" aria-hidden="true"></span><span class="t on"><svg class="ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="12" cy="12" r="10"/><path d="M2 12h20M12 2a15 15 0 0 1 0 20M12 2a15 15 0 0 0 0 20"/></svg>EN</span><span class="t"><span class="gl">א</span>עב</span></button>
+    </div>
+    <div class="body"><div class="chips"><span class="chip">UX Strategy</span><span class="chip">Web Design</span><span class="chip">Front-end</span><span class="chip">Animation</span></div>
+      <div class="title"><span class="l">Business Credit</span><br><span class="b">Meets AI</span></div></div>
+  </div>
+</div>
+
+<div class="opt">
+  <div class="lbl"><b>E</b>A classic switch: the current language is written on the white knob, the other one waits in the track</div>
+  <div class="cover">
+    <div class="bar"><span class="crumb">Case study · <b>Critera</b></span>
+      <button class="ios" data-v="en" aria-label="Switch language"><span class="ghost en">EN</span><span class="ghost he">עב</span><span class="knob">EN</span></button>
+    </div>
+    <div class="body"><div class="chips"><span class="chip">UX Strategy</span><span class="chip">Web Design</span><span class="chip">Front-end</span><span class="chip">Animation</span></div>
+      <div class="title"><span class="l">Business Credit</span><br><span class="b">Meets AI</span></div></div>
+  </div>
+</div>
+<script>
+  // A
+  document.querySelectorAll('.seg').forEach(s=>s.querySelectorAll('button').forEach(b=>b.onclick=()=>{
+    s.dataset.v=b.dataset.l;s.querySelectorAll('button').forEach(x=>x.classList.toggle('on',x===b))}));
+  // B
+  document.querySelectorAll('.tabs .set').forEach(set=>{
+    const line=set.querySelector('.line');
+    const place=b=>{line.style.left=b.offsetLeft+'px';line.style.width=b.offsetWidth+'px'};
+    set.querySelectorAll('button').forEach(b=>b.onclick=()=>{set.querySelectorAll('button').forEach(x=>x.classList.toggle('on',x===b));place(b)});
+    document.fonts.ready.then(()=>place(set.querySelector('.on')))});
+  // C
+  document.querySelectorAll('.sw').forEach(s=>s.querySelector('.track').onclick=()=>{
+    s.dataset.v=s.dataset.v==='en'?'he':'en';const [a,b]=s.querySelectorAll('.side');a.classList.toggle('on',s.dataset.v==='en');b.classList.toggle('on',s.dataset.v==='he')});
+
+  document.querySelectorAll('.tg').forEach(t=>t.onclick=()=>{t.dataset.v=t.dataset.v==='en'?'he':'en';const [a,b]=t.querySelectorAll('.t');a.classList.toggle('on',t.dataset.v==='en');b.classList.toggle('on',t.dataset.v==='he')});
+  document.querySelectorAll('.ios').forEach(t=>t.onclick=()=>{t.dataset.v=t.dataset.v==='en'?'he':'en';t.querySelector('.knob').textContent=t.dataset.v==='en'?'EN':'עב'});
+</script>
+</body>
+</html>

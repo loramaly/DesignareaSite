@@ -228,7 +228,7 @@
 
 /* shadows the first pass missed - all re-tinted, none left on black */
 :root[data-theme="light"] .share-menu{box-shadow:0 12px 32px rgba(53,38,104,.14)}
-:root[data-theme="light"] .case-media img{filter:drop-shadow(0 20px 40px rgba(53,38,104,.18))}
+:root[data-theme="light"] .case-media > img,:root[data-theme="light"] .case-media > .case-live{filter:drop-shadow(0 20px 40px rgba(53,38,104,.18))}
 :root[data-theme="light"] .rec-avatar{box-shadow:0 6px 16px rgba(53,38,104,.18)}
 :root[data-theme="light"] .case-head.is-stuck{box-shadow:0 10px 26px rgba(53,38,104,.12)}
 @media (max-width:900px){
@@ -238,7 +238,7 @@
 /* the floating back-to-top pill was a dark purple lozenge */
 :root[data-theme="light"] .back-to-top{
   background:rgba(255,255,255,.86);
-  border:2px solid var(--frame-line);
+  border:0;
   color:var(--btn);
   box-shadow:0 8px 22px rgba(53,38,104,.14);
 }
@@ -418,7 +418,7 @@
   box-shadow:0 8px 20px rgba(9,20,64,.34);
 }
 /* the screenshot's own halo read as a smudge on the light gradients */
-:root[data-theme="light"] .case-card.tint-blue .case-media img,:root[data-theme="light"] .case-card.tint-violet .case-media img{filter:none}
+:root[data-theme="light"] .case-card.tint-blue .case-media > img,:root[data-theme="light"] .case-card.tint-violet .case-media > img,:root[data-theme="light"] .case-card.tint-blue .case-media > .case-live,:root[data-theme="light"] .case-card.tint-violet .case-media > .case-live{filter:none}
 :root[data-theme="light"] .case-card.tint-blue .case-demo-link .live-dot,:root[data-theme="light"] .case-card.tint-violet .case-demo-link .live-dot,
 :root[data-theme="light"] .case-card.tint-blue .case-demo-link .live-dot::after,:root[data-theme="light"] .case-card.tint-violet .case-demo-link .live-dot::after{
   background:#fff}
@@ -500,3 +500,13 @@
 :root[data-theme="light"] .drag-handle span,
 :root[data-theme="light"] .alt-split .side-handle span{background:#CBC7D4}
 :root[data-theme="light"] .alt-split .agent-head{border-bottom-color:#E1DEE7}
+
+/* the Critera card: the case cover's own colours - nearly black, a little plum at the bottom (not SyncOps' blue) */
+:root[data-theme="light"] .case-card.tint-critera{
+  background:linear-gradient(180deg,#0a0a1a 0%,#14102b 55%,#2d1b4e 100%) border-box}
+
+/* portfolio filter - same quiet tabs, in ink */
+:root[data-theme="light"] .works-filter{border-left-color:rgba(36,28,61,.16)}
+:root[data-theme="light"] .wf-btn{color:rgba(36,28,61,.5)}
+:root[data-theme="light"] .wf-btn:hover{color:rgba(36,28,61,.8)}
+:root[data-theme="light"] .wf-btn.is-on{color:var(--text)}

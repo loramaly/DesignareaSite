@@ -1,0 +1,37 @@
+/* the embed pages: nothing but the piece itself, on a transparent page */
+html.embed, html.embed body { background: transparent !important; overflow: hidden; }
+html.embed-hero, html.embed-hero body { background: #120d2e !important; }
+html.embed .a11y-fab { display: none !important; }
+.embed-logo { position: fixed; inset: 0; display: flex; align-items: center; justify-content: center; }
+.embed-logo .embed-logo-svg { height: 72%; }
+/* the hero's slab sits on white in the case, not on the site's lilac */
+html.embed-hero .chero { --chero-below: #fff !important; }
+/* the timeline alone: the case has its own heading, so the section's is hidden */
+html.embed-timeline, html.embed-timeline body { background: transparent !important; }
+.embed-timeline #how-it-works { background: transparent !important; padding: 0 !important; }
+.embed-timeline .v11-tl-wrap { top: 0 !important; }
+.embed-timeline .v11-tl-wrap > :not(.v11-tl) { display: none !important; }
+/* in the case the timeline runs from the right edge, the full width of its frame - not centred in the site's container */
+.embed-timeline .v11-tl-wrap { width: 100% !important; margin: 0 !important; }
+/* hero-copy: only the words and buttons - the starry ground fills the whole frame (no slab edge), the deal scene is hidden */
+html.embed-hero-copy, html.embed-hero-copy body { background: #120d2e !important; }
+html.embed-hero-copy .chero { --chero-below: #120d2e !important; background: #120d2e !important; }
+html.embed-hero-copy .chero .sky { clip-path: none !important; }
+html.embed-hero-copy .chero .stage { visibility: hidden !important; }
+/* the plain hero embed is only ever shown cropped to its deal scene - fill the sky edge to edge there too */
+html.embed-hero .chero { --chero-below: #120d2e !important; background: #120d2e !important; }
+html.embed-hero .chero .sky { clip-path: none !important; }
+/* the headline runs on one line now (the site's own rule from 1061px), so its first word would reach into the crop: hide it, its place kept */
+html.embed-hero .chero h1 { visibility: hidden !important; }
+/* the arenas alone, on white */
+html.embed-arenas, html.embed-arenas body { background: #fff !important; }
+/* partners: shown only through its scene, on white */
+html.embed-partners, html.embed-partners body { background: #fff !important; }
+/* the lenders' stairs alone, centred on white */
+html.embed-stairs, html.embed-stairs body { background: #fff !important; }
+.embed-stairs { position: fixed; inset: 0; display: flex; align-items: center; justify-content: center; }
+.embed-stairs .lender-stairs { width: 72%; }  /* room all round, so the bars' glow fades out before the frame's edge */
+.embed-stairs .lender-stairs svg { width: 100%; height: auto; display: block; }
+/* on white the request reads dark, as it does on the About page */
+.embed-stairs .ls-req-title { fill: #1a1a2e; }
+.embed-stairs .ls-req-sub { fill: #5b6272; }

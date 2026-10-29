@@ -1,0 +1,349 @@
+<!doctype html>
+<html lang="en" dir="rtl">
+<head>
+<meta charset="utf-8">
+<!-- Embedded in the site via iframe: keep it out of search results on its own (indexifembedded lets Google count it as part of the page that embeds it). -->
+<meta name="robots" content="noindex">
+<meta name="googlebot" content="noindex, indexifembedded">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Critera - AI Deal Analysis Engine · Mobile</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Rubik:wght@400;500;600;700&family=MuseoModerno:wght@500;600;700&display=swap">
+<style>
+html,body{margin:0;background:transparent} /* site: no white plate, the section shows through, as on desktop */
+:root{
+  --purple:#6F5EEA; --purple-soft:#8C7EEE; --ink:#241D4F; --ink-2:#5A5478; --bg:#FFFFFF; --surface:#FFFFFF; --border:#E5E1F6;
+  --glow:rgba(111,94,234,.28); --res:#D554FF; --ok:#3DBB82;
+}
+
+
+*{box-sizing:border-box}
+#critera-engine{background:transparent;color:var(--ink);font-family:Rubik,"Segoe UI",Arial,sans-serif;direction:rtl;max-width:420px;margin:0 auto}
+.wrap{max-width:420px;margin:0 auto}
+.eyebrow{font-size:13px;letter-spacing:.08em;color:var(--purple);font-weight:600;margin:0 0 6px}
+h1{font-size:22px;line-height:1.2;margin:0 0 8px;text-wrap:balance}
+.lead{font-size:15px;color:var(--ink-2);margin:0 0 16px;line-height:1.55}
+.bar{display:flex;flex-wrap:wrap;gap:8px;align-items:center;margin-bottom:12px}
+.btn{font:inherit;font-weight:500;font-size:13px;border:1px solid var(--border);background:var(--surface);color:var(--ink);padding:7px 12px;border-radius:999px;cursor:pointer}
+.btn.on{background:var(--purple);border-color:var(--purple);color:#fff}
+.time{font-family:MuseoModerno,Rubik,sans-serif;font-weight:600;font-size:12px;color:var(--ink-2);direction:ltr}
+.scrub{flex:1 1 120px;accent-color:var(--purple);direction:ltr}
+.stage{background:var(--surface)}
+#critera-engine svg{display:block;width:100%;min-width:0px;height:auto;direction:ltr}
+#critera-engine svg text{font-family:Rubik,sans-serif;fill:var(--ink)}
+#critera-engine svg .pill text,#critera-engine svg .cta text{fill:#fff} /* white on the lilac pill and button, as on desktop (the rule above outranked theirs) */
+.num{font-family:MuseoModerno,Rubik,sans-serif;font-weight:600;font-variant-numeric:tabular-nums}
+.muted{fill:var(--ink-2)!important}
+.path{fill:none;stroke:var(--border);stroke-width:1.5;stroke-dasharray:3 6;stroke-linecap:round;opacity:0;transition:stroke .5s,stroke-width .5s,opacity .7s}
+.path.vis{opacity:1}
+.path.on{stroke:var(--purple-soft);stroke-width:2;stroke-dasharray:none}
+.src .box{fill:var(--surface);stroke:var(--border);stroke-width:1.5;transition:stroke .35s,filter .35s}
+.src .in{opacity:0;transform:translateY(-6px);transition:opacity .5s,transform .6s cubic-bezier(.2,.8,.2,1)}
+.src.vis .in{opacity:1;transform:none}
+.src.on .box{stroke:var(--purple-soft);filter:drop-shadow(0 0 8px var(--glow))}
+.src .label{fill:var(--ink-2);transition:fill .3s}
+.src.on .label{fill:var(--ink)}
+/* AI tile */
+.ai{opacity:0;transform:scale(.6);transform-origin:195px 210px;transition:opacity .4s,transform .6s cubic-bezier(.2,.8,.2,1)}
+.ai.show{opacity:1;transform:none}
+.ai .halo{fill:var(--purple);opacity:.08;transition:opacity .4s}
+.ai.on .halo{opacity:.18}
+.ai .tile{fill:url(#gTile);opacity:.72;filter:drop-shadow(0 6px 14px rgba(111,94,234,.35));transition:filter .4s,opacity .5s}
+.ai.on .tile,.ai.open .tile{opacity:1}
+.ai.on .tile{filter:drop-shadow(0 0 14px rgba(140,126,238,.8))}
+.ai .spark{transform-origin:0 0}
+.ai.on .spark{animation:spinup 2.6s cubic-bezier(.15,.75,.25,1) forwards}
+@keyframes spinup{from{transform:rotate(0)}to{transform:rotate(720deg)}}
+/* panels grow down from their tile */
+.engine .shell,.out .frame{fill:var(--surface);stroke:var(--purple-soft);stroke-width:2;transition:opacity .2s,y .8s cubic-bezier(.2,.8,.2,1),height .8s cubic-bezier(.2,.8,.2,1),stroke .4s,filter .4s}
+.engine .shell{x:20px;y:210px;width:350px;height:0px;rx:24px;opacity:0}
+.engine.open .shell{y:210px;height:315px;opacity:1}
+.openc{opacity:0;transition:opacity .3s .6s}
+.open .openc{opacity:1}
+.ptitle{font-weight:700;font-size:19px;opacity:0;transition:opacity .25s 0s}
+.open .ptitle{opacity:1;transition:opacity .45s .9s}
+.stg{opacity:0;transition:opacity .4s}
+.engine.open .stg{opacity:1}
+.engine.open .stg[data-i="0"]{transition-delay:1.1s}.engine.open .stg[data-i="1"]{transition-delay:1.2s}.engine.open .stg[data-i="2"]{transition-delay:1.3s}.engine.open .stg[data-i="3"]{transition-delay:1.4s}.engine.open .stg[data-i="4"]{transition-delay:1.5s}
+.stg .ring{fill:var(--surface);stroke:var(--border);stroke-width:1.5;transition:stroke .3s,fill .3s}
+.stg .tick{fill:none;stroke:var(--purple);stroke-width:2.2;stroke-linecap:round;stroke-linejoin:round;stroke-dasharray:20;stroke-dashoffset:20;transition:stroke-dashoffset .4s}
+.stg .name{fill:var(--ink-2);transition:fill .3s}
+.stg .track{fill:var(--border)}
+.stg .fill{fill:var(--purple)}
+.stg.active .ring{stroke:var(--purple)}
+.stg.active .name{fill:var(--ink);font-weight:600}
+.stg.done .ring{stroke:var(--purple);fill:var(--purple)}
+.stg.done .tick{stroke:#fff;stroke-dashoffset:0}
+.stg.done .name{fill:var(--ink)}
+.scan{fill:none;stroke:var(--purple);stroke-width:2;stroke-opacity:.85;stroke-linecap:round}
+/* file */
+.out .frame{x:163px;y:556px;width:64px;height:64px;rx:18px;stroke:var(--border)}
+.out.on .frame{stroke:var(--purple-soft);filter:drop-shadow(0 0 14px var(--glow))}
+.out.open .frame{x:20px;y:588px;width:350px;height:356px;rx:24px;stroke:var(--purple-soft)}
+.out .frame{transition:opacity .2s,x .8s cubic-bezier(.2,.8,.2,1),y .8s cubic-bezier(.2,.8,.2,1),width .8s cubic-bezier(.2,.8,.2,1),height .8s cubic-bezier(.2,.8,.2,1),rx .8s,stroke .4s,filter .4s}
+.ficon{transform-origin:195px 588px}
+.out .item{opacity:0;transform:translateY(6px);transition:opacity .45s,transform .45s}
+.out .item.on{opacity:1;transform:none}
+.pill{fill:var(--purple)} .pill text{fill:#fff}
+.simbar{fill:var(--purple-soft)} .simbar.b2{fill:#AA3ACE} .simbar.b3{fill:#F02FB8}
+.seg1{fill:var(--purple)} .seg2{fill:#AA3ACE} .seg3{fill:#FFA411}
+.cta .btn-inner{transform-origin:195px 886px;transition:transform .15s}
+.cta.press .btn-inner{transform:scale(.95)}
+.cta rect{fill:var(--purple);transition:fill .35s}
+.cta text{fill:#fff}
+.cta .done-lbl{opacity:0;transition:opacity .3s}
+.cta.done rect{fill:var(--ok)}
+.cta.done .lbl{opacity:0}
+.cta.done .done-lbl{opacity:1}
+.cta .lbl{transition:opacity .2s}
+.hand{opacity:0;transform:translate(250px,950px);transition:opacity .3s,transform .7s cubic-bezier(.2,.8,.2,1)}
+.hand.in{opacity:1;transform:translate(185px,880px)}
+.hand.press{transform:translate(185px,884px) scale(.92)}
+.hand.out{opacity:0;transform:translate(150px,940px)}
+/* lenders */
+.lend .lbox{fill:var(--surface);stroke:var(--border);stroke-width:1.5;transition:stroke .4s,filter .4s}
+.lend .lt{fill:var(--ink)}
+.lend .chk{opacity:0;transform:scale(.6);transform-origin:10px 10px;transition:opacity .35s,transform .35s cubic-bezier(.2,.9,.3,1.4)}
+.lend .chk rect{fill:var(--ok)}
+.lend.match.hit .lbox{stroke:var(--purple-soft);filter:drop-shadow(0 0 8px var(--glow))}
+.lend.match.hit .chk{opacity:1;transform:scale(1)}
+.sending .lend:not(.match){opacity:.45}
+.lend{transition:opacity .5s}
+.later{opacity:0;transition:opacity .5s}
+.later.vis{opacity:1}
+.particle{fill:var(--purple);opacity:0}
+.particle.warm{fill:var(--res)}
+@media (prefers-reduced-motion: reduce){ .path,.src *,.ai *,.engine *,.out *,.lend *{transition:none!important;animation:none!important} }
+.fin-base{stroke:var(--border);stroke-width:1.2}.fin-area{fill:var(--purple-soft);opacity:0;transition:opacity .4s}.fin-line{fill:none;stroke:var(--purple);stroke-width:2.2;stroke-linecap:round;stroke-linejoin:round;stroke-dasharray:1;stroke-dashoffset:1}.fin-dot{fill:#F02FB8;opacity:0;transition:opacity .3s}
+</style>
+<style>#critera-engine{direction:ltr}#critera-engine #svg{scale:-1 1}#svg text{transform-box:fill-box;transform-origin:center;scale:-1 1}#svg .chk{scale:-1 1}#svg .tick,#svg .done-lbl path{transform-box:fill-box;transform-origin:center;scale:-1 1}#svg text[font-size="17"]{font-size:15.5px}</style>
+<style>#svg .stg .fill{transform:matrix(-1,0,0,1,164,0)}</style>
+</head>
+<body>
+<!--
+  Critera · סקשן "מנוע ה-AI" · מובייל — עד 767px · קנבס 390×1136
+  גרסה סופית להטמעה (4.10.2026). רקע לבן, SVG + CSS + JS, בלי ספריות.
+  להטמיע כמו שהוא: לא לשנות קואורדינטות, צבעים, טקסטים, תזמונים או סדר אלמנטים.
+  שונה באתר בטקסט בלבד (15.10.2026, לבקשת איליה: גם השקעה, לא רק מימון): "Credit file" ← "Deal package", קופסת Family Office ← "Investor" (ביחיד, כמו שאר הקופסאות), "יוצא למלווים" ← "יוצא לגופים". שום דבר אחר לא שונה.
+  הותאם באתר: הקווים המקווקווים, אריח התיק והמלווים מוצגים מההתחלה כמו בדסקטופ, צמודים זה לזה כשהכול סגור ונדחפים למטה כשהלוחות נפתחים; אייקון התיק הוחלף לזה של גרסת הדסקטופ, והוא עולה לצד כותרת "Credit file" (שיושרה לימין) כמו בדסקטופ.
+-->
+<div id="critera-engine">
+<svg viewBox="0 0 390 1136" id="svg" aria-label="Critera's AI deal analysis engine - mobile version">
+    <defs>
+      <linearGradient id="gTile" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#7A5CF5"/><stop offset="1" stop-color="#B043D9"/></linearGradient>
+      <linearGradient id="gScan" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#6F5EEA" stop-opacity="0"/><stop offset="1" stop-color="#6F5EEA" stop-opacity=".22"/></linearGradient>
+      <clipPath id="shellClip"><rect x="20" y="210" width="350" height="315" rx="24"/></clipPath>
+    </defs>
+
+    <!-- ===== lines (under everything) ===== -->
+    <g id="paths">
+      <!-- spine segments first (branches draw over them) -->
+      <path class="path" id="s0" d="M 195 51 L 195 85"/>
+      <path class="path" id="s1" d="M 195 85 L 195 131"/>
+      <path class="path" id="s2" d="M 195 131 L 195 178"/>
+      <path class="path" id="pOut" d="M 195 525 L 195 588"/>
+      <path class="path" id="ls0" d="M 195 944 L 195 991"/>
+      <path class="path" id="ls1" d="M 195 991 L 195 1037"/>
+      <path class="path" id="ls2" d="M 195 1037 L 195 1083"/>
+      <path class="path" id="p0" d="M 225 39 L 207 39 A 12 12 0 0 0 195 51"/>
+      <path class="path" id="p1" d="M 165 39 L 183 39 A 12 12 0 0 1 195 51"/>
+      <path class="path" id="p2" d="M 225 85 L 207 85 A 12 12 0 0 0 195 97"/>
+      <path class="path" id="p3" d="M 165 85 L 183 85 A 12 12 0 0 1 195 97"/>
+      <path class="path" id="p4" d="M 225 131 L 207 131 A 12 12 0 0 0 195 143"/>
+      <path class="path" id="p5" d="M 165 131 L 183 131 A 12 12 0 0 1 195 143"/>
+      <path class="path lp match" id="lp0" d="M 195 991 A 12 12 0 0 0 207 1003 L 225 1003"/>
+      <path class="path lp match" id="lp1" d="M 195 991 A 12 12 0 0 1 183 1003 L 165 1003"/>
+      <path class="path lp" id="lp2" d="M 195 1037 A 12 12 0 0 0 207 1049 L 225 1049"/>
+      <path class="path lp match" id="lp3" d="M 195 1037 A 12 12 0 0 1 183 1049 L 165 1049"/>
+      <path class="path lp" id="lp4" d="M 195 1083 A 12 12 0 0 0 207 1095 L 225 1095"/>
+      <path id="pp0" d="M 225 39 L 207 39 A 12 12 0 0 0 195 51 L 195 178" fill="none" stroke="none"/>
+      <path id="pp1" d="M 165 39 L 183 39 A 12 12 0 0 1 195 51 L 195 178" fill="none" stroke="none"/>
+      <path id="pp2" d="M 225 85 L 195 85 L 195 178" fill="none" stroke="none"/>
+      <path id="pp3" d="M 165 85 L 195 85 L 195 178" fill="none" stroke="none"/>
+      <path id="pp4" d="M 225 131 L 195 131 L 195 178" fill="none" stroke="none"/>
+      <path id="pp5" d="M 165 131 L 195 131 L 195 178" fill="none" stroke="none"/>
+      <path id="lpp0" d="M 195 944 L 195 1003 L 225 1003" fill="none" stroke="none"/>
+      <path id="lpp1" d="M 195 944 L 195 1003 L 165 1003" fill="none" stroke="none"/>
+      <path id="lpp3" d="M 195 944 L 195 1049 L 165 1049" fill="none" stroke="none"/>
+    </g>
+
+    <!-- ===== sources: two columns, three rows ===== -->
+    <g id="sources">
+      <g class="src" transform="translate(225,20)"><g class="in"><rect class="box" width="145" height="38" rx="12"/><text class="label" x="131" y="24" text-anchor="end" font-size="14">Documents</text></g></g>
+      <g class="src" transform="translate(20,20)"><g class="in"><rect class="box" width="145" height="38" rx="12"/><text class="label" x="131" y="24" text-anchor="end" font-size="14">Company registry</text></g></g>
+      <g class="src" transform="translate(225,66)"><g class="in"><rect class="box" width="145" height="38" rx="12"/><text class="label" x="131" y="24" text-anchor="end" font-size="14">Land registry</text></g></g>
+      <g class="src" transform="translate(20,66)"><g class="in"><rect class="box" width="145" height="38" rx="12"/><text class="label" x="131" y="24" text-anchor="end" font-size="14">Tax records</text></g></g>
+      <g class="src" transform="translate(225,112)"><g class="in"><rect class="box" width="145" height="38" rx="12"/><text class="label" x="131" y="24" text-anchor="end" font-size="14">Central bank</text></g></g>
+      <g class="src" transform="translate(20,112)"><g class="in"><rect class="box" width="145" height="38" rx="12"/><text class="label" x="131" y="24" text-anchor="end" font-size="14">News & rulings</text></g></g>
+    </g>
+
+    <!-- ===== engine panel (grows down from the tile) ===== -->
+    <g class="engine" id="engine">
+      <rect class="shell"/>
+      <g class="openc">
+        <text class="ptitle" x="195" y="276" text-anchor="middle" style="direction:rtl;unicode-bidi:isolate">AI analysis engine</text>
+        <g class="stg" data-i="0" transform="translate(0,310)"><circle class="ring" cx="334" cy="0" r="11"/><path class="tick" d="M 328.5 0 L 332.5 4 L 339.5 -3.5"/><text class="name" x="314" y="5" text-anchor="end" font-size="16">Collects</text><rect class="track" x="52" y="-2" width="60" height="4" rx="2"/><rect class="fill" x="52" y="-2" width="0" height="4" rx="2"/></g>
+        <g class="stg" data-i="1" transform="translate(0,352)"><circle class="ring" cx="334" cy="0" r="11"/><path class="tick" d="M 328.5 0 L 332.5 4 L 339.5 -3.5"/><text class="name" x="314" y="5" text-anchor="end" font-size="16">Analyzes</text><rect class="track" x="52" y="-2" width="60" height="4" rx="2"/><rect class="fill" x="52" y="-2" width="0" height="4" rx="2"/></g>
+        <g class="stg" data-i="2" transform="translate(0,394)"><circle class="ring" cx="334" cy="0" r="11"/><path class="tick" d="M 328.5 0 L 332.5 4 L 339.5 -3.5"/><text class="name" x="314" y="5" text-anchor="end" font-size="16">Rates risk</text><rect class="track" x="52" y="-2" width="60" height="4" rx="2"/><rect class="fill" x="52" y="-2" width="0" height="4" rx="2"/></g>
+        <g class="stg" data-i="3" transform="translate(0,436)"><circle class="ring" cx="334" cy="0" r="11"/><path class="tick" d="M 328.5 0 L 332.5 4 L 339.5 -3.5"/><text class="name" x="314" y="5" text-anchor="end" font-size="16">Predicts price</text><rect class="track" x="52" y="-2" width="60" height="4" rx="2"/><rect class="fill" x="52" y="-2" width="0" height="4" rx="2"/></g>
+        <g class="stg" data-i="4" transform="translate(0,478)"><circle class="ring" cx="334" cy="0" r="11"/><path class="tick" d="M 328.5 0 L 332.5 4 L 339.5 -3.5"/><text class="name" x="314" y="5" text-anchor="end" font-size="16">Simulates</text><rect class="track" x="52" y="-2" width="60" height="4" rx="2"/><rect class="fill" x="52" y="-2" width="0" height="4" rx="2"/></g>
+        <g id="scanG" clip-path="url(#shellClip)" style="opacity:0">
+          <rect id="scanFade" x="20" y="230" width="350" height="70" fill="url(#gScan)"/>
+          <line class="scan" x1="20" y1="300" x2="370" y2="300"/>
+        </g>
+      </g>
+    </g>
+
+    <!-- ===== AI tile (stays; the panel hangs from it) ===== -->
+    <g class="ai" id="ai">
+      <rect class="halo" x="153" y="168" width="84" height="84" rx="24"/>
+      <rect class="tile" x="163" y="178" width="64" height="64" rx="18"/>
+      <g transform="translate(195,210)"><path class="spark" d="M 0 -16 C 1.8 -6, 6 -1.8, 16 0 C 6 1.8, 1.8 6, 0 16 C -1.8 6, -6 1.8, -16 0 C -6 -1.8, -1.8 -6, 0 -16 Z" fill="#fff"/></g>
+    </g>
+
+    <!-- ===== file card (grows down from its tile) ===== -->
+    <g class="out later" id="out">
+      <rect class="frame"/>
+      <g class="item" id="o-title"><text class="ptitle" style="opacity:1" x="299" y="633" text-anchor="end">Deal package</text></g>
+      <g class="item" id="o-rating"><text x="338" y="705" text-anchor="end" font-size="16">Deal score</text><g class="pill" transform="translate(52,686)"><rect width="60" height="28" rx="14"/><text class="num" x="30" y="19" text-anchor="middle" font-size="15">74</text></g></g>
+      <g class="item" id="o-price"><text x="338" y="749" text-anchor="end" font-size="16">Financials</text><g id="finChart" transform="translate(52,734) scale(0.85) matrix(-1,0,0,1,100,0)"><line class="fin-base" x1="0" y1="22" x2="100" y2="22"/><path class="fin-area" id="finArea" d="M 0 18 L 18 13 L 36 15 L 54 8 L 72 10 L 100 2 L 100 22 L 0 22 Z"/><path class="fin-line" id="finLine" d="M 0 18 L 18 13 L 36 15 L 54 8 L 72 10 L 100 2" pathLength="1"/><circle class="fin-dot" id="finDot" cx="100" cy="2" r="3.2"/></g></g>
+      <g class="item" id="o-sim"><text x="338" y="793" text-anchor="end" font-size="16">Simulations</text><g transform="translate(52,800) scale(1,-1)"><rect class="simbar b1" id="sb1" x="0" y="0" width="20" height="0" rx="3"/><rect class="simbar b2" id="sb2" x="27" y="0" width="20" height="0" rx="3"/><rect class="simbar b3" id="sb3" x="54" y="0" width="20" height="0" rx="3"/></g></g>
+      <g class="item" id="o-deal"><text x="338" y="837" text-anchor="end" font-size="16">Deal structure</text><g transform="translate(52,826)"><rect class="seg1" id="sg1" x="0" y="0" width="0" height="12" rx="3"/><rect class="seg2" id="sg2" x="58" y="0" width="0" height="12" rx="3"/><rect class="seg3" id="sg3" x="91" y="0" width="0" height="12" rx="3"/></g></g>
+      <g class="item cta" id="o-cta">
+        <g class="btn-inner">
+          <rect x="52" y="864" width="286" height="44" rx="22"/>
+          <text class="lbl" x="195" y="892" text-anchor="middle" font-size="16" font-weight="600">Open for review</text>
+          <g class="done-lbl"><g transform="translate(252,875)"><path d="M 4 12 l 5 5 L 20 6" fill="none" stroke="#fff" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"/></g><text x="244" y="892" text-anchor="start" style="direction:rtl;unicode-bidi:isolate" font-size="15" font-weight="600">Sent to lenders</text></g>
+        </g>
+        <g class="hand" id="hand"><path d="M 12 0 v 14 l -4 -3 c -2 -1.5 -4.5 0.5 -3 2.5 l 8 10 c 1 1.2 2.5 2 4 2 h 7 c 3 0 5 -2 5.5 -5 l 1.5 -8 c 0.5 -2.5 -2.5 -4 -4 -2 M 12 14 v -3 c 0 -2 4 -2 4 0 v 3 M 16 13 v -2 c 0 -2 4 -2 4 0 v 3" fill="#fff" stroke="var(--ink)" stroke-width="1.8" stroke-linejoin="round" stroke-linecap="round"/></g>
+      </g>
+    </g>
+    <g class="ficon later" id="ficon">
+      <!-- the desktop's briefcase (lucide briefcase-business): 1.36 in the 64 tile is the desktop's 1.7 in its 80 tile -->
+      <g transform="translate(195,588) scale(1.36) translate(-12,-10)" fill="none" stroke="var(--purple)" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round">
+        <rect x="2" y="6" width="20" height="14" rx="2" vector-effect="non-scaling-stroke"/>
+        <path d="M16 6V4a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v2" vector-effect="non-scaling-stroke"/>
+        <path d="M22 13a18.15 18.15 0 0 1-20 0" vector-effect="non-scaling-stroke"/>
+        <circle cx="12" cy="12.4" r="1.5" fill="var(--purple)" stroke="none"/>
+      </g>
+    </g>
+
+    <!-- ===== lenders: two columns ===== -->
+    <g id="lenders" class="later">
+      <g class="lend match" transform="translate(225,984)"><rect class="lbox" width="145" height="38" rx="12"/><text class="lt" x="131" y="24" text-anchor="end" font-size="14" font-weight="600">Bank</text><g transform="translate(12,9)"><g class="chk"><rect width="20" height="20" rx="5"/><path d="M 5 10 l 3.5 3.5 L 15 6.5" fill="none" stroke="#fff" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></g></g></g>
+      <g class="lend match" transform="translate(20,984)"><rect class="lbox" width="145" height="38" rx="12"/><text class="lt" x="131" y="24" text-anchor="end" font-size="14" font-weight="600">Debt fund</text><g transform="translate(12,9)"><g class="chk"><rect width="20" height="20" rx="5"/><path d="M 5 10 l 3.5 3.5 L 15 6.5" fill="none" stroke="#fff" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></g></g></g>
+      <g class="lend" transform="translate(225,1030)"><rect class="lbox" width="145" height="38" rx="12"/><text class="lt" x="131" y="24" text-anchor="end" font-size="14" font-weight="600">Institutional</text><g transform="translate(12,9)"><g class="chk"><rect width="20" height="20" rx="5"/><path d="M 5 10 l 3.5 3.5 L 15 6.5" fill="none" stroke="#fff" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></g></g></g>
+      <g class="lend match" transform="translate(20,1030)"><rect class="lbox" width="145" height="38" rx="12"/><text class="lt" x="131" y="24" text-anchor="end" font-size="14" font-weight="600">Investor</text><g transform="translate(12,9)"><g class="chk"><rect width="20" height="20" rx="5"/><path d="M 5 10 l 3.5 3.5 L 15 6.5" fill="none" stroke="#fff" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></g></g></g>
+      <g class="lend" transform="translate(225,1076)"><rect class="lbox" width="145" height="38" rx="12"/><text class="lt" x="131" y="24" text-anchor="end" font-size="14" font-weight="600">Non-bank lender</text><g transform="translate(12,9)"><g class="chk"><rect width="20" height="20" rx="5"/><path d="M 5 10 l 3.5 3.5 L 15 6.5" fill="none" stroke="#fff" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></g></g></g>
+    </g>
+
+    <g id="particles"></g>
+  </svg>
+</div>
+<script>
+(function(){
+  const DUR = 22000, HOLD = 2000, CLOSE_T = 20300;
+  const SRC_START = HOLD, SRC_STAG = 350;
+  const OPEN_T = HOLD+900;                  // engine panel opens
+  const STAGE_START = HOLD+2500, STAGE_LEN = 1600;
+  const stageT = i => STAGE_START + i*STAGE_LEN;
+  const CTA_T = HOLD+10900, SEND_T = HOLD+12100;
+  const reduced = matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+  const $ = id => document.getElementById(id);
+  const srcs=[...document.querySelectorAll('.src')], paths=[0,1,2,3,4,5].map(i=>$('p'+i)), ppaths=[0,1,2,3,4,5].map(i=>$('pp'+i));
+  const spine=[0,1,2].map(i=>$('s'+i)), lspine=[0,1,2].map(i=>$('ls'+i));
+  const allLines=[...document.querySelectorAll('.path')];
+  const engine=$('engine'), ai=$('ai'), out=$('out'), ficon=$('ficon');
+  const stgs=[...document.querySelectorAll('.stg')];
+  const scanG=$('scanG'), scanFade=$('scanFade'), scanLine=scanG.querySelector('.scan');
+  const pOut=$('pOut'), cta=$('o-cta'), hand=$('hand'), finLine=$('finLine'), finArea=$('finArea'), finDot=$('finDot');
+  const lendEls=[...document.querySelectorAll('.lend')], lpaths=[0,1,2,3,4].map(i=>$('lp'+i));
+  const svgRoot=$('svg'), partsG=$('particles');
+  const MATCH=[0,1,3];
+  const clamp=(v,a,b)=>Math.max(a,Math.min(b,v));
+  const ease=t=>t<.5?2*t*t:-1+(4-2*t)*t;
+  const easeOut=x=>1-Math.pow(1-x,3);
+
+  // particles
+  const parts=[];
+  for(let s=0;s<6;s++) for(let k=0;k<4;k++) parts.push({path:ppaths[s], start:SRC_START+200+s*SRC_STAG+k*260, len:520, warm:false});
+  [2,3,4].forEach(i=>parts.push({path:pOut, start:stageT(i)+STAGE_LEN-380, len:400, warm:true, ride:'file'}));
+  MATCH.forEach((i,k)=>{ for(let n=0;n<3;n++) parts.push({path:$('lpp'+i), start:SEND_T+200+k*300+n*180, len:600, warm:true, ride:'lend'}); });
+  parts.forEach(p=>{ const c=document.createElementNS('http://www.w3.org/2000/svg','circle'); c.setAttribute('r',p.warm?5:4); c.setAttribute('class','particle'+(p.warm?' warm':'')); partsG.appendChild(c); p.el=c; p.L=p.path.getTotalLength(); });
+
+  // ---- the stack (site, 5.10.2026): closed, everything sits together under the AI tile (tile, a dashed wire, the
+  // file's tile, wires, the lenders); as the engine panel grows down, all below it moves down with it, and as the file
+  // card opens, the lenders move down with that. Read from the panels' own animated sizes, so it follows them both ways.
+  const shell=document.querySelector('.engine .shell'), fileFrame=document.querySelector('#out .frame');
+  const lendLines=[...document.querySelectorAll('#paths .path')].filter(l=>/^l(s|p)/.test(l.id));
+  let dyFile=0, dyLend=0;
+  function stack(){
+    const sh=parseFloat(getComputedStyle(shell).height)||0;                  // 0 closed .. 315 open
+    dyFile=-273*(1-Math.min(1,sh/315));                                     // closed: the file's tile 31 under the tile's halo (252)
+    const fy=parseFloat(getComputedStyle(fileFrame).y)||556, fh=parseFloat(getComputedStyle(fileFrame).height)||64;
+    dyLend=dyFile+(fy+fh-944);                                              // closed file: its tile's foot (620) instead of the card's (944)
+    const tf=v=>'translate(0px,'+v.toFixed(1)+'px)';
+    out.style.transform=tf(dyFile); pOut.style.transform=tf(dyFile);
+    $('lenders').style.transform=tf(dyLend); lendLines.forEach(l=>l.style.transform=tf(dyLend));
+  }
+  function render(tRaw){
+    const closing = tRaw>=CLOSE_T; const t = closing ? 0 : tRaw;
+    srcs.forEach((s,i)=>{ const on=t>=SRC_START+i*SRC_STAG; s.classList.toggle('on',on); paths[i].classList.toggle('on',on); s.classList.toggle('vis', closing || tRaw>=i*110); });
+    const F_T=stageT(2)-900;
+    // as on desktop (Larisa, 5.10.2026): the whole map is there from the first frame, every wire dashed and pale, the
+    // file's tile and the lenders already in place, so the screen is never bare; the story then lights it up step by step
+    allLines.forEach((l,i)=>l.classList.toggle('vis', closing || tRaw>=300+i*60));
+    out.classList.add('vis'); ficon.classList.add('vis');
+    $('lenders').classList.add('vis');
+    spine[0].classList.toggle('on', t>=SRC_START+1*SRC_STAG); spine[1].classList.toggle('on', t>=SRC_START+3*SRC_STAG); spine[2].classList.toggle('on', t>=SRC_START+5*SRC_STAG);
+    lspine[0].classList.toggle('on', t>=SEND_T+500); lspine[1].classList.toggle('on', t>=SEND_T+800); lspine[2].classList.toggle('on', false);
+    ai.classList.toggle('show', closing || tRaw>=150);
+    ai.classList.toggle('on', t>=SRC_START+200 && t<stageT(1)+600);
+    ai.classList.toggle('open', t>=OPEN_T);
+    engine.classList.toggle('open', t>=OPEN_T);
+    stgs.forEach((g,i)=>{ const a=stageT(i), p=clamp((t-a)/STAGE_LEN,0,1); g.classList.toggle('active', t>=a&&p<1); g.classList.toggle('done', p>=1); g.querySelector('.fill').setAttribute('width',(60*p).toFixed(1)); });
+    if(t>=stageT(1) && t<stageT(2)){ const p=(t-stageT(1))/STAGE_LEN, y=262+250*p; scanG.style.opacity=1; scanLine.setAttribute('y1',y); scanLine.setAttribute('y2',y); scanFade.setAttribute('y',y-70);} else scanG.style.opacity=0;
+    // file: tile lights, card grows down, icon rises into header
+    const fp=easeOut(clamp((t-F_T)/800,0,1));
+    stack();
+    ficon.style.transform='translate('+(130*fp)+'px,'+(36.5*fp+dyFile).toFixed(1)+'px) scale('+(1-0.11*fp)+')'; // to the title's side, as on desktop; riding the stack
+    out.classList.toggle('on', t>=F_T-300 && t<CTA_T+1500);
+    out.classList.toggle('open', t>=F_T);
+    pOut.classList.toggle('on', t>=stageT(2));
+    const doneAt=i=>stageT(i)+STAGE_LEN;
+    $('o-title').classList.toggle('on', t>=stageT(2)+100);
+    $('o-rating').classList.toggle('on', t>=doneAt(2));
+    $('o-price').classList.toggle('on', t>=doneAt(3));
+    $('o-sim').classList.toggle('on', t>=doneAt(4)-200);
+    $('o-deal').classList.toggle('on', t>=doneAt(4)+250);
+    $('o-cta').classList.toggle('on', t>=CTA_T);
+    const pp=clamp((t-doneAt(3))/900,0,1); finLine.style.strokeDashoffset=String(1-ease(pp)); finArea.style.opacity=String(0.18*ease(pp)); finDot.style.opacity=pp>=1?'1':'0';
+    const sp=clamp((t-(doneAt(4)-200))/800,0,1);
+    $('sb1').setAttribute('height',(26*ease(sp)).toFixed(1)); $('sb2').setAttribute('height',(18*ease(clamp(sp*1.15-.1,0,1))).toFixed(1)); $('sb3').setAttribute('height',(32*ease(clamp(sp*1.3-.3,0,1))).toFixed(1));
+    const dp=ease(clamp((t-(doneAt(4)+250))/700,0,1)), W=100*dp;
+    $('sg1').setAttribute('width',Math.min(W,55)); $('sg2').setAttribute('width',clamp(W-55,0,30)); $('sg3').setAttribute('width',clamp(W-85,0,15));
+    hand.classList.toggle('in', t>=CTA_T+300 && t<CTA_T+1100); hand.classList.toggle('press', t>=CTA_T+750 && t<CTA_T+1100); hand.classList.toggle('out', t>=CTA_T+1100);
+    cta.classList.toggle('press', t>=CTA_T+750 && t<CTA_T+900); cta.classList.toggle('done', t>=CTA_T+900);
+    svgRoot.classList.toggle('sending', t>=SEND_T);
+    MATCH.forEach((i,k)=>{ lpaths[i].classList.toggle('on', t>=SEND_T+200+k*300); lendEls[i].classList.toggle('hit', t>=SEND_T+200+k*300+600); });
+    parts.forEach(p=>{ const u=(t-p.start)/p.len; if(u<0||u>1){p.el.style.opacity=0;return;} const pt=p.path.getPointAtLength(ease(u)*p.L); p.el.setAttribute('cx',pt.x); p.el.setAttribute('cy',pt.y+(p.ride==='file'?dyFile:p.ride==='lend'?dyLend:0)); p.el.style.opacity=u<.1?u*10:u>.8?(1-u)/.2:1; });
+  }
+
+  // ----- player (site): plays once while the section is on screen, then stays on its finished state (Larisa, 4.10.2026:
+  // on a phone a restart reads as something new to do) -----
+  const END = CLOSE_T - 1;
+  let playing=false, t0=0, offset=reduced?END:HOLD-300;
+  function now(){ return playing ? Math.min(offset + (performance.now()-t0)*1.3, END) : offset; }
+  function frame(){ const t=now(); render(t); if(t>=END){ offset=END; playing=false; return; } if(playing) requestAnimationFrame(frame); }
+  function play(){ if(playing||reduced) return; playing=true; t0=performance.now(); requestAnimationFrame(frame); }
+  function pause(){ if(!playing) return; offset=now(); playing=false; }
+  render(offset);
+  const host=document.getElementById('critera-engine');
+  if('IntersectionObserver' in window){
+    new IntersectionObserver(es=>es.forEach(e=>e.isIntersecting?play():pause()),{threshold:.2}).observe(host);
+  } else play();
+  document.addEventListener('visibilitychange',()=>{ if(document.hidden) pause(); else { const r=host.getBoundingClientRect(); if(r.top<innerHeight && r.bottom>0) play(); } });
+})();
+</script>
+</body>
+</html>

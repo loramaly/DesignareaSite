@@ -1,0 +1,142 @@
+/* The AFT live picture from the demo itself (js/live-aft.js). One unit (--u) = 1/1256 of the picture's width.
+   The window is the demo (an iframe, scaled); the floating pieces copy the demo's rules exactly - every number below
+   is the demo's px value (case-aft/aft-agent-demo.html), times --k, the piece's scale against the old slice.
+   The animation is js/case-live.js and the .cl-* motions in css/styles.css, untouched. */
+.case-live.cl-code{container-type:inline-size;--u:calc(100cqw / 1256);
+  /* the one screen shadow - the window and the Magic Pro card wear exactly the same (Larisa, 18.10) */
+  --sh-screen:0 calc(2 * var(--u)) calc(6 * var(--u)) rgba(24,12,64,.07),0 calc(16 * var(--u)) calc(36 * var(--u)) rgba(24,12,64,.13),
+    0 calc(42 * var(--u)) calc(90 * var(--u)) rgba(24,12,64,.16);
+  /* the pieces of the drawing: a larger, lighter shadow */
+  --sh-piece:0 calc(10 * var(--u)) calc(28 * var(--u)) rgba(46,26,120,.11),0 calc(2 * var(--u)) calc(6 * var(--u)) rgba(46,26,120,.06);
+  font-family:'DM Sans',system-ui,-apple-system,sans-serif;--ink:#1f2937;--purple:#8237f7;--amber:#f6a723}
+.case-live.cl-code .ad-stage{position:relative;width:100%;aspect-ratio:1256/840}
+
+/* the window: the demo, at 1440x1024, scaled into a 758x539 box */
+.ad-win{position:absolute;left:calc(52 * var(--u));top:calc(248 * var(--u));width:calc(758 * var(--u));height:calc(539 * var(--u));
+  border-radius:10px;overflow:hidden;
+  box-shadow:var(--sh-screen)}
+.ad-win iframe{position:absolute;left:0;top:0;border:0;transform-origin:0 0;pointer-events:none;background:transparent}
+
+/* ---------- the floating pieces ---------- */
+.cl-code .cl-s{display:block}
+.cl-code .cl-s .ad-chip{width:max-content}
+
+/* .chip + .chip .cic */
+.cl-code .ad-chip{--k:1;display:flex;align-items:center;gap:calc(5 * var(--k) * var(--u));
+  background:#fff;border-radius:calc(6 * var(--k) * var(--u));
+  padding:calc(3 * var(--k) * var(--u)) calc(8 * var(--k) * var(--u)) calc(3 * var(--k) * var(--u)) calc(3 * var(--k) * var(--u));
+  box-shadow:0 calc(2 * var(--k) * var(--u)) calc(8 * var(--k) * var(--u)) rgba(31,41,55,.14);
+  font-size:calc(11.5 * var(--k) * var(--u));font-weight:700;line-height:1.2;color:var(--ink);white-space:nowrap}
+.ad-chip .cic{width:calc(18 * var(--k) * var(--u));height:calc(18 * var(--k) * var(--u));border-radius:calc(6 * var(--k) * var(--u));
+  display:grid;place-items:center;background:#7c3aed;color:#fff;flex:none}
+.ad-chip .cic svg{width:calc(12 * var(--k) * var(--u));height:calc(12 * var(--k) * var(--u));stroke:currentColor;fill:none;stroke-width:2;
+  stroke-linecap:round;stroke-linejoin:round}
+
+/* .pill-missing - its frame opens and closes (--open 1..0, animated by js/case-live.js): closed it is a circle
+   round the icon, open it is the full pill; the arrow is its own element, so it stays on the line throughout */
+@property --open{syntax:'<number>';inherits:true;initial-value:1}
+@property --tip{syntax:'<number>';inherits:true;initial-value:1}
+/* the mark, its pill and its engine in one row: the mark comes and goes from its arrow tip on the line */
+.ad-mgrp{position:absolute;left:0;top:0;display:flex;align-items:center;gap:calc(12 * var(--u));
+  opacity:var(--tip);transform:scale(calc(.4 + .6 * var(--tip)));transform-origin:calc(-10 * var(--u)) 50%}
+.cl-code .ad-pill{--k:1.06;position:relative;display:flex;align-items:center;gap:calc(8 * var(--k) * var(--u));background:#fff;box-sizing:border-box;
+  border:calc(1.5 * var(--k) * var(--u)) solid #f2a091;color:#3f4a56;border-radius:999px;overflow:hidden;
+  height:calc(34 * var(--k) * var(--u));
+  width:calc((34 + 138.5 * var(--open)) * var(--k) * var(--u));
+  padding:0 0 0 calc(7 * var(--k) * var(--u));
+  font-size:calc(13.5 * var(--k) * var(--u));font-weight:600;line-height:1.2;white-space:nowrap;
+  box-shadow:0 calc(4 * var(--k) * var(--u)) calc(14 * var(--k) * var(--u)) rgba(238,122,100,.14)}
+.ad-pill .ad-ptxt{opacity:calc(var(--open) * 1.6 - .6)}
+.ad-tip{--k:1.06;position:absolute;left:calc(-9 * var(--k) * var(--u));top:50%;transform:translateY(-50%);
+  width:calc(10 * var(--k) * var(--u));height:calc(14 * var(--k) * var(--u));background:#f2a091;clip-path:polygon(100% 0,100% 100%,0 50%)}
+.ad-pill svg{width:calc(17 * var(--k) * var(--u));height:calc(17 * var(--k) * var(--u));color:#ee7a64;fill:none;stroke:currentColor;
+  stroke-width:1.2;stroke-linecap:round;stroke-linejoin:round;flex:none}
+
+/* .milestone */
+.ad-ms{--k:1;position:absolute;left:50%;top:50%;width:calc(19.5 * var(--k) * var(--u));height:calc(19.5 * var(--k) * var(--u));
+  border-radius:calc(6 * var(--k) * var(--u));background:var(--amber);transform:translate(-50%,-50%) rotate(45deg)}
+.ad-ms .mi{transform:rotate(-45deg);width:100%;height:100%;display:grid;place-items:center;color:#fff;
+  font-size:calc(11 * var(--k) * var(--u));font-weight:800;line-height:1}
+
+/* .bar - each piece's box is the bar itself */
+.ad-bar{position:absolute;inset:0;display:block;border-radius:999px}
+.ad-bar.phasebar{background:linear-gradient(90deg,#01c6ed,#7de9ff)}
+.ad-bar.sub{background:linear-gradient(90deg,#5edcf8,#aef0ff)}
+.ad-bar.lite{background:#c9f6ff}
+.ad-bar.sig-grad{background:linear-gradient(90deg,#f8d9a2 0%,#f4a98b 45%,#ef7264 100%)}
+.ad-bar.ghost{background:#e8e9ec}
+
+/* .sparkle-btn - the engine: its own shadow and pulse ring, the star turning inside it */
+.ad-spark{--k:1.06;flex:none;width:calc(32 * var(--k) * var(--u));height:calc(32 * var(--k) * var(--u));border-radius:50%;background:#fff;box-sizing:border-box;
+  border:calc(1.5 * var(--k) * var(--u)) solid var(--purple);color:var(--purple);display:grid;place-items:center;
+  box-shadow:0 calc(4 * var(--k) * var(--u)) calc(14 * var(--k) * var(--u)) rgba(130,55,247,.22)}
+.ad-spark svg{width:calc(16 * var(--k) * var(--u));height:calc(16 * var(--k) * var(--u));fill:currentColor}
+@keyframes adPulse{0%,100%{box-shadow:0 calc(4 * var(--k) * var(--u)) calc(14 * var(--k) * var(--u)) rgba(130,55,247,.22),0 0 0 0 rgba(130,55,247,.32)}
+  50%{box-shadow:0 calc(4 * var(--k) * var(--u)) calc(14 * var(--k) * var(--u)) rgba(130,55,247,.22),0 0 0 calc(9 * var(--k) * var(--u)) rgba(130,55,247,0)}}
+@keyframes adStar{0%{transform:rotate(0)}25%{transform:rotate(330deg)}45%{transform:rotate(420deg)}70%{transform:rotate(560deg)}
+  85%{transform:rotate(690deg)}100%{transform:rotate(720deg)}}
+.case-live.cl-code .cl-spark{transform:none}
+.case-live.go.cl-code .cl-spark{animation:none}
+.case-live.go.cl-code .ad-spark{animation:adPulse 2s ease infinite}
+.case-live.go.cl-code .ad-spark svg{animation:adStar 3.4s linear infinite}
+/* the milestone and the pill sit on their line: the milestone only breathes, the pill only opens and closes */
+.case-live.go.cl-code .cl-missing{animation:none}
+.case-live.go.cl-code .cl-diamond{animation:clPulse 2.6s ease-in-out infinite}
+
+/* the connectors: the demo's #d0d6dd, 1.5 */
+/* a fixed 1.5px at any size: in picture units the line fell under a pixel on the small card and broke up */
+.ad-link{display:block;width:100%;height:100%;overflow:visible;fill:none;stroke:#dde2e9;stroke-width:1.5px;stroke-linecap:round}
+.ad-link path{vector-effect:non-scaling-stroke}
+
+/* the soft shadows under the pieces of the drawing (the original had them baked into its files, cut at their edges) */
+.cl-code .ad-bar,.cl-code .ad-chip,.cl-code .ad-pill{box-shadow:var(--sh-piece)}
+.cl-code .ad-ms{box-shadow:0 calc(8 * var(--u)) calc(20 * var(--u)) rgba(160,100,10,.16)}
+
+/* ---------- weightless: the window (.cl-screen, clDrift in css/styles.css) and the drawing above it each float
+   on their own clock, so the picture is never quite still ---------- */
+.ad-float{position:absolute;inset:0}
+@keyframes adFloat{0%,100%{transform:translate(0,0)}35%{transform:translate(.25%,-1.1%)}70%{transform:translate(-.2%,-.5%)}}
+.case-live.go.cl-code .ad-float{animation:adFloat 7.6s ease-in-out -1.8s infinite}
+
+/* ---------- the case hero (data-variant="hero"): the card's picture, larger and to the left, and the Magic Pro card ---------- */
+.case-live.cl-code .ad-stage.ad-hero{aspect-ratio:1256/1060}
+.ad-card{position:absolute;left:0;top:0;width:100%;aspect-ratio:1256/840;transform-origin:0 0;
+  transform:translate(calc(-59 * var(--u)),calc(-52 * var(--u))) scale(1.134)}
+
+/* the demo's Magic Pro suggestion (.drawer / .mp-*), as a floating card; every number is the demo's px times --k.
+   Its shadow is the window's own (--sh-screen), at the window's size in the hero (x1.134) */
+.ad-mp{--k:.95;background:#fff;border-radius:10px;overflow:hidden;color:#1f2937;
+  box-shadow:0 calc(2.3 * var(--u)) calc(6.8 * var(--u)) rgba(24,12,64,.07),0 calc(18 * var(--u)) calc(41 * var(--u)) rgba(24,12,64,.13),
+    0 calc(48 * var(--u)) calc(102 * var(--u)) rgba(24,12,64,.16)}
+.ad-mp svg{fill:none;stroke:currentColor;stroke-width:2;stroke-linecap:round;stroke-linejoin:round;flex:none}
+.ad-mp .mp-head{position:relative;display:flex;align-items:center;gap:calc(10 * var(--k) * var(--u));
+  padding:calc(18 * var(--k) * var(--u)) calc(48 * var(--k) * var(--u)) calc(8 * var(--k) * var(--u)) calc(18 * var(--k) * var(--u))}
+.ad-mp .mp-title{display:flex;align-items:center;gap:calc(8 * var(--k) * var(--u));font-size:calc(19 * var(--k) * var(--u));
+  font-weight:700;color:#9a5cf9;white-space:nowrap;line-height:1.2}
+.ad-mp .mp-title svg{width:calc(16 * var(--k) * var(--u));height:calc(16 * var(--k) * var(--u));fill:currentColor;stroke:none}
+.ad-mp .mp-badge{font-size:calc(11 * var(--k) * var(--u));font-weight:700;letter-spacing:.06em;border-radius:calc(6 * var(--k) * var(--u));
+  padding:calc(5 * var(--k) * var(--u)) calc(12 * var(--k) * var(--u));background:#dbeafe;color:#1d6fd6;line-height:1.2}
+.ad-mp .mp-close{position:absolute;top:calc(17 * var(--k) * var(--u));right:calc(16 * var(--k) * var(--u));color:#6b7280}
+.ad-mp .mp-close svg{width:calc(18 * var(--k) * var(--u));height:calc(18 * var(--k) * var(--u))}
+.ad-mp .mp-body{padding:calc(8 * var(--k) * var(--u)) calc(18 * var(--k) * var(--u)) calc(14 * var(--k) * var(--u));
+  font-size:calc(14 * var(--k) * var(--u));line-height:1.5}
+.ad-mp p{margin:0}
+.ad-mp .mp-headline{font-weight:500;line-height:1.45;margin:calc(6 * var(--k) * var(--u)) 0 calc(14 * var(--k) * var(--u))}
+.ad-mp .mp-h{font-size:calc(16 * var(--k) * var(--u));font-weight:700;margin:calc(14 * var(--k) * var(--u)) 0 calc(6 * var(--k) * var(--u))}
+.ad-mp .mp-why{list-style:none;margin:0;padding:0}
+.ad-mp .mp-why li{display:flex;gap:calc(8 * var(--k) * var(--u));padding:calc(4 * var(--k) * var(--u)) 0;font-size:calc(13.5 * var(--k) * var(--u))}
+.ad-mp .mp-why li svg{width:calc(14 * var(--k) * var(--u));height:calc(14 * var(--k) * var(--u));margin-top:calc(3 * var(--k) * var(--u));color:#6b7280}
+.ad-mp .mp-p{font-size:calc(13.5 * var(--k) * var(--u));color:#4b5563}
+.ad-mp .mp-actions{display:flex;gap:calc(10 * var(--k) * var(--u));margin:calc(24 * var(--k) * var(--u)) 0 calc(6 * var(--k) * var(--u))}
+.ad-mp .btn-cta,.ad-mp .btn-ghost{display:grid;place-items:center;font-weight:600;font-size:calc(15 * var(--k) * var(--u));line-height:1.2;
+  border-radius:calc(6 * var(--k) * var(--u));padding:calc(9 * var(--k) * var(--u)) calc(18 * var(--k) * var(--u))}
+.ad-mp .btn-cta{flex:1;background:linear-gradient(90deg,#a95cf9,#7a3bf3);color:#fff}
+.ad-mp .btn-ghost{border:calc(1.5 * var(--k) * var(--u)) solid #8237f7;color:#8237f7;padding-left:calc(22 * var(--k) * var(--u));padding-right:calc(22 * var(--k) * var(--u))}
+.ad-mp .mp-guard{border:1px solid #e5e7eb;border-radius:calc(6 * var(--k) * var(--u));padding:calc(14 * var(--k) * var(--u));
+  margin-top:calc(24 * var(--k) * var(--u));font-size:calc(13.5 * var(--k) * var(--u))}
+.ad-mp .g-title{font-weight:600;margin-bottom:calc(10 * var(--k) * var(--u))}
+.ad-mp .g-row{display:flex;gap:calc(10 * var(--k) * var(--u));align-items:flex-start}
+.ad-mp .g-box{flex:none;width:calc(18 * var(--k) * var(--u));height:calc(18 * var(--k) * var(--u));margin-top:calc(2 * var(--k) * var(--u));
+  border:calc(1.5 * var(--k) * var(--u)) solid #6b7280;border-radius:calc(4 * var(--k) * var(--u));box-sizing:border-box}
+.ad-mp .manage{display:flex;justify-content:flex-end;align-items:center;gap:calc(4 * var(--k) * var(--u));margin-top:calc(8 * var(--k) * var(--u));font-weight:600}
+.ad-mp .manage svg{width:calc(14 * var(--k) * var(--u));height:calc(14 * var(--k) * var(--u))}

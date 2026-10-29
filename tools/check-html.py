@@ -40,7 +40,9 @@ TAG_CHECKS = (
 # still link-checked - only the markup-hygiene rules are skipped.
 def _is_prototype(rel):
     """Interactive prototypes build markup in JS and position from live values."""
-    return "demo" in rel.rsplit("/", 1)[-1].lower()
+    # a "<name>-demo/" folder holds a built copy of a real product site, so
+    # everything inside it counts as prototype output too
+    return any("demo" in part.lower() for part in rel.split("/"))
 
 # Templates are meant to be copied, not served: their paths are relative to a
 # case folder and their hrefs are [PLACEHOLDER]s. Markup hygiene is still checked.
@@ -124,6 +126,8 @@ def main():
     for path in sheets:
         text = path.read_text(encoding="utf-8")
         rel = path.relative_to(ROOT)
+        if _is_prototype(rel.as_posix()):   # bundler output - minified, not hand-written
+            continue
         for m in CSS_URL.finditer(text):
             raw = m.group(1).strip()
             if raw.startswith(EXTERNAL):

@@ -1,15 +1,18 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+<script src="js/analytics.js?v=1"></script>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Larisa Maly - Senior AI Product Designer | AI & Agentic UX</title>
 <meta name="description" content="Senior AI Product Designer specializing in UX Strategy, UI Craft & Agentic AI Experiences.">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700&family=Luxurious+Script&family=JetBrains+Mono:wght@400;500;600;700&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="css/styles.css?v=20261009v">
-<link rel="stylesheet" href="css/light.css?v=20261009t">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=DM+Sans:wght@400;500;600;700;800&family=Nunito:wght@400;600;700&family=Luxurious+Script&family=JetBrains+Mono:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="css/styles.css?v=20261028still2">
+<link rel="stylesheet" href="css/live-syncops.css?v=20261018e">
+<link rel="stylesheet" href="css/live-aft.css?v=20261028a">
+<link rel="stylesheet" href="css/light.css?v=20261028ring">
 <link rel="icon" type="image/png" sizes="32x32" href="assets/icons/favicon-32x32.png">
 <link rel="icon" type="image/png" sizes="16x16" href="assets/icons/favicon-16x16.png">
 <link rel="apple-touch-icon" sizes="180x180" href="assets/icons/apple-touch-icon.png">
@@ -219,7 +222,14 @@ addEventListener('pageshow', () => {
 
   <section class="works" id="works">
     <div class="works-head">
-      <h2>Portfolio</h2>
+      <div class="works-title">
+        <h2>Portfolio</h2>
+        <div class="works-filter" role="group" aria-label="Filter cases">
+          <button class="wf-btn is-on" type="button" data-filter="all" aria-pressed="true">All</button>
+          <button class="wf-btn" type="button" data-filter="uxui" aria-pressed="false">UX/UI</button>
+          <button class="wf-btn" type="button" data-filter="digital" aria-pressed="false">Digital Design</button>
+        </div>
+      </div>
       <div class="works-actions">
         <div class="share-wrap">
           <button class="pf-btn" id="portfolioShareBtn" aria-label="Share portfolio" title="Share portfolio" aria-haspopup="true" aria-expanded="false">
@@ -248,9 +258,11 @@ addEventListener('pageshow', () => {
     </div>
     <div class="cards">
 
-      <div class="case-card has-demo tint-blue">
+      <div class="case-card has-demo tint-blue" data-cat="uxui">
         <a class="case-card-link" href="case-syncops/syncops.html" aria-label="Open the SyncOps case study"></a>
-        <div class="case-media"><img src="assets/images/case-timeline.webp" alt="SyncOps - incident boards and live map"></div>
+        <div class="case-media">
+          <div class="case-live cl-syncops cl-code" data-play="syncops" data-demo="case-syncops/syncops-agent-demo.html" style="aspect-ratio:1256/944" role="img" aria-label="SyncOps - incident board and live map"></div>
+        </div>
         <div class="case-body">
           <div class="case-tags">
             <span class="case-tag">Agentic AI</span>
@@ -269,9 +281,11 @@ addEventListener('pageshow', () => {
         <div class="case-cta"><span class="case-explore">EXPLORE <svg viewBox="0 0 24 24"><path d="M5 12h14M13 6l6 6-6 6"/></svg></span></div>
       </div>
 
-      <div class="case-card has-demo tint-violet">
+      <div class="case-card has-demo tint-violet" data-cat="uxui">
         <a class="case-card-link" href="case-aft/aft-timeline.html" aria-label="Open the AFT Timeline case study"></a>
-        <div class="case-media"><img src="assets/images/case-gantt.webp" alt="Amazon Global Syndicated Loan - AI decision-support timeline"></div>
+        <div class="case-media">
+          <div class="case-live cl-aft cl-code" data-play="aft" data-demo="case-aft/aft-agent-demo.html" style="aspect-ratio:1256/840" role="img" aria-label="Amazon Global Syndicated Loan - AI decision-support timeline"></div>
+        </div>
         <div class="case-body">
           <div class="case-tags">
             <span class="case-tag">Agentic AI</span>
@@ -285,6 +299,30 @@ addEventListener('pageshow', () => {
             <div class="stat-pill"><svg viewBox="0 0 24 24"><path d="M12 5v14M19 12l-7 7-7-7"/></svg><span><strong>~35%</strong> less coordination time</span></div>
           </div>
           <a class="case-demo-link" href="case-aft/aft-agent-demo.html" target="_blank" rel="noopener">
+            <span class="live-dot" aria-hidden="true"></span>Try the live demo<svg class="arrow" viewBox="0 0 24 24" aria-hidden="true"><path d="M7 17L17 7M9 7h8v8"/></svg><span class="sr-only"> (opens in a new tab)</span>
+          </a>
+        </div>
+        <div class="case-cta"><span class="case-explore">EXPLORE <svg viewBox="0 0 24 24"><path d="M5 12h14M13 6l6 6-6 6"/></svg></span></div>
+      </div>
+
+      <!-- Critera: the cover's isometric animation (the case's own file) stands in for the screenshot; the case itself is in Hebrew -->
+      <div class="case-card has-demo tint-blue tint-critera" data-cat="digital">
+        <a class="case-card-link" href="case-critera/critera-en.html" aria-label="Open the Critera case study"></a>
+        <div class="case-media case-media-anim"><iframe src="case-critera/assets/critera-isometry.html?en&amp;card&amp;deco=a&amp;v=20261029o" title="Critera - the website on desktop and mobile" loading="lazy" tabindex="-1" aria-hidden="true" onload="this.classList.add('is-live')"></iframe></div>
+        <div class="case-body">
+          <div class="case-tags five">
+            <span class="case-tag">UX Strategy</span>
+            <span class="case-tag">Web Design</span>
+            <span class="case-tag">Animation</span>
+            <span class="case-tag">Branding</span>
+            <span class="case-tag">Video Ads</span>
+          </div>
+          <h3>Business Credit <strong>Connects to AI</strong></h3>
+          <p>A marketplace where one financing request meets offers from banks, funds and institutional lenders. I shaped the story and the brand, designed the site and its motion, and built the front-end.</p>
+          <div class="case-stats">
+            <div class="stat-pill"><svg viewBox="0 0 24 24"><path d="M12 5v14M19 12l-7 7-7-7"/></svg><span><strong>+70%</strong> less time across the deal process</span></div>
+          </div>
+          <a class="case-demo-link" href="case-critera/critera-demo-en/index.html" target="_blank" rel="noopener">
             <span class="live-dot" aria-hidden="true"></span>Try the live demo<svg class="arrow" viewBox="0 0 24 24" aria-hidden="true"><path d="M7 17L17 7M9 7h8v8"/></svg><span class="sr-only"> (opens in a new tab)</span>
           </a>
         </div>
@@ -547,5 +585,9 @@ addEventListener('pageshow', () => {
 <script src="js/nav-back.js?v=20260812"></script>
 <script src="js/portrait-reveal.js?v=20260814y"></script>
 <script src="js/hero-slats.js?v=20261009"></script>
+<script src="js/live-aft.js?v=20261018g"></script>
+<script src="js/live-syncops.js?v=20261018d"></script>
+<script src="js/case-live.js?v=20261018g"></script>
+<script src="js/works-filter.js?v=20261018"></script>
 </body>
 </html>

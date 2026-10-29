@@ -1,8 +1,20 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+<script src="../js/analytics.js?v=1"></script>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
+<!-- ?shot: the demo as a picture, for the live cards and the case hero (js/live-aft.js frames it) - no demo bar,
+     no tour, no toasts, no clicks. Without ?shot nothing changes. -->
+<script>if (/[?&]shot\b/.test(location.search)) {
+  document.documentElement.classList.add('shot');
+  // as a picture inside another page, the demo must never scroll that page: scrollIntoView (it centres the Gantt
+  // on load) would scroll the parent too, and the picture there would leave the screen and stop
+  Element.prototype.scrollIntoView = function () {};
+  HTMLElement.prototype.focus = function () {};
+}</script>
+<style>html.shot #demoCtl,html.shot #tour,html.shot #toast,html.shot .drawer-scrim,html.shot .mnav-scrim{display:none!important}
+html.shot,html.shot body{overflow:hidden!important;pointer-events:none!important;background:#fff}</style>
 <title>AFT - Magic Pro Live Demo · Larisa Maly</title>
 <meta name="description" content="Interactive concept demo of Magic Pro, the human-in-the-loop agent for the AFT syndicated-loan timeline. Fictional data. Designed & coded by Larisa Maly.">
 <link rel="preconnect" href="https://fonts.googleapis.com">
