@@ -159,6 +159,7 @@ h1{font-size:clamp(26px,4vw,38px);line-height:1.15;margin:0 0 10px;text-wrap:bal
 }
 .fin-base{stroke:var(--border);stroke-width:1.2}.fin-area{fill:var(--purple-soft);opacity:0;transition:opacity .4s}.fin-line{fill:none;stroke:var(--purple);stroke-width:2.2;stroke-linecap:round;stroke-linejoin:round;stroke-dasharray:1;stroke-dashoffset:1}.fin-dot{fill:#F02FB8;opacity:0;transition:opacity .3s}
 </style>
+<style id="rtl-engine">#svg .stg .fill{transform:matrix(-1,0,0,1,944,0)}</style>
 </head>
 <body>
 <!--
@@ -282,7 +283,7 @@ h1{font-size:clamp(26px,4vw,38px);line-height:1.15;margin:0 0 10px;text-wrap:bal
 
       <g class="item" id="o-price">
         <text x="274" y="287" text-anchor="end" font-size="17">ניתוח פיננסי</text>
-        <g id="finChart" transform="translate(52,270) scale(1)"><line class="fin-base" x1="0" y1="22" x2="100" y2="22"/><path class="fin-area" id="finArea" d="M 0 18 L 18 13 L 36 15 L 54 8 L 72 10 L 100 2 L 100 22 L 0 22 Z"/><path class="fin-line" id="finLine" d="M 0 18 L 18 13 L 36 15 L 54 8 L 72 10 L 100 2" pathLength="1"/><circle class="fin-dot" id="finDot" cx="100" cy="2" r="3.2"/></g>
+        <g id="finChart" transform="translate(52,270) scale(1) matrix(-1,0,0,1,100,0)"><line class="fin-base" x1="0" y1="22" x2="100" y2="22"/><path class="fin-area" id="finArea" d="M 0 18 L 18 13 L 36 15 L 54 8 L 72 10 L 100 2 L 100 22 L 0 22 Z"/><path class="fin-line" id="finLine" d="M 0 18 L 18 13 L 36 15 L 54 8 L 72 10 L 100 2" pathLength="1"/><circle class="fin-dot" id="finDot" cx="100" cy="2" r="3.2"/></g>
       </g>
 
       <g class="item" id="o-sim">
@@ -371,9 +372,9 @@ h1{font-size:clamp(26px,4vw,38px);line-height:1.15;margin:0 0 10px;text-wrap:bal
 </div>
 <script>
 (function(){
-  const DUR = 24000;
-  const HOLD = 2000;            // everything closed, dashed lines only
-  const CLOSE_T = 18400;       // everything folds back, then loop (was 22400; the engine and file columns run faster)
+  const DUR = 17800;            // the loop starts again 1.4s after everything folds back (was a 7.6s wait, 30.10.2026)
+  const HOLD = 700;             // everything closed, dashed lines only (was 2000)
+  const CLOSE_T = 16400;       // everything folds back, then loop (was 22400; the engine and file columns run faster)
   const svg = document.getElementById('svg');
   const srcs = [...document.querySelectorAll('.src')];
   const paths = [0,1,2,3,4,5].map(i=>document.getElementById('p'+i));
@@ -402,7 +403,7 @@ h1{font-size:clamp(26px,4vw,38px);line-height:1.15;margin:0 0 10px;text-wrap:bal
   const STAGE_START = HOLD+2500, STAGE_LEN = 1400;   // 5 stages -> ends 9500 after HOLD (was 2200 each)
   const stageT = i => STAGE_START + i*STAGE_LEN;
   const CTA_T = HOLD+9900;
-  const SEND_T = HOLD+11700; // file goes out to lenders
+  const SEND_T = HOLD+11000; // file goes out to lenders
 
   // particles: sources -> engine
   const parts = [];
@@ -499,7 +500,7 @@ h1{font-size:clamp(26px,4vw,38px);line-height:1.15;margin:0 0 10px;text-wrap:bal
   }
 
   // ----- player (site): autoplay in a loop while the section is on screen -----
-  let playing=false, t0=0, offset=reduced?DUR-1:HOLD-300;
+  let playing=false, t0=0, offset=reduced?DUR-1:0;
   function now(){ return playing ? (offset + (performance.now()-t0)*1.3) % DUR : offset; }
   function frame(){ render(now()); if(playing) requestAnimationFrame(frame); }
   function play(){ if(playing||reduced) return; playing=true; t0=performance.now(); requestAnimationFrame(frame); }

@@ -38,18 +38,8 @@ PY
 (cd "$W" && ./node_modules/.bin/vite build)
 if [[ "$DEMO_LANG" == extract ]]; then cp "$W/en.json" "$HERE/en.json"; echo "en.json refreshed"; exit 0; fi
 rsync -a --delete --exclude robots.txt --exclude sitemap.xml --exclude llms.txt --exclude favicon.old.svg "$W/dist/" "$OUT/"
-# the engine animation, in both languages (28.10.2026): it starts at once, without the site's 2s of empty dashed lines,
-# and its clock runs 30% faster - in the case it is watched, not waited for
-python3 - "$OUT" <<'PY'
-import sys, glob
-for f in glob.glob(sys.argv[1] + '/engine/critera-engine-section*.html'):
-    s = open(f, encoding='utf-8').read()
-    n = s.count('offset=reduced?DUR-1:0;') + s.count('offset=reduced?END:0;')
-    if n != 1 or s.count('(performance.now()-t0)') != 1: sys.exit('engine clock changed in ' + f + ' - update build.sh')
-    s = s.replace('offset=reduced?DUR-1:0;', 'offset=reduced?DUR-1:HOLD-300;').replace('offset=reduced?END:0;', 'offset=reduced?END:HOLD-300;')
-    s = s.replace('(performance.now()-t0)', '(performance.now()-t0)*1.3')
-    open(f, 'w', encoding='utf-8').write(s)
-PY
+# the engine's speed and timing live in the site's own engine files now (30.10.2026), the same on the site and in both demos
+if [[ "$DEMO_LANG" != en ]]; then python3 "$HERE/rtl-engine.py" "$OUT"; fi
 # English: the files the bundler copies untouched (the engine pages, index.html, a CSS label) get their Hebrew swapped too
 if [[ "$DEMO_LANG" == en ]]; then
 cp "$HERE/en.css" "$OUT/en.css"
@@ -73,9 +63,11 @@ for f in glob.glob(out + '/engine/*.html') + [out + '/index.html'] + glob.glob(o
         # so in English it fills left to right (the track's x differs per drawing: 442 desktop and tablet, 52 phone)
         # the Financials chart is turned back too, inside its own 100px box (a CSS scale about its fill-box moved it off its
         # place - the box is measured before the group's own translate), so in English it still climbs to the right
-        s = re.sub(r'(<g id="finChart" transform="[^"]*)"', r'\1 matrix(-1,0,0,1,100,0)"', s, count=1)
+        # (when the site's engine is already right to left - rtl-engine.py on the source - the mirror alone turns them right for English)
+        if 'rtl-engine' not in s:
+                s = re.sub(r'(<g id="finChart" transform="[^"]*)"', r'\1 matrix(-1,0,0,1,100,0)"', s, count=1)
         tx = re.search(r'class="track" x="(\d+)" y="-2" width="60"', s)
-        if tx:
+        if tx and 'rtl-engine' not in s:
             s = s.replace('</head>', '<style>#svg .stg .fill{transform:matrix(-1,0,0,1,%d,0)}</style>\n</head>' % (2 * int(tx.group(1)) + 60), 1)
     if f.endswith('/index.html'):
         s = s.replace('</head>', '<link rel="stylesheet" href="./en.css?v=59">\n</head>', 1)

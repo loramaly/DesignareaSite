@@ -115,8 +115,8 @@ h1{font-size:22px;line-height:1.2;margin:0 0 8px;text-wrap:balance}
 @media (prefers-reduced-motion: reduce){ .path,.src *,.ai *,.engine *,.out *,.lend *{transition:none!important;animation:none!important} }
 .fin-base{stroke:var(--border);stroke-width:1.2}.fin-area{fill:var(--purple-soft);opacity:0;transition:opacity .4s}.fin-line{fill:none;stroke:var(--purple);stroke-width:2.2;stroke-linecap:round;stroke-linejoin:round;stroke-dasharray:1;stroke-dashoffset:1}.fin-dot{fill:#F02FB8;opacity:0;transition:opacity .3s}
 </style>
+<style id="rtl-engine">#svg .stg .fill{transform:matrix(-1,0,0,1,164,0)}</style>
 <style>#critera-engine{direction:ltr}#critera-engine #svg{scale:-1 1}#svg text{transform-box:fill-box;transform-origin:center;scale:-1 1}#svg .chk{scale:-1 1}#svg .tick,#svg .done-lbl path{transform-box:fill-box;transform-origin:center;scale:-1 1}#svg text[font-size="17"]{font-size:15.5px}</style>
-<style>#svg .stg .fill{transform:matrix(-1,0,0,1,164,0)}</style>
 </head>
 <body>
 <!--
@@ -241,7 +241,7 @@ h1{font-size:22px;line-height:1.2;margin:0 0 8px;text-wrap:balance}
 </div>
 <script>
 (function(){
-  const DUR = 22000, HOLD = 2000, CLOSE_T = 20300;
+  const DUR = 22000, HOLD = 700, CLOSE_T = 19000;
   const SRC_START = HOLD, SRC_STAG = 350;
   const OPEN_T = HOLD+900;                  // engine panel opens
   const STAGE_START = HOLD+2500, STAGE_LEN = 1600;
@@ -332,7 +332,7 @@ h1{font-size:22px;line-height:1.2;margin:0 0 8px;text-wrap:balance}
   // ----- player (site): plays once while the section is on screen, then stays on its finished state (Larisa, 4.10.2026:
   // on a phone a restart reads as something new to do) -----
   const END = CLOSE_T - 1;
-  let playing=false, t0=0, offset=reduced?END:HOLD-300;
+  let playing=false, t0=0, offset=reduced?END:0;
   function now(){ return playing ? Math.min(offset + (performance.now()-t0)*1.3, END) : offset; }
   function frame(){ const t=now(); render(t); if(t>=END){ offset=END; playing=false; return; } if(playing) requestAnimationFrame(frame); }
   function play(){ if(playing||reduced) return; playing=true; t0=performance.now(); requestAnimationFrame(frame); }
